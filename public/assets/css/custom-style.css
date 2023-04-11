@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.dataTables_wrapper .dataTable 
+{
+border:  1px solid #333;
+}
+.dataTables_wrapper .dataTable th, .dataTables_wrapper .dataTable td
+{
+    border-bottom: 1px solid #333 !important;
+    border-right: 1px solid #333;
+
+}
+
+table.table-bordered th:last-child, table.table-bordered td:last-child 
+{
+    border-right: 1px solid #333 !important;
+}
+
+.mau02:hover{
+    background-color: #F3F6F9;
+    color: #6993FF;
+    -webkit-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+}
