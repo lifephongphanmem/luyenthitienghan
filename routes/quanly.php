@@ -19,6 +19,7 @@ Route::prefix('LopHoc')->group(function(){
     Route::post('/delete/{id}',[lophocController::class,'destroy']);
     Route::get('/chitiet',[lophocController::class,'show']);
     Route::post('/themhocvien',[lophocController::class,'themhocvien']);
+    Route::post('/chuyenlop/{id}',[lophocController::class,'chuyenlop']);
 });
 
 //giáo viên
