@@ -40,7 +40,7 @@ class HethongchungController extends Controller
 
 		//tài khoản không tồn tại
 		if (!isset($user)) {
-			return view('errors.tontai_dulieu')
+			return view('errors.tontaidulieu')
 				->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập')
 				->with('furl', '/');
 		}
@@ -52,7 +52,7 @@ class HethongchungController extends Controller
 		// }
 		//Tài khoản đang bị khóa
 		if ($user->trangthai == 2) {
-			return view('errors.tontai_dulieu')
+			return view('errors.tontaidulieu')
 				->with('message', 'Tài khoản đang bị khóa. Bạn hãy liên hệ với người quản trị để mở tài khoản')
 				->with('furl', '/home');
 		}
@@ -75,7 +75,7 @@ class HethongchungController extends Controller
 				//         ->with('url', '/DangNhap');
 				// }
 				// $user->save();
-				return view('errors.tontai_dulieu')
+				return view('errors.tontaidulieu')
 					->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập
                     .Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại');
 			}

@@ -77,6 +77,6 @@ class ChucnangController extends Controller
             }
         }
         $model->delete();
-        return redirect('/Chuc_nang/Thong_tin');
+        return redirect('/Chuc_nang/ThongTin');
     }
 }

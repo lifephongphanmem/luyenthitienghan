@@ -92,13 +92,13 @@
                                      <td class="text-left" style="width: 10%">{{ $hv->sdt }}</td>
                                      <td class="text-left" style="width: 20%">{{ $hv->diachi }}</td>
                                     <td class="text-center">
-                                        {{-- <button title="Sửa thông tin"
-                                            onclick="edit(this,'{{ $lh->id }}','{{ $lh->tenlop }}','{{ $lh->khoahoc }}','{{ $lh->giaovienchunhiem }}')"
-                                            data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
-                                            <i class="icon-lg la flaticon-edit-1 text-primary "></i>
+                                        <button title="Chuyển lớp"
+                                            onclick="chuyenlop(this,'{{ $hv->id }}')"
+                                            data-target="#chuyenlop" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-xl la la-exchange-alt text-success"></i>
                                         </button>
 
-                                        <button title="Xóa thông tin" type="button"
+                                        {{-- <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{ '/LopHoc/delete/' . $lh->id }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                             data-toggle="modal">
@@ -116,7 +116,6 @@
     </div>
     <!--end::Row-->
     <!--Thêm học viên -->
-        <!--Thêm mới -->
         <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
             <form action="{{ '/LopHoc/themhocvien' }}" method="POST" id="frm_them" enctype="multipart/form-data">
                 @csrf
@@ -176,6 +175,37 @@
                 </div>
             </form>
         </div>
+
+        <div id="chuyenlop" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+            <form action="" method="POST" id="frm_chuyen" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog modal-sx">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Danh sách lớp học
+                            </h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12 mt-1">
+                                <label class="control-label">Lớp học</label>
+                                <select name="malop" id="malop" class="form-control "style="width:100%">
+                                    <option value="">-- Chọn lớp học --</option>
+                                    @foreach ($a_lophoc as $k=>$ct )
+                                        <option value="{{$k}}">{{$ct}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickchuyen()">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     <!--Xóa -->
     <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8">
@@ -212,6 +242,9 @@
         function clickedit() {
             $('#frm_edit').submit();
         }
+        function clickchuyen() {
+            $('#frm_chuyen').submit();
+        }
 
 
         function edit(e, id, tenlop, khoahoc, giaovienchunhiem) {
@@ -224,6 +257,11 @@
             }
 
             $('#frm_edit').attr('action', url);
+        }
+
+        function chuyenlop(e,id){
+            var url='/LopHoc/chuyenlop/'+id;
+            $('#frm_chuyen').attr('action', url);
         }
     </script>
 

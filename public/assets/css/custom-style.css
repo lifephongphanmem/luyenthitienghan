@@ -22,3 +22,14 @@ table.table-bordered th:last-child, table.table-bordered td:last-child
     -webkit-transition: color 0.3s ease;
     transition: color 0.3s ease;
 }
+.box_dark{
+    border: solid 1px #05D6A0;
+    box-shadow: 0 2px 8px rgb(0 24 171 / 43%);
+    padding: 10px;
+    overflow: auto;
+    color: #030938;
+    border-radius: 3px;
+    width: 100%;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+}
