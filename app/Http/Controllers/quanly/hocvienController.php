@@ -79,6 +79,14 @@ class hocvienController extends Controller
 
     }
 
+    public function thithuepstopik(){
+        return view('thithu.thithu');
+    }
+
+    public function lambaithithu(){
+        return view('thithu.lambai');
+    }
+
     /**
      * Display the specified resource.
      */

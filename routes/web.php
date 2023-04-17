@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Hethong\HethongchungController;
+use App\Http\Controllers\quanly\hocvienController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,6 @@ Route::get('/dashboard',[HethongchungController::class,'index']);
 include('hethongchung.php');
 include('quanly.php');
 include('baigiang.php');
+
+Route::get('/thi-thu-esp-topik',[hocvienController::class,'thithuepstopik'])->name('thithuepstopik');
+Route::get('/lam-bai/218',[hocvienController::class,'lambaithithu'])->name('lambaithithu');
