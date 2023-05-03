@@ -21,3 +21,4 @@ Route::get('/dashboard',[HethongchungController::class,'index']);
 include('hethongchung.php');
 include('quanly.php');
 include('baigiang.php');
+include('dethi.php');

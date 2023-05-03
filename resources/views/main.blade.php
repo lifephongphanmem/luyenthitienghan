@@ -16,8 +16,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <head>
     <base href="">
-    <meta charset="utf-8" />
-    <title>Lifesc</title>
+    {{-- <meta charset="utf-8" /> --}}
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+    {{-- <title>Lifesc</title> --}}
+    <title>{{ $pageTitle }}</title>
     <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="canonical" href="https://keenthemes.com/metronic" />
@@ -35,12 +37,15 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Global Theme Styles-->
 
     <link href="{{ url('assets/css/custom-style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('css/player.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/jquery-migrate.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+    <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
     <!--begin::Layout Themes(used by all pages)-->
     <!--end::Layout Themes-->
     @yield('custom-style')
-    <link rel="shortcut icon" href="{{ url('assets/media/logos/logolife.png') }}" />
+    <link rel="shortcut icon" href="{{ url('assets/media/logos/ttdvvl.png') }}" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -51,7 +56,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <div id="kt_header_mobile" class="header-mobile bg-primary header-mobile-fixed">
         <!--begin::Logo-->
         <a href="index.html">
-            <img alt="Logo" src="{{ url('assets/media/logos/logolife.png') }}" class="max-h-30px" />
+            <img alt="Logo" src="{{ url('assets/media/logos/ttdvvl.png') }}" class="max-h-30px" />
         </a>
         <!--end::Logo-->
         <!--begin::Toolbar-->
@@ -96,8 +101,8 @@ License: You must have a valid license purchased only from themeforest(the above
                             <div class="d-none d-lg-flex align-items-center mr-3">
                                 <!--begin::Logo-->
                                 <a href="index.html" class="mr-20">
-                                    <img alt="Logo" src="{{ url('assets/media/logos/logolife.png') }}"
-                                        class="max-h-35px" />
+                                    <img alt="Logo" src="{{ url('assets/media/logos/ttdvvl.png') }}"
+                                        class="max-h-55px" />
                                 </a>
                                 <!--end::Logo-->
                                 <!--begin::Desktop Search-->
@@ -257,6 +262,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!--end::Bottom-->
                 </div>
                 <!--end::Header-->
+                @yield('banner')
                 <!--begin::Content-->
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                     <!--begin::Entry-->
@@ -1553,7 +1559,7 @@ License: You must have a valid license purchased only from themeforest(the above
     @if (Session::has('success'))
 
         <script>
-            toastr.success("{!! Session::get('success') !!}");
+
             // toastr.options = {
             //     "closeButton": false,
             //     "debug": false,
@@ -1571,14 +1577,14 @@ License: You must have a valid license purchased only from themeforest(the above
             //     "showMethod": "fadeIn",
             //     "hideMethod": "fadeOut"
             // };
-
+            toastr.success("{!! Session::get('success') !!}");
             // toastr.success("Are you the six fingered man?");
         </script>
     @endif
 
     @if (Session::has('error'))
         <script>
-            toastr.error("{!! Session::get('success') !!}");
+            toastr.error("{!! Session::get('error') !!}");
         </script>
     @endif
     <script>
@@ -1658,6 +1664,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="{{ url('assets/js/pages/widgets.js') }}"></script>
     <script src="{{ url('assets/js/pages/main.js') }}"></script>
     <script src="{{ url('assets/js/pages/select2.js') }}"></script>
+
     @yield('custom-script')
     <!--end::Page Scripts-->
 </body>

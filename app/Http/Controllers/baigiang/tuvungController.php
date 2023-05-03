@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\baigiang;
 
 use App\Http\Controllers\Controller;
+use App\Models\baigiang\baihoc;
+use App\Models\baigiang\tuvung;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class tuvungController extends Controller
 {
@@ -24,6 +27,14 @@ class tuvungController extends Controller
         if (!chkPhanQuyen('tuvung', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'tuvung');
         }
+        $model = tuvung::all();
+        $m_baihoc = baihoc::all();
+        $a_cumtuvung = array_column($model->unique('cumtuvung')->toarray(), 'cumtuvung');
+        return view('baigiang.tuvung.index')
+            ->with('model', $model)
+            ->with('m_baihoc', $m_baihoc)
+            ->with('a_cumtuvung', $a_cumtuvung)
+            ->with('pageTitle', 'Từ vựng');
     }
 
     /**
@@ -39,7 +50,43 @@ class tuvungController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!chkPhanQuyen('tuvung', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'tuvung');
+        }
+        $inputs = $request->all();
+        $inputs['matuvung'] = date('YmdHis');
+
+        $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
+        if (!isset($baihoc)) {
+            $inputs['mabaihoc'] = getdate()[0];
+            $data = [
+                'mabaihoc' => $inputs['mabaihoc'],
+                'tenbaihoc' => $inputs['tenbaihoc'],
+            ];
+            baihoc::create($data);
+        } else {
+            $inputs['mabaihoc'] = $baihoc->mabaihoc;
+        }
+
+        //file hình ảnh
+        // if (isset($inputs['hinhanh'])) {
+        //     $file = $inputs['hinhanh'];
+        //     $name = time() . $file->getClientOriginalName();
+        //     $file->move('uploads/anh/tuvung/', $name);
+        //     $inputs['hinhanh'] = 'uploads/anh/tuvung/' . $name;
+        // }
+        //file audio
+        if (isset($inputs['audio'])) {
+            $file = $inputs['audio'];
+            $name = time() . $file->getClientOriginalName();
+            $file->move('uploads/audio/tuvung/', $name);
+            $inputs['audio'] = 'uploads/audio/tuvung/' . $name;
+        }
+
+        tuvung::create($inputs);
+
+        return redirect('/TuVung/ThongTin')
+                ->with('success','Thêm thành công');
     }
 
     /**

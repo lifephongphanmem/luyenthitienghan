@@ -43,7 +43,7 @@ class dsnhomtaikhoanController extends Controller
         return view('Hethong.nhomchucnang.index')
             ->with('model', $model)
             ->with('inputs', $inputs)
-            ->with('pageTitle', 'Danh sách nhóm tài khoản');
+            ->with('pageTitle', 'Quản lý nhóm tài khoản');
     }
 
     /**
@@ -99,7 +99,7 @@ class dsnhomtaikhoanController extends Controller
             ->with('model', $m_chucnang->where('capdo', '1')->sortby('sapxep'))
             ->with('m_chucnang', $m_chucnang)
             ->with('m_nhomtaikhoan', $m_nhomtaikhoan)
-            ->with('pageTitle', 'Phân quyền tài khoản');
+            ->with('pageTitle', 'Phân quyền nhóm tài khoản');
     }
 
     public function LuuPhanQuyen(Request $request)

@@ -5,7 +5,11 @@ namespace App\Http\Controllers\baigiang;
 use App\Http\Controllers\Controller;
 use App\Models\baigiang\baihoc;
 use App\Models\baigiang\baihocchinh;
+use App\Models\baigiang\baitap;
 use App\Models\baigiang\giaotrinh;
+use App\Models\baigiang\hinhanh;
+use App\Models\baigiang\tracnghiem;
+use App\Models\baigiang\tuvung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -184,11 +188,31 @@ class giaotrinhController extends Controller
             return view('errors.noperm')->with('machucnang', 'giaotrinh');
         }
         $inputs=$request->all();
+
+        //Bài học chính
         $model=baihoc::where('mabaihoc',$inputs['mabaihoc'])->first();
         $m_baihocchinh=baihocchinh::where('mabaihoc',$inputs['mabaihoc'])->get();
         $trang=$m_baihocchinh->max('stt');
+
+        //Từ vựng
+        $m_tuvung=tuvung::where('mabaihoc',$inputs['mabaihoc'])->get();
+        $a_cumtuvung=array_column($m_tuvung->unique('cumtuvung')->toarray(),'cumtuvung');
+
+        //Trắc nghiệm
+        $m_tracnghiem=tracnghiem::where('mabaihoc',$inputs['mabaihoc'])->get();
+
+        //Hình ảnh
+        $m_hinhanh=hinhanh::where('mabaihoc',$inputs['mabaihoc'])->get();
+
+        //Bài tập
+        $m_baitap=baitap::where('mabaihoc',$inputs['mabaihoc'])->get();
         return view('baigiang.giaotrinh.60baieps.chitiet')
                     ->with('m_baihocchinh',$m_baihocchinh)
+                    ->with('m_tuvung',$m_tuvung)
+                    ->with('a_cumtuvung',$a_cumtuvung)
+                    ->with('m_tracnghiem',$m_tracnghiem)
+                    ->with('m_hinhanh',$m_hinhanh)
+                    ->with('m_baitap',$m_baitap)
                     ->with('model',$model)
                     ->with('trang',$trang)
                     ->with('pageTitle',$model->tenbaihoc);

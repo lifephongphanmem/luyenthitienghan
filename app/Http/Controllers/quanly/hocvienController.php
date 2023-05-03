@@ -32,7 +32,8 @@ class hocvienController extends Controller
         $model=hocvien::all();
 
         return view('quanly.hocvien.index')
-                    ->with('model',$model);
+                    ->with('model',$model)
+                    ->with('pageTitle','Quản lý học viên');
     }
 
     /**

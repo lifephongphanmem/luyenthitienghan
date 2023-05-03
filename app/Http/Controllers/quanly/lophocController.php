@@ -44,7 +44,8 @@ class lophocController extends Controller
                 ->with('model',$model)
                 ->with('inputs',$inputs)
                 ->with('a_khoahoc',$a_khoahoc)
-                ->with('a_giaovien',$a_giaovien);
+                ->with('a_giaovien',$a_giaovien)
+                ->with('pageTitle','Quản lý lớp học');
 
     }
 
@@ -105,7 +106,8 @@ class lophocController extends Controller
                 ->with('m_hocvien',$m_hocvien)
                 ->with('a_khoahoc',$a_khoahoc)
                 ->with('a_lophoc',$a_lophoc)
-                ->with('a_giaovien',$a_giaovien);
+                ->with('a_giaovien',$a_giaovien)
+                ->with('pageTitle','Chi tiết lớp học');
     }
 
     /**

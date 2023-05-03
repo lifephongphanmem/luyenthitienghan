@@ -5,9 +5,19 @@ namespace App\Http\Controllers\Hethong;
 use App\Http\Controllers\Controller;
 use App\Models\Hethong\Chucnang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ChucnangController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     public function index()
     {
         // if (!chkPhanQuyen('chucnang', 'danhsach')) {
@@ -20,7 +30,8 @@ class ChucnangController extends Controller
         // }
         return view('Hethong.chucnang.index')
         // ->with('baocao', getdulieubaocao())
-                ->with('model',$model);
+                ->with('model',$model)
+                ->with('pageTitle','Quản lý chức năng tài khoản');
     }
 
     public function store(Request $request)

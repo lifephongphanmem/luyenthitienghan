@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Session;
 class HethongchungController extends Controller
 {
     public function index(){
-        return view('Hethong.dashboard')
+        return view('trangchu')
 		->with('pageTitle','Trang chủ');
     }
 
@@ -101,7 +101,8 @@ class HethongchungController extends Controller
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['cccd'])->get()->keyBy('machucnang')->toArray());
 
 			return redirect('/dashboard')
-			->with('success', 'Đăng nhập thành công');
+						->with('success', 'Đăng nhập thành công')
+						->with('pageTitle','Trang chủ');
 		
 		
 	}
