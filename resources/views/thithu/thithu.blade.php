@@ -5,13 +5,13 @@
 @endsection
 
 @section('header')
-    <div class="p-2 align-self-center flex-fill">
+    <div class="p-2 align-self-center" style="flex: 1; margin: auto">
         <img src="{{ url('/assets/media/logos/logo-thithu.png') }}" />
     </div>
-    <div class="p-2 h2 align-self-center flex-fill">
+    <div class="p-2 h2 align-self-center" style="flex: 1; margin: auto">
         Test of proficiency in Korean 2020-2021
     </div>
-    <div class="p-2 align-self-center" style="width:20%">
+    <div class="p-2 align-self-center" style="width:20%; margin: auto">
         <div class="row p-2 m-1" style="background-color: rgba(229, 231, 233)">
             <div class="col-8">
                 <div class="row">

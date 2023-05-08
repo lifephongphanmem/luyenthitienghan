@@ -88,7 +88,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Header Mobile--> --}}
 
     <div class="d-flex justify-content-between border border-bottom-10"
-        style="background-image: linear-gradient(to top, rgba(189, 195, 199), rgba(189, 195, 199), rgba(189, 195, 199), rgba(253, 254, 254), rgba(253, 254, 254))">
+        style="background-image: linear-gradient(to top, rgba(189, 195, 199), rgba(189, 195, 199), rgba(189, 195, 199), rgba(253, 254, 254), rgba(253, 254, 254)); height: 60px">
         @yield('header')
     </div>
 
@@ -99,6 +99,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="container-fluid" style="height: 100%">
         @yield('content')
     </div>
+
+    @yield('scripts')
+    
     <!--end::Main-->
     <!-- begin::User Panel-->
 
