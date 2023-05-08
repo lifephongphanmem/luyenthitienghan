@@ -424,7 +424,7 @@
     </script>
 
     <script>
-        var countdownReading = 15000;
+        var countdownReading = 1500000;
         var countReading = 0;
 
         var countdownListening = 1500000;
