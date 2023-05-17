@@ -44,7 +44,8 @@ class dstaikhoanController extends Controller
         $a_nhomtk = array_column(dsnhomtaikhoan::all()->toArray(), 'tennhomchucnang', 'manhomchucnang');
         return view('Hethong.taikhoan.index')
             ->with('model', $model)
-            ->with('a_nhomtk', $a_nhomtk);
+            ->with('a_nhomtk', $a_nhomtk)
+            ->with('pageTitle','Quản lý tài khoản');
     }
 
     public function store(Request $request)
@@ -154,7 +155,8 @@ class dstaikhoanController extends Controller
         return view('Hethong.taikhoan.phanquyen')
             ->with('model', $m_chucnang->where('capdo', '1')->sortby('id'))
             ->with('m_chucnang', $m_chucnang)
-            ->with('m_taikhoan', $m_taikhoan);
+            ->with('m_taikhoan', $m_taikhoan)
+            ->with('pageTitle','Phân quyền tài khoản');
     }
 
     public function luuphanquyen(Request $request)

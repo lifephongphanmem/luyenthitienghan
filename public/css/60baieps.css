@@ -1,0 +1,184 @@
+@charset "UTF-8";
+.ml-3 {
+    width: 10%;
+
+}
+
+.btn {
+    width: 100%;
+}
+
+/* Từ vựng */
+a.sm2_button {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    text-indent: -9999px;
+    overflow: hidden;
+    vertical-align: middle;
+    border-radius: 2px;
+    margin-top: -5px;
+    transition: all .2s ease-in-out;
+}
+
+a.sm2_button,
+a.sm2_button.sm2_paused:hover {
+    background-color: #39c;
+    background-image: url(../../images/arrow-right-white.png);
+    background-image: none, url(../../images/arrow-right-white-2x.png);
+    background-size: 9px 10px;
+    background-repeat: no-repeat;
+    background-position: 5px 50%;
+}
+
+a.sm2_button,
+a.sm2_button.sm2_paused:hover {
+    background-color: #39c;
+    background-size: 9px 10px;
+    background-position: 5px 50%;
+}
+
+.sm2_button,
+.box_dark.thi-tracnghiem .ds-cauhoi .td-ch.cauhoi.chophep {
+    cursor: pointer !important;
+}
+
+a.sm2_button:hover,
+a.sm2_button.sm2_playing,
+a.sm2_button.sm2_playing:hover {
+    background-color: #c33;
+}
+
+a.sm2_button.sm2_playing,
+a.sm2_button.sm2_playing:hover {
+    transform: rotate(90deg);
+}
+
+a.sm2_button:hover,
+a.sm2_button.sm2_playing,
+a.sm2_button.sm2_playing:hover {
+    background-color: #c33;
+}
+
+/* Trắc nghiệm */
+
+.cauhoi-tracnghiem .qselect {
+    padding: 3px 0;
+}
+.qselect {
+    padding: 7px 0;
+    border: solid 1px transparent;
+    cursor: pointer;
+}
+
+.qselect>.mark {
+    padding: 0;
+    background-color: #fff;
+}
+
+.mark, mark {
+    padding: 0em;
+    background-color: #fcf8e3;
+}
+.mark {
+    line-height: 20px;
+    height: 22px;
+    width: 22px;
+    text-align: center;
+    border-radius: 18px;
+    display: inline-block;
+    border: solid 1px #230082;
+    margin-right: 3px;
+    background: none;
+    color: #000;
+}
+.result_view_tracnghiem .mark, .result_view_hinhanh .mark, .entry-tracnghiem-test .mark {
+    border: solid 1px #16a6d4;
+    color: #16a6d4;
+}
+
+.qselect>.qsign {
+    display: inline;
+    font-size: 17px;
+    height: 100%;
+}
+
+@media only screen and (min-width: 480px){
+.cauhoi-tracnghiem {
+    float: left;
+    width: 49%;
+    min-height: 190px;
+}
+}
+
+/* hình ảnh */
+
+@media only screen and (min-width: 960px){
+.cauhoi-tracnghiem-hinhanh {
+    width: 32%;
+    float: left;
+    margin: .5% .5%;
+    min-height: 340px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+}
+@media only screen and (min-width: 768px){
+.cauhoi-tracnghiem-hinhanh {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 32%;
+    float: left;
+    min-height: 280px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+}
+@media only screen and (min-width: 480px){
+.cauhoi-tracnghiem-hinhanh {
+    width: 49%;
+    height: 400px;
+    min-height: 400px;
+    float: left;
+    border: 1px solid #ddd;
+    padding: 5px;
+    margin: .5% .5%;
+}
+}
+
+.voca_show_audio {
+    padding: 5px 3px;
+    font-weight: 700;
+}
+
+/* Bài tập */
+.entry-tracnghiem-test {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    webkit-box-shadow: 0 2px 28px rgba(0,0,0,.1);
+    width: 100%;
+    box-shadow: 0 2px 28px rgba(0,0,0,.1);
+    float: left;
+    margin-bottom: 20px;
+    padding: 10px;
+    overflow: auto;
+    border-radius: 3px;
+    transition: all 0.3s;
+    background-color: #fffcfc;
+}
+
+.qselect>.qsignbt {
+    display: inline;
+    font-size: 17px;
+    height: 100%;
+}
+.question .qselect.cot2 {
+    float: left;
+    width: 50%;
+    min-height: 50px;
+    display: flex;
+    align-items: baseline;
+}

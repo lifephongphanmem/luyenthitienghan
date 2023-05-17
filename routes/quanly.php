@@ -1,9 +1,5 @@
 <?php 
 
-
-
-//lớp học
-
 use App\Http\Controllers\quanly\giaovienController;
 use App\Http\Controllers\quanly\hocvienController;
 use App\Http\Controllers\quanly\lophocController;

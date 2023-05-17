@@ -32,7 +32,8 @@ class giaovienController extends Controller
         return view('quanly.giaovien.index')
                 ->with('model',$model)
                 ->with('a_texttrangthai',$a_texttrangthai)
-                ->with('a_trangthai',$a_trangthai);
+                ->with('a_trangthai',$a_trangthai)
+                ->with('pageTitle','Quản lý giáo viên');
     }
 
     /**

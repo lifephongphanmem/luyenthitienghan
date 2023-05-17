@@ -15,6 +15,7 @@ class tuvung extends Model
         'cumtuvung',
         'audio',
         'tutienghan',
-        'tiengviet'
+        'tiengviet',
+        'hinhanh'
     ];
 }
