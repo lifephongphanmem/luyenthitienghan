@@ -234,11 +234,81 @@
                     <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                         <ul class="menu-subnav">
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="custom/apps/user/list-default.html" class="menu-link">
+                                <a href="{{'/LoaiCauHoi/ThongTin'}}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Chức vụ</span>
+                                    <span class="menu-text">Loại câu hỏi</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{'/DiaBan/ThongTin'}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Danh mục hành chính</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{'/TrinhDoGDPT/ThongTin'}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Trình độ GDPT</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{'/TrinhDoCMKT/ThongTin'}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Trình độ CMKT</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{'/DoiTuongUuTien/ThongTin'}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Đối tượng ưu tiên</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{'/NganhHoc/ThongTin'}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Ngành học</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{'/dmLopHoc/ThongTin'}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Lớp học</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{'/NguonCauHoi/ThongTin'}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Nguồn câu hỏi</span>
                                 </a>
                             </li>
                         </ul>

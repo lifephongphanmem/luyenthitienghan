@@ -24,9 +24,13 @@ Route::prefix('CauHoi')->group(function(){
     Route::post('/store',[cauhoiController::class,'store']);
     Route::post('/update/{macauhoi}',[cauhoiController::class,'update']);
     Route::post('/delete/{macauhoi}',[cauhoiController::class,'destroy']);
+    Route::post('/LoaiCauHoi',[cauhoiController::class,'loaicauhoi']);
+    Route::post('/LoaiDapAn',[cauhoiController::class,'loaidapan']);
 });
 
 Route::prefix('ThiThu')->group(function(){
     Route::get('/EPS-TOPIK',[thithuController::class,'thithu']);
     Route::get('/LamBai',[thithuController::class,'lambai']);
+    Route::post('/NopBai',[thithuController::class,'nopbai']);
+    Route::post('/checklog',[thithuController::class,'checklog']);
 });

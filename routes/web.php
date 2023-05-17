@@ -22,3 +22,4 @@ include('hethongchung.php');
 include('quanly.php');
 include('baigiang.php');
 include('dethi.php');
+include('danhmuc.php');

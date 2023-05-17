@@ -22,6 +22,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <title>{{ $pageTitle }}</title>
     <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="canonical" href="https://keenthemes.com/metronic" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />

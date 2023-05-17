@@ -18,6 +18,15 @@ class cauhoi extends Model
         'anh',
         'loaidapan',
         'A','B','C','D',
-        'dapan'
+        'dapan',
+        'dangcaudochieu',
+        'dangcauxemtranh',
+        'nganhhoc',
+        'nguoncauhoi',
+        'dangcau',
+        'macaughep',
+        'hoithoai',
+        'nguoi1',
+        'nguoi2'
     ];
 }

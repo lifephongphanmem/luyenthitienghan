@@ -17,51 +17,107 @@
             TableManaged3.init();
         });
 
+        $('#loaicauhoi').on('change', function() {
+            var loaicauhoi = $(this).val();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: '/CauHoi/LoaiCauHoi',
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN,
+                    loaicauhoi: loaicauhoi
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    console.log(data);
+                    $('#xoadangcaudoc').remove();
+                    $('#xoaxemtranh').remove();
+                    $('#caudoc').append(data);
+                },
+                error: function(message) {
+                    toastr.error(message, "Lỗi")
+                }
+            });
+
+        });
+
+        function xemtranh(e) {
+            var dangcaudoc = $(e).val();
+            $('#xoaxemtranh').remove();
+            if (dangcaudoc == 1683687307) {
+                var html = '<div class="col-md-12 mt-2" id="xoaxemtranh">';
+                html += '<label class="control-label">Loại câu xem tranh<span class="require">*</span></label>';
+                html += '<select name="dangcauxemtranh" class="form-control" id="loaicauxemtranh">';
+                html += '<option value="1">Chỉ đồ vật</option>';
+                html += '<option value="2">Chỉ hành động</option>';
+                html += '<option value="3">Số lượng</option>';
+                html += '</select>';
+                html += '</div>';
+                $('#xemtranh').append(html);
+            }
+        }
+
         $('#loaidapan').on('change', function() {
             var loaidapan = $(this).val();
-            $('#A').remove();
-            $('#B').remove();
-            $('#C').remove();
-            $('#D').remove();
-            if (loaidapan == 1) {
-                var html = '<div class="col-md-3 mt-2" id="A">';
-                html += '<label class="control-label">Đáp án 1<span class="require">*</span></label>';
-                html += '<input type="text" name="A" class="form-control">';
-                html += '</div>';
-                html += '<div class="col-md-3 mt-2" id="B">';
-                html += '<label class="control-label">Đáp án B<span class="require">*</span></label>';
-                html += '<input type="text" name="B" class="form-control">';
-                html += '</div>';
-                html += '<div class="col-md-3 mt-2" id="C">';
-                html += '<label class="control-label">Đáp án C<span class="require">*</span></label>';
-                html += '<input type="text" name="C" class="form-control">';
-                html += '</div>';
-                html += '<div class="col-md-3 mt-2" id="D">';
-                html += '<label class="control-label">Đáp án D<span class="require">*</span></label>';
-                html += '<input type="text" name="D" class="form-control">';
-                html += '</div>';
-                $('#dapan').append(html);
-            } else {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: '/CauHoi/LoaiDapAn',
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN,
+                    loaidapan: loaidapan
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    console.log(data);
+                    $('#A').remove();
+                    $('#B').remove();
+                    $('#C').remove();
+                    $('#D').remove();
+                    $('#dapan').append(data);
+                },
+                error: function(message) {
+                    toastr.error(message, "Lỗi")
+                }
+            });
 
-                var html = '<div class="col-md-3 mt-2" id="A">';
-                html += '<label class="control-label">Đáp án 1<span class="require">*</span></label>';
-                html += '<input type="file" name="A" class="form-control">';
-                html += '</div>';
-                html += '<div class="col-md-3 mt-2" id="B">';
-                html += '<label class="control-label">Đáp án 2<span class="require">*</span></label>';
-                html += '<input type="file" name="B" class="form-control">';
-                html += '</div>';
-                html += '<div class="col-md-3 mt-2" id="C">';
-                html += '<label class="control-label">Đáp án 3<span class="require">*</span></label>';
-                html += '<input type="file" name="C" class="form-control">';
-                html += '</div>';
-                html += '<div class="col-md-3 mt-2" id="D">';
-                html += '<label class="control-label">Đáp án 4<span class="require">*</span></label>';
-                html += '<input type="file" name="D" class="form-control">';
-                html += '</div>';
-                $('#dapan').append(html);
-            }
+
         })
+
+        $('#hoithoai').on('change', function() {
+            var hoithoai = $(this).val();
+            $('#noidung').remove();
+            if (hoithoai == 0) {
+                var html = '<div class="col-md-12 mt-2" id="noidung">';
+                html += '<label class="control-label">Nội dung<span class="require">*</span></label>';
+                html += ' <input type="text" name="noidung" class="form-control">';
+                html += '</div>'
+
+
+            } else {
+                var html = '<div class="col-md-12 mt-2" id="noidung">'
+                html += '<div class="row mt-2">'
+                html += '<div class="col-md-6 mt-2">'
+
+                html += '<label class="control-label">Người 1<span class="require">*</span></label>';
+                html += '<input type="text" name="nguoi1" class="form-control">';
+                html += '</div>';
+                html += '<div class="col-md-6 mt-2">'
+                html += '<label class="control-label">Người 2<span class="require">*</span></label>';
+                html += '<input type="text" name="nguoi2" class="form-control">';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+
+            }
+            $('#cauhoithoai').append(html);
+        });
+        $('#madanhmuc').on('change',function(){
+            window.location.href = "{{ $inputs['url'] }}" + '?madm=' +$('#madanhmuc').val()+'&dangcau='+$('#dangcauhoi').val();
+        });
+        $('#dangcauhoi').on('change',function(){
+            window.location.href = "{{ $inputs['url'] }}" + '?madm=' +$('#madanhmuc').val()+'&dangcau='+$('#dangcauhoi').val();
+        });
     </script>
 @stop
 @section('content')
@@ -86,21 +142,38 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Loại câu hỏi</label>
+                            <select name="madm" id="madanhmuc"  class="form-control select2basic">
+                                @foreach ($loaicauhoi as $key=>$ct )
+                                    <option value="{{$ct->madm}}" {{$ct->madm == $inputs['madm']?'selected':''}}>{{$ct->tendm}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Dạng câu</label>
+                            <select name="dangcau" id="dangcauhoi"  class="form-control select2basic">
+                                <option value="1" {{$inputs['dangcau'] ==1?'selected':''}}>Câu đơn</option>
+                                <option value="2" {{$inputs['dangcau'] ==2?'selected':''}}>Câu ghép</option>
+                            </select>
+                        </div>
+                    </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr class="text-center">
                                 <th>STT</th>
-                                <th>Mã câu hỏi</th>
-                                <th>Loại câu hỏi</th>
+                                {{-- <th>Mã câu hỏi</th> --}}
+                                {{-- <th>Loại câu hỏi</th> --}}
                                 <th>Câu hỏi</th>
                                 <th>Nội dung</th>
                                 <th>Audio</th>
                                 <th>Ảnh</th>
-                                <th>1</th>
+                                {{-- <th>1</th>
                                 <th>2</th>
                                 <th>3</th>
                                 <th>4</th>
-                                <th>Đáp án</th>
+                                <th>Đáp án</th> --}}
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -108,22 +181,30 @@
                             @foreach ($model as $key => $ch)
                                 <tr class="text-center">
                                     <td>{{ ++$key }}</td>
-                                    <td name="macauhoi">{{ $ch->macauhoi }}</td>
-                                    <td name='loaicauhoi'>{{ $ch->loaicauhoi }}</td>
+                                    {{-- <td name="macauhoi">{{ $ch->macauhoi }}</td> --}}
+                                    {{-- <td name='loaicauhoi'>{{ $ch->loaicauhoi }}</td> --}}
                                     <td name='cauhoi'>{{ $ch->cauhoi }}</td>
                                     <td name='noidung'>{{ $ch->noidung }}</td>
                                     <td name='audio'>{{ $ch->audio }}</td>
                                     <td name='anh'>{{ $ch->anh }}</td>
-                                    <td name='A'>{{ $ch->A }}</td>
+                                    {{-- <td name='A'>{{ $ch->A }}</td>
                                     <td name='B'>{{ $ch->B }}</td>
                                     <td name='C'>{{ $ch->C }}</td>
                                     <td name='D'>{{ $ch->D }}</td>
-                                    <td name='dapan'>{{ $ch->dapan }}</td>
+                                    <td name='dapan'>{{ $ch->dapan }}</td> --}}
                                     <td class="text-center">
+
+                                        @if ($ch->dangcau == 2)
+                                        <button title="Thêm câu" onclick="themcau(this,'{{ $ch->macauhoi }}')"
+                                            data-target="#themmoi" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
+                                            <i class="fa fa-plus text-success "></i>
+                                        </button>
+                                        @endif
                                         <button title="Sửa thông tin" onclick="edit(this,'{{ $ch->macauhoi }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
+
 
                                         <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{ '/CauHoi/delete/' . $ch->macauhoi }}')"
@@ -146,7 +227,7 @@
     <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="{{ '/CauHoi/store' }}" method="POST" id="frm_cauhoi" enctype="multipart/form-data">
             @csrf
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">Thông tin câu hỏi
@@ -154,27 +235,47 @@
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
+
                         <div class="form-group row">
+                            <div class="col-md-6 mt-2">
+                                <label class="control-label">Nguồn câu hỏi<span class="require">*</span></label>
+                                <select name="nguoncauhoi" class="form-control" id='nguoncauhoi'>
+                                    @foreach ($nguoncauhoi as $ct)
+                                        <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <label class="control-label">Dạng câu hỏi<span class="require">*</span></label>
+                                <select name="dangcau" class="form-control" id='dangcau'>
+                                    <option value="1">Câu đơn</option>
+                                    <option value="2">Câu ghép</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <label class="control-label">Câu hội thoại/không<span class="require">*</span></label>
+                                <select name="hoithoai" class="form-control" id='hoithoai'>
+                                    <option value="0">Không hội thoại</option>
+                                    <option value="1">Câu hội thoại</option>
+                                </select>
+                            </div>
+                            <div id='cauhoithoai' style="width:100%">
+
+                            </div>
                             <div class="col-md-12 mt-2">
                                 <label class="control-label">Câu hỏi<span class="require">*</span></label>
                                 <input type="text" name="cauhoi" class="form-control">
                             </div>
-                            <div class="col-md-12 mt-2">
-                                <label class="control-label">Nội dung<span class="require">*</span></label>
-                                <input type="text" name="noidung" class="form-control">
-                            </div>
+
                             <div class="col-md-4 mt-2">
                                 <label class="control-label">Loại câu hỏi<span class="require">*</span></label>
                                 <select name="loaicauhoi" class="form-control" id='loaicauhoi'>
-                                    <option value="1">Nghe hiểu</option>
-                                    <option value="2">Đọc hiểu</option>
+                                    @foreach ($loaicauhoi as $ct)
+                                        <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
-                            {{-- <div class="col-md-12">
-                                <label class="control-label">Hình ảnh<span class="require">*</span></label>
-                                <input type="file" name="hinhanh" class="form-control">
-                            </div> --}}
                             <div class="col-md-4 mt-2">
                                 <label class="control-label">Ảnh</label>
                                 <input type="file" name="anh" class="form-control">
@@ -183,19 +284,21 @@
                                 <label class="control-label">Audio<span class="require">*</span></label>
                                 <input type="file" name="audio" class="form-control">
                             </div>
-                            <div class="col-md-12 mt-2">
+                            <div id='caudoc' style="width:100%">
+                            </div>
+                            <div id='xemtranh' style="width:100%">
+
+                            </div>
+                            <div class="col-md-6 mt-2">
                                 <label class="control-label">Loại đáp án<span class="require">*</span></label>
                                 <select name="loaidapan" class="form-control " id="loaidapan">
                                     <option value="1">Text</option>
                                     <option value="2">Hình ảnh</option>
                                 </select>
                             </div>
-
-                            <div class="form-group row" id='dapan'>
+                            <div class=" row" id='dapan' style="width:100%">
 
                             </div>
-
-
                             <div class="col-md-12 mt-2">
                                 <label class="control-label">Đáp án đúng<span class="require">*</span></label>
                                 <select name="dapan" class="form-control">
@@ -206,6 +309,7 @@
                                 </select>
                             </div>
                         </div>
+                       
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
@@ -213,6 +317,7 @@
                             onclick="clickNhanvaTKT()">Đồng
                             ý</button>
                     </div>
+                   
                 </div>
             </div>
         </form>
@@ -283,25 +388,48 @@
         }
 
         function add() {
+            $('#A').remove();
+            $('#B').remove();
+            $('#C').remove();
+            $('#D').remove();
+            $('#noidung').remove();
             var html = '<div class="col-md-3 mt-2" id="A">';
-            html += '<label class="control-label">Đáp án 1<span class="require">*</span></label>';
-            html += '<input type="text" name="A" class="form-control">';
+            html += '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
+            html += '<input type="text" name="A" class="form-control ml-3">';
             html += '</div>';
             html += '<div class="col-md-3 mt-2" id="B">';
-            html += '<label class="control-label">Đáp án 2<span class="require">*</span></label>';
-            html += '<input type="text" name="B" class="form-control">';
+            html += '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
+            html += '<input type="text" name="B" class="form-control ml-3">';
             html += '</div>';
             html += '<div class="col-md-3 mt-2" id="C">';
-            html += '<label class="control-label">Đáp án 3<span class="require">*</span></label>';
-            html += '<input type="text" name="C" class="form-control">';
+            html += '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
+            html += '<input type="text" name="C" class="form-control ml-3">';
             html += '</div>';
             html += '<div class="col-md-3 mt-2" id="D">';
-            html += '<label class="control-label">Đáp án 4<span class="require">*</span></label>';
-            html += '<input type="text" name="D" class="form-control">';
+            html += '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
+            html += '<input type="text" name="D" class="form-control ml-3">';
             html += '</div>';
             $('#dapan').append(html);
+
+            var html1 = '<div class="col-md-12 mt-2" id="noidung">';
+            html1 += '<label class="control-label">Nội dung<span class="require">*</span></label>';
+            html1 += '<textarea name="noidung" id="noidungcau" rows="5" class="form-control"></textarea>';
+            html1 += '</div>';
+            $('#cauhoithoai').append(html1);
         }
 
+        function themcau(e,id){
+            add();
+            var html=' <input type="hidden" name="macaughep" value="'+id+'">';
+            var tr = $(e).closest('tr');
+            $('#xoadangcaudoc').remove();
+                    $('#xoaxemtranh').remove();
+            $('#noidungcau').text($(tr).find('td[name=noidung]').text());
+            $('#dangcau option[value=2 ]').attr('selected', 'selected');
+            $('#loaicauhoi option[value=1683685323 ]').attr('selected', 'selected');
+               
+            $('#frm_cauhoi').append(html);
+        }
 
         function edit(e, id) {
             var url = '/DeThi/update/' + id;

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('macauhoi',50)->nullable();
             $table->string('loaicauhoi')->nullable()->comment('1:nghehieu;2:dochieu');
             $table->string('cauhoi')->nullable();
-            $table->string('noidung')->nullable();
+            $table->ntext('noidung')->nullable();
             $table->string('audio')->nullable();
             $table->string('anh')->nullable();
             $table->integer('loaidapan')->nullable()->comment('1:text;2:anh');
