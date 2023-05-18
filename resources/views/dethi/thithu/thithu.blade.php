@@ -83,7 +83,7 @@
                                 class="bailam-tracnghiem list-tracnghiem">
                                 <div class="bailam-tracnghiem-center">
                                     @foreach ($m_cauhoi as $k => $ct)
-                                        @if ($ct->loaicauhoi == 2)
+                                        @if ($ct->loaicauhoi == 1683685323)
                                             <div id="question" class="question thi-thu entry-tracnghiem cauhoi-{{++$k}} @if($k == 1) active @endif"
                                                 data-id="{{$k}}" data-code="{{$ct->macauhoi}}:F">
                                                 <div class="cauhoitracnghiem">

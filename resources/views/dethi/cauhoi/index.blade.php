@@ -194,7 +194,7 @@
                                     <td name='dapan'>{{ $ch->dapan }}</td> --}}
                                     <td class="text-center">
 
-                                        @if ($ch->dangcau == 2)
+                                        @if ($ch->dangcau == 2 && $luottrung[$ch->macaughep]<2)
                                         <button title="Thêm câu" onclick="themcau(this,'{{ $ch->macauhoi }}')"
                                             data-target="#themmoi" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="fa fa-plus text-success "></i>

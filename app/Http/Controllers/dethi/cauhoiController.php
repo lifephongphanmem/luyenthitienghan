@@ -36,10 +36,13 @@ class cauhoiController extends Controller
         $inputs['madm']=isset($inputs['madm'])?$inputs['madm']:$madm;
         $inputs['dangcau']=isset($inputs['dangcau'])?$inputs['dangcau']:1;
         $model = cauhoi::where('loaicauhoi',$inputs['madm'])->where('dangcau',$inputs['dangcau'])->get();
+        $a_ghep=array_column($model->toarray(),'macaughep');
+        $luottrung=array_count_values($a_ghep);
         $inputs['url']='/CauHoi/ThongTin';
         return view('dethi.cauhoi.index')
             ->with('model', $model)
             ->with('inputs', $inputs)
+            ->with('luottrung', $luottrung)
             ->with('nguoncauhoi', $nguoncauhoi)
             ->with('loaicauhoi', $loaicauhoi)
             ->with('pageTitle', 'Quản lý câu hỏi');
@@ -96,7 +99,7 @@ class cauhoiController extends Controller
         }
         cauhoi::create($inputs);
 
-        return redirect('/CauHoi/ThongTin')
+        return redirect('/CauHoi/ThongTin?madm='.$inputs['madm'].'&dangcau='.$inputs['dangcau'])
                     ->with('success','Thêm câu hỏi thành công');
     }
 
