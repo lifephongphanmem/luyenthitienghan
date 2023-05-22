@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('cauhoi', function (Blueprint $table) {
-            $table->ntext('noidungtiengviet')->nullable();
+            $table->text('noidungtiengviet')->nullable();
             $table->string('cauhoitiengviet')->nullable();
+            $table->string('Atiengviet')->nullable();
+            $table->string('Btiengviet')->nullable();
+            $table->string('Ctiengviet')->nullable();
+            $table->string('Dtiengviet')->nullable();
         });
     }
 
@@ -23,7 +27,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('cauhoi', function (Blueprint $table) {
-            //
+            $table->dropColumn('noidungtiengviet');
+            $table->dropColumn('cauhoitiengviet');
+            $table->dropColumn('Atiengviet');
+            $table->dropColumn('Btiengviet');
+            $table->dropColumn('Ctiengviet');
+            $table->dropColumn('Dtiengviet');
         });
     }
 };

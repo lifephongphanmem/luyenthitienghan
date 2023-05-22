@@ -34,7 +34,7 @@
     <script src="{{ url('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ url('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
     <script src="{{ url('assets/js/scripts.bundle.js') }}"></script>
-    <link rel="stylesheet" href="{{ url('css/style_lambai.css') }}">
+    {{-- <link rel="stylesheet" href="{{ url('css/style_lambai.css') }}"> --}}
 </head>
 
 <body>
@@ -71,9 +71,9 @@
                     </div>
                     <div id="contentWrap" style="background: #d7e4f2;margin: 0px;">
                         <div>
-                            <marquee width="100%" bgcolor="pink" onmouseover="this.stop();"
+                            {{-- <marquee width="100%" bgcolor="pink" onmouseover="this.stop();"
                                 onmouseout="this.start();">Để được đăng ký sử dụng phần mềm có nội dung đề sưu tầm thi
-                                thật vui lòng liên hệ số ĐT: 024 6287 6287.</marquee>
+                                thật vui lòng liên hệ số ĐT: 024 6287 6287.</marquee> --}}
                         </div>
                         <div class="list-tracnghiem diemthi-tracnghiem" style="background-color: white;display:none;">
                         </div>
@@ -93,7 +93,7 @@
                                                         <strong>{{ $ct->cauhoi }}</strong>
                                                         <p style="display: block;"></p>
                                                         @if (isset($ct->anh))
-                                                            <img src="{{ $ct->anh }}">
+                                                            <img src="{{ url($ct->anh) }}">
                                                         @endif
 
                                                     </div>

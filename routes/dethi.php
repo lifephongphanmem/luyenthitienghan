@@ -34,3 +34,6 @@ Route::prefix('ThiThu')->group(function(){
     Route::post('/NopBai',[thithuController::class,'nopbai']);
     Route::post('/checklog',[thithuController::class,'checklog']);
 });
+
+Route::get('/960CauDocHieu',[cauhoiController::class,'caudochieu']);
+Route::get('/960CauNgheHieu',[cauhoiController::class,'caunghehieu']);

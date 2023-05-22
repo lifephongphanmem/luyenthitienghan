@@ -52,6 +52,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!--begin::Body-->
 
 <body id="kt_body" class="header-fixed header-mobile-fixed page-loading">
+    <div class="ajax-loader" style="display: none;"></div>
     <!--begin::Main-->
     <!--begin::Header Mobile-->
     <div id="kt_header_mobile" class="header-mobile bg-primary header-mobile-fixed">

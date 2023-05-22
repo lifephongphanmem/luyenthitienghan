@@ -42,6 +42,7 @@
                                 <th>STT</th>
                                 <th>Mã danh mục</th>
                                 <th>Tên danh mục</th>
+                                <th>Số lượng câu</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -51,6 +52,7 @@
                                     <td style="width: 2%">{{ ++$key }}</td>
                                     <td name='madm' style="width: 2%">{{ $dm->madm }}</td>
                                     <td name='tendm' style="width: 10%">{{ $dm->tendm }}</td>
+                                    <td name='soluongcau' style="width: 10%">{{ $dm->soluongcau }}</td>
 
                                     <td class="text-center" style="width:8%">
                                         <a href="{{'/LoaiCauHoi/chitiet/'.$dm->madm}}" title="Chi tiết"
@@ -84,7 +86,7 @@
     <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="{{ '/LoaiCauHoi/store' }}" method="POST" id="frm_loaicauhoi" enctype="multipart/form-data">
             @csrf
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog modal-xs">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">Thông tin loại câu hỏi
@@ -97,7 +99,10 @@
                                 <label class="control-label">Tên danh mục<span class="require">*</span></label>
                                 <input type="text" name="tendm" class="form-control">
                             </div>
-                           
+                            <div class="col-md-12 mt-2">
+                                <label class="control-label">Số lượng câu<span class="require">*</span></label>
+                                <input type="number" name="soluongcau" value="20" class="form-control">
+                            </div>   
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -140,7 +145,7 @@
     <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="" method="POST" id="frm_edit" enctype="multipart/form-data">
             @csrf
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog modal-xs">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">Thông tin loại câu hỏi
@@ -152,6 +157,10 @@
                             <div class="col-md-12 mt-2">
                                 <label class="control-label">Tên danh mục<span class="require">*</span></label>
                                 <input type="text" name="tendm" id='tendm' class="form-control">
+                            </div> 
+                            <div class="col-md-12 mt-2">
+                                <label class="control-label">Số lượng câu<span class="require">*</span></label>
+                                <input type="number" name="soluongcau" id="soluongcau" class="form-control">
                             </div>                           
                         </div>
                     </div>
@@ -205,6 +214,7 @@
             var tr = $(e).closest('tr');
 
             $('#tendm').val($(tr).find('td[name=tendm]').text());
+            $('#soluongcau').val($(tr).find('td[name=soluongcau]').text());
             $('#frm_edit').attr('action', url);
           
         }

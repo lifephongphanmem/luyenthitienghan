@@ -43,6 +43,7 @@
                                 <th>Mã danh mục ct</th>
                                 <th>Tên danh mục ct</th>
                                 <th>Tên danh mục</th>
+                                <th>Số lượng câu</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -53,6 +54,7 @@
                                     <td name='madm' style="width: 2%">{{ $dmct->madmct }}</td>
                                     <td name='tendm' style="width: 25%">{{ isset($dmct->madmct)?$a_dmct[$dmct->madmct]:'' }}</td>
                                     <td name='tendmct2'>{{$dmct->tendmct2}}</td>
+                                    <td name='soluongcau'>{{$dmct->soluongcau}}</td>
 
                                     <td class="text-center" style="width:8%">
                                         <button title="Sửa thông tin"
@@ -95,6 +97,10 @@
                             <div class="col-md-12 mt-2">
                                 <label class="control-label">Tên danh mục chi tiết<span class="require">*</span></label>
                                 <input type="text" name="tendmct2" class="form-control">
+                            </div> 
+                            <div class="col-md-12 mt-2">
+                                <label class="control-label">Số lượng câu<span class="require">*</span></label>
+                                <input type="number" name="soluongcau" value="1" class="form-control">
                             </div>                           
                         </div>
                     </div>
@@ -125,7 +131,11 @@
                             <div class="col-md-12 mt-2">
                                 <label class="control-label">Tên danh mục<span class="require">*</span></label>
                                 <input type="text" name="tendmct2" id='tendmct2' class="form-control">
-                            </div>                           
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <label class="control-label">Số lượng câu<span class="require">*</span></label>
+                                <input type="number" name="soluongcau" id="soluongcau" class="form-control">
+                            </div>                             
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -178,6 +188,7 @@
             var tr = $(e).closest('tr');
 
             $('#tendmct2').val($(tr).find('td[name=tendmct2]').text());
+            $('#soluongcau').val($(tr).find('td[name=soluongcau]').text());
             $('#frm_edit').attr('action', url);
           
         }

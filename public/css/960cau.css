@@ -1,0 +1,277 @@
+
+
+.tieude-giaotrinh {
+    color: #004eff;
+    font-size: 24px;
+}
+#tab-menu {
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+}
+
+#content-tab .result_tab {
+    width: 100%;
+    float: left;
+}
+
+.dochieu {
+    width: 100%;
+    -webkit-box-shadow: 0 2px 28px rgba(0,0,0,.1);
+    box-shadow: 0 1px 12px rgb(6 211 251 / 62%);
+    padding: 10px;
+    background-color: #fff;
+    margin-bottom: 20px;
+    overflow: auto;
+    color: #040ac3;
+    border-radius: 3px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.box_dark {
+    background: url(../images/global.png) center no-repeat #fff;
+    border: solid 1px #05D6A0;
+    width: 100%;
+    -webkit-box-shadow: 0 2px 28px rgba(0,0,0,.1);
+    box-shadow: 0 2px 8px rgb(0 24 171 / 43%);
+    padding: 10px;
+    overflow: auto;
+    color: #030938;
+    border-radius: 3px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+}
+.entry-tracnghiem.active {
+    display: block;
+    width: 100%;
+    float: left;
+}
+.entry-crumbs {
+    font-size: 12px;
+    color: #c3c3c3;
+    width: 100%;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ededed;
+    padding: 15px 20px;
+}
+.list-box.ds-blog article {
+    border-bottom: 1px solid #ededed;
+}
+.list-box.ds-blog article, .list-box.ds-blog aside {
+    padding: 15px 20px;
+    width: 100%;
+    float: left;
+}
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
+    display: block;
+}
+#tab-menu .tab-menu {
+    margin-right: 3px;
+}
+@media only screen and (min-width: 768px){
+.tab-menu-baihoc {
+    float: left;
+    width: 125px;
+    margin-top: 25px;
+}}
+a {
+    color: #0141a1;
+    font-weight: 700;
+}
+a, button, input {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+a {
+    color: #334862;
+    text-decoration: none;
+}
+
+a {
+    color: #0141a1;
+    font-weight: 700;
+}
+a, button, input {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+a {
+    color: #334862;
+    text-decoration: none;
+}
+a, button, input {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+a {
+    background-color: transparent;
+}
+.tab-menu-baihoc .title_hoc.active, .tab-menu-baihoc .title_hoc:hover {
+    background: #f2901c;
+}
+.title_hoc {
+    float: right;
+    display: inline-block;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    background: #16a6d4;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    width: 100%;
+    line-height: 40px;
+    height: 40px;
+}
+.cauhoitracnghiem img {
+    max-width: 100%;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+img {
+    transition: opacity 1s;
+    opacity: 1;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+img {
+    border-style: none;
+}
+.list-tracnghiem .no2qselect.cot2 {
+    float: left;
+    width: 50%;
+    min-height: 50px;
+}
+.no2qselect {
+    padding: 7px 0;
+    border: solid 1px transparent;
+}
+.cauhoitracnghiem {
+    padding: 15px 5px;
+    font-size: 16px;
+}
+.mark, mark {
+    padding: 0em;
+    background-color: #fcf8e3;
+}
+.mark {
+    line-height: 20px;
+    height: 22px;
+    width: 22px;
+    text-align: center;
+    border-radius: 18px;
+    display: inline-block;
+    border: solid 1px #230082;
+    margin-right: 3px;
+    background: none;
+    color: #000;
+}
+.no2qselect>.qsign {
+    display: inline;
+    font-size: 17px;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-top: 1px solid #0091c7;
+    width: 100%;
+    float: left;
+}
+hr {
+    margin: 15px 0;
+    border-width: 0;
+    border-top: 1px solid currentColor;
+    opacity: 0.1;
+}
+.is-uppercase, .uppercase {
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+.tieude-giaotrinh {
+    color: #004eff;
+    font-size: 24px;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+h1 {
+    font-size: 22px;
+    color: #545454;
+    margin-bottom: 5px;
+    line-height: 30px;
+}
+.content .container{
+    background: #fff;
+}
+.entry-tracnghiem-test {
+    border: 2px solid #0000003b;
+    width: 100%;
+    box-shadow: 0px 0px 8px 4px rgb(74 74 74 / 33%);
+    float: left;
+    margin-bottom: 20px;
+    padding: 10px;
+    overflow: auto;
+    border-radius: 3px;
+    transition: all 0.3s;
+    background-color: #fffcfc;
+}
+.cauhoitracnghiem {
+    padding: 15px 5px;
+    font-size: 16px;
+}
+.question .qselect.cot4 {
+    float: left;
+    width: 25%;
+    min-height: 50px;
+}
+.qselect {
+    padding: 7px 0;
+    border: solid 1px transparent;
+    cursor: pointer;
+}
+.qselect>.mark {
+    padding: 0;
+    background-color: #fff;
+}
+.result_view_tracnghiem .mark, .result_view_hinhanh .mark {
+    border: solid 1px #16a6d4;
+    color: #16a6d4;
+}
+.qselect>.qsign {
+    display: inline;
+    font-size: 17px;
+    height: 100%;
+}
+.cauhoi-tracnghiem .traloisai .mark, .cauhoi-tracnghiem-hinhanh .traloisai .mark, .entry-tracnghiem-test .traloisai .mark, .thi-thu .traloisai .mark {
+    border: solid 1px #fc7272;
+    background-color: #fc7272!important;
+    color: #fff;
+}
+.cauhoi-tracnghiem .traloidung .mark, .cauhoi-tracnghiem-hinhanh .traloidung .mark, .entry-tracnghiem-test .traloidung .mark, .thi-thu .traloidung .mark {
+    border: solid 1px #4dde7d;
+    background-color: #4dde7d!important;
+    color: #fff;
+}
+.cauhoi-tracnghiem .traloidung, .cauhoi-tracnghiem-hinhanh .traloidung, .entry-tracnghiem-test .traloidung, .thi-thu .traloidung {
+    background: url(../images/correctx.png) no-repeat 20px 0;
+    background-size: 10px;
+}
+.cauhoi-tracnghiem .traloisai, .cauhoi-tracnghiem-hinhanh .traloisai, .entry-tracnghiem-test .traloisai, .thi-thu .traloisai {
+    background: url(../images/wrongx.png) no-repeat 20px 0;
+    background-size: 10px;
+}
