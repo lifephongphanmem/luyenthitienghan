@@ -712,7 +712,7 @@
                         <div class="thongtin_thi">
                             <div class="thongtin thongtin1"> 218 </div>
                             <div class="thongtin thongtin2"> <span>THI THỬ EPS </span></div>
-                            <div class="thongtin thongtin3"> THI THỬ EPS 2022 </div>
+                            <div class="thongtin thongtin3"> {{$phongthi??'THI THỬ EPS 2022'}} </div>
                             <div class="thongtin thongtin4"> 5.00.1.24 </div>
                             <div class="thongtin thongtin5"> {{session('admin')->tentaikhoan}}</div>
                         </div>
@@ -720,7 +720,7 @@
                     <div class="center2 thongtin_infoview">
                         <center>
                         </center>
-                        <div class="center2"><a href="{{ '/ThiThu/LamBai' }}">
+                        <div class="center2"><a href="{{$url}}">
                                 <img src="{{url('images/btn_confirm_on.jpg')}}" onmouseover="this.src='{{url('images/btn_confirm_on.jpg')}}';"
                                     onmouseout="this.src='{{url('images/btn_confirm_on.jpg')}}';" style="cursor:pointer;"></a>
                         </div>

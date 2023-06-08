@@ -31,6 +31,7 @@
                 success: function(data) {
                     console.log(data);
                     $('#xoadangcaudoc').remove();
+                    $('#xoadangcaunghe').remove();
                     $('#xoaxemtranh').remove();
                     $('#caudoc').append(data);
                 },
@@ -74,6 +75,10 @@
                     $('#B').remove();
                     $('#C').remove();
                     $('#D').remove();
+                    $('#Atiengviet').remove();
+                    $('#Btiengviet').remove();
+                    $('#Ctiengviet').remove();
+                    $('#Dtiengviet').remove();
                     $('#dapan').append(data);
                 },
                 error: function(message) {
@@ -112,11 +117,13 @@
             }
             $('#cauhoithoai').append(html);
         });
-        $('#madanhmuc').on('change',function(){
-            window.location.href = "{{ $inputs['url'] }}" + '?madm=' +$('#madanhmuc').val()+'&dangcau='+$('#dangcauhoi').val();
+        $('#madanhmuc').on('change', function() {
+            window.location.href = "{{ $inputs['url'] }}" + '?madm=' + $('#madanhmuc').val() + '&dangcau=' + $(
+                '#dangcauhoi').val();
         });
-        $('#dangcauhoi').on('change',function(){
-            window.location.href = "{{ $inputs['url'] }}" + '?madm=' +$('#madanhmuc').val()+'&dangcau='+$('#dangcauhoi').val();
+        $('#dangcauhoi').on('change', function() {
+            window.location.href = "{{ $inputs['url'] }}" + '?madm=' + $('#madanhmuc').val() + '&dangcau=' + $(
+                '#dangcauhoi').val();
         });
     </script>
 @stop
@@ -145,17 +152,19 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Loại câu hỏi</label>
-                            <select name="madm" id="madanhmuc"  class="form-control select2basic">
-                                @foreach ($loaicauhoi as $key=>$ct )
-                                    <option value="{{$ct->madm}}" {{$ct->madm == $inputs['madm']?'selected':''}}>{{$ct->tendm}}</option>
+                            <select name="madm" id="madanhmuc" class="form-control select2basic">
+                                @foreach ($loaicauhoi as $key => $ct)
+                                    <option value="{{ $ct->madm }}"
+                                        {{ $ct->madm == $inputs['madm'] ? 'selected' : '' }}>
+                                        {{ $ct->tendm }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label style="font-weight: bold">Dạng câu</label>
-                            <select name="dangcau" id="dangcauhoi"  class="form-control select2basic">
-                                <option value="1" {{$inputs['dangcau'] ==1?'selected':''}}>Câu đơn</option>
-                                <option value="2" {{$inputs['dangcau'] ==2?'selected':''}}>Câu ghép</option>
+                            <select name="dangcau" id="dangcauhoi" class="form-control select2basic">
+                                <option value="1" {{ $inputs['dangcau'] == 1 ? 'selected' : '' }}>Câu đơn</option>
+                                <option value="2" {{ $inputs['dangcau'] == 2 ? 'selected' : '' }}>Câu ghép</option>
                             </select>
                         </div>
                     </div>
@@ -165,10 +174,10 @@
                                 <th>STT</th>
                                 {{-- <th>Mã câu hỏi</th> --}}
                                 {{-- <th>Loại câu hỏi</th> --}}
-                                <th>Câu hỏi</th>
-                                <th>Nội dung</th>
-                                <th>Audio</th>
-                                <th>Ảnh</th>
+                                <th width="20%">Câu hỏi</th>
+                                <th width="35%">Nội dung</th>
+                                <th width="15%">Audio</th>
+                                <th width="15%">Ảnh</th>
                                 {{-- <th>1</th>
                                 <th>2</th>
                                 <th>3</th>
@@ -185,8 +194,18 @@
                                     {{-- <td name='loaicauhoi'>{{ $ch->loaicauhoi }}</td> --}}
                                     <td name='cauhoi'>{{ $ch->cauhoi }}</td>
                                     <td name='noidung'>{{ $ch->noidung }}</td>
-                                    <td name='audio'>{{ $ch->audio }}</td>
-                                    <td name='anh'>{{ $ch->anh }}</td>
+                                    <td name='audio'>
+                                        @if (isset($ch->audio))
+                                            <audio title="Nghe K-4" controls="controls" style="width:103px">
+                                                <source src="{{ asset($ch->audio) }}">
+                                            </audio>
+                                        @endif
+                                    </td>
+                                    <td name='anh'>
+                                        @if (isset($ch->anh))
+                                            <img src="{{ url($ch->anh) }}" style="width:30%">
+                                        @endif
+                                    </td>
                                     {{-- <td name='A'>{{ $ch->A }}</td>
                                     <td name='B'>{{ $ch->B }}</td>
                                     <td name='C'>{{ $ch->C }}</td>
@@ -194,11 +213,12 @@
                                     <td name='dapan'>{{ $ch->dapan }}</td> --}}
                                     <td class="text-center">
 
-                                        @if ($ch->dangcau == 2 && $luottrung[$ch->macaughep]<2)
-                                        <button title="Thêm câu" onclick="themcau(this,'{{ $ch->macauhoi }}')"
-                                            data-target="#themmoi" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
-                                            <i class="fa fa-plus text-success "></i>
-                                        </button>
+                                        @if ($ch->dangcau == 2 && $luottrung[$ch->macaughep] < 2)
+                                            <button title="Thêm câu" onclick="themcau(this,'{{ $ch->macauhoi }}')"
+                                                data-target="#themmoi" data-toggle="modal"
+                                                class="btn btn-sm btn-clean btn-icon">
+                                                <i class="fa fa-plus text-success "></i>
+                                            </button>
                                         @endif
                                         <button title="Sửa thông tin" onclick="edit(this,'{{ $ch->macauhoi }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
@@ -285,6 +305,14 @@
                                 <input type="file" name="audio" class="form-control">
                             </div>
                             <div id='caudoc' style="width:100%">
+                                <div class="col-md-12 mt-2" id="xoadangcaunghe">
+                                    <label class="control-label">Dạng câu nghe<span class="require">*</span></label>
+                                    <select name="loaicaunghe" class="form-control" id="loaicaunghe">
+                                        @foreach ($caunghe as $ct)
+                                            <option value="{{ $ct->madmct }}"> {{ $ct->tendmct }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div id='xemtranh' style="width:100%">
 
@@ -309,7 +337,7 @@
                                 </select>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
@@ -317,7 +345,7 @@
                             onclick="clickNhanvaTKT()">Đồng
                             ý</button>
                     </div>
-                   
+
                 </div>
             </div>
         </form>
@@ -392,6 +420,10 @@
             $('#B').remove();
             $('#C').remove();
             $('#D').remove();
+            $('#Atiengviet').remove();
+            $('#Btiengviet').remove();
+            $('#Ctiengviet').remove();
+            $('#Dtiengviet').remove();
             $('#noidung').remove();
             var html = '<div class="col-md-3 mt-2" id="A">';
             html += '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
@@ -409,6 +441,23 @@
             html += '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
             html += '<input type="text" name="D" class="form-control ml-3">';
             html += '</div>';
+
+            // html += '<div class="col-md-3 mt-2" id="Atiengviet">';
+            // html += '<label class="control-label ml-3">Đáp án 1 tiếng việt<span class="require">*</span></label>';
+            // html += '<input type="text" name="Atiengviet" class="form-control ml-3">';
+            // html += '</div>';
+            // html += '<div class="col-md-3 mt-2" id="Btiengviet">';
+            // html += '<label class="control-label ml-3">Đáp án 2 tiếng việt<span class="require">*</span></label>';
+            // html += '<input type="text" name="Btiengviet" class="form-control ml-3">';
+            // html += '</div>';
+            // html += '<div class="col-md-3 mt-2" id="Ctiengviet">';
+            // html += '<label class="control-label ml-3">Đáp án 3 tiếng việt<span class="require">*</span></label>';
+            // html += '<input type="text" name="Ctiengviet" class="form-control ml-3">';
+            // html += '</div>';
+            // html += '<div class="col-md-3 mt-2" id="Dtiengviet">';
+            // html += '<label class="control-label ml-3">Đáp án 4 tiếng việt<span class="require">*</span></label>';
+            // html += '<input type="text" name="Dtiengviet" class="form-control ml-3">';
+            // html += '</div>';
             $('#dapan').append(html);
 
             var html1 = '<div class="col-md-12 mt-2" id="noidung">';
@@ -418,16 +467,16 @@
             $('#cauhoithoai').append(html1);
         }
 
-        function themcau(e,id){
+        function themcau(e, id) {
             add();
-            var html=' <input type="hidden" name="macaughep" value="'+id+'">';
+            var html = ' <input type="hidden" name="macaughep" value="' + id + '">';
             var tr = $(e).closest('tr');
             $('#xoadangcaudoc').remove();
-                    $('#xoaxemtranh').remove();
+            $('#xoaxemtranh').remove();
             $('#noidungcau').text($(tr).find('td[name=noidung]').text());
             $('#dangcau option[value=2 ]').attr('selected', 'selected');
             $('#loaicauhoi option[value=1683685323 ]').attr('selected', 'selected');
-               
+
             $('#frm_cauhoi').append(html);
         }
 

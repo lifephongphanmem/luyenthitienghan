@@ -23,3 +23,4 @@ include('quanly.php');
 include('baigiang.php');
 include('dethi.php');
 include('danhmuc.php');
+include('export.php');

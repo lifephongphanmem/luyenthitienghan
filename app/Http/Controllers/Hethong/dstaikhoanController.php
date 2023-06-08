@@ -70,7 +70,7 @@ class dstaikhoanController extends Controller
                         ->with('furl','/TaiKhoan/ThongTin');
         }
         $inputs['password'] = Hash::make($inputs['password']);
-        // $inputs['mataikhoan']=date('YmdHis');
+        $inputs['mataikhoan']=date('YmdHis');
         // $inputs['email']='a@gmail.com';
         $inputs['status'] = 1;
         switch ($inputs['phanloai']) {

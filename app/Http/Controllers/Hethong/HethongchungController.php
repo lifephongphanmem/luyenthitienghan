@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Hethong;
 use App\Http\Controllers\Controller;
 use App\Models\Hethong\Chucnang;
 use App\Models\Hethong\dstaikhoan_phanquyen;
+use App\Models\quanly\giaovien;
+use App\Models\quanly\hocvien;
+use App\Models\thithu\phongthi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,12 +34,6 @@ class HethongchungController extends Controller
 				'cccd'=>$inputs['cccd'],
 				'password'=>$inputs['password']
 			];
-
-		// if(isset($user_gmail)){
-		// 	$user=$user_gmail;
-		// }else{
-		// 	$user = User::where('username', $inputs['username'])->first();
-		// }
 
 		//tài khoản không tồn tại
 		if (!isset($user)) {
@@ -84,12 +81,20 @@ class HethongchungController extends Controller
 		//kiểm tra tài khoản
 		//1. level = SSA ->
 		if ($user->sadmin != "SSA") {
+			if($user->hocvien == 1){
+				$hocvien=hocvien::where('cccd',$user->cccd)->first();
+				$user->mahocvien=$hocvien->mahocvien;
+				$user->malop=$hocvien->malop;
+
+			}
+			if($user->giaovien == 1){
+				$giaovien=giaovien::where('cccd',$user->cccd)->first();
+				$user->magiaovien=$giaovien->magiaovien;
+			}
 				$user->phanquyen = json_decode($user->phanquyen, true);
 				// dd($user);
 		} else {
-			//$ttuser->chucnang = array('SSA');
 			$user->capdo = "SSA";
-			//$ttuser->phanquyen = [];
 		}
 
 		Session::put('admin', $user);

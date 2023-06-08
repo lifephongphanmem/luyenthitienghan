@@ -27,6 +27,13 @@ class cauhoi extends Model
         'macaughep',
         'hoithoai',
         'nguoi1',
-        'nguoi2'
+        'nguoi2',
+        'cauhoitiengviet',
+        'noidungtiengviet',
+        'Atiengviet',
+        'Btiengviet',
+        'Ctiengviet',
+        'Dtiengviet',
+        'loaicaunghe'
     ];
 }

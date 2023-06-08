@@ -32,6 +32,7 @@ Route::prefix('BaiHocChinh')->group(function(){
     Route::post('/store',[baihocchinhController::class,'store']);
     Route::post('/update/{id}',[baihocchinhController::class,'update']);
     Route::post('/delete/{id}',[baihocchinhController::class,'destroy']);
+    Route::post('/import',[baihocchinhController::class,'import']);
 });
 
 //Từ vựng
@@ -40,6 +41,7 @@ Route::prefix('/TuVung')->group(function(){
     Route::post('/store',[tuvungController::class,'store']);
     Route::post('/update/{id}',[tuvungController::class,'update']);
     Route::post('/delete/{id}',[tuvungController::class,'destroy']);
+    Route::post('/import',[tuvungController::class,'import']);
 });
 
 //Trắc nghiệm
@@ -56,6 +58,7 @@ Route::prefix('HinhAnh')->group(function(){
     Route::post('/store',[hinhanhController::class,'store']);
     Route::post('/update/{mahinhanh}',[hinhanhController::class,'update']);
     Route::post('/delete/{mahinhanh}',[hinhanhController::class,'destroy']);
+    Route::post('/import',[hinhanhController::class,'import']);
 });
 
 //Bài tập
@@ -64,4 +67,5 @@ Route::prefix('BaiTap')->group(function(){
     Route::post('/store',[baitapController::class,'store']);
     Route::post('/update/{mabaitap}',[baitapController::class,'update']);
     Route::post('/delete/{mabiatap}',[baitapController::class,'destroy']);
+    Route::post('/import',[baitapController::class,'import']);
 });

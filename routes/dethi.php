@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\dethi\cauhoiController;
 use App\Http\Controllers\dethi\dethiController;
+use App\Http\Controllers\thithu\phongthiController;
 use App\Http\Controllers\thithu\thithuController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,8 +30,24 @@ Route::prefix('CauHoi')->group(function(){
 });
 
 Route::prefix('ThiThu')->group(function(){
+    Route::get('/ThongTin',[thithuController::class,'quanlythithu']);
     Route::get('/EPS-TOPIK',[thithuController::class,'thithu']);
     Route::get('/LamBai',[thithuController::class,'lambai']);
     Route::post('/NopBai',[thithuController::class,'nopbai']);
     Route::post('/checklog',[thithuController::class,'checklog']);
 });
+
+Route::prefix('PhongThi')->group(function(){
+    Route::get('/ThongTin',[phongthiController::class,'index']);
+    Route::get('/ChiTiet/{maphongthi}',[phongthiController::class,'show']);
+    Route::post('/store',[phongthiController::class,'store']);
+    Route::post('/update/{maphongthi}',[phongthiController::class,'update']);
+    Route::post('/delete/{maphongthi}',[phongthiController::class,'destroy']);
+    Route::post('/ThemLop',[phongthiController::class,'themlop']);
+    Route::post('/XoaLop/{malop}',[phongthiController::class,'xoalop']);
+    Route::post('/DongPhongThi',[phongthiController::class,'dongphongthi']);
+});
+Route::get('/LuyenThi_EPS',[thithuController::class,'luyenthi']);
+
+Route::get('/960CauDocHieu',[cauhoiController::class,'caudochieu']);
+Route::get('/960CauNgheHieu',[cauhoiController::class,'caunghehieu']);

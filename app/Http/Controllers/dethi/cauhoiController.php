@@ -29,19 +29,25 @@ class cauhoiController extends Controller
         if (!chkPhanQuyen('cauhoi', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'cauhoi');
         }
-        $inputs=$request->all();
-        $nguoncauhoi=dmnguoncauhoi::all();
-        $loaicauhoi=loaicauhoi::all();
-        $madm=loaicauhoi::select('madm')->first()->madm;
-        $inputs['madm']=isset($inputs['madm'])?$inputs['madm']:$madm;
-        $inputs['dangcau']=isset($inputs['dangcau'])?$inputs['dangcau']:1;
-        $model = cauhoi::where('loaicauhoi',$inputs['madm'])->where('dangcau',$inputs['dangcau'])->get();
-        $a_ghep=array_column($model->toarray(),'macaughep');
-        $luottrung=array_count_values($a_ghep);
-        $inputs['url']='/CauHoi/ThongTin';
+        $inputs = $request->all();
+        $nguoncauhoi = dmnguoncauhoi::all();
+        $loaicauhoi = loaicauhoi::all();
+        $madm = loaicauhoi::select('madm')->first()->madm;
+        $inputs['madm'] = isset($inputs['madm']) ? $inputs['madm'] : $madm;
+        $inputs['dangcau'] = isset($inputs['dangcau']) ? $inputs['dangcau'] : 1;
+        $model = cauhoi::where('loaicauhoi', $inputs['madm'])->where('dangcau', $inputs['dangcau'])->orderBy('id', 'desc')->get();
+        $a_ghep = array_column($model->toarray(), 'macaughep');
+        $luottrung = [];
+        if ($inputs['dangcau'] == 2) {
+            $luottrung = array_count_values($a_ghep);
+        }
+        $caunghe=loaicauhoict::where('madm',1683685241)->get();
+
+        $inputs['url'] = '/CauHoi/ThongTin';
         return view('dethi.cauhoi.index')
             ->with('model', $model)
             ->with('inputs', $inputs)
+            ->with('caunghe', $caunghe)
             ->with('luottrung', $luottrung)
             ->with('nguoncauhoi', $nguoncauhoi)
             ->with('loaicauhoi', $loaicauhoi)
@@ -59,13 +65,12 @@ class cauhoiController extends Controller
         }
 
         $inputs = $request->all();
-        $inputs['macauhoi']=getdate()[0];
+        $inputs['macauhoi'] = getdate()[0];
 
-        if($inputs['dangcau'] == 2){
-            if(!isset($inputs['macaughep'])){
-                $inputs['macaughep']= $inputs['macauhoi'];
+        if ($inputs['dangcau'] == 2) {
+            if (!isset($inputs['macaughep'])) {
+                $inputs['macaughep'] = $inputs['macauhoi'];
             }
-
         }
 
         //file hình ảnh
@@ -86,57 +91,27 @@ class cauhoiController extends Controller
 
         //Đáp án
 
-        if($inputs['loaidapan'] == 2){
-            $arr=['A','B','C','D'];
-            foreach($arr as $ct){
-            if (isset($inputs[$ct])) {
-                $file = $inputs[$ct];
-                $name = time() . $file->getClientOriginalName();
-                $file->move('uploads/cauhoi/dapan/anh/', $name);
-                $inputs[$ct] = 'uploads/cauhoi/dapan/anh/' . $name;
+        if ($inputs['loaidapan'] == 2) {
+            $arr = ['A', 'B', 'C', 'D'];
+            foreach ($arr as $ct) {
+                if (isset($inputs[$ct])) {
+                    $file = $inputs[$ct];
+                    $name = time() . $file->getClientOriginalName();
+                    $file->move('uploads/cauhoi/dapan/anh/', $name);
+                    $inputs[$ct] = 'uploads/cauhoi/dapan/anh/' . $name;
+                }
             }
-        }
         }
         cauhoi::create($inputs);
 
-        return redirect('/CauHoi/ThongTin?madm='.$inputs['madm'].'&dangcau='.$inputs['dangcau'])
-                    ->with('success','Thêm câu hỏi thành công');
+        return redirect('/CauHoi/ThongTin?madm=' . $inputs['loaicauhoi'] . '&dangcau=' . $inputs['dangcau'])
+            ->with('success', 'Thêm câu hỏi thành công');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+
+    public function loaidapan(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function loaidapan(Request $request){
-        $inputs=$request->all();
+        $inputs = $request->all();
         if ($inputs['loaidapan'] == 1) {
             $html = '<div class="col-md-3 mt-2" id="A">';
             $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
@@ -154,6 +129,22 @@ class cauhoiController extends Controller
             $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
             $html .= '<input type="text" name="D" class="form-control ml-3">';
             $html .= '</div>';
+            // $html .= '<div class="col-md-3 mt-2" id="Atiengviet">';
+            // $html .= '<label class="control-label ml-3">Đáp án 1 tiếng việt<span class="require">*</span></label>';
+            // $html .= '<input type="text" name="Atiengviet" class="form-control ml-3">';
+            // $html .= '</div>';
+            // $html .= '<div class="col-md-3 mt-2" id="Btiengviet">';
+            // $html .= '<label class="control-label ml-3">Đáp án 2 tiếng việt<span class="require">*</span></label>';
+            // $html .= '<input type="text" name="Btiengviet" class="form-control ml-3">';
+            // $html .= '</div>';
+            // $html .= '<div class="col-md-3 mt-2" id="Ctiengviet">';
+            // $html .= '<label class="control-label ml-3">Đáp án 3 tiếng việt<span class="require">*</span></label>';
+            // $html .= '<input type="text" name="Ctiengviet" class="form-control ml-3">';
+            // $html .= '</div>';
+            // $html .= '<div class="col-md-3 mt-2" id="Dtiengviet">';
+            // $html .= '<label class="control-label ml-3">Đáp án 4 tiếng việt<span class="require">*</span></label>';
+            // $html .= '<input type="text" name="Dtiengviet" class="form-control ml-3">';
+            // $html .= '</div>';
         } else {
 
             $html = '<div class="col-md-3 mt-2" id="A">';
@@ -177,20 +168,90 @@ class cauhoiController extends Controller
         return response()->json($html);
     }
 
-    public function loaicauhoi(Request $request){
-        $inputs=$request->all();
-        $caudoc=loaicauhoict::where('madm',1683685323)->orderBy('id','desc')->get();
+    public function loaicauhoi(Request $request)
+    {
+        $inputs = $request->all();
+        $caudoc = loaicauhoict::where('madm', 1683685323)->orderBy('id', 'desc')->get();
+        $caunghe=loaicauhoict::where('madm',1683685241)->get();
         if ($inputs['loaicauhoi'] == 1683685323) {
             $html = '<div class="col-md-12 mt-2" id="xoadangcaudoc">';
             $html .= '<label class="control-label">Dạng câu đọc<span class="require">*</span></label>';
             $html .= '<select name="dangcaudochieu" class="form-control" id="dangcaudoc" onchange="xemtranh(this)">';
-            foreach($caudoc as $ct){
-                $html .= '<option value="'.$ct->madmct.'">'.$ct->tendmct.'</option>';
+            foreach ($caudoc as $ct) {
+                $html .= '<option value="' . $ct->madmct . '">' . $ct->tendmct . '</option>';
             }
             $html .= '</select>';
-            $html .= '</div>';           
+            $html .= '</div>';
+        }else{
+            $html = '<div class="col-md-12 mt-2" id="xoadangcaunghe">';
+            $html .= '<label class="control-label">Dạng câu nghe<span class="require">*</span></label>';
+            $html .= '<select name="loaicaunghe" class="form-control" id="loaicaunghe">';
+            foreach ($caunghe as $ct) {
+                $html .= '<option value="' . $ct->madmct . '">' . $ct->tendmct . '</option>';
+            }
+            $html .= '</select>';
+            $html .= '</div>';
         }
 
         return response()->json($html);
+    }
+    public function index960caudoc()
+    {
+        return view('960cau.dochieu.index')
+            ->with('pageTitle', '960 câu đọc hiểu');
+    }
+    public function caudochieu(Request $request)
+    {
+        $inputs = $request->all();
+        // dd($inputs);
+        if (!isset($inputs['socau'])) {
+            return view('960cau.dochieu.index')
+                ->with('pageTitle', '960 câu đọc hiểu');
+        }
+        $m_model = cauhoi::where('loaicauhoi', 1683685323)->where('nguoncauhoi', 1684121327);
+        if($inputs['socau']>23){
+            $m_caughep=$m_model->where('dangcau',2)->get();
+            $a_caughep=array_column($m_caughep->unique('macaughep')->toarray(),'macaughep');
+            $model=[];
+            foreach($a_caughep as $ct){
+                $m_ghep=$m_caughep->where('macaughep',$ct);
+                $data=[];
+                foreach($m_ghep as $k=>$val){
+                    $data['noidung']=$val->noidung;
+                    $data['macauhoi']=$val->macauhoi;
+                    $data['anh']=$val->anh;
+                    $cauhoi='cauhoi'.++$k;
+                    $A='A'.$k;
+                    $B='B'.$k;
+                    $C='C'.$k;
+                    $D='D'.$k;
+                    $dapan='dapan'.$k;
+                    $data[$cauhoi]=$val->cauhoi;
+                    $data[$A]=$val->A;
+                    $data[$B]=$val->B;
+                    $data[$C]=$val->C;
+                    $data[$D]=$val->D;
+                    $data[$dapan]=$val->dapan;
+                }
+                $model[]=$data;
+            }
+            $dangcau=2;
+        }else{
+            $model=$m_model->where('dangcau',1)->get();
+            $dangcau=1;
+        }
+        if ($inputs['socau']==1){
+            $title='Câu 01 đến câu 40';
+            $cau=1;
+        }else{
+            $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
+            $cau=($inputs['socau']-1)*40+1;
+        };      
+        return view('960cau.dochieu.960caudochieu')
+            ->with('model', $model)
+            ->with('title', $title)
+            ->with('cau', $cau)
+            ->with('dangcau', $dangcau)
+            ->with('pageTitle',$title);
     }
 }

@@ -33,8 +33,8 @@
                         <button onclick="add()" data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Thêm mới</button>
                         <button class="btn btn-xs  btn-success mr-2" title="Nhận dữ liệu từ file Excel"
-                            data-target="#modal-nhanexcel" data-toggle="modal">Nhận excel
-                            <i class="fas fa-file-import"></i>
+                            data-target="#modal-nhanexcel" data-toggle="modal">
+                            <i class="fas fa-file-import"></i>Nhận Excel
                         </button>
                     </div>
                 </div>
@@ -179,6 +179,54 @@
             </div>
         </form>
     </div>
+        <!--Nhận excel -->
+        <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+            <form action="{{ '/HinhAnh/import' }}" method="POST" id="frm_hinhanh_excel" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Thông tin hình ảnh
+                            </h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-md-11">
+                                    <label class="control-label">Tên bài học<span class="require">*</span></label>
+                                    <select name="tenbaihoc" id="tenbaihoc" class="form-control">
+                                        @foreach ($m_baihoc as $key=>$ct )
+                                            <option value="{{$ct->mabaihoc}}">{{$ct->tenbaihoc}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-1" style="padding-left: 0px;">
+                                    <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                                    <button type="button" class="btn btn-default" data-target="#modal-tenbaihoc" data-toggle="modal">
+                                        <i class="fa fa-plus"></i></button>
+                                </div>
+    
+                                {{-- <div class="col-md-12">
+                                    <label class="control-label">Hình ảnh<span class="require">*</span></label>
+                                    <input type="file" name="hinhanh" class="form-control">
+                                </div> --}}
+                                <div class="col-md-4 mt-2">
+                                    <label class="control-label">File Excel</label>
+                                    <input type="file" name="file" class="form-control">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickImport()">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
 
     <div id="modal-tenbaihoc" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <div class="modal-dialog">
@@ -311,6 +359,9 @@
 
         function clickNhanvaTKT() {
             $('#frm_tracnghiem').submit();
+        }
+        function clickImport() {
+            $('#frm_hinhanh_excel').submit();
         }
 
         function clickedit() {

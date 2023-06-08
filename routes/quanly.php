@@ -3,7 +3,6 @@
 use App\Http\Controllers\quanly\giaovienController;
 use App\Http\Controllers\quanly\hocvienController;
 use App\Http\Controllers\quanly\lophocController;
-use App\Models\quanly\hocvien;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,6 +15,7 @@ Route::prefix('LopHoc')->group(function(){
     Route::get('/chitiet',[lophocController::class,'show']);
     Route::post('/themhocvien',[lophocController::class,'themhocvien']);
     Route::post('/chuyenlop/{id}',[lophocController::class,'chuyenlop']);
+    Route::post('/KetQuaThiThu',[lophocController::class,'ketquathi']);
 });
 
 //giáo viên

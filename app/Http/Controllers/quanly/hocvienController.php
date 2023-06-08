@@ -70,7 +70,7 @@ class hocvienController extends Controller
             'password'=>Hash::make('123456abc'),
             'hocvien'=>1,
             'sdt'=>$inputs['sdt'],
-            // 'mataikhoan'=>date('YmdHis'),
+            'mataikhoan'=>date('YmdHis'),
             'manhomchucnang'=>1680748012
         ];
         User::create($data);

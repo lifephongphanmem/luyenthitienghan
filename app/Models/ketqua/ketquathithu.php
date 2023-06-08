@@ -12,8 +12,13 @@ class ketquathithu extends Model
     protected $fillable=[
         'maketqua',
         'mahocvien',
-        'solanthi',
-        'diemcaonhat',
-        'thoigianthigannhat'
+        'madethi',
+        'diemthi',
+        'dapanchon',
+        'thoigianlambai',
+        'malop',
+        'maphongthi',
+        'ngaythi',
+        'giothi'
     ];
 }
