@@ -41,12 +41,13 @@ class cauhoiController extends Controller
         if ($inputs['dangcau'] == 2) {
             $luottrung = array_count_values($a_ghep);
         }
-
+        $caunghe=loaicauhoict::where('madm',1683685241)->get();
 
         $inputs['url'] = '/CauHoi/ThongTin';
         return view('dethi.cauhoi.index')
             ->with('model', $model)
             ->with('inputs', $inputs)
+            ->with('caunghe', $caunghe)
             ->with('luottrung', $luottrung)
             ->with('nguoncauhoi', $nguoncauhoi)
             ->with('loaicauhoi', $loaicauhoi)
@@ -128,22 +129,22 @@ class cauhoiController extends Controller
             $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
             $html .= '<input type="text" name="D" class="form-control ml-3">';
             $html .= '</div>';
-            $html .= '<div class="col-md-3 mt-2" id="Atiengviet">';
-            $html .= '<label class="control-label ml-3">Đáp án 1 tiếng việt<span class="require">*</span></label>';
-            $html .= '<input type="text" name="Atiengviet" class="form-control ml-3">';
-            $html .= '</div>';
-            $html .= '<div class="col-md-3 mt-2" id="Btiengviet">';
-            $html .= '<label class="control-label ml-3">Đáp án 2 tiếng việt<span class="require">*</span></label>';
-            $html .= '<input type="text" name="Btiengviet" class="form-control ml-3">';
-            $html .= '</div>';
-            $html .= '<div class="col-md-3 mt-2" id="Ctiengviet">';
-            $html .= '<label class="control-label ml-3">Đáp án 3 tiếng việt<span class="require">*</span></label>';
-            $html .= '<input type="text" name="Ctiengviet" class="form-control ml-3">';
-            $html .= '</div>';
-            $html .= '<div class="col-md-3 mt-2" id="Dtiengviet">';
-            $html .= '<label class="control-label ml-3">Đáp án 4 tiếng việt<span class="require">*</span></label>';
-            $html .= '<input type="text" name="Dtiengviet" class="form-control ml-3">';
-            $html .= '</div>';
+            // $html .= '<div class="col-md-3 mt-2" id="Atiengviet">';
+            // $html .= '<label class="control-label ml-3">Đáp án 1 tiếng việt<span class="require">*</span></label>';
+            // $html .= '<input type="text" name="Atiengviet" class="form-control ml-3">';
+            // $html .= '</div>';
+            // $html .= '<div class="col-md-3 mt-2" id="Btiengviet">';
+            // $html .= '<label class="control-label ml-3">Đáp án 2 tiếng việt<span class="require">*</span></label>';
+            // $html .= '<input type="text" name="Btiengviet" class="form-control ml-3">';
+            // $html .= '</div>';
+            // $html .= '<div class="col-md-3 mt-2" id="Ctiengviet">';
+            // $html .= '<label class="control-label ml-3">Đáp án 3 tiếng việt<span class="require">*</span></label>';
+            // $html .= '<input type="text" name="Ctiengviet" class="form-control ml-3">';
+            // $html .= '</div>';
+            // $html .= '<div class="col-md-3 mt-2" id="Dtiengviet">';
+            // $html .= '<label class="control-label ml-3">Đáp án 4 tiếng việt<span class="require">*</span></label>';
+            // $html .= '<input type="text" name="Dtiengviet" class="form-control ml-3">';
+            // $html .= '</div>';
         } else {
 
             $html = '<div class="col-md-3 mt-2" id="A">';
@@ -171,11 +172,21 @@ class cauhoiController extends Controller
     {
         $inputs = $request->all();
         $caudoc = loaicauhoict::where('madm', 1683685323)->orderBy('id', 'desc')->get();
+        $caunghe=loaicauhoict::where('madm',1683685241)->get();
         if ($inputs['loaicauhoi'] == 1683685323) {
             $html = '<div class="col-md-12 mt-2" id="xoadangcaudoc">';
             $html .= '<label class="control-label">Dạng câu đọc<span class="require">*</span></label>';
             $html .= '<select name="dangcaudochieu" class="form-control" id="dangcaudoc" onchange="xemtranh(this)">';
             foreach ($caudoc as $ct) {
+                $html .= '<option value="' . $ct->madmct . '">' . $ct->tendmct . '</option>';
+            }
+            $html .= '</select>';
+            $html .= '</div>';
+        }else{
+            $html = '<div class="col-md-12 mt-2" id="xoadangcaunghe">';
+            $html .= '<label class="control-label">Dạng câu nghe<span class="require">*</span></label>';
+            $html .= '<select name="loaicaunghe" class="form-control" id="loaicaunghe">';
+            foreach ($caunghe as $ct) {
                 $html .= '<option value="' . $ct->madmct . '">' . $ct->tendmct . '</option>';
             }
             $html .= '</select>';
@@ -197,18 +208,50 @@ class cauhoiController extends Controller
             return view('960cau.dochieu.index')
                 ->with('pageTitle', '960 câu đọc hiểu');
         }
-        $model = cauhoi::where('loaicauhoi', 1683685323)->where('nguoncauhoi', 1684121327)->get();
+        $m_model = cauhoi::where('loaicauhoi', 1683685323)->where('nguoncauhoi', 1684121327);
+        if($inputs['socau']>23){
+            $m_caughep=$m_model->where('dangcau',2)->get();
+            $a_caughep=array_column($m_caughep->unique('macaughep')->toarray(),'macaughep');
+            $model=[];
+            foreach($a_caughep as $ct){
+                $m_ghep=$m_caughep->where('macaughep',$ct);
+                $data=[];
+                foreach($m_ghep as $k=>$val){
+                    $data['noidung']=$val->noidung;
+                    $data['macauhoi']=$val->macauhoi;
+                    $data['anh']=$val->anh;
+                    $cauhoi='cauhoi'.++$k;
+                    $A='A'.$k;
+                    $B='B'.$k;
+                    $C='C'.$k;
+                    $D='D'.$k;
+                    $dapan='dapan'.$k;
+                    $data[$cauhoi]=$val->cauhoi;
+                    $data[$A]=$val->A;
+                    $data[$B]=$val->B;
+                    $data[$C]=$val->C;
+                    $data[$D]=$val->D;
+                    $data[$dapan]=$val->dapan;
+                }
+                $model[]=$data;
+            }
+            $dangcau=2;
+        }else{
+            $model=$m_model->where('dangcau',1)->get();
+            $dangcau=1;
+        }
         if ($inputs['socau']==1){
             $title='Câu 01 đến câu 40';
+            $cau=1;
         }else{
             $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
-        }
-
-        
-        // dd($model);
+            $cau=($inputs['socau']-1)*40+1;
+        };      
         return view('960cau.dochieu.960caudochieu')
             ->with('model', $model)
             ->with('title', $title)
-            ->with('pageTitle', '960 câu đọc hiểu');
+            ->with('cau', $cau)
+            ->with('dangcau', $dangcau)
+            ->with('pageTitle',$title);
     }
 }

@@ -275,3 +275,22 @@ h1 {
     background: url(../images/wrongx.png) no-repeat 20px 0;
     background-size: 10px;
 }
+.entry-tracnghiem-test {
+    border: 2px solid #0000003b;
+    width: 100%;
+    box-shadow: 0px 0px 8px 4px rgb(74 74 74 / 33%);
+    float: left;
+    margin-bottom: 20px;
+    padding: 10px;
+    overflow: auto;
+    border-radius: 3px;
+    transition: all 0.3s;
+    background-color: #fffcfc;
+}
+.question .qselect.cot2 {
+    float: left;
+    width: 50%;
+    min-height: 50px;
+    display: flex;
+    align-items: baseline;
+}

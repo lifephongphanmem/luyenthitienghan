@@ -7,6 +7,8 @@ use App\Models\baigiang\baihoc;
 use App\Models\baigiang\tuvung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Imports\ColectionImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class tuvungController extends Controller
 {
@@ -50,7 +52,7 @@ class tuvungController extends Controller
      */
     public function store(Request $request)
     {
-        if (!chkPhanQuyen('tuvung', 'danhsach')) {
+        if (!chkPhanQuyen('tuvung', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'tuvung');
         }
         $inputs = $request->all();
@@ -76,12 +78,12 @@ class tuvungController extends Controller
         //     $inputs['hinhanh'] = 'uploads/anh/tuvung/' . $name;
         // }
         //file audio
-        if (isset($inputs['audio'])) {
-            $file = $inputs['audio'];
-            $name = time() . $file->getClientOriginalName();
-            $file->move('uploads/audio/tuvung/', $name);
-            $inputs['audio'] = 'uploads/audio/tuvung/' . $name;
-        }
+        // if (isset($inputs['audio'])) {
+        //     $file = $inputs['audio'];
+        //     $name = time() . $file->getClientOriginalName();
+        //     $file->move('uploads/audio/tuvung/', $name);
+        //     $inputs['audio'] = 'uploads/audio/tuvung/' . $name;
+        // }
 
         tuvung::create($inputs);
 
@@ -119,5 +121,41 @@ class tuvungController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function import(Request $request){
+        if (!chkPhanQuyen('tuvung', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'tuvung');
+        }
+        $inputs = $request->all();
+        $dataObj = new ColectionImport();
+        $theArray = Excel::toArray($dataObj, $inputs['file']);
+        $arr = $theArray[0];
+        $arr_col = array('tenbaihoc','cumtu','tutienghan', 'tiengviet');
+        $nfield = sizeof($arr_col);
+        // dd($arr);
+        for ($i = 1; $i < count($arr); $i++) {
+            $data = array();
+            $data['matuvung'] = date('YmdHis') . $i;
+
+            for ($j = 0; $j < $nfield; $j++) {
+                $data[$arr_col[$j]] = $arr[$i][$j];
+            }
+            $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
+            if (!isset($baihoc)) {
+                $inputs['mabaihoc'] = getdate()[0];
+                $databaihoc = [
+                    'mabaihoc' => $inputs['mabaihoc'],
+                    'tenbaihoc' => $inputs['tenbaihoc'],
+                ];
+                baihoc::create($databaihoc);
+            } else {
+                $data['mabaihoc'] = $baihoc->mabaihoc;
+            }
+            unset($data['tenbaihoc']);
+            tuvung::create($data);
+        }
+
+        return redirect('/TuVung/ThongTin')
+                    ->with('success','Thêm thành công');
     }
 }

@@ -243,7 +243,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </div>
                     <!--end::Top-->
                     <!--begin::Bottom-->
-                    <div class="header-bottom">
+                    <div class="header-bottom" style="height:70%">
                         <!--begin::Container-->
                         <div class="container">
                             <!--begin::Header Menu Wrapper-->

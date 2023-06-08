@@ -61,8 +61,9 @@ class dethiController extends Controller
         $m_caunghe=$m_cauhoi->where('loaicauhoi',1683685241);
         $caudoc=$m_cauhoi->where('loaicauhoi',1683685323);
         $loaicaudoc=loaicauhoict::where('madm',1683685323)->get();
-
+        $loaicaunghe=loaicauhoict::where('madm',1683685241)->where('madmct','!=',1684898896)->get();
         $macaudoc=[];
+        $macaunghekhac=[];
         foreach($loaicaudoc as $ct){
             $m_caudoc=array_column($caudoc->where('dangcaudochieu',$ct->madmct)->toarray(),'macauhoi');
             if($m_caudoc != []){
@@ -74,6 +75,18 @@ class dethiController extends Controller
             }
         }
 
+        foreach($loaicaunghe as $ct){
+            $m_caunghe=array_column($m_caunghe->where('loaicaunghe',$ct->madmct)->toarray(),'macauhoi');
+            if($m_caudoc != []){
+                $index=array_rand($m_caunghe,$ct->soluongcau);
+                foreach($index as $val){
+                    $macaunghekhac[]=$m_caunghe[$val];
+                }
+               
+            }
+        }
+
+
         $caungheghep=array_column($m_caunghe->where('dangcau',2)->unique('macaughep')->toarray(),'macaughep');
         $macaungheghep=[];
         if($caungheghep != []){
@@ -81,15 +94,15 @@ class dethiController extends Controller
             $macaungheghep=array_column($m_caunghe->where('macaughep',$caungheghep[$index_caungheghep])->toarray(),'macauhoi');
         }
 
-        $caunghekhac=array_column($m_caunghe->where('dangcau',1)->toarray(),'macauhoi');
-        $macaunghekhac=[];
-        if($caunghekhac != []){
-            $index_caungheghepkhac=array_rand($caunghekhac,18);
-            // $index_caungheghepkhac=array_rand($caunghekhac,20);
-            foreach($index_caungheghepkhac as $ct){
-                $macaunghekhac[]=$caunghekhac[$ct];
-            }
-        }
+        // $caunghekhac=array_column($m_caunghe->where('dangcau',1)->toarray(),'macauhoi');
+        // $macaunghekhac=[];
+        // if($caunghekhac != []){
+        //     $index_caungheghepkhac=array_rand($caunghekhac,18);
+        //     // $index_caungheghepkhac=array_rand($caunghekhac,20);
+        //     foreach($index_caungheghepkhac as $ct){
+        //         $macaunghekhac[]=$caunghekhac[$ct];
+        //     }
+        // }
         $macaunghe=array_merge($macaunghekhac,$macaungheghep);
         $macauhoidethi=array_merge($macaudoc,$macaunghe);
 

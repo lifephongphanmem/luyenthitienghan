@@ -32,10 +32,10 @@
                     <div class="card-toolbar">
                         <button onclick="add()" data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Thêm mới</button>
-                        {{-- <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
+                        <button class="btn btn-xs btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
-                            <i class="fas fa-file-import"></i>
-                        </button> --}}
+                            <i class="fas fa-file-import"></i>Nhận Excel
+                        </button>
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
                                 <th>Cụm từ</th>
                                 <th>Tiếng Hàn</th>
                                 <th>Tiếng Việt</th>
-                                <th>Audio</th>
+                                {{-- <th>Audio</th> --}}
                                 {{-- <th>Hình Ảnh</th> --}}
                                 <th>Thao tác</th>
                             </tr>
@@ -59,7 +59,7 @@
                                     <td name='tengiaotrinh' class="text-left" style="width: 5%">{{ $tv->cumtuvung }}</td>
                                     <td name='soluongbai' style="width: 8%">{{ $tv->tutienghan }}</td>
                                     <td name='ghichu' style="width: 10%">{{ $tv->tiengviet }}</td>
-                                    <td name='tengiaotrinh' class="text-left" style="width: 20%">{{ $tv->audio }}</td>
+                                    {{-- <td name='tengiaotrinh' class="text-left" style="width: 20%">{{ $tv->audio }}</td> --}}
                                     <td class="text-center" style="width:8%">
                                         <button title="Sửa thông tin"
                                             onclick="edit(this,'{{ $tv->id }}')"
@@ -154,6 +154,53 @@
             </div>
         </form>
     </div>
+
+        <!--Thêm mới -->
+        <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+            <form action="{{ '/TuVung/import' }}" method="POST" id="frm_tuvung_import" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog modal-xs">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Thông tin từ vựng
+                            </h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-md-10">
+                                    <label class="control-label">Tên bài học<span class="require">*</span></label>
+                                    <select name="tenbaihoc" id="tenbaihoc" class="form-control">
+                                        @foreach ($m_baihoc as $key=>$ct )
+                                            <option value="{{$ct->mabaihoc}}">{{$ct->tenbaihoc}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-1" style="padding-left: 0px;">
+                                    <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                                    <button type="button" class="btn btn-default" data-target="#modal-tenbaihoc" data-toggle="modal">
+                                        <i class="fa fa-plus"></i></button>
+                                </div>
+                                {{-- <div class="col-md-12">
+                                    <label class="control-label">Hình ảnh<span class="require">*</span></label>
+                                    <input type="file" name="hinhanh" class="form-control">
+                                </div> --}}
+                                <div class="col-md-12 mt-2">
+                                    <label class="control-label">File Excel</label>
+                                    <input type="file" name="file" class="form-control">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickImport()">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
     <div id="modal-tenbaihoc" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <div class="modal-dialog">
@@ -270,6 +317,9 @@
 
         function clickNhanvaTKT() {
             $('#frm_tuvung').submit();
+        }
+        function clickImport() {
+            $('#frm_tuvung_import').submit();
         }
 
         function clickedit() {

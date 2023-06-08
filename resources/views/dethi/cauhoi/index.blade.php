@@ -31,6 +31,7 @@
                 success: function(data) {
                     console.log(data);
                     $('#xoadangcaudoc').remove();
+                    $('#xoadangcaunghe').remove();
                     $('#xoaxemtranh').remove();
                     $('#caudoc').append(data);
                 },
@@ -153,7 +154,8 @@
                             <label style="font-weight: bold">Loại câu hỏi</label>
                             <select name="madm" id="madanhmuc" class="form-control select2basic">
                                 @foreach ($loaicauhoi as $key => $ct)
-                                    <option value="{{ $ct->madm }}" {{ $ct->madm == $inputs['madm'] ? 'selected' : '' }}>
+                                    <option value="{{ $ct->madm }}"
+                                        {{ $ct->madm == $inputs['madm'] ? 'selected' : '' }}>
                                         {{ $ct->tendm }}</option>
                                 @endforeach
                             </select>
@@ -194,14 +196,14 @@
                                     <td name='noidung'>{{ $ch->noidung }}</td>
                                     <td name='audio'>
                                         @if (isset($ch->audio))
-                                        <audio title="Nghe K-4" controls="controls" style="width:103px">
-                                            <source src="{{ asset($ch->audio) }}">
-                                        </audio> 
+                                            <audio title="Nghe K-4" controls="controls" style="width:103px">
+                                                <source src="{{ asset($ch->audio) }}">
+                                            </audio>
                                         @endif
                                     </td>
                                     <td name='anh'>
                                         @if (isset($ch->anh))
-                                        <img src="{{url($ch->anh)}}" style="width:30%">
+                                            <img src="{{ url($ch->anh) }}" style="width:30%">
                                         @endif
                                     </td>
                                     {{-- <td name='A'>{{ $ch->A }}</td>
@@ -303,6 +305,14 @@
                                 <input type="file" name="audio" class="form-control">
                             </div>
                             <div id='caudoc' style="width:100%">
+                                <div class="col-md-12 mt-2" id="xoadangcaunghe">
+                                    <label class="control-label">Dạng câu nghe<span class="require">*</span></label>
+                                    <select name="loaicaunghe" class="form-control" id="loaicaunghe">
+                                        @foreach ($caunghe as $ct)
+                                            <option value="{{ $ct->madmct }}"> {{ $ct->tendmct }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div id='xemtranh' style="width:100%">
 
@@ -432,22 +442,22 @@
             html += '<input type="text" name="D" class="form-control ml-3">';
             html += '</div>';
 
-            html += '<div class="col-md-3 mt-2" id="Atiengviet">';
-            html += '<label class="control-label ml-3">Đáp án 1 tiếng việt<span class="require">*</span></label>';
-            html += '<input type="text" name="Atiengviet" class="form-control ml-3">';
-            html += '</div>';
-            html += '<div class="col-md-3 mt-2" id="Btiengviet">';
-            html += '<label class="control-label ml-3">Đáp án 2 tiếng việt<span class="require">*</span></label>';
-            html += '<input type="text" name="Btiengviet" class="form-control ml-3">';
-            html += '</div>';
-            html += '<div class="col-md-3 mt-2" id="Ctiengviet">';
-            html += '<label class="control-label ml-3">Đáp án 3 tiếng việt<span class="require">*</span></label>';
-            html += '<input type="text" name="Ctiengviet" class="form-control ml-3">';
-            html += '</div>';
-            html += '<div class="col-md-3 mt-2" id="Dtiengviet">';
-            html += '<label class="control-label ml-3">Đáp án 4 tiếng việt<span class="require">*</span></label>';
-            html += '<input type="text" name="Dtiengviet" class="form-control ml-3">';
-            html += '</div>';
+            // html += '<div class="col-md-3 mt-2" id="Atiengviet">';
+            // html += '<label class="control-label ml-3">Đáp án 1 tiếng việt<span class="require">*</span></label>';
+            // html += '<input type="text" name="Atiengviet" class="form-control ml-3">';
+            // html += '</div>';
+            // html += '<div class="col-md-3 mt-2" id="Btiengviet">';
+            // html += '<label class="control-label ml-3">Đáp án 2 tiếng việt<span class="require">*</span></label>';
+            // html += '<input type="text" name="Btiengviet" class="form-control ml-3">';
+            // html += '</div>';
+            // html += '<div class="col-md-3 mt-2" id="Ctiengviet">';
+            // html += '<label class="control-label ml-3">Đáp án 3 tiếng việt<span class="require">*</span></label>';
+            // html += '<input type="text" name="Ctiengviet" class="form-control ml-3">';
+            // html += '</div>';
+            // html += '<div class="col-md-3 mt-2" id="Dtiengviet">';
+            // html += '<label class="control-label ml-3">Đáp án 4 tiếng việt<span class="require">*</span></label>';
+            // html += '<input type="text" name="Dtiengviet" class="form-control ml-3">';
+            // html += '</div>';
             $('#dapan').append(html);
 
             var html1 = '<div class="col-md-12 mt-2" id="noidung">';

@@ -10,7 +10,7 @@
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text">GIÁO TRÌNH</span>
-            <span class="menu-desc">EPS-TOPIK</span>
+            {{-- <span class="menu-desc">EPS-TOPIK</span> --}}
             <i class="menu-arrow"></i>
         </a>
     </a>
@@ -61,20 +61,20 @@
                                 <span class="menu-text">BÀI HỌC CHÍNH</span>
                             </a>
                         </li>
-                        <li class="menu-item" aria-haspopup="true">
+                        {{-- <li class="menu-item" aria-haspopup="true">
                             <a href="{{'/TracNghiem/ThongTin'}}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
                                 <span class="menu-text">TRẮC NGHIỆM</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="menu-item" aria-haspopup="true">
                             <a href="{{'/TuVung/ThongTin'}}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">TỪ VỤNG</span>
+                                <span class="menu-text">TỪ VỰNG</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true">
@@ -153,7 +153,7 @@
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text">THI THỬ</span>
-            <span class="menu-desc">Luyện thi</span>
+            {{-- <span class="menu-desc">Luyện thi</span> --}}
             <i class="menu-arrow"></i>
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-right">
@@ -171,18 +171,32 @@
                     </a>
                 </li>
                 <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/PhongThi/ThongTin'}}" class="menu-link">
+                        <span class="menu-text">QUẢN LÝ THI THỬ</span>
+                        {{-- <span class="menu-desc"></span> --}}
+                    </a>
+                </li>
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/LuyenThi_EPS'}}" class="menu-link">
+                        <span class="menu-text">LUYỆN THI EPS</span>
+                        {{-- <span class="menu-desc"></span> --}}
+                    </a>
+                </li>
+                @if (chkThiThu(session('admin')->mahocvien))
+                <li class="menu-item" aria-haspopup="true">
                     <a href="{{'/ThiThu/EPS-TOPIK'}}" class="menu-link">
                         <span class="menu-text">THI THỬ EPS</span>
                         {{-- <span class="menu-desc"></span> --}}
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
     </li>
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text"> QUẢN LÝ HỒ SƠ</span>
-            <span class="menu-desc">Giáo viên & Học viên</span>
+            {{-- <span class="menu-desc">Giáo viên & Học viên</span> --}}
             <i class="menu-arrow"></i>
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-left">
@@ -200,7 +214,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">GIÁO VIÊN</span>
+                        <span class="menu-text">QUẢN LÝ GIÁO VIÊN</span>
                         <i class="menu-arrow"></i>
                     </a>
                 </li>
@@ -217,7 +231,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">HỌC VIÊN</span>
+                        <span class="menu-text">QUẢN LÝ HỌC VIÊN</span>
                         <i class="menu-arrow"></i>
                     </a>
                 </li>
@@ -234,7 +248,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">LỚP HỌC</span>
+                        <span class="menu-text">QUẢN LÝ LỚP HỌC</span>
                         <i class="menu-arrow"></i>
                     </a>
                 </li>
@@ -244,7 +258,7 @@
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text">HỆ THỐNG</span>
-            <span class="menu-desc">Quản trị hệ thống</span>
+            {{-- <span class="menu-desc">Quản trị hệ thống</span> --}}
             <i class="menu-arrow"></i>
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-left">

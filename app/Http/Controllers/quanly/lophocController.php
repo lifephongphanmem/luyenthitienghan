@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\quanly;
 
 use App\Http\Controllers\Controller;
+use App\Models\dethi\dethi;
+use App\Models\ketqua\ketquathithu;
 use App\Models\quanly\giaovien;
 use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -99,6 +102,9 @@ class lophocController extends Controller
 
         $inputs['url']='/LopHoc/chitiet';
         $m_hocvien=hocvien::wherenull('malop')->get();
+        $ketquathi=ketquathithu::where('malop',$inputs['lophoc'])->get();
+        $ketquathi->unique('created_at');
+        
         return view('quanly.lophoc.chitiet')
                 ->with('model',$model)
                 ->with('inputs',$inputs)
@@ -107,6 +113,7 @@ class lophocController extends Controller
                 ->with('a_khoahoc',$a_khoahoc)
                 ->with('a_lophoc',$a_lophoc)
                 ->with('a_giaovien',$a_giaovien)
+                ->with('ketquathi',$ketquathi)
                 ->with('pageTitle','Chi tiết lớp học');
     }
 
@@ -182,5 +189,35 @@ class lophocController extends Controller
 
         return redirect('/LopHoc/chitiet?lophoc='.$lophoc->malop.'&khoahoc='.$lophoc->khoahoc)
                     ->with('success','Chuyển lớp thành công');
+    }
+
+    public function ketquathi(Request $request){
+        $inputs=$request->all();
+        $a_giaovien=array_column(giaovien::where('trangthai','!=',3)->get()->toarray(),'tengiaovien','magiaovien');
+        $a_khoahoc=array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(),'khoahoc','khoahoc');
+        $a_lophoc=array_column(lophoc::select('malop','tenlop')->get()->toarray(),'tenlop','malop');
+        $ketqua=ketquathithu::where('malop',$inputs['malop'])->where('ngaythi',$inputs['ngaythi'])->where('giothi',$inputs['giothi'])->get();
+        $thongtin_thithu=$ketqua->unique('made')->first();
+        $a_dethi=array_column(dethi::all()->toarray(),'tende','made');
+        $mahocvien=array_column($ketqua->toarray(),'mahocvien');
+        $hocvien=hocvien::wherein('mahocvien',$mahocvien)->get();
+        foreach($hocvien as $ct){
+            $ketqua_hv=$ketqua->where('mahocvien',$ct->mahocvien)->first();
+            $ct->diemthi=$ketqua_hv->diemthi;
+            $ct->ngaythi=$ketqua_hv->ngaythi;
+            $ct->giothi=$ketqua_hv->giothi;
+            $ct->thoigianlambai=$ketqua_hv->thoigianlambai;
+        }
+        $inputs['url']='/LopHoc/KetQuaThiThu';
+        return view('export.ketquathi.index')
+                ->with('a_khoahoc',$a_khoahoc)
+                ->with('a_lophoc',$a_lophoc)
+                ->with('a_giaovien',$a_giaovien)
+                ->with('a_dethi',$a_dethi)
+                ->with('thongtin_thithu',$thongtin_thithu)
+                ->with('inputs',$inputs)
+                ->with('hocvien',$hocvien)
+                ->with('ketqua',$ketqua)
+                ->with('pageTitle','Kết quả thi thử');
     }
 }

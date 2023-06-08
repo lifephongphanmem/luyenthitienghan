@@ -33,6 +33,7 @@ class cauhoi extends Model
         'Atiengviet',
         'Btiengviet',
         'Ctiengviet',
-        'Dtiengviet'
+        'Dtiengviet',
+        'loaicaunghe'
     ];
 }

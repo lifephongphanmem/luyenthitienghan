@@ -1,4 +1,4 @@
-<html class="no-js" itemscope="" itemtype="http://schema.org/WebPage" lang="vi">
+<html  lang="vi">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -16,25 +16,23 @@
     <meta name="googlebot" content="index">
     <meta itemprop="name" content="Làm Bài Thi Thử EPS-Topik">
     <meta itemprop="description" content="">
-    <meta itemprop="image" content="https://luyenthieps.vn/images/no-image.jpg">
     <meta property="og:title" content="Làm Bài Thi Thử EPS-Topik">
     <meta property="og:locale" content="vi_VN">
     <meta property="og:type" content="website">
     <meta property="og:description" content="">
     <meta property="og:site_name" content="Luyện Thi EPS">
-    <meta property="fb:app_id" content="580129962610165">
     <meta name="twitter:title" content="Làm Bài Thi Thử EPS-Topik">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Play" />
     <link href="{{ url('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ url('css/customer-thithu.css') }}">
+    {{-- <link rel="stylesheet" href="{{ url('css/customer-thithu.css') }}"> --}}
     <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/global/plugins/jquery-migrate.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ url('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
     <script src="{{ url('assets/js/scripts.bundle.js') }}"></script>
-    {{-- <link rel="stylesheet" href="{{ url('css/style_lambai.css') }}"> --}}
+    <link rel="stylesheet" href="{{ url('css/style_lambai.css') }}">
 </head>
 
 <body>
@@ -82,6 +80,10 @@
                                 style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"
                                 class="bailam-tracnghiem list-tracnghiem">
                                 <div class="bailam-tracnghiem-center">
+                                    <input type="hidden" name="madethi" id="madethi" value="{{$made}}">
+                                    <input type="hidden" name="timestart" id="timestart" value="{{$timestart}}">
+                                    <input type="hidden" name="malop" id="malop" value="{{$malop}}">
+                                    <input type="hidden" name="maphongthi" id="maphongthi" value="{{$maphongthi}}">
                                     @foreach ($m_cauhoi as $k => $ct)
                                         @if ($ct->loaicauhoi == 1683685323)
                                             <div id="question" class="question thi-thu entry-tracnghiem cauhoi-{{++$k}} @if($k == 1) active @endif"
@@ -123,7 +125,7 @@
                                             </div>
                                         @else
                                             <div id="question" class="question thi-thu entry-tracnghiem cauhoi-{{++$k}}"
-                                                data-id="{{$k}}" data-code="1617:F">
+                                                data-id="{{$k}}" data-code="{{$ct->macauhoi}}:F">
                                                 <div class="cauhoitracnghiem"> <b>Câu: {{$k }}.
                                                         [MA-{{ $ct->macauhoi }}]</b> <audio controls="controls"
                                                         src="{{ url($ct->audio) }}"></audio><strong>{{ $ct->cauhoi }}</strong>
@@ -478,13 +480,21 @@
                             $('.cauhoi-' + a + ' .qselect').addClass('traloisai');
                         }
                     }
+                    madethi=$('#madethi').val();
+                    malop=$('#malop').val();
+                    maphongthi=$('#maphongthi').val();
+                    timestart=$('#timestart').val()
                     danopbai = 1;
-                    queryString = 'bailam=' + bailam_thisinh + '&loaide=1';
+                    queryString = bailam_thisinh;
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     jQuery.ajax({
                         url: "/ThiThu/NopBai",
                         data: {
                             queryString: queryString,
+                            madethi: madethi,
+                            malop: malop,
+                            maphongthi: maphongthi,
+                            timestart: timestart,
                             _token: CSRF_TOKEN,
                         },
                         type: "POST",
@@ -499,22 +509,30 @@
                                     timer: 5000
                                 })
                             } else {
-                                var kq_data = data['queryString'].split("|");
-                                console.log(kq_data);
+
+                                // console.log(data);
                                 $('.box_dark.thi-tracnghiem .ds-cauhoi .td-ch').removeClass("select");
-                                var kq_chon = kq_data[1].split(':');
-                                var kq_dung = kq_data[2].split(':');
-                                var kq_sai = kq_data[3].split(':');
+                                var kq_chon = data['kq_chon'];
+                                var kq_dung = data['dapandung'];
+                                var dapan_dung = data['kq_dung'];
+                                var kq_sai = data['dapansai'];
+                                // var kq_sai = kq_data[3].split(':');
                                 for (var kq = 1; kq <= 40; kq++) {
                                     mang = kq - 1;
                                     $('.box_dark.thi-tracnghiem .ds-cauhoi .td-ch.trloi' + kq).addClass(kq_chon[mang]);
-                                    $(kq_dung[mang]).addClass('traloidung');
+                                    $('#'+dapan_dung[mang]).addClass('traloidung');
+                                }
+                                for($i=0;$i<kq_dung.length;$i++){
+                                    $('#'+kq_dung[$i]).addClass('traloidung');
+                                }
+                                for($j=0;$j<kq_sai.length;$j++){
+                                    $('#'+kq_sai[$j]).addClass('traloisai');
                                 }
                                 var tonglambai = 40;
-                                var tongsai = tonglambai - kq_data[0];
-                                for (var sai = 0; sai < tongsai; sai++) {
-                                    $(kq_sai[sai]).addClass('traloisai');
-                                }
+                                // var tongsai = tonglambai - kq_data[0];
+                                // for (var sai = 0; sai < tongsai; sai++) {
+                                //     $(kq_sai[sai]).addClass('traloisai');
+                                // }
                                 $('.box_dark.thi-tracnghiem .ds-cauhoi .td-ch.cauhoi').addClass('chophep');
                                 var btnext =
                                     '<a class="cautruoc"><img src="images/btn_prev.png" style="cursor:pointer;"></a><a class="causau"><img src="images/btn_next.png" style="cursor:pointer;"></a>';
@@ -523,12 +541,20 @@
                                 $('.pagination .answer').html(
                                     '<div class="bt-chucnang"> <div class="tab-menu-baihoc"> <a class="view_baihocchinh"><span id="ctl00_ContentPlaceHolder1_Label1" class="title_hoc active" data-id="1">KẾT QUẢ THI</span></a> <div style="clear: both; padding-top: 5px"></div> </div> <div class="tab-menu-baihoc"> <a class="view_tracnghiem"><span id="ctl00_ContentPlaceHolder1_Label1" class="title_hoc" data-id="2">XEM ĐÁP ÁN</span></a> <div style="clear: both; padding-top: 5px"></div> </div></div>'
                                 );
-                                var tongdiem = kq_data[0] * 5;
+                                var tongdiem = data['diemthi'];
                                 $('.box_dark.thi-tracnghiem .bailam-tracnghiem').hide();
-                                $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').html('<div class="kq-thi">' +
+                                if(data['madethi'] == 1){
+                                    $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').html('<div class="kq-thi">' +
                                     tongdiem +
-                                    '</div><div class="ketquathi"><a href="/dashboard" style="margin-right: 10px;"> Về Trang Chủ </a> <a href="/ThiThu/LamBai"> Thi tiếp </a></div>'
+                                    '</div><div class="ketquathi"><a href="/dashboard" style="margin-right: 10px;"> Về Trang Chủ </a> <a href="/ThiThu/LamBai?loai=1"> Thi tiếp </a></div>'
                                 );
+                                }else{
+                                    $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').html('<div class="kq-thi">' +
+                                    tongdiem +
+                                    '</div><div class="ketquathi"><a href="/dashboard" style="margin-right: 10px;"> Về Trang Chủ </a> </div>'
+                                );
+                                }
+
                                 $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').show();
                                 $('#question audio').addClass("show-audio");
                                 Swal.fire({
@@ -732,12 +758,13 @@
                         return false;
                     });
                     $(".box_dark.thi-tracnghiem").mousedown(function() {
+
                         window.addEventListener('mouseup', onDragEnd);
                         window.addEventListener('selectstart', disableSelect);
                     });
                 });
             </script>
-            <script type="text/javascript">
+            {{-- <script type="text/javascript">
                 $(function() {
                     $(".list-tracnghiem").bind("click", function() {
                         var size = parseInt($('.cauhoitracnghiem').css("font-size"));
@@ -758,7 +785,7 @@
 
                     });
                 });
-            </script>
+            </script> --}}
 
             <span style="display:none"> Designed by LTEPS </span>
         </div>

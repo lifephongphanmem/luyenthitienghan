@@ -72,6 +72,11 @@
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
+                                        <button title="Kết quả thi thử"
+                                        onclick="edit(this,'{{ $hv->id }}')"
+                                        data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
+                                        <i class="icon-lg la flaticon-edit-1 text-primary "></i>
+                                    </button>
 
                                         <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{ '/HocVien/delete/' . $hv->id }}')"

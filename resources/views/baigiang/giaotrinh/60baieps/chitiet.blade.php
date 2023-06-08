@@ -121,10 +121,10 @@
                             <button class="btn btn-sm btn-primary btn-square" onclick="clickChonLoai(this,'tuvung')">TỪ
                                 VỰNG</button>
                         </div>
-                        <div class=" ml-3">
+                        {{-- <div class=" ml-3">
                             <button class="btn btn-sm btn-primary btn-square"
                                 onclick="clickChonLoai(this,'tracnghiem')">TRẮC NGHIỆM</button>
-                        </div>
+                        </div> --}}
                         <div class=" ml-3">
                             <button class="btn btn-sm btn-primary btn-square" onclick="clickChonLoai(this,'hinhanh')">HÌNH
                                 ẢNH</button>
@@ -182,8 +182,8 @@
                                 <div class="bg-nhomtuvung">
                                     @foreach ($cumtu as $tuvung)
                                         <div class="audio-play mt-2">
-                                            <a class="sm2_button audio-play-1"
-                                                onclick="playAudio(this,'{{ asset($tuvung->audio) }}')"></a> &nbsp;
+                                            {{-- <a class="sm2_button audio-play-1"
+                                                onclick="playAudio(this,'{{ asset($tuvung->audio) }}')"></a> &nbsp; --}}
                                             <a href="https://korean.dict.naver.com/kovidict/vietnamese/#/search?query={{ $tuvung->tutienghan }}"
                                                 target="_bank">{{ $tuvung->tutienghan }}</a> : {{ $tuvung->tiengviet }}
                                         </div>
@@ -193,12 +193,11 @@
                         @endforeach
 
                     </div>
-                    <div class="tracnghiem d-none result_view_tracnghiem">
+                    {{-- <div class="tracnghiem d-none result_view_tracnghiem">
                         <br />
                         <hr>
                         <?php $arr = ['A', 'B', 'C', 'D']; ?>
                         @foreach ($m_tracnghiem as $k => $tn)
-                            {{-- <div class="col-md-6"> --}}
                             <div id="question-tracnghiem"
                                 style="background-color: #fbfbfb; border-radius: 3px; border: 1px solid #e8e8e8; margin-left: 2px; margin-right: 2px; margin-top: 12px;"
                                 class="cauhoi-tienghan question cauhoi-tracnghiem">
@@ -217,12 +216,10 @@
 
                                     </div>
                                 </div>
-                                {{-- <div style="clear: both"></div> --}}
                             </div>
-                            {{-- </div> --}}
                         @endforeach
 
-                    </div>
+                    </div> --}}
                     <div class="hinhanh d-none result_view_hinhanh">
                         <br>
                         <hr>

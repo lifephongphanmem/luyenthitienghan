@@ -32,10 +32,10 @@
                     <div class="card-toolbar">
                         <button onclick="add()" data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button>
-                        {{-- <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
+                        <button class="btn btn-xs btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
-                            <i class="fas fa-file-import"></i>
-                        </button> --}}
+                            <i class="fas fa-file-import"></i>Nhận Excel
+                        </button>
                     </div>
                 </div>
 
@@ -45,7 +45,8 @@
                             <tr class="text-center">
                                 <th>STT</th>
                                 <th>Tên bài học</th>
-                                <th>Hình ảnh</th>
+                                <th>Hình ảnh 1</th>
+                                <th>Hình ảnh 2</th>
                                 <th>Audio</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -55,8 +56,23 @@
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
                                     <td name='tengiaotrinh' class="text-left" style="width: 20%">{{ $gt->tenbaihoc }}</td>
-                                    <td name='soluongbai' style="width: 8%">{{ $gt->anh }}</td>
-                                    <td name='ghichu' style="width: 10%">{{ $gt->audio }}</td>
+                                    <td name='soluongbai' style="width: 8%">
+                                        @if (isset($gt->anh))
+                                        <img src="{{ url($gt->anh) }}" style="width:30%">
+                                    @endif
+                                    </td>
+                                    <td name='soluongbai' style="width: 8%">
+                                        @if (isset($gt->anh2))
+                                        <img src="{{ url($gt->anh2) }}" style="width:30%">
+                                    @endif
+                                    </td>
+                                    <td name='ghichu' style="width: 10%">
+                                        @if (isset($gt->audio))
+                                        <audio title="Nghe" controls="controls" style="width:103px">
+                                            <source src="{{ asset($gt->audio) }}">
+                                        </audio>
+                                    @endif
+                                    </td>
                                     <td class="text-center" style="width:8%">
                                         <a href="{{'/GiaoTrinh/chitiet/'.$gt->id}}" title="Chi tiết"
                                             class="btn btn-sm btn-clean btn-icon">
@@ -138,6 +154,48 @@
             </div>
         </form>
     </div>
+
+        <!--Nhận excel -->
+        <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+            <form action="{{ '/BaiHocChinh/import' }}" method="POST" id="frm_import" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog modal-xs">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Thông tin bài giảng chính
+                            </h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-md-10">
+                                    <label class="control-label">Tên bài học<span class="require">*</span></label>
+                                    <select name="tenbaihoc" id="tenbaihoc" class="form-control">
+                                        @foreach ($m_baihoc as $key=>$ct )
+                                            <option value="{{$ct->mabaihoc}}">{{$ct->tenbaihoc}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-1" style="padding-left: 0px;">
+                                    <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                                    <button type="button" class="btn btn-default" data-target="#modal-tenbaihoc" data-toggle="modal">
+                                        <i class="fa fa-plus"></i></button>
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <label class="control-label">File excel<span class="require">*</span></label>
+                                    <input type="file" name="file" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickNhanexcel()">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
     <div id="modal-tenbaihoc" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <div class="modal-dialog">
@@ -230,6 +288,9 @@
 
         function clickNhanvaTKT() {
             $('#frm_baihocchinh').submit();
+        }
+        function clickNhanexcel(){
+            $('#frm_import').submit();
         }
 
         function clickedit() {

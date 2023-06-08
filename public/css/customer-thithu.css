@@ -1,7 +1,7 @@
-@font-face {
+/* @font-face {
     font-family: Play;
     src: url(../font/Play-Regular.ttf)
-}
+} */
 
 @font-face {
     font-family: "FontAwesome";
@@ -428,9 +428,9 @@ a {
     color: #fff
 }
 
-@media only screen and (min-width:992px) #main-menu {
+@media only screen and (min-width:992px) {#main-menu {
     height: auto
-}
+}}
 
 #main-menu {
     height: 120px;
@@ -481,11 +481,11 @@ a {
     position: inherit
 }
 
-element.style {
+/* element.style {
     transform: translate3d(-5922px, 0, 0);
     transition: all 0s ease 0s;
     width: 17766px
-}
+} */
 
 #header-banner img {
     width: 100%
@@ -1606,7 +1606,6 @@ img {
 .blog-lienhe .submit-contact {
     color: #f39220
 }
-}
 
 .animate-box {
     padding: 3px
@@ -1851,7 +1850,7 @@ a>img.fh5co-align-center {
     margin-bottom: 10px;
     box-shadow: 0 2px 8px rgb(0 24 171 / 43%)
 }
-}
+
 
 .entry-tracnghiem-test .qselect {
     padding: 3px 0

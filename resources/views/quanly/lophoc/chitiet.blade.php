@@ -17,6 +17,8 @@
             TableManaged1.init();
             $('#a_khoahoc').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?lophoc=' +$('#lophoc').val()+'&khoahoc='+$('#a_khoahoc').val();
+                var url= "/LopHoc/KetQuaThiThu" + '?lophoc=' +$('#lophoc').val()+'&khoahoc='+$('#a_khoahoc').val();
+                $('a#kq_thithu').attr('href', url);
             });
             $('#lophoc').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?lophoc=' +$('#lophoc').val()+'&khoahoc='+$('#a_khoahoc').val();
@@ -38,10 +40,9 @@
                     <div class="card-toolbar">
                         <button  data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i>Thêm học viên</button>
-                        {{-- <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
-                            data-target="#modal-nhanexcel" data-toggle="modal">
-                            <i class="fas fa-file-import"></i>
-                        </button> --}}
+                        <button  class="btn btn-xs btn-success mr-2" onclick="kq_thithu()" data-target="#thithu" data-toggle="modal">
+                            <i class="flaticon-list"></i> Kết quả thi
+                        </button>
                     </div>
                 </div>
 
@@ -175,6 +176,49 @@
                 </div>
             </form>
         </div>
+        <div id="thithu" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+            <form action="{{'/Export/KetQuaThi'}}" method="POST" id="frm_kq_thithu" enctype="multipart/form-data" target="_blank">
+                @csrf
+                <div class="modal-dialog modal-sx">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Xem kết quả thi thử
+                            </h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id='malop_thi' name='malop'>
+                            <input type="hidden" id='khoahoc_malop_thi' name='khoahoc'>
+                            <div class="col-md-12 mt-1">
+                                <label class="control-label">Ngày thi</label>
+                                <select name="ngaythi" id="ngaythi" class="form-control "style="width:100%">
+                                    <option value="">-- Chọn ngày thi --</option>
+                                    @foreach ($ketquathi as $ct )
+                                        <option value="{{$ct->ngaythi}}">{{$ct->ngaythi}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label class="control-label">Ngày thi</label>
+                                <select name="giothi" id="giothi" class="form-control "style="width:100%">
+                                    <option value="">-- Chọn giờ thi --</option>
+                                    @foreach ($ketquathi as $ct )
+                                        <option value="{{$ct->giothi}}">{{$ct->giothi}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickxemkq()">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <div id="chuyenlop" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
             <form action="" method="POST" id="frm_chuyen" enctype="multipart/form-data">
@@ -238,6 +282,9 @@
         function clickthem() {
             $('#frm_them').submit();
         }
+        function clickxemkq() {
+            $('#frm_kq_thithu').submit();
+        }
 
         function clickedit() {
             $('#frm_edit').submit();
@@ -245,7 +292,10 @@
         function clickchuyen() {
             $('#frm_chuyen').submit();
         }
-
+        function kq_thithu(){
+            $('#malop_thi').val($('#lophoc').val());
+            $('#khoahoc_malop_thi').val($('#a_khoahoc').val());
+        }
 
         function edit(e, id, tenlop, khoahoc, giaovienchunhiem) {
             var url = '/LopHoc/update/' + id;
