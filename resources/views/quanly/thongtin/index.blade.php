@@ -12,11 +12,11 @@
 
     <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
     <script src="{{ url('js/custome-form.js') }}"></script>
-    {{-- <script>
+    <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
         });
-    </script> --}}
+    </script>
 @stop
 
 @section('content')
