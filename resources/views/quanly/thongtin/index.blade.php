@@ -29,119 +29,141 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Thông tin người dùng</h3>
                     </div>
-                    {{-- <div class="card-toolbar">
-                    
-                </div> --}}
                 </div>
 
                 <div class="card-body">
-                    <div class="row" style="padding-left: 10%; padding-right: 10%">
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="tenhocvien">Tên học viên</label>
-                                <input type="text" class="form-control-plaintext" readonly id="tenhocvien"
-                                    value="{{ $hocvien->tenhocvien }}">
+                    <div class="row" style="padding-bottom: 10px">
+                        <div class="col-6">
+                            <div class="row align-items-center" style="padding-left: 5%">
+                                <div class="col-sm-3">Họ tên:</div>
+                                <div class="col-sm-9">
+                                    @if ($user->hocvien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ $nguoidung->tenhocvien }}">
+                                    @elseif($user->giaovien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ $nguoidung->tengiaovien }}">
+                                    @else
+                                        <input type="text" class="form-control-plaintext" readonly value="">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row align-items-center" style="padding-left: 5%">
+                                <div class="col-sm-3">Số CCCD:</div>
+                                <div class="col-sm-9">
+                                    @if ($user->hocvien == 1 || $user->giaovien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ $nguoidung->cccd }}">
+                                    @else
+                                        <input type="text" class="form-control-plaintext" readonly value="">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row align-items-center" style="padding-left: 5%">
+                                <div class="col-sm-3">Số điện thoại:</div>
+                                <div class="col-sm-9">
+                                    @if ($user->hocvien == 1 || $user->giaovien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ $nguoidung->sdt }}">
+                                    @else
+                                        <input type="text" class="form-control-plaintext" readonly value="">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row align-items-center" style="padding-left: 5%">
+                                <div class="col-sm-3">Địa chỉ email:</div>
+                                <div class="col-sm-9">
+                                    @if ($user->hocvien == 1 || $user->giaovien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ $nguoidung->email }}">
+                                    @else
+                                        <input type="text" class="form-control-plaintext" readonly value="">
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="cccd">Số CCCD</label>
-                                <input type="text" class="form-control-plaintext" readonly id="cccd"
-                                    value="{{ $hocvien->cccd }}">
+                        <div class="col-6">
+                            <div class="row align-items-center" style="padding-left: 5%">
+                                <div class="col-sm-3">Ngày sinh:</div>
+                                <div class="col-sm-9">
+                                    @if ($user->hocvien == 1 || $user->giaovien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ getDayVn($nguoidung->ngaysinh) }}">
+                                    @else
+                                        <input type="text" class="form-control-plaintext" readonly value="">
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="sdt">Số điện thoại</label>
-                                <input type="text" class="form-control-plaintext" readonly id="sdt"
-                                    value="{{ $hocvien->sdt }}">
+                            <div class="row align-items-center" style="padding-left: 5%">
+                                <div class="col-sm-3">Giới tính:</div>
+                                <div class="col-sm-9">
+                                    @if ($user->hocvien == 1 || $user->giaovien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ $nguoidung->gioitinh == '1' ? 'Nam' : 'Nữ' }}">
+                                    @else
+                                        <input type="text" class="form-control-plaintext" readonly value="">
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="email">Địa chỉ email</label>
-                                <input type="text" class="form-control-plaintext" readonly id="email"
-                                    value="{{ $hocvien->email }}">
+                            <div class="row align-items-center" style="padding-left: 5%">
+                                <div class="col-sm-3">Địa chỉ:</div>
+                                <div class="col-sm-9">
+                                    @if ($user->hocvien == 1 || $user->giaovien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ $nguoidung->diachi }}">
+                                    @else
+                                        <input type="text" class="form-control-plaintext" readonly value="">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row align-items-center" style="padding-left: 5%">
+                                <div class="col-sm-3">Ghi chú:</div>
+                                <div class="col-sm-9">
+                                    @if ($user->hocvien == 1 || $user->giaovien == 1)
+                                        <input type="text" class="form-control-plaintext" readonly
+                                            value="{{ $nguoidung->ghichu }}">
+                                    @else
+                                        <input type="text" class="form-control-plaintext" readonly value="">
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="padding-left: 10%; padding-right: 10%">
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="ngaysinh">Ngày sinh</label>
-                                <input type="text" class="form-control-plaintext" readonly id="ngaysinh"
-                                    value="{{ getDayVn($hocvien->ngaysinh) }}">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="gioitinh">Giới tính</label>
-                                <input type="text" class="form-control-plaintext" readonly id="gioitinh"
-                                    value={{ $hocvien->gioitinh == '1' ? 'Nam' : 'Nữ' }}>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="diachi">Địa chỉ</label>
-                                <input type="text" class="form-control-plaintext" readonly id="diachi"
-                                    value="{{ $hocvien->diachi }}">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="ghichu">Ghi chú</label>
-                                <input type="text" class="form-control-plaintext" readonly id="ghichu"
-                                    value="{{ $hocvien->ghichu }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--end::Card-->
-    </div>
-    <!--end::Row-->
-    <!--begin::Row-->
-    <div class="row" style="padding-top: 20px">
-        <div class="col-xl-12">
-            <!--begin::Card-->
-            <div class="card card-custom">
-                <div class="card-header card-header-tabs-line">
-                    <div class="card-title">
-                        <h3 class="card-label text-uppercase">Kết quả thi thử</h3>
-                    </div>
-                    {{-- <div class="card-toolbar">
-                    
-                </div> --}}
-                </div>
 
-                <div class="card-body">
-                    <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
-                        <thead>
-                            <tr class="text-center">
-                                <th>STT</th>
-                                <th>Tên đề thi</th>
-                                <th>Điểm thi</th>
-                                <th>Ngày thi</th>
-                                <th>Giờ thi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($ketquathi as $key => $ketqua)
+                    @if ($user->hocvien == 1)
+                        <hr>
+
+                        <h5 class="card-label text-uppercase pb-3" style="padding-top: 10px">Kết quả thi thử</h5>
+                        <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
+                            <thead>
                                 <tr class="text-center">
-                                    <td style="width: 10%">{{ ++$key }}</td>
-                                    <td style="width: 30%">{{ $ketqua->tende }}</td>
-                                    <td style="width: 20%">{{ $ketqua->diemthi }}</td>
-                                    <td style="width: 20%">{{ getDayVn($ketqua->ngaythi) }}</td>
-                                    <td style="width: 20%">{{ $ketqua->giothi }}</td>
+                                    <th>STT</th>
+                                    <th>Tên đề thi</th>
+                                    <th>Điểm thi</th>
+                                    <th>Ngày thi</th>
+                                    <th>Giờ thi</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($ketquathi as $key => $ketqua)
+                                    <tr class="text-center">
+                                        <td style="width: 10%">{{ ++$key }}</td>
+                                        <td class="text-left" style="width: 30%">{{ $ketqua->tende }}</td>
+                                        <td style="width: 20%">{{ $ketqua->diemthi }}</td>
+                                        <td style="width: 20%">{{ getDayVn($ketqua->ngaythi) }}</td>
+                                        <td style="width: 20%">{{ $ketqua->giothi }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
+                <!--end::Card-->
             </div>
         </div>
         <!--end::Card-->
+        <hr>
+
     </div>
     <!--end::Row-->
 @stop
