@@ -3,6 +3,7 @@
 use App\Http\Controllers\quanly\giaovienController;
 use App\Http\Controllers\quanly\hocvienController;
 use App\Http\Controllers\quanly\lophocController;
+use App\Http\Controllers\quanly\thongtinController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,3 +38,5 @@ Route::prefix('HocVien')->group(function(){
     Route::post('/delete/{id}',[hocvienController::class,'destroy']);
 
 });
+
+Route::get('/QuanLyThongTin', [thongtinController::class,'index']);
