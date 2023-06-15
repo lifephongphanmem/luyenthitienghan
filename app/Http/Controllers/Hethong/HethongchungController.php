@@ -92,6 +92,7 @@ class HethongchungController extends Controller
 			if ($user->giaovien == 1) {
 				$giaovien = giaovien::where('cccd', $user->cccd)->first();
 				$user->manguoidung = $giaovien->magiaovien;
+
 			}
 			$user->phanquyen = json_decode($user->phanquyen, true);
 			// dd($user);

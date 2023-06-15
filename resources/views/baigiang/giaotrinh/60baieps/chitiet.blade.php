@@ -35,6 +35,15 @@
             background-color: #fc7272 !important;
             color: #fff !important;
         }
+
+        hr {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            border-top: 1px solid #0091c7;
+            width: 100%;
+            float: left;
+            opacity: 0.1;
+        }
     </style>
 @stop
 
@@ -135,21 +144,25 @@
                         </div>
 
                     </div>
+
                     <div class="baihocchinh">
-                        <div class="box_dark">
+                        {{-- <div class="box_dark">
                             <iframe width="100%" height="720"
                                 src="https://www.youtube.com/embed/ewKUARpZ2Tw?list=PLbE1A9P3lz9zki9ehzjGyc2HIaGwd6jlV"
                                 title="Bài 2.1:  PATCHIM VÀ PHÁT ÂM TRONG TIẾNG HÀN" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen="allowfullscreen"></iframe>
                             <p class="mt-5 text-center">Link youtube</p>
-                        </div>
-                        <div class="box_dark">
-                            <video controls width="100%">
-                                <source src="{{ '/uploads/mp4/2.1.mp4' }}">
-                            </video>
-                            <p class="mt-5 mb-5 text-center">Link local</p>
-                        </div>
+                        </div> --}}
+                        @if (file_exists($model->link1))
+                            <div class="box_dark">
+                                <video controls width="100%" poster="{{url('/images/logolife.png')}}">
+                                    <source src="{{ url($model->link1) }}">
+                                </video>
+                                {{-- <p class="mt-5 mb-5 text-center">Link local</p> --}}
+                            </div>
+                        @endif
+                        <hr>
                         @for ($i = 1; $i <= $trang; $i++)
                             <?php $a_baihocchinh = $m_baihocchinh->where('stt', $i); ?>
                             @foreach ($a_baihocchinh as $ct)
@@ -249,32 +262,30 @@
                     </div>
                     <div class="baitap d-none">
                         <br>
-                        @foreach ($m_baitap as $k=>$bt )
-
-                        <div id="question" class="question entry-tracnghiem-test">
-                            <div class="cauhoibaitap"> <b>❖ CÂU HỎI: {{++$k}}</b>
-                                <hr>
-                                <div style="margin-top: 20px;margin-left: 10px;">
-                                    <p><strong>다음 그림을 보고 알맞은 대답을 고르십시오. 이 사람의 증상은 어떻습니까?</strong></p>
-                                    <p><strong><audio controls="controls"
-                                                src="{{asset($bt->audio)}}"></audio></strong></p>
-                                    <p style="text-align: center;"><strong><img src="{{asset($bt->anh)}}"
-                                                alt="" width="112" height="163"></strong></p>
-                                </div>
-                            </div>
-                            <div class="quiz-list">
-                                @foreach ($arr_ha as $tl)
-                                <div class="qselect cot2" data-id="{{ $bt->id }}"
-                                    data-traloi="{{ $bt->dapan == $tl ? 'T' : 'F' }}" >
-                                    <div class="mark">{{$tl}}</div>
-                                    <div class="qsignbt" >
-                                        <p>{{$bt->$tl}}</p>
+                        @foreach ($m_baitap as $k => $bt)
+                            <div id="question" class="question entry-tracnghiem-test">
+                                <div class="cauhoibaitap"> <b>❖ CÂU HỎI: {{ ++$k }}</b>
+                                    <hr>
+                                    <div style="margin-top: 20px;margin-left: 10px;">
+                                        <p><strong>다음 그림을 보고 알맞은 대답을 고르십시오. 이 사람의 증상은 어떻습니까?</strong></p>
+                                        <p><strong><audio controls="controls"
+                                                    src="{{ asset($bt->audio) }}"></audio></strong></p>
+                                        <p style="text-align: center;"><strong><img src="{{ asset($bt->anh) }}"
+                                                    alt="" width="112" height="163"></strong></p>
                                     </div>
                                 </div>
-                                @endforeach
+                                <div class="quiz-list">
+                                    @foreach ($arr_ha as $tl)
+                                        <div class="qselect cot2" data-id="{{ $bt->id }}"
+                                            data-traloi="{{ $bt->dapan == $tl ? 'T' : 'F' }}">
+                                            <div class="mark">{{ $tl }}</div>
+                                            <div class="qsignbt">
+                                                <p>{{ $bt->$tl }}</p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                                                    
                         @endforeach
                     </div>
 

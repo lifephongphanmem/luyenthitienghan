@@ -182,7 +182,7 @@
                         {{-- <span class="menu-desc"></span> --}}
                     </a>
                 </li>
-                @if (chkThiThu(session('admin')->mahocvien))
+                @if (session('admin')?chkThiThu(session('admin')->manguoidung):'')
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{'/ThiThu/EPS-TOPIK'}}" class="menu-link">
                         <span class="menu-text">THI THỬ EPS</span>
