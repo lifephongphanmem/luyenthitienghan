@@ -4,6 +4,7 @@ use App\Models\danhmuc\loaicauhoict;
 use App\Models\dethi\cauhoi;
 use App\Models\quanly\hocvien;
 use App\Models\thithu\phongthi;
+use Illuminate\Support\Facades\Session;
 
 function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
 {
@@ -31,6 +32,9 @@ function chkGiaoDien($machucnang, $tentruong = 'trangthai')
     return $chk[$tentruong];
 }
 function chkThiThu($mahocvien){
+    // if (!Session::has('admin')) {
+    //     return redirect('/');
+    // };
     $phongthi=phongthi::join('phongthi_lop','phongthi_lop.maphongthi','phongthi.maphongthi')->select('phongthi_lop.malop')->where('phongthi.trangthai',1)->get();
     $a_malop=array_column($phongthi->toarray(),'malop');
     $hocvien=hocvien::where('mahocvien',$mahocvien)->first();

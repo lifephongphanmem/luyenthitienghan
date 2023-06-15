@@ -32,6 +32,7 @@ class baihocchinhController extends Controller
         }
         $model = baihocchinh::join('baihoc', 'baihoc.mabaihoc', 'baihocchinh.mabaihoc')
             ->select('baihoc.tenbaihoc', 'baihocchinh.*')
+            ->orderBy('id','desc')
             ->get();
         // dd($model);
         $m_baihoc = baihoc::all();
@@ -144,8 +145,29 @@ class baihocchinhController extends Controller
         $theArray = Excel::toArray($dataObj, $inputs['file']);
         $arr = $theArray[0];
         $arr_col = array('tenbaihoc', 'audio', 'anh', 'anh2');
-        $nfield = sizeof($arr_col);
+        $nfield = sizeof($arr_col);        
         // dd($arr);
+        $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
+        if (!isset($baihoc)) {
+            $inputs['mabaihoc'] = getdate()[0];
+            $inputs['link1']='data/bai'.$arr[1][0].'/baihocchinh/'.$arr[1][0].'.mp4';
+            $sott= baihoc::max('stt');
+            $inputs['stt']=$sott??0;
+            $databaihoc = [
+                'mabaihoc' => $inputs['mabaihoc'],
+                'tenbaihoc' => $inputs['tenbaihoc'],
+                'link1'=>$inputs['link1'],
+                'stt'=>++$inputs['stt']
+            ];
+            baihoc::create($databaihoc);
+           $stt=1;
+            $mabaihoc=$inputs['mabaihoc'];
+        } else {
+            $mabaihoc = $baihoc->mabaihoc;
+            $sothutu=baihocchinh::where('mabaihoc',$inputs['tenbaihoc'])->max('stt');
+            $stt=++$sothutu;
+        }
+
         for ($i = 1; $i < count($arr); $i++) {
             $data = array();
             $data['mabaihocchinh'] = date('YmdHis') . $i;
@@ -153,20 +175,9 @@ class baihocchinhController extends Controller
             for ($j = 0; $j < $nfield; $j++) {
                 $data[$arr_col[$j]] = $arr[$i][$j];
             }
-            $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
-            if (!isset($baihoc)) {
-                $inputs['mabaihoc'] = getdate()[0];
-                $databaihoc = [
-                    'mabaihoc' => $inputs['mabaihoc'],
-                    'tenbaihoc' => $inputs['tenbaihoc'],
-                ];
-                baihoc::create($databaihoc);
-                $data['stt']=$i;
-            } else {
-                $data['mabaihoc'] = $baihoc->mabaihoc;
-                $stt=baihocchinh::where('mabaihoc',$inputs['tenbaihoc'])->max('stt');
-                $data['stt']=++$stt;
-            }
+            $data['mabaihoc']=$mabaihoc;
+            $data['stt']=$stt;
+            // dd($data);
             unset($data['tenbaihoc']);
             baihocchinh::create($data);
         }

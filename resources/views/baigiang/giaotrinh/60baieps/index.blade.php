@@ -35,8 +35,8 @@
 
                     <div class="form-group row">
                         @foreach ($model as $ct )
-                        <div class="col-md-4">
-                            <a href="{{'/GiaoTrinh/60-bai-eps-topik/baihoc?mabaihoc='.$ct->mabaihoc}}">{{$ct->tenbaihoc}}</a>
+                        <div class="col-md-4 mb-5" style="font-size: 16px">
+                            <a class="ml-10" href="{{'/GiaoTrinh/60-bai-eps-topik/baihoc?mabaihoc='.$ct->mabaihoc}}">» {{$ct->tenbaihoc}}</a>
                         </div>
                         @endforeach
                     </div>

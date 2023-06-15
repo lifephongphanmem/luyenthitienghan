@@ -170,7 +170,7 @@
                             <div class="form-group row">
                                 <div class="col-md-10">
                                     <label class="control-label">Tên bài học<span class="require">*</span></label>
-                                    <select name="tenbaihoc" id="tenbaihoc" class="form-control">
+                                    <select name="tenbaihoc" id="tenbaihoc_excel" class="form-control">
                                         @foreach ($m_baihoc as $key=>$ct )
                                             <option value="{{$ct->mabaihoc}}">{{$ct->tenbaihoc}}</option>
                                         @endforeach
@@ -305,6 +305,14 @@
             var gt = $('#tenbaihoc_add').val();
             $('#tenbaihoc').append(new Option(gt, gt, true, true));
             $('#tenbaihoc').val(gt).trigger('change');
+            $('#tenbaihoc_excel').append(new Option(gt, gt, true, true));
+            $('#tenbaihoc_excel').val(gt).trigger('change');
+        }
+        function add_tenbaihoc_excel(){
+            $('#modal-tenbaihoc').modal('hide');
+            var gt = $('#tenbaihoc_add').val();
+            $('#tenbaihoc_excel').append(new Option(gt, gt, true, true));
+            $('#tenbaihoc_excel').val(gt).trigger('change');
         }
         function edit(e, id) {
             var url='/GiaoTrinh/update/'+id;

@@ -191,6 +191,7 @@ class giaotrinhController extends Controller
 
         //Bài học chính
         $model=baihoc::where('mabaihoc',$inputs['mabaihoc'])->first();
+        // dd($model);
         $m_baihocchinh=baihocchinh::where('mabaihoc',$inputs['mabaihoc'])->get();
         $trang=$m_baihocchinh->max('stt');
 

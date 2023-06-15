@@ -83,13 +83,13 @@ class HethongchungController extends Controller
 		if ($user->sadmin != "SSA") {
 			if($user->hocvien == 1){
 				$hocvien=hocvien::where('cccd',$user->cccd)->first();
-				$user->mahocvien=$hocvien->mahocvien;
+				$user->manguoidung=$hocvien->mahocvien;
 				$user->malop=$hocvien->malop;
 
 			}
 			if($user->giaovien == 1){
 				$giaovien=giaovien::where('cccd',$user->cccd)->first();
-				$user->magiaovien=$giaovien->magiaovien;
+				$user->manguoidung=$giaovien->magiaovien;
 			}
 				$user->phanquyen = json_decode($user->phanquyen, true);
 				// dd($user);
