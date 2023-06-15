@@ -15,25 +15,27 @@ use Illuminate\Support\Facades\Session;
 
 class HethongchungController extends Controller
 {
-    public function index(){
-        return view('trangchu')
-		->with('pageTitle','Trang chủ');
-    }
+	public function index()
+	{
+		return view('trangchu')
+			->with('pageTitle', 'Trang chủ');
+	}
 
-    public function login(){
-        return view('HeThong.dangnhap');
-    }
+	public function login()
+	{
+		return view('HeThong.dangnhap');
+	}
 
-    public function DangNhap(Request $request)
+	public function DangNhap(Request $request)
 	{
 		$inputs = $request->all();
-		
 
-			$user = User::where('cccd', $inputs['cccd'])->first();
-			$data=[
-				'cccd'=>$inputs['cccd'],
-				'password'=>$inputs['password']
-			];
+
+		$user = User::where('cccd', $inputs['cccd'])->first();
+		$data = [
+			'cccd' => $inputs['cccd'],
+			'password' => $inputs['password']
+		];
 
 		//tài khoản không tồn tại
 		if (!isset($user)) {
@@ -53,16 +55,16 @@ class HethongchungController extends Controller
 				->with('message', 'Tài khoản đang bị khóa. Bạn hãy liên hệ với người quản trị để mở tài khoản')
 				->with('furl', '/home');
 		}
-	
+
 
 		//Sai tài khoản
 
-		$res=Auth::attempt($data);
+		$res = Auth::attempt($data);
 		// dd($res);
 		if (md5($inputs['password']) != '40b2e8a2e835606a91d0b2770e1cd84f') { //mk chung
 			// if (md5($inputs['password']) != $user->password) {
-				// if (Hash::make($inputs['password']) != $user->password) {
-					if(!$res){
+			// if (Hash::make($inputs['password']) != $user->password) {
+			if (!$res) {
 				// $ttuser->solandn = $ttuser->solandn + 1;
 				// if ($ttuser->solandn >= $solandn) {
 				//     $ttuser->status = 'Vô hiệu';
@@ -77,22 +79,23 @@ class HethongchungController extends Controller
                     .Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại');
 			}
 		}
-// dd($user);
+		// dd($user);
 		//kiểm tra tài khoản
 		//1. level = SSA ->
 		if ($user->sadmin != "SSA") {
-			if($user->hocvien == 1){
-				$hocvien=hocvien::where('cccd',$user->cccd)->first();
-				$user->manguoidung=$hocvien->mahocvien;
-				$user->malop=$hocvien->malop;
+			if ($user->hocvien == 1) {
+				$hocvien = hocvien::where('cccd', $user->cccd)->first();
+				$user->manguoidung = $hocvien->mahocvien;
+				$user->malop = $hocvien->malop;
 
 			}
-			if($user->giaovien == 1){
-				$giaovien=giaovien::where('cccd',$user->cccd)->first();
-				$user->manguoidung=$giaovien->magiaovien;
+			if ($user->giaovien == 1) {
+				$giaovien = giaovien::where('cccd', $user->cccd)->first();
+				$user->manguoidung = $giaovien->magiaovien;
+
 			}
-				$user->phanquyen = json_decode($user->phanquyen, true);
-				// dd($user);
+			$user->phanquyen = json_decode($user->phanquyen, true);
+			// dd($user);
 		} else {
 			$user->capdo = "SSA";
 		}
@@ -105,11 +108,11 @@ class HethongchungController extends Controller
 		//gán phân quyền của User
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['cccd'])->get()->keyBy('machucnang')->toArray());
 
-			return redirect('/dashboard')
-						->with('success', 'Đăng nhập thành công')
-						->with('pageTitle','Trang chủ');
-		
-		
+		return redirect('/dashboard')
+			->with('success', 'Đăng nhập thành công')
+			->with('pageTitle', 'Trang chủ');
+
+
 	}
 
 	public function logout()
