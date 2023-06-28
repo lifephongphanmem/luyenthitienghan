@@ -101,9 +101,6 @@
                     $(hientai).removeClass('sm2_playing');
                 }, time * 1000)
             }
-
-
-
         }
     </script>
 @stop
@@ -192,7 +189,7 @@
                             <?php $cumtu = $m_tuvung->where('cumtuvung', $val); ?>
                             <div class="col-md-4" style="float:left; padding: 10px 0px;"> <span
                                     class="sothutu_nhomtuvung">{{ $val }}.</span>
-                                <div class="bg-nhomtuvung">
+                                <div class="bg-nhomtuvung" style="font-size: 16px">
                                     @foreach ($cumtu as $tuvung)
                                         <div class="audio-play mt-2">
                                             {{-- <a class="sm2_button audio-play-1"

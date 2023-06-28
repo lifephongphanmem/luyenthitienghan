@@ -11,19 +11,19 @@ class cauhoi extends Model
     protected $table='cauhoi';
     protected $fillable=[
         'macauhoi',
-        'loaicauhoi',
+        'loaicauhoi',//nghe hiểu, đọc hiểu
         'cauhoi',
         'noidung',
         'audio',
         'anh',
-        'loaidapan',
+        'loaidapan',//1:text, 2:hình ảnh
         'A','B','C','D',
         'dapan',
-        'dangcaudochieu',
+        'dangcaudochieu',// 7 dạng câu đọc hiểu
         'dangcauxemtranh',
         'nganhhoc',
-        'nguoncauhoi',
-        'dangcau',
+        'nguoncauhoi',// từ bộ 960 câu, tự tạo
+        'dangcau', //1: câu 1 câu hỏi, 2: câu 2 câu hỏi
         'macaughep',
         'hoithoai',
         'nguoi1',
@@ -34,6 +34,7 @@ class cauhoi extends Model
         'Btiengviet',
         'Ctiengviet',
         'Dtiengviet',
-        'loaicaunghe'
+        'loaicaunghe',//7 dạng câu nghe
+        'stt'
     ];
 }

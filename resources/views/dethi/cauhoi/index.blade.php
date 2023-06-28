@@ -141,10 +141,10 @@
                     <div class="card-toolbar">
                         <button onclick="add()" data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button>
-                        {{-- <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
+                            <button class="btn btn-xs btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
-                            <i class="fas fa-file-import"></i>
-                        </button> --}}
+                            <i class="fas fa-file-import"></i>Nhận Excel
+                        </button>
                     </div>
                 </div>
 
@@ -213,7 +213,7 @@
                                     <td name='dapan'>{{ $ch->dapan }}</td> --}}
                                     <td class="text-center">
 
-                                        @if ($ch->dangcau == 2 && $luottrung[$ch->macaughep] < 2)
+                                        @if ($ch->dangcau == 2 && $luottrung[$ch->stt] < 2)
                                             <button title="Thêm câu" onclick="themcau(this,'{{ $ch->macauhoi }}')"
                                                 data-target="#themmoi" data-toggle="modal"
                                                 class="btn btn-sm btn-clean btn-icon">
@@ -243,6 +243,51 @@
         <!--end::Example-->
     </div>
     <!--end::Row-->
+
+            <!--Nhận excel -->
+            <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+                <form action="{{ '/CauHoi/import' }}" method="POST" id="frm_import" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-primary">
+                                <h4 id="modal-header-primary-label" class="modal-title">Thông tin câu hỏi
+                                </h4>
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Nguồn câu hỏi<span class="require">*</span></label>
+                                        <select name="nguoncauhoi" id="nguoncauhoi_excel" class="form-control">
+                                            @foreach ($nguoncauhoi as $ct)
+                                            <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="control-label">Loại câu hỏi<span class="require">*</span></label>
+                                        <select name="loaicauhoi" id="loaicauhoi_excel" class="form-control">
+                                            @foreach ($loaicauhoi as $key=>$ct )
+                                                <option value="{{$ct->madm}}">{{$ct->tendm}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <label class="control-label">File excel<span class="require">*</span></label>
+                                        <input type="file" name="file" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickNhanexcel()">Đồng
+                                    ý</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
     <!--Thêm mới -->
     <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="{{ '/CauHoi/store' }}" method="POST" id="frm_cauhoi" enctype="multipart/form-data">
@@ -410,7 +455,9 @@
         function clickNhanvaTKT() {
             $('#frm_cauhoi').submit();
         }
-
+        function clickNhanexcel(){
+            $('#frm_import').submit();
+        }
         function clickedit() {
             $('#frm_edit').submit();
         }
