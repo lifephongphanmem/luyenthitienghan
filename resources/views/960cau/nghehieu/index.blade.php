@@ -105,7 +105,7 @@ img {
             <h1 class="page-title is-large uppercase  tieude-giaotrinh">960 Câu Nghe Hiểu</h1>
         </header>
         <div class="noidung-baiviet list-learning">
-            @for ($i=1;$i<25;$i++)
+            @for ($i=1;$i<$sotrang;$i++)
             <div class="col post-item-baiviet"
             style="padding: 10px; padding: 10px; border: 1px solid aqua; margin-bottom: 10px;">
             <div class="width-20">

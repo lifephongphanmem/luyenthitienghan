@@ -275,36 +275,12 @@ h1 {
     background: url(../images/wrongx.png) no-repeat 20px 0;
     background-size: 10px;
 }
-.entry-tracnghiem-test {
-    border: 2px solid #0000003b;
-    width: 100%;
-    box-shadow: 0px 0px 8px 4px rgb(74 74 74 / 33%);
-    float: left;
-    margin-bottom: 20px;
-    padding: 10px;
-    overflow: auto;
-    border-radius: 3px;
-    transition: all 0.3s;
-    background-color: #fffcfc;
-}
 .question .qselect.cot2 {
     float: left;
     width: 50%;
     min-height: 50px;
     display: flex;
     align-items: baseline;
-}
-.entry-tracnghiem-test {
-    border: 2px solid #0000003b;
-    width: 100%;
-    box-shadow: 0px 0px 8px 4px rgb(74 74 74 / 33%);
-    float: left;
-    margin-bottom: 20px;
-    padding: 10px;
-    overflow: auto;
-    border-radius: 3px;
-    transition: all 0.3s;
-    background-color: #fffcfc;
 }
 a.sm2_button, a.sm2_button.sm2_paused:hover {
     background-color: #39c;
@@ -339,3 +315,21 @@ a.sm2_button, a.sm2_button.sm2_paused:hover {
 .sm2_button, .box_dark.thi-tracnghiem .ds-cauhoi .td-ch.cauhoi.chophep {
     cursor: pointer!important;
 }
+a.sm2_button:hover,
+a.sm2_button.sm2_playing,
+a.sm2_button.sm2_playing:hover {
+    background-color: #c33;
+}
+
+a.sm2_button.sm2_playing,
+a.sm2_button.sm2_playing:hover {
+    transform: rotate(90deg);
+}
+
+a.sm2_button:hover,
+a.sm2_button.sm2_playing,
+a.sm2_button.sm2_playing:hover {
+    background-color: #c33;
+}
+
+

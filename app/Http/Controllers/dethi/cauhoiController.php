@@ -267,37 +267,51 @@ class cauhoiController extends Controller
     public function caunghehieu(Request $request){
         $inputs = $request->all();
         // dd($inputs);
+        $m_model = cauhoi::where('loaicauhoi', 1683685241)->where('nguoncauhoi', 1684121327);
         if (!isset($inputs['socau'])) {
+            $sotrang=count($m_model->get())/40;
             return view('960cau.nghehieu.index')
+                ->with('sotrang',$sotrang)
                 ->with('pageTitle', '960 câu nghe hiểu');
         }
-        $m_model = cauhoi::where('loaicauhoi', 1683685241)->where('nguoncauhoi', 1684121327);
+
         if($inputs['socau']>23){
             $m_caughep=$m_model->where('dangcau',2)->get();
+            // dd($m_caughep);
             // $a_caughep=array_column($m_caughep->unique('macaughep')->toarray(),'macaughep');
             $a_caughep=array_column($m_caughep->unique('stt')->toarray(),'stt');
+
             $model=[];
+            $k=0;
             foreach($a_caughep as $ct){
                 $m_ghep=$m_caughep->where('stt',$ct);
                 $data=[];
-                foreach($m_ghep as $k=>$val){
-                    $data['noidung']=$val->noidung;
-                    $data['macauhoi']=$val->macauhoi;
+                foreach($m_ghep as $val){
+                    $data['stt']=$val->stt;
+                    $data['audio']=$val->audio;
+                    $data['noidung']=$val->noidung;                   
                     $data['anh']=$val->anh;
                     $cauhoi='cauhoi'.++$k;
+                    $macauhoi='macauhoi'.$k;
+                    $loaidapan='loaidapan'.$k;
                     $A='A'.$k;
                     $B='B'.$k;
                     $C='C'.$k;
                     $D='D'.$k;
                     $dapan='dapan'.$k;
+                    $data[$macauhoi]=$val->macauhoi;
+                    $data[$loaidapan]=$val->loaidapan;
                     $data[$cauhoi]=$val->cauhoi;
                     $data[$A]=$val->A;
                     $data[$B]=$val->B;
                     $data[$C]=$val->C;
                     $data[$D]=$val->D;
                     $data[$dapan]=$val->dapan;
+
                 }
                 $model[]=$data;
+                $k=0;
+// dd($model);
             }
             $dangcau=2;
         }else{
@@ -310,7 +324,8 @@ class cauhoiController extends Controller
         }else{
             $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
             $cau=($inputs['socau']-1)*40+1;
-        };      
+        };   
+// dd($model);
         return view('960cau.nghehieu.960caunghehieu')
             ->with('model', $model)
             ->with('title', $title)
