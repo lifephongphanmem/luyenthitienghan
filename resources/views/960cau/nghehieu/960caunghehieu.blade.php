@@ -82,19 +82,20 @@
             @foreach ($model as $key => $ct)
                 @if ($dangcau == 1)
                     <div id="question" class="question entry-tracnghiem-test cauhoi-1" data-id="1350">
-                        <div class="cauhoitracnghiem"> <b>{{ ++$key }}</b> <audio controls="controls"
+                        <div class="cauhoitracnghiem"> <b>{{ $ct->stt }}</b> <audio controls="controls"
                                 src="{{ url($ct->audio) }}"></audio> <a onclick="playAudio(this,'{{ url($ct->audio) }}')"
                                 class="sm2_button" data-div="1" style="margin-left:10px;"> </a> </div>
                         <div class="quiz-list">
                             @foreach ($arr_ha as $k => $tl)
-                                <div class="qselect {{ $ch->loaidapan == 1 ? 'cot4' : 'cot2' }}" data-id="{{ $ct->id }}"
+                                <div class="qselect {{ $ct->loaidapan == 1 ? 'cot4' : 'cot2' }}" data-id="{{ $ct->id }}"
                                     data-traloi="{{ $ct->dapan == $tl ? 'T' : 'F' }}">
                                     <div class="mark">{{ $k }}</div>
                                     <div class="qsign">
                                         @if ($ct->loaidapan == 1)
                                             {{ $ct->$tl }}
                                         @else
-                                            <img src="{{ url($ct->tl) }}" width="120" height="120">
+                                            <img src="{{ asset($ct->$tl) }}" width="120" height="120">
+
                                         @endif
                                     </div>
                                 </div>

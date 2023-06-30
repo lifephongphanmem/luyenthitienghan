@@ -314,18 +314,23 @@ class cauhoiController extends Controller
 // dd($model);
             }
             $dangcau=2;
+            $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
+            $cau=($inputs['socau']-1)*40+1;
         }else{
             $model=$m_model->where('dangcau',1)->get();
             $dangcau=1;
+            if ($inputs['socau']==1){
+                $title='Câu 01 đến câu 40';
+                $model=$model->take(40);
+                $cau=1;
+            }else{
+                $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
+                $cau=($inputs['socau']-1)*40+1;
+                $model=$model->where('stt','>=',$cau)->take(40);
+            }; 
         }
-        if ($inputs['socau']==1){
-            $title='Câu 01 đến câu 40';
-            $cau=1;
-        }else{
-            $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
-            $cau=($inputs['socau']-1)*40+1;
-        };   
-// dd($model);
+  
+// dd($model->where('id',361));
         return view('960cau.nghehieu.960caunghehieu')
             ->with('model', $model)
             ->with('title', $title)
