@@ -9,6 +9,9 @@ use App\Models\danhmuc\loaicauhoict;
 use App\Models\dethi\cauhoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
+use App\Imports\ColectionImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class cauhoiController extends Controller
 {
@@ -30,19 +33,22 @@ class cauhoiController extends Controller
             return view('errors.noperm')->with('machucnang', 'cauhoi');
         }
         $inputs = $request->all();
+
         $nguoncauhoi = dmnguoncauhoi::all();
         $loaicauhoi = loaicauhoi::all();
         $madm = loaicauhoi::select('madm')->first()->madm;
         $inputs['madm'] = isset($inputs['madm']) ? $inputs['madm'] : $madm;
         $inputs['dangcau'] = isset($inputs['dangcau']) ? $inputs['dangcau'] : 1;
         $model = cauhoi::where('loaicauhoi', $inputs['madm'])->where('dangcau', $inputs['dangcau'])->orderBy('id', 'desc')->get();
-        $a_ghep = array_column($model->toarray(), 'macaughep');
+        // $a_ghep = array_column($model->toarray(), 'macaughep');
+        $a_ghep = array_column($model->toarray(), 'stt');
         $luottrung = [];
         if ($inputs['dangcau'] == 2) {
             $luottrung = array_count_values($a_ghep);
         }
         $caunghe=loaicauhoict::where('madm',1683685241)->get();
-
+        // dd($model->where('stt',202));
+        // dd($model);
         $inputs['url'] = '/CauHoi/ThongTin';
         return view('dethi.cauhoi.index')
             ->with('model', $model)
@@ -253,5 +259,111 @@ class cauhoiController extends Controller
             ->with('cau', $cau)
             ->with('dangcau', $dangcau)
             ->with('pageTitle',$title);
+    }
+    public function index960caunghe(){
+        return view('960cau.nghehieu.index')
+        ->with('pageTitle', '960 câu nghe hiểu');
+    }
+    public function caunghehieu(Request $request){
+        $inputs = $request->all();
+        // dd($inputs);
+        $m_model = cauhoi::where('loaicauhoi', 1683685241)->where('nguoncauhoi', 1684121327);
+        if (!isset($inputs['socau'])) {
+            $sotrang=count($m_model->get())/40;
+            return view('960cau.nghehieu.index')
+                ->with('sotrang',$sotrang)
+                ->with('pageTitle', '960 câu nghe hiểu');
+        }
+
+        if($inputs['socau']>23){
+            $m_caughep=$m_model->where('dangcau',2)->get();
+            // dd($m_caughep);
+            // $a_caughep=array_column($m_caughep->unique('macaughep')->toarray(),'macaughep');
+            $a_caughep=array_column($m_caughep->unique('stt')->toarray(),'stt');
+
+            $model=[];
+            $k=0;
+            foreach($a_caughep as $ct){
+                $m_ghep=$m_caughep->where('stt',$ct);
+                $data=[];
+                foreach($m_ghep as $val){
+                    $data['stt']=$val->stt;
+                    $data['audio']=$val->audio;
+                    $data['noidung']=$val->noidung;                   
+                    $data['anh']=$val->anh;
+                    $cauhoi='cauhoi'.++$k;
+                    $macauhoi='macauhoi'.$k;
+                    $loaidapan='loaidapan'.$k;
+                    $A='A'.$k;
+                    $B='B'.$k;
+                    $C='C'.$k;
+                    $D='D'.$k;
+                    $dapan='dapan'.$k;
+                    $data[$macauhoi]=$val->macauhoi;
+                    $data[$loaidapan]=$val->loaidapan;
+                    $data[$cauhoi]=$val->cauhoi;
+                    $data[$A]=$val->A;
+                    $data[$B]=$val->B;
+                    $data[$C]=$val->C;
+                    $data[$D]=$val->D;
+                    $data[$dapan]=$val->dapan;
+
+                }
+                $model[]=$data;
+                $k=0;
+// dd($model);
+            }
+            $dangcau=2;
+            $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
+            $cau=($inputs['socau']-1)*40+1;
+        }else{
+            $model=$m_model->where('dangcau',1)->get();
+            $dangcau=1;
+            if ($inputs['socau']==1){
+                $title='Câu 01 đến câu 40';
+                $model=$model->take(40);
+                $cau=1;
+            }else{
+                $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
+                $cau=($inputs['socau']-1)*40+1;
+                $model=$model->where('stt','>=',$cau)->take(40);
+            }; 
+        }
+  
+// dd($model->where('id',361));
+        return view('960cau.nghehieu.960caunghehieu')
+            ->with('model', $model)
+            ->with('title', $title)
+            ->with('cau', $cau)
+            ->with('dangcau', $dangcau)
+            ->with('pageTitle',$title);
+    }
+    public function import(Request $request){
+
+        $inputs=$request->all();
+        $dataObj = new ColectionImport();
+        $theArray = Excel::toArray($dataObj, $inputs['file']);
+        $arr = $theArray[0];
+        $arr_col = array('stt', 'cauhoi', 'noidung', 'audio','anh','A','B','C','D','dapan','dangcauhoi','loaidapan1','phanloai','loaicaunghe','loaidapan','dangcau');
+        $nfield = sizeof($arr_col);
+        $socauhoi=0;  
+        // dd($arr);
+        for ($i = 1; $i < count($arr); $i++) {
+            $data = array();
+            $data['macauhoi'] = date('YmdHis') . $i;
+            $data['loaicauhoi']=$inputs['loaicauhoi'];
+            $data['nguoncauhoi']=$inputs['nguoncauhoi'];
+            for ($j = 0; $j < $nfield; $j++) {
+                $data[$arr_col[$j]] = $arr[$i][$j];
+            }
+            if($data['A'] == '' && $data['B'] == '' && $data['C'] == '' && $data['D'] == ''){
+                break;
+            }
+            // dd($data);
+            cauhoi::create($data);
+            $socauhoi++;
+        }
+        return redirect('/CauHoi/ThongTin?madm='.$inputs['loaicauhoi'])
+                        ->with('success','Thêm thành công '.$socauhoi.' câu hỏi');
     }
 }

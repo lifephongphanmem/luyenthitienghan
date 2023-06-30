@@ -130,9 +130,21 @@ class tuvungController extends Controller
         $dataObj = new ColectionImport();
         $theArray = Excel::toArray($dataObj, $inputs['file']);
         $arr = $theArray[0];
-        $arr_col = array('tenbaihoc','cumtu','tutienghan', 'tiengviet');
+        $arr_col = array('tenbaihoc','cumtuvung','tutienghan', 'tiengviet');
         $nfield = sizeof($arr_col);
         // dd($arr);
+        $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
+        if (!isset($baihoc)) {
+            $inputs['mabaihoc'] = getdate()[0];
+            $databaihoc = [
+                'mabaihoc' => $inputs['mabaihoc'],
+                'tenbaihoc' => $inputs['tenbaihoc']
+            ];
+            baihoc::create($databaihoc);
+            $mabaihoc=$inputs['mabaihoc'];
+        } else {
+            $mabaihoc = $baihoc->mabaihoc;
+        }
         for ($i = 1; $i < count($arr); $i++) {
             $data = array();
             $data['matuvung'] = date('YmdHis') . $i;
@@ -140,17 +152,7 @@ class tuvungController extends Controller
             for ($j = 0; $j < $nfield; $j++) {
                 $data[$arr_col[$j]] = $arr[$i][$j];
             }
-            $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
-            if (!isset($baihoc)) {
-                $inputs['mabaihoc'] = getdate()[0];
-                $databaihoc = [
-                    'mabaihoc' => $inputs['mabaihoc'],
-                    'tenbaihoc' => $inputs['tenbaihoc'],
-                ];
-                baihoc::create($databaihoc);
-            } else {
-                $data['mabaihoc'] = $baihoc->mabaihoc;
-            }
+            $data['mabaihoc']=$mabaihoc;
             unset($data['tenbaihoc']);
             tuvung::create($data);
         }

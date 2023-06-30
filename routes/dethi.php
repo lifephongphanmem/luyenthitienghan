@@ -27,6 +27,7 @@ Route::prefix('CauHoi')->group(function(){
     Route::post('/delete/{macauhoi}',[cauhoiController::class,'destroy']);
     Route::post('/LoaiCauHoi',[cauhoiController::class,'loaicauhoi']);
     Route::post('/LoaiDapAn',[cauhoiController::class,'loaidapan']);
+    Route::post('import',[cauhoiController::class,'import']);
 });
 
 Route::prefix('ThiThu')->group(function(){
