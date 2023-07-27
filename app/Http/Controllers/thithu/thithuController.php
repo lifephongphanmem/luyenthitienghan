@@ -11,6 +11,7 @@ use App\Models\quanly\lophoc;
 use App\Models\thithu\phongthi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
 class thithuController extends Controller
@@ -19,7 +20,7 @@ class thithuController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (!Session::has('admin')) {
-                return redirect('/');
+                return redirect('/DangNhap');
             };
             return $next($request);
         });
@@ -28,7 +29,7 @@ class thithuController extends Controller
     {
         $m_phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')->select('phongthi_lop.malop')->where('phongthi.trangthai', 1)->get();
         $a_malop = array_column($m_phongthi->toarray(), 'malop');
-        $hocvien = hocvien::where('mahocvien', session('admin')->mahocvien)->first();
+        $hocvien = hocvien::where('mahocvien', session('admin')->manguoidung)->first();
         if (isset($hocvien)) {
             if (in_array($hocvien->malop, $a_malop)) {
                 $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')->select('phongthi.*')->where('phongthi_lop.malop', $hocvien->malop)->first();
@@ -48,6 +49,7 @@ class thithuController extends Controller
         $inputs = $request->all();
         if (isset($inputs['loai'])) {
             $cauhoi = taodethi();
+            // dd($cauhoi);
             $m_cauhoi = cauhoi::wherein('macauhoi', $cauhoi)->get();
             // $hocvien = hocvien::where('mahocvien', session('admin')->mahocvien)->first();
             // $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')
@@ -63,8 +65,9 @@ class thithuController extends Controller
             $made = 1;
             $malop=1;
             $maphongthi=1;
+            $title='Luyện thi EPS-TOPIK';
         } else {
-            $hocvien = hocvien::where('mahocvien', session('admin')->mahocvien)->first();
+            $hocvien = hocvien::where('mahocvien', session('admin')->manguoidung)->first();
             $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')
                 ->select('phongthi.made','phongthi_lop.malop','phongthi.maphongthi')
                 ->where('phongthi.trangthai', 1)
@@ -77,17 +80,36 @@ class thithuController extends Controller
                 ->where('cauhoi_dethi.made', $made)
                 ->orderBy('loaicauhoi', 'desc')
                 ->get();
+                $title='Thi thử EPS-TOPIK';
         }
 
+        $caudoc=$m_cauhoi->where('loaicauhoi',1683685323);
+        if(count($caudoc) > 0){
+            $i=1;
+            foreach($caudoc as $val){
+                $val->cau=$i++;
+            }
+        }
+        $caunghe=$m_cauhoi->where('loaicauhoi',1683685241);
+        if(count($caunghe) > 0){
+            $j=21;
+            foreach($caunghe as $val){
+                $val->cau=$j++;
+            }
+        }
+        $colection=new Collection([$caudoc,$caunghe]);
+        $cauhoi_dethi=$colection->collapse();
+        // dd($cauhoi_dethi);
         $thoigianbatdau = Carbon::now('Asia/Ho_Chi_Minh');
+
         $timestart = strtotime($thoigianbatdau->toTimeString());
         return view('dethi.thithu.thithu')
-            ->with('m_cauhoi', $m_cauhoi)
+            ->with('m_cauhoi', $cauhoi_dethi)
             ->with('made', $made)
             ->with('maphongthi', $maphongthi)
             ->with('malop', $malop)
             ->with('timestart', $timestart)
-            ->with('pageTitle', 'Thi thử EPS-TOPIK');
+            ->with('pageTitle', $title);
     }
 
     public function nopbai(Request $request)

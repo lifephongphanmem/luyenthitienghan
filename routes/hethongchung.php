@@ -6,10 +6,10 @@ use App\Http\Controllers\Hethong\dstaikhoanController;
 use App\Http\Controllers\Hethong\HethongchungController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/',[HeThongChungController::class,'index']);
-Route::get('/',[HethongchungController::class,'login']);
+Route::get('/',[HeThongChungController::class,'index']);
+// Route::get('/',[HethongchungController::class,'login']);
 
-// Route::get('/DangNhap',[HethongchungController::class,'login']);
+Route::get('/DangNhap',[HethongchungController::class,'login']);
 Route::post('/DangNhap',[HethongchungController::class,'DangNhap']);
 Route::post('/DangKy',[HethongchungController::class,'DangKy']);
 Route::get('/DangXuat',[HethongchungController::class,'logout']);

@@ -19,7 +19,7 @@ class giaotrinhController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (!Session::has('admin')) {
-                return redirect('/');
+                return redirect('/DangNhap');
             };
             return $next($request);
         });
@@ -170,7 +170,7 @@ class giaotrinhController extends Controller
     }
 
     public function DanhSach(){
-        if (!chkPhanQuyen('giaotrinh', 'danhsach')) {
+        if (!chkPhanQuyen('noidungbaihoc', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'giaotrinh');
         }
 
@@ -184,7 +184,7 @@ class giaotrinhController extends Controller
 
     public function noidungbaihoc(Request $request)
     {
-        if (!chkPhanQuyen('giaotrinh', 'danhsach')) {
+        if (!chkPhanQuyen('noidungbaihoc', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'giaotrinh');
         }
         $inputs=$request->all();

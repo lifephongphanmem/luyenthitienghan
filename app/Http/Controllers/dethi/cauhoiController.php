@@ -19,7 +19,7 @@ class cauhoiController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (!Session::has('admin')) {
-                return redirect('/');
+                return redirect('/DangNhap');
             };
             return $next($request);
         });
@@ -344,7 +344,12 @@ class cauhoiController extends Controller
         $dataObj = new ColectionImport();
         $theArray = Excel::toArray($dataObj, $inputs['file']);
         $arr = $theArray[0];
-        $arr_col = array('stt', 'cauhoi', 'noidung', 'audio','anh','A','B','C','D','dapan','dangcauhoi','loaidapan1','phanloai','loaicaunghe','loaidapan','dangcau');
+        if($inputs['loaicauhoi'] == 1683685241){
+            $arr_col = array('stt', 'cauhoi', 'noidung','audio','anh','A','B','C','D','dapan','dangcauhoi','loaidapan1','phanloai','loaicaunghe','loaidapan','dangcau');
+        }else{
+            $arr_col = array('stt', 'cauhoi', 'noidung','hoithoai1','hoithoai2','hoithoai3','hoithoai4','anh','A','B','C','D','dapan','dangcauhoi','loaidapan1','phanloai','dangcaudochieu','loaidapan','dangcau');  
+        }
+
         $nfield = sizeof($arr_col);
         $socauhoi=0;  
         // dd($arr);

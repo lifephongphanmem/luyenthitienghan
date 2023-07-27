@@ -17,7 +17,7 @@ class dethiController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (!Session::has('admin')) {
-                return redirect('/');
+                return redirect('/DangNhap');
             };
             return $next($request);
         });
@@ -45,12 +45,13 @@ class dethiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store_cu(Request $request)
     {
         if (!chkPhanQuyen('dethi', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'dethi');
         }
         $inputs=$request->all();
+
         $inputs['made']=getdate()[0];
         $model=dethi::where('tende','like','%'.$inputs['tende'].'%')->first();
         if(isset($model)){
@@ -116,6 +117,31 @@ class dethiController extends Controller
             }
             return redirect('/DeThi/ThongTin')
                         ->with('success','Thêm mới thành công');
+
+    }
+    public function store(Request $request){
+        if (!chkPhanQuyen('dethi', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'dethi');
+        }
+        $inputs=$request->all();
+
+        $inputs['made']=getdate()[0];
+        $model=dethi::where('tende','like','%'.$inputs['tende'].'%')->first();
+        if(isset($model)){
+            return redirect('/DeThi/ThongTin')
+                    ->with('error','Đề thi đã tồn tại');
+        }
+        // dd($inputs);
+        dethi::create($inputs);
+        foreach(taodethi() as $ct){
+            $data=[
+                'made'=>$inputs['made'],
+                'macauhoi'=>$ct
+            ];
+            cauhoi_dethi::create($data);
+        }
+        return redirect('/DeThi/ThongTin')
+                    ->with('success','Thêm mới thành công');
 
     }
 

@@ -1,6 +1,6 @@
 <ul class="menu-nav">
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
-        <a href="{{'/dashboard'}}" class="menu-link">
+        <a href="{{'/TrangChu'}}" class="menu-link">
             <span class="menu-text">TRANG CHỦ</span>
             {{-- <span class="menu-desc">Recent Updates &amp; Reports</span> --}}
             <i class="menu-arrow"></i>

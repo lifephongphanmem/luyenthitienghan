@@ -35,6 +35,7 @@ class cauhoi extends Model
         'Ctiengviet',
         'Dtiengviet',
         'loaicaunghe',//7 dạng câu nghe
-        'stt'
+        'stt',
+        'hoithoai1','hoithoai2','hoithoai3','hoithoai4'
     ];
 }
