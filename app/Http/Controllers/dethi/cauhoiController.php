@@ -217,22 +217,30 @@ class cauhoiController extends Controller
         $m_model = cauhoi::where('loaicauhoi', 1683685323)->where('nguoncauhoi', 1684121327);
         if($inputs['socau']>23){
             $m_caughep=$m_model->where('dangcau',2)->get();
-            $a_caughep=array_column($m_caughep->unique('macaughep')->toarray(),'macaughep');
+            $a_caughep=array_column($m_caughep->unique('stt')->toarray(),'stt');
             $model=[];
+            $k=0;
             foreach($a_caughep as $ct){
-                $m_ghep=$m_caughep->where('macaughep',$ct);
+                $m_ghep=$m_caughep->where('stt',$ct);
                 $data=[];
-                foreach($m_ghep as $k=>$val){
-                    $data['noidung']=$val->noidung;
-                    $data['macauhoi']=$val->macauhoi;
+                foreach($m_ghep as $val){
+                    $data['stt']=$val->stt;
+                    if(trim($val->noidung) != null){
+                        $data['noidung']=$val->noidung;
+                    }                   
+                    // $data['macauhoi']=$val->macauhoi;
                     $data['anh']=$val->anh;
                     $cauhoi='cauhoi'.++$k;
+                    $macauhoi='macauhoi'.$k;
+                    $loaidapan='loaidapan'.$k;
                     $A='A'.$k;
                     $B='B'.$k;
                     $C='C'.$k;
                     $D='D'.$k;
                     $dapan='dapan'.$k;
+                    $data[$macauhoi]=$val->macauhoi;
                     $data[$cauhoi]=$val->cauhoi;
+                    $data[$loaidapan]=$val->loaidapan;
                     $data[$A]=$val->A;
                     $data[$B]=$val->B;
                     $data[$C]=$val->C;
@@ -240,19 +248,33 @@ class cauhoiController extends Controller
                     $data[$dapan]=$val->dapan;
                 }
                 $model[]=$data;
+                $k=0;
             }
+            // dd($model);
             $dangcau=2;
+            $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
+            $cau=($inputs['socau']-1)*40+1;
         }else{
             $model=$m_model->where('dangcau',1)->get();
             $dangcau=1;
+            if ($inputs['socau']==1){
+                $title='Câu 01 đến câu 40';
+                $model=$model->take(40);
+                $cau=1;
+            }else{
+                $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
+                $cau=($inputs['socau']-1)*40+1;
+                $model=$model->where('stt','>=',$cau)->take(40);
+            }; 
         }
-        if ($inputs['socau']==1){
-            $title='Câu 01 đến câu 40';
-            $cau=1;
-        }else{
-            $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
-            $cau=($inputs['socau']-1)*40+1;
-        };      
+
+        // if ($inputs['socau']==1){
+        //     $title='Câu 01 đến câu 40';
+        //     $cau=1;
+        // }else{
+        //     $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
+        //     $cau=($inputs['socau']-1)*40+1;
+        // };      
         return view('960cau.dochieu.960caudochieu')
             ->with('model', $model)
             ->with('title', $title)

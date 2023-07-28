@@ -246,23 +246,58 @@
                         @if ($dangcau == 1)
                             <div id="question" class="question entry-tracnghiem-test cauhoi-{{ ++$k }}"
                                 data-id="4058">
-                                <div class="cauhoitracnghiem"> <b>{{ $cau++ }}.</b> <strong>다음 그림을 보고 맞는 단어나 문장을
-                                        고르십시오.</strong>
-                                    <p style="display: block;"></p><img src="{{ asset($ct->anh) }}" alt="11"
+                                <div class="cauhoitracnghiem"> <b>{{ $cau++ }}.</b> <strong>{{$ct->cauhoi}}</strong>
+                                    <p style="display: block;"></p>
+                                    @if(trim($ct->noidung) != null)
+                                    <table style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;border: 1px solid" height="70">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 99%; padding: 10px;">{{$ct->noidung}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    @endif
+                                    @if(trim($ct->hoithoai1) != null)
+                                    <table border="1" style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;" height="70">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 99%; padding: 10px;">
+                                                    <?php $a_hoithoai=['hoithoai1','hoithoai2','hoithoai3','hoithoai4'] ?>
+                                                    @foreach ($a_hoithoai as $ng=>$ht)
+                                                    @if($ct->$ht != null)
+                                                        {{in_array($ng,['1','3'])?'가':'나'}} : {{$ct->$ht}}<br>
+                                                    @endif
+                                                    @endforeach
+                                                    {{-- 가： 지금 김 과장님 자리에 안 계신데요. 메모를 남겨 드릴까요?<br>나： 아니요, 제가 나중에 다시 전화 _______________. --}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    @endif
+                                    @if(trim($ct->anh) != null)
+                                    <img src="{{ asset($ct->anh) }}" alt="11"
                                         width="244" height="207">
+                                    @endif
                                 </div>
                                 <div class="quiz-list">
                                     @foreach ($arr_ha as $key => $tl)
-                                        <div class="qselect cot4" data-id="{{ $ct->macauhoi }}"
+                                        <div class="qselect cot2" data-id="{{ $ct->macauhoi }}"
                                             data-traloi="{{ $ct->dapan == $tl ? 'T' : 'F' }}">
                                             <div class="mark">{{ ++$key }}</div>
-                                            <div class="qsign">{{ $ct->$tl }}</div>
+                                            <div class="qsign">
+                                                @if ($ct->loaidapan == 1)
+                                            {{ $ct->$tl }}
+                                        @else
+                                            <img src="{{ asset($ct->$tl) }}" width="120" height="120">
+
+                                        @endif
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
                         @else
-                            <div id="question" class="question entry-tracnghiem-test cauhoi-1" data-id="921">
+                            {{-- <div id="question" class="question entry-tracnghiem-test cauhoi-1" data-id="921">
                                 <div class="cauhoitracnghiem"> <b>{{$cau++}}.</b>
                                     <table border="1"
                                         style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;"
@@ -327,7 +362,51 @@
                                         <div class="qsign"> {{ $ct['D2'] }}</div>
                                     </div>
                                 </div>
+                            </div> --}}
+                            <?php $arr_ch=[
+                                '1'=>['macauhoi'=>'macauhoi1','cauhoi'=>'cauhoi1','audio'=>'audio','stt'=>'stt','dapan'=>'dapan1','loaidapan'=>'loaidapan1'],
+                                '2'=>['macauhoi'=>'macauhoi2','cauhoi'=>'cauhoi2','audio'=>'','stt'=>'stt','dapan'=>'dapan2','loaidapan'=>'loaidapan2']
+                            ];
+                            $a_dapan=[
+                                '1'=>[ '1'=>'A','2'=>'B','3'=>'C','4'=>'D'],
+                                '2'=>['1'=>'A','2'=>'B','3'=>'C','4'=>'D']
+                            ]
+                            ?>
+                             @foreach ($arr_ch as $tt=>$val)
+                             <div id="question" class="question entry-tracnghiem-test cauhoi-1" data-id="2235">
+                                @if($tt==1)
+                                <div class="cauhoitracnghiem"> <b>{{ $ct[$val['stt']] }}.</b> 
+                                    <table border="1" style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;" height="70">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 99%; padding: 10px;">
+                                                    {{$ct['noidung']}}
+                                                  </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p style="display: block;"></p><strong>1 -&nbsp;{{ $ct[$val['cauhoi']] }}</strong>  </div>
+                                @else
+                                <div class="cauhoitracnghiem"> <b>{{ $ct[$val['stt']] }}.</b> {{$tt}} - {{ $ct[$val['cauhoi']] }} </div>
+                                @endif
+                                <div class="quiz-list">
+                                    @foreach ($a_dapan[$tt] as $stt=>$item)
+                                    <?php $cauhoi=$item.$tt; ?>
+                                    <div class="qselect cot2" data-id="{{ $ct[$val['macauhoi']] }}"
+                                    data-traloi="{{ $ct[$val['dapan']] == $item ? 'T' : 'F' }}">
+                                    <div class="mark">{{$stt}}</div>
+                                    <div class="qsign">
+                                        @if ($ct[$val['loaidapan']] == 1)
+                                        {{ $ct[$cauhoi] }}
+                                    @else
+                                        <img src="{{ url($ct[$cauhoi]) }}" width="120" height="120">
+                                    @endif
+                                        </div>
+                                </div>
+                                    @endforeach                      
+                                </div>
                             </div>
+                             @endforeach
                         @endif
                     @endforeach
                 </div>
