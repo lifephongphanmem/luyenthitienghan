@@ -58,7 +58,7 @@
                             @foreach ($model as $key => $hv)
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
-                                    <td class="text-left" style="width: 20%">{{ $hv->tenhocvien }}</td>
+                                    <td class="text-left" style="width: 15%">{{ $hv->tenhocvien }}</td>
                                     <td style="width: 8%">{{ $hv->cccd }}</td>
                                     <td style="width: 6%">{{ $hv->gioitinh == 0?'Nữ':'Nam' }}</td>
                                     <td style="width: 7%">{{ getDayVn($hv->ngaysinh) }}</td>
@@ -75,7 +75,7 @@
                                         <button title="Kết quả thi thử"
                                         onclick="edit(this,'{{ $hv->id }}')"
                                         data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
-                                        <i class="icon-lg la flaticon-edit-1 text-primary "></i>
+                                        <i class="icon-xl fas fa-atlas text-success "></i>
                                     </button>
 
                                         <button title="Xóa thông tin" type="button"

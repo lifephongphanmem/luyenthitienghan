@@ -13,7 +13,7 @@ class dmtrinhdogdptController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (!Session::has('admin')) {
-                return redirect('/');
+                return redirect('/DangNhap');
             };
             return $next($request);
         });
