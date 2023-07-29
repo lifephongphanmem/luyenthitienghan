@@ -163,6 +163,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <!--begin::Topbar-->
                             <div class="topbar">
                             <!--begin::Notifications-->
+                            @if(Session::has('admin'))
                             <div class="dropdown">
                                 <!--begin::Toggle-->
                                 <div class="topbar-item" data-offset="10px,0px">
@@ -235,6 +236,24 @@ License: You must have a valid license purchased only from themeforest(the above
                                         </span>
                                     </div>
                                 </div>
+                                @else
+                                <a href="{{'/DangNhap'}}"  title="Đăng nhập">
+                                <div class="topbar-item" data-offset="10px,0px">
+                                    <div class="btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center btn-lg px-2">
+
+                                    <span class="symbol symbol-35">
+                                        <div class="symbol symbol-35 mr-3">
+                                            <i class="icon-xl fas fa-sign-in-alt"></i>
+                                        </div>
+                                    </span>
+                                    <div class="d-flex flex-column text-right pr-3">
+                                        <span
+                                            class="text-white font-weight-bolder font-size-sm d-none d-md-inline">ĐĂNG NHẬP</span>
+                                    </div>
+                                </div>
+                            </a>
+                                </div>
+                                @endif
                                 <!--end::User-->
                             </div>
                             <!--end::Topbar-->

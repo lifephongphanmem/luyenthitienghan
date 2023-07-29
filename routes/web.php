@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/dashboard',[HethongchungController::class,'index']);
+Route::get('/TrangChu',[HethongchungController::class,'index']);
 include('hethongchung.php');
 include('quanly.php');
 include('baigiang.php');

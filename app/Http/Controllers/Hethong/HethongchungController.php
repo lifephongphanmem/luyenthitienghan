@@ -108,7 +108,7 @@ class HethongchungController extends Controller
 		//gán phân quyền của User
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['cccd'])->get()->keyBy('machucnang')->toArray());
 
-		return redirect('/dashboard')
+		return redirect('/TrangChu')
 			->with('success', 'Đăng nhập thành công')
 			->with('pageTitle', 'Trang chủ');
 

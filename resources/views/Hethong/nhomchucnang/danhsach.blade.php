@@ -62,7 +62,7 @@ src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.boots
                                 <thead>
                                     <tr class="text-center">
                                         <th width="10%">STT</th>
-                                        <th>Tên đơn vị</th>
+                                        <th>Tên đăng nhập</th>
                                         <th>Tên tài khoản</th>
                                     </tr>
         
@@ -74,8 +74,8 @@ src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.boots
                                     @foreach ($model as $tt)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td>{{ $tt->name }}</td>
-                                            <td>{{ $tt->phanloaitk==1?$tt->username:$tt->email }}</td>
+                                            <td>{{ $tt->cccd }}</td>
+                                            <td>{{$tt->tentaikhoan}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
