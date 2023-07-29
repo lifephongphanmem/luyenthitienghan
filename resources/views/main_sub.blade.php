@@ -213,7 +213,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span> --}}
-                        <span class="menu-text">QUẢN LÝ THÔNG TIN</span>
+                        <span class="menu-text">THÔNG TIN</span>
                         {{-- <i class="menu-arrow"></i> --}}
                     </a>
                 </li>

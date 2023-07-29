@@ -179,7 +179,7 @@ class dsnhomtaikhoanController extends Controller
         $inputs = $request->all();
         $m_nhom = dsnhomtaikhoan::where('manhomchucnang', $inputs['manhomchucnang'])->first();
         $model = User::where('manhomchucnang', $inputs['manhomchucnang'])->get();
-        //dd($inputs);
+        // dd($model);
         return view('Hethong.nhomchucnang.danhsach')
             ->with('model', $model)
             ->with('m_nhom', $m_nhom)
@@ -202,7 +202,7 @@ class dsnhomtaikhoanController extends Controller
         foreach ($model as $taikhoan) {
             foreach ($model_phanquyen as $phanquyen) {
                 $a_phanquyen[] = [
-                    'tendangnhap' => $taikhoan->phanloaitk == 1?$taikhoan->username:$taikhoan->email,
+                    'tendangnhap' =>$taikhoan->cccd,
                     'machucnang' => $phanquyen->machucnang,
                     'phanquyen' => $phanquyen->phanquyen,
                     'danhsach' => $phanquyen->danhsach,
@@ -212,7 +212,7 @@ class dsnhomtaikhoanController extends Controller
             }
         }
         // dd($a_phanquyen);
-        foreach (array_chunk(array_column($model->toarray(), 'username'), 100) as $data) {
+        foreach (array_chunk(array_column($model->toarray(), 'cccd'), 100) as $data) {
             dstaikhoan_phanquyen::wherein('tendangnhap', $data)->delete();
         }
         foreach (array_chunk($a_phanquyen, 200) as $data) {
