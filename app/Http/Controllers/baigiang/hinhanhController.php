@@ -29,7 +29,7 @@ class hinhanhController extends Controller
         if (!chkPhanQuyen('hinhanh', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'hinhanh');
         }
-        $model=hinhanh::all();
+        $model=hinhanh::orderBy('id','desc')->get();
         $m_baihoc = baihoc::all();
         return view('baigiang.hinhanh.index')
                     ->with('model',$model)
@@ -104,6 +104,7 @@ class hinhanhController extends Controller
             return view('errors.noperm')->with('machucnang', 'tuvung');
         }
         $inputs = $request->all();
+        // dd($inputs);
         $dataObj = new ColectionImport();
         $theArray = Excel::toArray($dataObj, $inputs['file']);
         $arr = $theArray[0];

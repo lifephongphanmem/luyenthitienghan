@@ -263,12 +263,44 @@
                             <div id="question" class="question entry-tracnghiem-test">
                                 <div class="cauhoibaitap"> <b>❖ CÂU HỎI: {{ ++$k }}</b>
                                     <hr>
-                                    <div style="margin-top: 20px;margin-left: 10px;">
-                                        <p><strong>다음 그림을 보고 알맞은 대답을 고르십시오. 이 사람의 증상은 어떻습니까?</strong></p>
+                                    {{-- <div style="margin-top: 20px;margin-left: 10px;"> --}}
+                                        <div style="margin-top: 20px;padding: 10px;box-shadow: inset 0px 0px 5px 2px #cfcfcf;border-radius: 5px;">
+                                        <p><strong>{{$bt->cauhoi}}</strong></p>
+                                        @if (isset($bt->audio))
                                         <p><strong><audio controls="controls"
-                                                    src="{{ asset($bt->audio) }}"></audio></strong></p>
+                                            src="{{ asset($bt->audio) }}"></audio></strong></p>
+                                        @endif
+                                        @if ($bt->noidung != null)
+                                        <table border="1" style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;" height="70">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 99%; padding: 10px; text-align: center;">{{$bt->noidung}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        @endif
+                                        @if($bt->hoithoai1 != null)
+                                        <table border="1" style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;" height="70">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 99%; padding: 10px;">
+                                                        <?php $a_hoithoai=['hoithoai1','hoithoai2','hoithoai3','hoithoai4'] ?>
+                                                        @foreach ($a_hoithoai as $ng=>$ht)
+                                                        @if($bt->$ht != null)
+                                                            {{in_array($ng,['1','3'])?'가':'나'}} : {{$bt->$ht}}<br>
+                                                        @endif
+                                                        @endforeach
+                                                        {{-- 가： 지금 김 과장님 자리에 안 계신데요. 메모를 남겨 드릴까요?<br>나： 아니요, 제가 나중에 다시 전화 _______________. --}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        @endif
+                                        @if (isset($bt->anh))
                                         <p style="text-align: center;"><strong><img src="{{ asset($bt->anh) }}"
-                                                    alt="" width="112" height="163"></strong></p>
+                                            alt="" width="112" height="163"></strong></p>
+                                        @endif
+
                                     </div>
                                 </div>
                                 <div class="quiz-list">

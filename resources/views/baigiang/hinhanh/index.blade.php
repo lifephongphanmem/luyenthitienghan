@@ -63,7 +63,9 @@
                                     <td style="width: 2%">{{ ++$key }}</td>
                                     <td name='mabaihoc' style="width: 2%">{{ $ha->mabaihoc }}</td>
                                     <td name='hinhanh' class="text-left" style="width: 5%">
-                                    <img src="{{url($ha->hinhanh)}}" alt="" style="width:82px">    
+                                        @if(isset($ha->hinhanh))
+                                    <img src="{{url($ha->hinhanh)}}" alt="" style="width:82px"> 
+                                    @endif   
                                     </td>
                                     <td name='audio' style="width: 8%">
                                         <audio title="Nghe K-4" controls="controls" style="width:103px">

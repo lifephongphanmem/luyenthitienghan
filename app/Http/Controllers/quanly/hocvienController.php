@@ -63,7 +63,9 @@ class hocvienController extends Controller
 
         $inputs['mahocvien']=getdate()[0];
         hocvien::create($inputs);
+        $taikhoan=User::where('cccd',$inputs['cccd'])->first();
         //Tạo tài khoản
+        if(!isset($taikhoan)){
         $data=[
             'tentaikhoan'=>$inputs['tenhocvien'],
             'cccd'=>$inputs['cccd'],
@@ -74,7 +76,7 @@ class hocvienController extends Controller
             'manhomchucnang'=>1680748012
         ];
         User::create($data);
-
+    }
         return redirect('/HocVien/ThongTin')
                 ->with('success','Thêm mới thành công');
 

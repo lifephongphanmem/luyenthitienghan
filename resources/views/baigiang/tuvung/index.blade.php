@@ -44,6 +44,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th>STT</th>
+                                <th>Mã bài học</th>
                                 <th>Cụm từ</th>
                                 <th>Tiếng Hàn</th>
                                 <th>Tiếng Việt</th>
@@ -56,6 +57,7 @@
                             @foreach ($model as $key => $tv)
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
+                                    <td style="width: 2%">{{ $tv->mabaihoc }}</td>
                                     <td name='tengiaotrinh' class="text-left" style="width: 5%">{{ $tv->cumtuvung }}</td>
                                     <td name='soluongbai' style="width: 8%">{{ $tv->tutienghan }}</td>
                                     <td name='ghichu' style="width: 10%">{{ $tv->tiengviet }}</td>
