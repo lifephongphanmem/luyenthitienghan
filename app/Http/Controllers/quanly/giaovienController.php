@@ -53,10 +53,26 @@ class giaovienController extends Controller
             return view('errors.noperm')->with('machucnang', 'giaovien');
         }
         $inputs=$request->all();
+        $gv=giaovien::where('cccd',$inputs['cccd'])->first();
+        if(isset($gv)){
+            return view('errors.tontaidulieu')->with('furl','/GiaoVien/ThongTin')->with('message','CCCD đã được sử dụng');;
+        }
         $inputs['magiaovien']=getdate()[0];
 
         giaovien::create($inputs);
-
+        $taikhoan=User::where('cccd',$inputs['cccd'])->first();
+        if(!isset($taikhoan)){
+        $data=[
+            'tentaikhoan'=>$inputs['tengiaovien'],
+            'cccd'=>$inputs['cccd'],
+            'password'=>Hash::make('123456abc'),
+            'giaovien'=>1,
+            'sdt'=>$inputs['sdt'],
+            'mataikhoan'=>date('YmdHis'),
+            'manhomchucnang'=>1680747743
+        ];
+        User::create($data);
+        }
         return redirect('/GiaoVien/ThongTin')
                 ->with('success','Thêm mới thành công');
     }

@@ -29,7 +29,7 @@ class tuvungController extends Controller
         if (!chkPhanQuyen('tuvung', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'tuvung');
         }
-        $model = tuvung::all();
+        $model = tuvung::orderBy('id','desc')->get();
         $m_baihoc = baihoc::all();
         $a_cumtuvung = array_column($model->unique('cumtuvung')->toarray(), 'cumtuvung');
         return view('baigiang.tuvung.index')
