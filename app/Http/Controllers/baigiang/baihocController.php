@@ -31,6 +31,7 @@ class baihocController extends Controller
 
         return view('baigiang.baihoc.index')
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('pageTitle','Bài học');
     }
 

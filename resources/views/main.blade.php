@@ -292,6 +292,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="container">
                             <!--begin::Dashboard-->
                             @yield('content')
+                            @include('includes.modal')
                             <!--end::Dashboard-->
                         </div>
                         <!--end::Container-->

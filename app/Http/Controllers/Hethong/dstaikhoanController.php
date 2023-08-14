@@ -44,6 +44,7 @@ class dstaikhoanController extends Controller
         $a_nhomtk = array_column(dsnhomtaikhoan::all()->toArray(), 'tennhomchucnang', 'manhomchucnang');
         return view('Hethong.taikhoan.index')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('a_nhomtk', $a_nhomtk)
             ->with('pageTitle','Quản lý tài khoản');
     }

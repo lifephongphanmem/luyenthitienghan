@@ -41,6 +41,7 @@ class thongtinController extends Controller
         }
 
         return view('quanly.thongtin.index', compact('nguoidung', 'ketquathi', 'user'))
+            ->with('baocao',getdulieubaocao())
             ->with('pageTitle', 'Quản lý thông tin');
     }
 }

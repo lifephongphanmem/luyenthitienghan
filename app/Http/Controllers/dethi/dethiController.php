@@ -38,6 +38,7 @@ class dethiController extends Controller
         }
         return  view('dethi.dethi.index')
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('pageTitle','Quản lý đề thi');
     }
 
@@ -124,7 +125,6 @@ class dethiController extends Controller
             return view('errors.noperm')->with('machucnang', 'dethi');
         }
         $inputs=$request->all();
-
         $inputs['made']=getdate()[0];
         $model=dethi::where('tende','like','%'.$inputs['tende'].'%')->first();
         if(isset($model)){
@@ -161,7 +161,7 @@ class dethiController extends Controller
         $a_dethi=array_column(dethi::all()->toarray(),'tende','made');
 
         $a_cauhoi=array_column($m_cauhoi->toarray(),'macauhoi');
-        $m_cauhoi_khac=cauhoi::wherenotin('macauhoi',$a_cauhoi)->get();               
+        $m_cauhoi_khac=cauhoi::wherenotin('macauhoi',$a_cauhoi)->where('nguoncauhoi',1684121372)->get();               
         if(isset($inputs['made'])){
             $inputs['url']='/DeThi/ChiTiet/'.$inputs['made'];
         }else{

@@ -42,6 +42,7 @@ class dsnhomtaikhoanController extends Controller
         }
         return view('Hethong.nhomchucnang.index')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('inputs', $inputs)
             ->with('pageTitle', 'Quản lý nhóm tài khoản');
     }

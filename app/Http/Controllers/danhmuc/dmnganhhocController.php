@@ -25,6 +25,7 @@ class dmnganhhocController extends Controller
         $model=nganhhoc::all();
         return view('danhmuc.nganhhoc.index')
                 ->with('model',$model)
+                ->with('baocao',getdulieubaocao())
                 ->with('pageTitle','Danh mục ngành học');
     }
     public function store_update(Request $request)

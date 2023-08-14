@@ -37,6 +37,7 @@ class thithuController extends Controller
         }
         $url = '/ThiThu/LamBai';
         return view('dethi.thithu.index')
+        ->with('baocao',getdulieubaocao())
             ->with('url', $url)
             ->with('phongthi', $phongthi->tenphongthi);
     }
@@ -48,7 +49,7 @@ class thithuController extends Controller
         // $made = $a_madethi[array_rand($a_madethi)];
         $inputs = $request->all();
         if (isset($inputs['loai'])) {
-            $cauhoi = taodethi();
+            $cauhoi = taodeluyenthi();
             // dd($cauhoi);
             $m_cauhoi = cauhoi::wherein('macauhoi', $cauhoi)->get();
             // $hocvien = hocvien::where('mahocvien', session('admin')->mahocvien)->first();
@@ -84,6 +85,10 @@ class thithuController extends Controller
         }
 
         $caudoc=$m_cauhoi->where('loaicauhoi',1683685323);
+        // dd(count($caudoc));
+        if(count($caudoc)<20){
+            return view('errors.tontaidulieu')->with('message','Đề thi chưa đủ số lượng câu')->with('furl','/');
+        }
         if(count($caudoc) > 0){
             $i=1;
             foreach($caudoc as $val){
@@ -105,6 +110,7 @@ class thithuController extends Controller
         $timestart = strtotime($thoigianbatdau->toTimeString());
         return view('dethi.thithu.thithu')
             ->with('m_cauhoi', $cauhoi_dethi)
+            ->with('baocao',getdulieubaocao())
             ->with('made', $made)
             ->with('maphongthi', $maphongthi)
             ->with('malop', $malop)
@@ -157,7 +163,7 @@ class thithuController extends Controller
             $luu_kq = array(
                 'maketqua' => getdate()[0],
                 'madethi' => $inputs['madethi'],
-                'mahocvien' => session('admin')->mahocvien,
+                'mahocvien' => session('admin')->manguoidung,
                 'diemthi' => $diemthi,
                 'dapanchon' => json_encode($bailam),
                 'thoigianlambai' => $thoigianlambai,
@@ -191,6 +197,7 @@ class thithuController extends Controller
 
         return view('dethi.thithu.quanlythithu')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('pageTitle', 'Danh sách phòng thi');
     }
 
@@ -198,6 +205,7 @@ class thithuController extends Controller
     {
         $url = '/ThiThu/LamBai?loai=1';
         return view('dethi.thithu.index')
+        ->with('baocao',getdulieubaocao())
             ->with('url', $url)
             ->with('pageTitle', 'Luyện thi EPS-TOPIK');
     }

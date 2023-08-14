@@ -31,6 +31,7 @@ class ChucnangController extends Controller
         return view('Hethong.chucnang.index')
         // ->with('baocao', getdulieubaocao())
                 ->with('model',$model)
+                ->with('baocao',getdulieubaocao())
                 ->with('pageTitle','Quản lý chức năng tài khoản');
     }
 

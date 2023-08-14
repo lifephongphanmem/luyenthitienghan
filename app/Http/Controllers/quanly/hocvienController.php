@@ -33,6 +33,7 @@ class hocvienController extends Controller
 
         return view('quanly.hocvien.index')
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('pageTitle','Quản lý học viên');
     }
 

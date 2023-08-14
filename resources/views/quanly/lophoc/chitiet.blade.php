@@ -194,12 +194,12 @@
                                 <select name="ngaythi" id="ngaythi" class="form-control "style="width:100%">
                                     <option value="">-- Chọn ngày thi --</option>
                                     @foreach ($ketquathi as $ct )
-                                        <option value="{{$ct->ngaythi}}">{{$ct->ngaythi}}</option>
+                                        <option value="{{$ct->ngaythi}}">{{getDayVn($ct->ngaythi)}}</option>
                                     @endforeach
 
                                 </select>
                             </div>
-                            <div class="col-md-12 mt-1">
+                            {{-- <div class="col-md-12 mt-1">
                                 <label class="control-label">Ngày thi</label>
                                 <select name="giothi" id="giothi" class="form-control "style="width:100%">
                                     <option value="">-- Chọn giờ thi --</option>
@@ -208,7 +208,7 @@
                                     @endforeach
 
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>

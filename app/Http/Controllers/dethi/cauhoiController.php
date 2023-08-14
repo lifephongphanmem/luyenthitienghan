@@ -52,6 +52,7 @@ class cauhoiController extends Controller
         $inputs['url'] = '/CauHoi/ThongTin';
         return view('dethi.cauhoi.index')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('inputs', $inputs)
             ->with('caunghe', $caunghe)
             ->with('luottrung', $luottrung)

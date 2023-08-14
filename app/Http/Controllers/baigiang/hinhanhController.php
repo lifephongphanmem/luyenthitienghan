@@ -33,6 +33,7 @@ class hinhanhController extends Controller
         $m_baihoc = baihoc::all();
         return view('baigiang.hinhanh.index')
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('m_baihoc',$m_baihoc)
                     ->with('pageTitle','Hình ảnh bài giảng');
     }

@@ -25,6 +25,7 @@ class dmlophocController extends Controller
         $model=dmlophoc::all();
         return view('danhmuc.lophoc.index')
                 ->with('model',$model)
+                ->with('baocao',getdulieubaocao())
                 ->with('pageTitle','Danh mục lớp học');
     }
     public function store_update(Request $request)

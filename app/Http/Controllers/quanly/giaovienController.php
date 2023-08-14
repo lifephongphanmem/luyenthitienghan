@@ -31,6 +31,7 @@ class giaovienController extends Controller
                 $a_texttrangthai=array('1'=>'text-success','2'=>'text-warning','3'=>'text-danger');
         return view('quanly.giaovien.index')
                 ->with('model',$model)
+                ->with('baocao',getdulieubaocao())
                 ->with('a_texttrangthai',$a_texttrangthai)
                 ->with('a_trangthai',$a_trangthai)
                 ->with('pageTitle','Quản lý giáo viên');

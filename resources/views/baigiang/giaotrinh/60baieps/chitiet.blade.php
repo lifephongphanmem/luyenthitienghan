@@ -309,7 +309,13 @@
                                             data-traloi="{{ $bt->dapan == $tl ? 'T' : 'F' }}">
                                             <div class="mark">{{ $tl }}</div>
                                             <div class="qsignbt">
-                                                <p>{{ $bt->$tl }}</p>
+                                                {{-- <p>{{ $bt->$tl }}</p> --}}
+                                                @if ($bt->loaidapan == 1)
+                                                {{ $bt->$tl }}
+                                            @else
+                                                <img src="{{ url($bt->$tl) }}" width="120"
+                                                    height="120">
+                                            @endif
                                             </div>
                                         </div>
                                     @endforeach

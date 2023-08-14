@@ -599,12 +599,12 @@
                                 if(data['madethi'] == 1){
                                     $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').html('<div class="kq-thi">' +
                                     tongdiem +
-                                    '</div><div class="ketquathi"><a href="/dashboard" style="margin-right: 10px;"> Về Trang Chủ </a> <a href="/ThiThu/LamBai?loai=1"> Thi tiếp </a></div>'
+                                    '</div><div class="ketquathi"><a href="/" style="margin-right: 10px;"> Về Trang Chủ </a> <a href="/ThiThu/LamBai?loai=1"> Thi tiếp </a></div>'
                                 );
                                 }else{
                                     $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').html('<div class="kq-thi">' +
                                     tongdiem +
-                                    '</div><div class="ketquathi"><a href="/dashboard" style="margin-right: 10px;"> Về Trang Chủ </a> </div>'
+                                    '</div><div class="ketquathi"><a href="/" style="margin-right: 10px;"> Về Trang Chủ </a> </div>'
                                 );
                                 }
 
