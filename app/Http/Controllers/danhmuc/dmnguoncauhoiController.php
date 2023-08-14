@@ -25,6 +25,7 @@ class dmnguoncauhoiController extends Controller
         $model=dmnguoncauhoi::all();
         return view('danhmuc.nguoncauhoi.index')
                 ->with('model',$model)
+                ->with('baocao',getdulieubaocao())
                 ->with('pageTitle','Danh mục nguồn câu hỏi');
     }
     public function store_update(Request $request)

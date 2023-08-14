@@ -18,6 +18,7 @@ class HethongchungController extends Controller
 	public function index()
 	{
 		return view('trangchu')
+		->with('baocao',getdulieubaocao())
 			->with('pageTitle', 'Trang chủ');
 	}
 

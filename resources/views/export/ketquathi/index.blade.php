@@ -9,14 +9,14 @@
         <td style="text-align:left;width:5%">Lớp học</td>
         <td class="text-left">: {{$a_lophoc[$inputs['malop']]}}</td>
     </tr>
-    <tr>
+    {{-- <tr>
         <td style="text-align:left">Đề thi</td>
-        <td class="text-left">: {{$a_dethi[$thongtin_thithu->madethi]}}</td>
-    </tr>
+        <td class="text-left">: {{$a_dethi[$thongtin_thithu->madethi]??''}}</td>
+    </tr> --}}
     <tr >
         <td style="text-align:left">Thời gian thi thử</td>
         <td width="40%" style="vertical-align: top;text-align:left">
-            : {{getDayVn($thongtin_thithu->ngaythi)}}
+            : {{getDayVn($inputs['ngaythi'])}}
         </td>
     </tr>
 </table>
@@ -45,14 +45,19 @@
     </thead>
     <?php $stt = 1; ?>
     <tbody>
-        @foreach ($hocvien as $item)
+        @foreach ($a_madeketqua as $key=>$made )
+            <tr style="font-weight:bold">
+                <td>{{convert2Roman(++$key)}}</td>
+                <td colspan="7">{{$a_dethi[$made]??''}}</td>
+            </tr>
+            <?php $m_hocvien=$hocvien->where('madethi',$made); ?>
+            @foreach ($m_hocvien as $item)
             <tr>
-
                 <td style="text-align: center ; vertical-align: middle">{{ $stt++ }}</td>
                 <td style="vertical-align: middle">{{ $item->tenhocvien }}</td>
 
                 @if ($item->gioitinh == 1)
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->ngaysinh }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ getDayVn($item->ngaysinh) }}</td>
                 @else
                     <td></td>
                 @endif
@@ -65,7 +70,7 @@
                 <td style="text-align: center ; vertical-align: middle">{{ $item->cccd }}</td>
                 <td style="vertical-align: middle">{{ $item->diachi }}</td>
                 <td style="text-align: center ; vertical-align: middle">{{ $item->diemthi }}</td>
-                <td style="text-align: center ; vertical-align: middle">{{ $item->thoigianlambai }}</td>
+                <td style="text-align: center ; vertical-align: middle">{{gmdate("H:i:s",$item->thoigianlambai)  }}</td>
 
                 {{-- <td style="text-align: center ; vertical-align: middle">{{ $item->mqh }}</td> --}}
 
@@ -77,6 +82,8 @@
 
             </tr>
         @endforeach
+        @endforeach
+
 
     </tbody>
 </table>

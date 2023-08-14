@@ -26,6 +26,7 @@ class dmtrinhdocmktController extends Controller
         $model = dmtrinhdocmkt::all()->sortBy('stt');	
 		$count = Count($model);		
 		return view('danhmuc.trinhdocmkt.index',compact('model','count'))
+        ->with('baocao',getdulieubaocao())
         ->with('pageTitle', 'Danh mục trình độ chuyên môn kỹ thuật');
 	}
 

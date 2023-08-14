@@ -33,6 +33,7 @@ class loaicauhoictController extends Controller
         return view('danhmuc.loaicauhoict.index')
                     ->with('madm',$madm)
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('a_danhmuc',$a_danhmuc)
                     ->with('pageTitle','Danh mục loại câu hỏi chi tiết');
     }

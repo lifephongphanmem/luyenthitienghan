@@ -45,6 +45,7 @@ class lophocController extends Controller
         $inputs['url']='/LopHoc/ThongTin';
         return view('quanly.lophoc.index')
                 ->with('model',$model)
+                ->with('baocao',getdulieubaocao())
                 ->with('inputs',$inputs)
                 ->with('a_khoahoc',$a_khoahoc)
                 ->with('a_giaovien',$a_giaovien)
@@ -196,24 +197,36 @@ class lophocController extends Controller
         $a_giaovien=array_column(giaovien::where('trangthai','!=',3)->get()->toarray(),'tengiaovien','magiaovien');
         $a_khoahoc=array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(),'khoahoc','khoahoc');
         $a_lophoc=array_column(lophoc::select('malop','tenlop')->get()->toarray(),'tenlop','malop');
-        $ketqua=ketquathithu::where('malop',$inputs['malop'])->where('ngaythi',$inputs['ngaythi'])->where('giothi',$inputs['giothi'])->get();
-        $thongtin_thithu=$ketqua->unique('made')->first();
-        $a_dethi=array_column(dethi::all()->toarray(),'tende','made');
+        $ketqua=ketquathithu::where('malop',$inputs['malop'])->where('ngaythi',$inputs['ngaythi'])->get();
+        // dd($ketqua);
+        // $thongtin_thithu=$ketqua->unique('madethi')->first();
+        $thongtin_thithu=$ketqua->unique('madethi');
+        $a_madeketqua=array_column($thongtin_thithu->toarray(),'madethi');
+        $dethi=dethi::all();
+        $a_dethi=array_column($dethi->toarray(),'tende','made');
+        $a_dethi_sosanh=array_column($dethi->toarray(),'made');
+        if(count(array_intersect($a_madeketqua,$a_dethi_sosanh))<=0 ){
+            $ketqua=new ketquathithu();
+        }
         $mahocvien=array_column($ketqua->toarray(),'mahocvien');
+
         $hocvien=hocvien::wherein('mahocvien',$mahocvien)->get();
         foreach($hocvien as $ct){
             $ketqua_hv=$ketqua->where('mahocvien',$ct->mahocvien)->first();
             $ct->diemthi=$ketqua_hv->diemthi;
             $ct->ngaythi=$ketqua_hv->ngaythi;
-            $ct->giothi=$ketqua_hv->giothi;
+            // $ct->giothi=$ketqua_hv->giothi;
+            $ct->madethi=$ketqua_hv->madethi;
             $ct->thoigianlambai=$ketqua_hv->thoigianlambai;
         }
+
         $inputs['url']='/LopHoc/KetQuaThiThu';
         return view('export.ketquathi.index')
                 ->with('a_khoahoc',$a_khoahoc)
                 ->with('a_lophoc',$a_lophoc)
                 ->with('a_giaovien',$a_giaovien)
                 ->with('a_dethi',$a_dethi)
+                ->with('a_madeketqua',$a_madeketqua)
                 ->with('thongtin_thithu',$thongtin_thithu)
                 ->with('inputs',$inputs)
                 ->with('hocvien',$hocvien)

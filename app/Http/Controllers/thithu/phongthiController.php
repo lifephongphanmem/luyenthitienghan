@@ -36,6 +36,7 @@ class phongthiController extends Controller
         ];
         return view('dethi.thithu.phongthi.index')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('a_trangthai', $a_trangthai)
             ->with('pageTitle', 'Danh sách phòng thi');
     }
@@ -63,6 +64,7 @@ class phongthiController extends Controller
         if (!chkPhanQuyen('phongthi', 'danh sách')) {
             return view('errors.noperm')->with('machucnang', 'phongthi');
         }
+        
         $phongthi = phongthi::where('maphongthi', $id)->first();
         $model = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')
             ->select('phongthi.*', 'phongthi_lop.malop')
@@ -77,12 +79,14 @@ class phongthiController extends Controller
             '1'=>'Mở'
         ];
         $m_dethi=dethi::all();
+        $a_dethi=array_column($m_dethi->toArray(),'tende','made');
         return view('dethi.thithu.phongthi.chitiet')
             ->with('model', $model)
             ->with('lophoc', $lophoc)
             ->with('tenlop', $tenlop)
             ->with('khoa', $khoa)
             ->with('m_dethi', $m_dethi)
+            ->with('a_dethi', $a_dethi)
             ->with('a_trangthai', $a_trangthai)           
             ->with('phongthi', $phongthi)
             ->with('pageTitle', 'Danh sách lớp thi');
@@ -98,10 +102,11 @@ class phongthiController extends Controller
         }
         $inputs = $request->all();
         $model = phongthi::where('maphongthi', $id)->first();
+        // dd($model);
         if (isset($model)) {
-            $model->update($inputs);
+            $model->update(['made'=>$inputs['made']]);
         };
-        return redirect('/PhongThi/ThongTin')
+        return redirect('/PhongThi/ChiTiet/'.$model->maphongthi)
             ->with('success', 'Cập nhật thành công');
     }
 

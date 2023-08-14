@@ -26,6 +26,7 @@ public function __construct()
         $model = doituonguutien::all()->sortBy('stt');	
 		$count = Count($model);			
 		return view('danhmuc.doituonguutien.index',compact('model','count'))
+        ->with('baocao',getdulieubaocao())
         ->with('pageTitle', 'Danh mục đối tượng ưu tiên');
 	}
 

@@ -34,6 +34,7 @@ class tuvungController extends Controller
         $a_cumtuvung = array_column($model->unique('cumtuvung')->toarray(), 'cumtuvung');
         return view('baigiang.tuvung.index')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('m_baihoc', $m_baihoc)
             ->with('a_cumtuvung', $a_cumtuvung)
             ->with('pageTitle', 'Từ vựng');

@@ -33,6 +33,7 @@ class baitapController extends Controller
         $m_baihoc = baihoc::all();
         return view('baigiang.baitap.index')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('m_baihoc', $m_baihoc)
             ->with('pageTitle', 'Bài tập');
     }
@@ -106,7 +107,8 @@ class baitapController extends Controller
         $dataObj = new ColectionImport();
         $theArray = Excel::toArray($dataObj, $inputs['file']);
         $arr = $theArray[0];
-        $arr_col = array('tenbaihoc','cauhoi','anh','audio','A','B','C','D','dapan');
+        // $arr_col = array('tenbaihoc','cauhoi','noidung','hoithoai1','hoithoai2','hoithoai3','hoithoai4','anh','audio','A','B','C','D','dapan');
+        $arr_col = array('tenbaihoc', 'cauhoi', 'noidung','hoithoai1','hoithoai2','hoithoai3','hoithoai4','anh','audio','A','B','C','D','dapan','dangcauhoi','loaidapan1','phanloai','dangcaudochieu','loaidapan','dangcau');
         $nfield = sizeof($arr_col);
         // dd($arr);
         for ($i = 1; $i < count($arr); $i++) {
@@ -117,6 +119,7 @@ class baitapController extends Controller
                 $data[$arr_col[$j]] = $arr[$i][$j];
             }
             $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
+            // dd($data);
             if (!isset($baihoc)) {
                 $inputs['mabaihoc'] = getdate()[0];
                 $databaihoc = [

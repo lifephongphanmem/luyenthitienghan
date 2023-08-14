@@ -13,10 +13,16 @@ class baitap extends Model
         'mabaihoc',
         'mabaitap',
         'cauhoi',
+        'noidung',
         'anh',
         'audio',
         'A','B','C','D',
         'dapan',
-        'stt'
+        'stt',
+        'hoithoai1',
+        'hoithoai2',
+        'hoithoai3',
+        'hoithoai4',
+        'loaidapan'
     ];
 }

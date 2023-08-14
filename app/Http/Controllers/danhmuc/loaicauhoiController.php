@@ -31,6 +31,7 @@ class loaicauhoiController extends Controller
 
         return view('danhmuc.loaicauhoi.index')
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('pageTitle','Danh mục loại câu hỏi');
     }
 

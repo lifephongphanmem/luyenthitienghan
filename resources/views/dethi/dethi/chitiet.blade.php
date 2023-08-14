@@ -34,8 +34,10 @@
                         <h3 class="card-label text-uppercase">Danh sách câu hỏi</h3>
                     </div>
                     <div class="card-toolbar">
+                        @if(count($m_cauhoi)<40)
                         <button onclick="add()" data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i>Thêm câu hỏi</button>
+                        @endif
                         {{-- <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import"></i>
@@ -115,7 +117,7 @@
         <!--end::Example-->
     </div>
     <!--end::Row-->
-    <!--Thêm bài học -->
+    <!--Thêm câu hỏi -->
     <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="{{ '/DeThi/ThemCauHoi' }}" method="POST" id="frm_them" enctype="multipart/form-data">
             @csrf

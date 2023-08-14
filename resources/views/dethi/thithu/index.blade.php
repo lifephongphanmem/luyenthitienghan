@@ -729,7 +729,7 @@
                         </center>
                     </div>
                     <center> <br>
-                        <div class="vetrangchu"> <a href="{{ '/dashboard' }}"> &lt;&lt; Trở Về Trang Chủ &gt;&gt; </a>
+                        <div class="vetrangchu"> <a href="{{ '/' }}"> &lt;&lt; Trở Về Trang Chủ &gt;&gt; </a>
                         </div>
                     </center>
                 </div>

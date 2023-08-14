@@ -28,6 +28,7 @@ class dmhanhchinhController extends Controller
         // dd(getdate()[0]);
         return view('danhmuc.danhmuchanhchinh.index')
                 ->with('model',$model)
+                ->with('baocao',getdulieubaocao())
                 ->with('pageTitle','Danh mục hành chính');
     }
 

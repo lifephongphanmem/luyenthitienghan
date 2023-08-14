@@ -442,10 +442,6 @@ function getDayVn($date) {
     return $newday;
 }
 
-function danhsachtinhtrangvl()
-{
-    return array('1'=>'Người có việc làm','2'=>'Người thất thất nghiệp','3'=>'Không tham gia hoạt động kinh tế');
-}
 
 function check_trung($array, $indexs, $justvals = false)
 {

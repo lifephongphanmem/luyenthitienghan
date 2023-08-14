@@ -33,6 +33,7 @@ class chitietloaicauhoictController extends Controller
 
         return view('danhmuc.chitietloaicauhoict.index')
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('a_dmct',$a_dmct)
                     ->with('madmct',$madmct)
                     ->with('pageTitle','Chi tiết loại câu hỏi chi tiết');
