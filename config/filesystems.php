@@ -56,6 +56,14 @@ return [
             'throw' => false,
         ],
 
+        'tintuc' => [
+            'driver' => 'local',
+            'root' => base_path('public/uploads/tintuc'),
+            'url' => base_path('public/uploads/tintuc'),
+            'visibility' => 'public',
+            'throw' => false,
+        ]
+
     ],
 
     /*
