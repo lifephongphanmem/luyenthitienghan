@@ -24,18 +24,26 @@ class tuvungController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!chkPhanQuyen('tuvung', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'tuvung');
         }
-        $model = tuvung::orderBy('id','desc')->get();
+        $inputs=$request->all();
+
         $m_baihoc = baihoc::all();
-        $a_cumtuvung = array_column($model->unique('cumtuvung')->toarray(), 'cumtuvung');
+        $inputs['mabaihoc']=$inputs['mabaihoc']??$m_baihoc->first()->mabaihoc;
+        $model = tuvung::join('baihoc','baihoc.mabaihoc','tuvung.mabaihoc')
+        ->select('tuvung.*')
+        ->where('baihoc.mabaihoc',$inputs['mabaihoc'])
+        ->get();
+        $a_cumtuvung = array_column($model->unique('cumtuvung')->sortBy('cumtuvung')->toarray(), 'cumtuvung');
+        $inputs['url']='/TuVung/ThongTin';
         return view('baigiang.tuvung.index')
             ->with('model', $model)
             ->with('baocao',getdulieubaocao())
             ->with('m_baihoc', $m_baihoc)
+            ->with('inputs',$inputs)
             ->with('a_cumtuvung', $a_cumtuvung)
             ->with('pageTitle', 'Từ vựng');
     }
@@ -113,7 +121,29 @@ class tuvungController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (!chkPhanQuyen('tuvung', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'tuvung');
+        }
+        $inputs=$request->all();
+        $model=tuvung::findOrFail($id);
+        $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
+        if (!isset($baihoc)) {
+            $inputs['mabaihoc'] = getdate()[0];
+            $data = [
+                'mabaihoc' => $inputs['mabaihoc'],
+                'tenbaihoc' => $inputs['tenbaihoc'],
+            ];
+            baihoc::create($data);
+        } else {
+            $inputs['mabaihoc'] = $baihoc->mabaihoc;
+        }
+
+        if(isset($model)){
+            $model->update($inputs);
+        }
+
+        return redirect('/TuVung/ThongTin')->with('success','Cập nhật thành công');
+        
     }
 
     /**

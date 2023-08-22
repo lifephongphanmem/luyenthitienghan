@@ -213,6 +213,7 @@ class cauhoiController extends Controller
         // dd($inputs);
         if (!isset($inputs['socau'])) {
             return view('960cau.dochieu.index')
+            ->with('baocao',getdulieubaocao())
                 ->with('pageTitle', '960 câu đọc hiểu');
         }
         $m_model = cauhoi::where('loaicauhoi', 1683685323)->where('nguoncauhoi', 1684121327);
@@ -281,10 +282,12 @@ class cauhoiController extends Controller
             ->with('title', $title)
             ->with('cau', $cau)
             ->with('dangcau', $dangcau)
+            ->with('baocao',getdulieubaocao())
             ->with('pageTitle',$title);
     }
     public function index960caunghe(){
         return view('960cau.nghehieu.index')
+        ->with('baocao',getdulieubaocao())
         ->with('pageTitle', '960 câu nghe hiểu');
     }
     public function caunghehieu(Request $request){
@@ -359,6 +362,7 @@ class cauhoiController extends Controller
             ->with('title', $title)
             ->with('cau', $cau)
             ->with('dangcau', $dangcau)
+            ->with('baocao',getdulieubaocao())
             ->with('pageTitle',$title);
     }
     public function import(Request $request){
@@ -393,5 +397,19 @@ class cauhoiController extends Controller
         }
         return redirect('/CauHoi/ThongTin?madm='.$inputs['loaicauhoi'])
                         ->with('success','Thêm thành công '.$socauhoi.' câu hỏi');
+    }
+    public function destroy($macauhoi)
+    {
+        if (!chkPhanQuyen('cauhoi', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'cauhoi');
+        }
+
+        $model=cauhoi::where('macauhoi',$macauhoi)->first();
+        if(isset($model)){
+            $model->delete();
+        }
+
+        return redirect('/CauHoi/ThongTin?madm='.$model->loaicauhoi.'&dangcau='.$model->dangcau)
+                    ->with('success','Xóa thành công');
     }
 }

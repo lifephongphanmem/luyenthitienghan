@@ -115,6 +115,7 @@ class lophocController extends Controller
                 ->with('a_lophoc',$a_lophoc)
                 ->with('a_giaovien',$a_giaovien)
                 ->with('ketquathi',$ketquathi)
+                ->with('baocao',getdulieubaocao())
                 ->with('pageTitle','Chi tiết lớp học');
     }
 
@@ -174,7 +175,7 @@ class lophocController extends Controller
             $hocvien=hocvien::where('mahocvien',$ct)->first();
             $hocvien->update(['malop'=>$inputs['malop']]);
         }
-
+        $lophoc->update(['soluonghocvien'=>$lophoc->soluonghocvien + count($inputs['mahocvien'])]);
         return redirect('/LopHoc/chitiet?lophoc='.$inputs['malop'].'&khoahoc='.$lophoc->khoahoc);
     }
     public function chuyenlop(Request $request,$id){
@@ -183,10 +184,12 @@ class lophocController extends Controller
         }
         $inputs=$request->all();
         $hocvien=hocvien::findOrFail($id);
+        $lophoc=lophoc::where('malop',$hocvien->malop)->first();
         if(isset($hocvien)){
             $hocvien->update(['malop'=>$inputs['malop']]);
         }
-        $lophoc=lophoc::where('malop',$inputs['malop'])->first();
+        $lophoc->update(['soluonghocvien'=>$lophoc->soluonghocvien - 1]);
+        // $lophoc=lophoc::where('malop',$inputs['malop'])->first();
 
         return redirect('/LopHoc/chitiet?lophoc='.$lophoc->malop.'&khoahoc='.$lophoc->khoahoc)
                     ->with('success','Chuyển lớp thành công');

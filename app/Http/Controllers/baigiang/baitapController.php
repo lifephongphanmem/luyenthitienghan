@@ -8,6 +8,7 @@ use App\Models\baigiang\baitap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Imports\ColectionImport;
+use App\Models\danhmuc\loaicauhoi;
 use Maatwebsite\Excel\Facades\Excel;
 
 class baitapController extends Controller
@@ -24,17 +25,24 @@ class baitapController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!chkPhanQuyen('baitap', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'baitap');
         }
-        $model = baitap::all();
+        $inputs=$request->all();
         $m_baihoc = baihoc::all();
+        $inputs['mabaihoc']=$inputs['mabaihoc']??$m_baihoc->first()->mabaihoc;
+        $model=baitap::join('baihoc','baihoc.mabaihoc','baitap.mabaihoc')
+                        ->select('baitap.*')
+                        ->where('baihoc.mabaihoc',$inputs['mabaihoc'])
+                        ->get();
+                        $inputs['url']='/BaiTap/ThongTin';
         return view('baigiang.baitap.index')
             ->with('model', $model)
             ->with('baocao',getdulieubaocao())
             ->with('m_baihoc', $m_baihoc)
+            ->with('inputs',$inputs)
             ->with('pageTitle', 'Bài tập');
     }
 

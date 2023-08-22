@@ -25,25 +25,31 @@ class baihocchinhController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!chkPhanQuyen('baihocchinh', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'baihocchinh');
         }
+        $inputs=$request->all();
+        $m_baihoc = baihoc::all();
+        $inputs['mabaihoc']=$inputs['mabaihoc']??$m_baihoc->first()->mabaihoc;
+        // dd($inputs);
         $model = baihocchinh::join('baihoc', 'baihoc.mabaihoc', 'baihocchinh.mabaihoc')
             ->select('baihoc.tenbaihoc', 'baihocchinh.*')
+            ->where('baihoc.mabaihoc',$inputs['mabaihoc'])
             ->orderBy('id','desc')
             ->get();
         // dd($model);
-        $m_baihoc = baihoc::all();
+
         $stt = baihocchinh::max('stt');
 
-
+        $inputs['url']='/BaiHocChinh/ThongTin';
         return view('baigiang.baihocchinh.index')
             ->with('model', $model)
             ->with('baocao',getdulieubaocao())
             ->with('stt', $stt ?? 0)
             ->with('m_baihoc', $m_baihoc)
+            ->with('inputs',$inputs)
             ->with('pageTitle', 'Bài học chính');
     }
 
@@ -101,6 +107,59 @@ class baihocchinhController extends Controller
 
         return redirect('/BaiHocChinh/ThongTin')
             ->with('success', 'Thêm mới thành công');
+    }
+
+    public function update(Request $request,$id)
+    {
+        if (!chkPhanQuyen('baihocchinh', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'baihocchinh');
+        }
+        $inputs=$request->all();
+        $model=baihocchinh::findOrFail($id);
+        if(isset($inputs['anh'])){
+            if(File::exists($model->anh)){
+                File::Delete($model->anh);
+            }
+            $file = $inputs['anh'];
+            $name = time() . $file->getClientOriginalName();
+            $file->move('uploads/anh/', $name);
+            $inputs['anh'] = 'uploads/anh/' . $name;
+        }
+        if(isset($inputs['anh2'])){
+            if(File::exists($model->anh2)){
+                File::Delete($model->anh2);
+            }
+            $file = $inputs['anh2'];
+            $name = time() . $file->getClientOriginalName();
+            $file->move('uploads/anh2/', $name);
+            $inputs['anh2'] = 'uploads/anh2/' . $name;
+        }
+        if (isset($inputs['audio'])) {
+            if(File::exists($model->audio)){
+                File::Delete($model->audio);
+            }
+            $file = $inputs['audio'];
+            $name = time() . $file->getClientOriginalName();
+            $file->move('uploads/audio/', $name);
+            $inputs['audio'] = 'uploads/audio/' . $name;
+        }
+
+        //trường hợp lúc đầu có dữ liệu nhưng sau muốn bỏ dữ liệu
+        if(isset($model->anh) && !isset($inputs['remove_anh'])){
+            $inputs['anh']= null;
+        }
+        if(isset($model->anh2) && !isset($inputs['remove_anh2'])){
+            $inputs['anh2']= null;
+        }
+        if(isset($model->audio) && !isset($inputs['audio'])){
+            $inputs['audio']= null;
+        }
+
+
+
+        $model->update($inputs);
+
+        return redirect('/BaiHocChinh/ThongTin?mabaihoc='.$model->mabaihoc)->with('success','Cập nhật thành công');
     }
 
 
