@@ -28,6 +28,7 @@ Route::prefix('CauHoi')->group(function(){
     Route::post('/LoaiCauHoi',[cauhoiController::class,'loaicauhoi']);
     Route::post('/LoaiDapAn',[cauhoiController::class,'loaidapan']);
     Route::post('import',[cauhoiController::class,'import']);
+    Route::get('/edit/{macauhoi}',[cauhoiController::class,'edit']);
 });
 
 Route::prefix('ThiThu')->group(function(){
