@@ -33,13 +33,14 @@ class cauhoiController extends Controller
             return view('errors.noperm')->with('machucnang', 'cauhoi');
         }
         $inputs = $request->all();
-
         $nguoncauhoi = dmnguoncauhoi::all();
         $loaicauhoi = loaicauhoi::all();
         $madm = loaicauhoi::select('madm')->first()->madm;
         $inputs['madm'] = isset($inputs['madm']) ? $inputs['madm'] : $madm;
         $inputs['dangcau'] = isset($inputs['dangcau']) ? $inputs['dangcau'] : 1;
-        $model = cauhoi::where('loaicauhoi', $inputs['madm'])->where('dangcau', $inputs['dangcau'])->orderBy('id', 'desc')->get();
+        $inputs['nguoncauhoi']=isset($inputs['nguoncauhoi'])?$inputs['nguoncauhoi']:$nguoncauhoi->first()->madm;
+
+        $model = cauhoi::where('loaicauhoi', $inputs['madm'])->where('dangcau', $inputs['dangcau'])->where('nguoncauhoi',$inputs['nguoncauhoi'])->orderBy('id', 'desc')->get();
         // $a_ghep = array_column($model->toarray(), 'macaughep');
         $a_ghep = array_column($model->toarray(), 'stt');
         $luottrung = [];
@@ -292,7 +293,6 @@ class cauhoiController extends Controller
     }
     public function caunghehieu(Request $request){
         $inputs = $request->all();
-        // dd($inputs);
         $m_model = cauhoi::where('loaicauhoi', 1683685241)->where('nguoncauhoi', 1684121327);
         if (!isset($inputs['socau'])) {
             $sotrang=count($m_model->get())/40;
@@ -338,7 +338,7 @@ class cauhoiController extends Controller
                 }
                 $model[]=$data;
                 $k=0;
-// dd($model);
+            // dd($model);
             }
             $dangcau=2;
             $title='Câu '.(($inputs['socau']-1)*40)+1 .' đến câu '.$inputs['socau']*40;
@@ -356,7 +356,7 @@ class cauhoiController extends Controller
                 $model=$model->where('stt','>=',$cau)->take(40);
             }; 
         }
-// dd($model->where('id',361));
+        // dd($model->where('id',361));
         return view('960cau.nghehieu.960caunghehieu')
             ->with('model', $model)
             ->with('title', $title)
@@ -411,5 +411,26 @@ class cauhoiController extends Controller
 
         return redirect('/CauHoi/ThongTin?madm='.$model->loaicauhoi.'&dangcau='.$model->dangcau)
                     ->with('success','Xóa thành công');
+    }
+
+    public function edit($id){
+        if (!chkPhanQuyen('cauhoi', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'cauhoi');
+        }
+        $model=cauhoi::where('macauhoi',$id)->first(); 
+
+        return response()->json($model);
+    }
+
+    public function update(Request $request,$id)
+    {
+        if (!chkPhanQuyen('cauhoi', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'cauhoi');
+        }
+        $inputs=$request->all();
+        $model=cauhoi::findOrFail($id);
+        if(isset($model)){
+
+        }
     }
 }
