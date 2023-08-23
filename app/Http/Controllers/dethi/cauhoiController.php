@@ -298,6 +298,7 @@ class cauhoiController extends Controller
             $sotrang=count($m_model->get())/40;
             return view('960cau.nghehieu.index')
                 ->with('sotrang',$sotrang)
+                ->with('baocao',getdulieubaocao())
                 ->with('pageTitle', '960 câu nghe hiểu');
         }
 
@@ -355,7 +356,6 @@ class cauhoiController extends Controller
                 $model=$model->where('stt','>=',$cau)->take(40);
             }; 
         }
-  
 // dd($model->where('id',361));
         return view('960cau.nghehieu.960caunghehieu')
             ->with('model', $model)
