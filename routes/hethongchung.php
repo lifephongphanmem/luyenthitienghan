@@ -29,7 +29,7 @@ Route::prefix('TaiKhoan')->group(function () {
     Route::get('/ThongTin', [dstaikhoanController::class, 'ThongTin']);
     // Route::get('/ThemMoi', [dstaikhoanController::class, 'create']);
     Route::post('/store', [dstaikhoanController::class, 'store']);
-    // Route::post('/delete/{id}', [dstaikhoanController::class, 'destroy']);
+    Route::post('/delete/{id}', [dstaikhoanController::class, 'destroy']);
     // Route::get('/edit_tk/{id}', [dstaikhoanController::class, 'edit_tk']);
     Route::post('/update/{id}', [dstaikhoanController::class, 'update']);
 

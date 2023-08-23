@@ -4,7 +4,9 @@ namespace App\Http\Controllers\quanly;
 
 use App\Http\Controllers\Controller;
 use App\Models\quanly\giaovien;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class giaovienController extends Controller
@@ -109,7 +111,11 @@ class giaovienController extends Controller
         }
         $inputs=$request->all();
         $model=giaovien::findOrFail($id);
+
         if(isset($model)){
+            if($model->cccd != $inputs['cccd']){
+                User::where('cccd',$model->cccd)->update(['cccd'=>$inputs['cccd']]);
+            }
             $model->update($inputs);
         }
 
@@ -126,7 +132,12 @@ class giaovienController extends Controller
             return view('errors.noperm')->with('machucnang', 'giaovien');
         }
         $model=giaovien::findOrFail($id);
+
         if(isset($model)){
+            $user=User::where('cccd',$model->cccd)->first();
+            if(isset($user)){
+                $user->delete();
+            }
             $model->delete();
         }
 

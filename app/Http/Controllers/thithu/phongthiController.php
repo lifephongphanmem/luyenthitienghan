@@ -61,7 +61,7 @@ class phongthiController extends Controller
      */
     public function show(string $id)
     {
-        if (!chkPhanQuyen('phongthi', 'danh sách')) {
+        if (!chkPhanQuyen('phongthi', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'phongthi');
         }
         
@@ -89,6 +89,7 @@ class phongthiController extends Controller
             ->with('a_dethi', $a_dethi)
             ->with('a_trangthai', $a_trangthai)           
             ->with('phongthi', $phongthi)
+            ->with('baocao',getdulieubaocao())
             ->with('pageTitle', 'Danh sách lớp thi');
     }
 

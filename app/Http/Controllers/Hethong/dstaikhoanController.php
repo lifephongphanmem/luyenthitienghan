@@ -7,6 +7,8 @@ use App\Models\Hethong\Chucnang;
 use App\Models\Hethong\dsnhomtaikhoan;
 use App\Models\Hethong\dsnhomtaikhoan_phanquyen;
 use App\Models\Hethong\dstaikhoan_phanquyen;
+use App\Models\quanly\giaovien;
+use App\Models\quanly\hocvien;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -77,9 +79,23 @@ class dstaikhoanController extends Controller
         switch ($inputs['phanloai']) {
             case '1':
                 $inputs['giaovien'] = 1;
+                $data=[
+                    'magiaovien'=>$inputs['cccd'].'_'.getdate()[0],
+                    'tengiaovien'=>$inputs['tentaikhoan'],
+                    'cccd'=>$inputs['cccd'],
+                    'email'=>$inputs['email'],
+                ];
+                giaovien::create($data);
                 break;
             case '2':
                 $inputs['hocvien'] = 1;
+                $data=[
+                    'hocvien'=>$inputs['cccd'].'_'.getdate()[0],
+                    'tenhocvien'=>$inputs['tentaikhoan'],
+                    'cccd'=>$inputs['cccd'],
+                    'email'=>$inputs['email'],
+                ];
+                hocvien::create($data);
                 break;
             default:
                 $inputs['hethong'] = 1;
@@ -94,13 +110,19 @@ class dstaikhoanController extends Controller
 		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
-        $validate = $request->validate([
-			'email' => 
-                [Rule::unique('users')->ignore($id)],
-                'cccd' => 
-                [Rule::unique('users')->ignore($id)],				
-			
-			]);
+
+        // $validate = $request->validate([
+		// 	'email' => 
+        //         [Rule::unique('users')->ignore($id)],
+        //         'cccd' => 
+        //         [Rule::unique('users')->ignore($id)],							
+		// 	]);
+        $validate=$request->validate([
+            'cccd'=>'unique:users,cccd,'.$id,
+            // 'email'=>'unique:users,email,'.$id
+        ]);
+// dd(1);
+
 		$inputs = $request->all();
 		$model = User::findOrFail($id);
 		// $model = User::where('username',$inputs['username'])->first();
@@ -157,6 +179,7 @@ class dstaikhoanController extends Controller
             ->with('model', $m_chucnang->where('capdo', '1')->sortby('id'))
             ->with('m_chucnang', $m_chucnang)
             ->with('m_taikhoan', $m_taikhoan)
+            ->with('baocao',getdulieubaocao())
             ->with('pageTitle','Phân quyền tài khoản');
     }
 
@@ -248,5 +271,31 @@ class dstaikhoanController extends Controller
         } else {
             return redirect('/TaiKhoan/ThongTin?phanloaitk=' . $inputs['phanloaitk']);
         }
+    }
+
+    public function destroy($id)
+    {
+        if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
+        $model=User::findOrFail($id);
+        if(isset($model)){
+            if($model->hocvien == 1){
+                $hocvien=hocvien::where('cccd',$model->cccd)->first();
+                if(isset($hocvien)){
+                    $hocvien->delete();
+                }
+            }
+            if($model->giaovien == 1){
+                $giaovien=giaovien::where('cccd',$model->cccd)->first();
+                if(isset($giaovien)){
+                    $giaovien->delete();
+                }
+            }
+
+            $model->delete();
+        }
+
+        return redirect('/TaiKhoan/ThongTin')->with('message','Xóa thành công');
     }
 }

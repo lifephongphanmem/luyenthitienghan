@@ -258,7 +258,7 @@
             <div class="feature">
                 <div class="feature-icon">
                     <a href="mien-phi"><img
-                            src="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/tich-hop.png"
+                            src="{{ url('/images/tich-hop.png') }}"
                             data-at2x="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/tich-hop@2x.png"></a>
                 </div>
                 <h3 class="feature-heading">
@@ -272,7 +272,7 @@
             <div class="feature">
                 <div class="feature-icon">
                     <a href="dich-vu"><img
-                            src="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/dichvu-ondinh.png"
+                            src="{{ url('/images/dichvu-ondinh.png') }}"
                             data-at2x="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/dichvu-ondinh@2x.png"></a>
                 </div>
                 <h3 class="feature-heading">
@@ -286,7 +286,7 @@
             <div class="feature">
                 <div class="feature-icon">
                     <a href="chat-luong"><img
-                            src="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/chinhsachdaily.png"
+                            src="{{ url('/images/chinhsachdaily.png') }}"
                             data-at2x="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/chinhsachdaily@2x.png"></a>
                 </div>
                 <h3 class="feature-heading">

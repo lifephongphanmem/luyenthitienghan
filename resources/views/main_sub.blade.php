@@ -177,7 +177,7 @@
                         </a>
                     </li>
                 @endif
-                @if (chkPhanQuyen('dethi', 'phanquyen'))
+                @if (chkPhanQuyen('phongthi', 'phanquyen'))
                     <li class="menu-item" aria-haspopup="true">
                         <a href="{{ '/PhongThi/ThongTin' }}" class="menu-link"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;

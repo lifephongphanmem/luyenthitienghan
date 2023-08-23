@@ -143,8 +143,8 @@
                             {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                             <select name="trangthai" class="form-control select2basic"  style="width:100%">
 
-                                <option value="0">Kích hoạt</option>
-                                <option value="1">Vô hiệu</option>
+                                <option value="1">Kích hoạt</option>
+                                <option value="0">Vô hiệu</option>
 
 
                             </select>

@@ -15,6 +15,9 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+            $('#a_baihoc').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?mabaihoc=' + $('#a_baihoc').val();
+            });
         });
     </script>
 @stop
@@ -40,6 +43,19 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Bài học</label>
+
+                            <select name="mabaihoc" id="a_baihoc" class="form-control select2basic">
+                                @foreach ($m_baihoc as $key => $ct)
+                                    <option value="{{ $ct->mabaihoc }}"
+                                        {{ $ct->mabaihoc == $inputs['mabaihoc'] ? 'selected' : '' }}>{{ $ct->tenbaihoc }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr class="text-center">
@@ -72,7 +88,7 @@
                                             <source src="{{ asset($ha->audio) }}">
                                         </audio>  
                                     </td>
-                                    <td name='audio' style="width: 8%">{{ $ha->tienghan }}</td>
+                                    <td name='tutienghan' style="width: 8%">{{ $ha->tienghan }}</td>
                                     <td name='A' style="width: 10%">{{ $ha->A }}</td>
                                     <td name='B' style="width: 10%">{{ $ha->B }}</td>
                                     <td name='C' style="width: 10%">{{ $ha->C }}</td>
@@ -181,6 +197,85 @@
             </div>
         </form>
     </div>
+        <!--Cập nhật -->
+        <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+            <form action="" method="POST" id="frm_edit" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Thông tin hình ảnh
+                            </h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-md-11">
+                                    <label class="control-label">Tên bài học<span class="require">*</span></label>
+                                    <select name="tenbaihoc" id="tenbaihoc_update" class="form-control">
+                                        @foreach ($m_baihoc as $key=>$ct )
+                                            <option value="{{$ct->mabaihoc}}">{{$ct->tenbaihoc}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-1" style="padding-left: 0px;">
+                                    <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                                    <button type="button" class="btn btn-default" data-target="#modal-tenbaihoc" data-toggle="modal">
+                                        <i class="fa fa-plus"></i></button>
+                                </div>
+    
+                                {{-- <div class="col-md-12">
+                                    <label class="control-label">Hình ảnh<span class="require">*</span></label>
+                                    <input type="file" name="hinhanh" class="form-control">
+                                </div> --}}
+                                <div class="col-md-4 mt-2">
+                                    <label class="control-label">Ảnh</label>
+                                    <input type="file" name="hinhanh" id="anh" class="form-control">
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    <label class="control-label">Audio<span class="require">*</span></label>
+                                    <input type="file" name="audio" class="form-control">
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    <label class="control-label">Từ ngữ<span class="require">*</span></label>
+                                    <input type="text" name="tienghan" id="tienghan" class="form-control">
+                                </div>
+                                <div class="col-md-3 mt-2">
+                                    <label class="control-label">Đáp án A<span class="require">*</span></label>
+                                    <input type="text" name="A" id="dapanA" class="form-control">
+                                </div>
+                                <div class="col-md-3 mt-2">
+                                    <label class="control-label">Đáp án B<span class="require">*</span></label>
+                                    <input type="text" name="B" id="dapanB" class="form-control">
+                                </div>
+                                <div class="col-md-3 mt-2">
+                                    <label class="control-label">Đáp án C<span class="require">*</span></label>
+                                    <input type="text" name="C" id="dapanC" class="form-control">
+                                </div>
+                                <div class="col-md-3 mt-2">
+                                    <label class="control-label">Đáp án D<span class="require">*</span></label>
+                                    <input type="text" name="D" id="dapanD" class="form-control">
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <label class="control-label">Đáp án đúng<span class="require">*</span></label>
+                                    <select name="dapan" id='dapandung' class="form-control">
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         <!--Nhận excel -->
         <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
             <form action="{{ '/HinhAnh/import' }}" method="POST" id="frm_hinhanh_excel" enctype="multipart/form-data">
@@ -256,81 +351,7 @@
     </div>
 
 
-    <!--Cập nhật -->
-    <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
-        <form action="" method="POST" id="frm_edit" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin câu trắc nghiệm
-                        </h4>
-                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <div class="col-md-11">
-                                <label class="control-label">Tên bài học<span class="require">*</span></label>
-                                <select name="tenbaihoc" id="mabaihoc" class="form-control">
-                                    @foreach ($m_baihoc as $key=>$ct )
-                                        <option value="{{$ct->mabaihoc}}">{{$ct->tenbaihoc}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-1" style="padding-left: 0px;">
-                                <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
-                                <button type="button" class="btn btn-default" data-target="#modal-tenbaihoc" data-toggle="modal">
-                                    <i class="fa fa-plus"></i></button>
-                            </div>
 
-                            {{-- <div class="col-md-12">
-                                <label class="control-label">Hình ảnh<span class="require">*</span></label>
-                                <input type="file" name="hinhanh" class="form-control">
-                            </div> --}}
-                            <div class="col-md-6 mt-2">
-                                <label class="control-label">Tên câu hỏi</label>
-                                <input type="text" name="tencautracnghiem" id="tencauhoi" class="form-control">
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <label class="control-label">Nội dung<span class="require">*</span></label>
-                                <input type="text" name="noidung" id="noidung" class="form-control">
-                            </div>
-                            <div class="col-md-3 mt-2">
-                                <label class="control-label">Đáp án A<span class="require">*</span></label>
-                                <input type="text" name="A" id="A" class="form-control">
-                            </div>
-                            <div class="col-md-3 mt-2">
-                                <label class="control-label">Đáp án B<span class="require">*</span></label>
-                                <input type="text" name="B" id="B" class="form-control">
-                            </div>
-                            <div class="col-md-3 mt-2">
-                                <label class="control-label">Đáp án C<span class="require">*</span></label>
-                                <input type="text" name="C" id="C" class="form-control">
-                            </div>
-                            <div class="col-md-3 mt-2">
-                                <label class="control-label">Đáp án D<span class="require">*</span></label>
-                                <input type="text" name="D" id="D" class="form-control">
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <label class="control-label">Đáp án đúng<span class="require">*</span></label>
-                                <select name="dapan" id="dapan" class="form-control">
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
-                            ý</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
     <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8">
             @csrf
@@ -384,24 +405,24 @@
             $('#cumtuvung').val(gt).trigger('change');
         }
         function edit(e, matracnghiem) {
-            var url='/TracNghiem/update/'+matracnghiem;
+            var url='/HinhAnh/update/'+matracnghiem;
             var tr = $(e).closest('tr');
 
             $('#tencauhoi').val($(tr).find('td[name=tencauhoi]').text());
-            $('#noidung').val($(tr).find('td[name=noidung]').text());
-            $('#A').val($(tr).find('td[name=A]').text());
-            $('#B').val($(tr).find('td[name=B]').text());
-            $('#C').val($(tr).find('td[name=C]').text());
-            $('#D').val($(tr).find('td[name=D]').text());
+            $('#tienghan').val($(tr).find('td[name=tutienghan]').text());
+            $('#dapanA').val($(tr).find('td[name=A]').text());
+            $('#dapanB').val($(tr).find('td[name=B]').text());
+            $('#dapanC').val($(tr).find('td[name=C]').text());
+            $('#dapanD').val($(tr).find('td[name=D]').text());
 
             var dapan=$(tr).find('td[name=dapan]').text();
             var tenbaihoc=$(tr).find('td[name=mabaihoc]').text();
 
-            $('#dapan option[value=' + dapan + ' ]').attr('selected', false);
-            $('#dapan option[value=' + dapan + ' ]').attr('selected', 'selected');
+            $('#dapandung option[value=' + dapan + ' ]').attr('selected', false);
+            $('#dapandung option[value=' + dapan + ' ]').attr('selected', 'selected');
 
             $('#mabaihoc option[value=' + tenbaihoc + ' ]').attr('selected', false);
-            $('#mabaihoc option[value=' + tenbaihoc + ' ]').attr('selected', 'selected');
+            $('#tenbaihoc_update option[value=' + tenbaihoc + ' ]').attr('selected', 'selected');
 
             $('#frm_edit').attr('action', url);
           
