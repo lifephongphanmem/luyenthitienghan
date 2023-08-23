@@ -298,13 +298,15 @@
             </ul>
         </div>
     </li>
+    
+    @if (chkPhanQuyen('baocao', 'phanquyen'))
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text">BÁO CÁO &nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
             {{-- <span class="menu-desc">EPS-TOPIK</span> --}}
 
         </a>
-        </a>
+        @if (chkPhanQuyen('thongke', 'phanquyen'))
         <div class="menu-submenu menu-submenu-classic menu-submenu-left">
             <ul class="menu-subnav">
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
@@ -327,7 +329,9 @@
 
             </ul>
         </div>
+        @endif
     </li>
+    @endif
     @if (chkPhanQuyen('hethong', 'phanquyen'))
         <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
             <a href="javascript:;" class="menu-link menu-toggle">
