@@ -29,7 +29,7 @@ class thongtinController extends Controller
             $nguoidung = hocvien::where('mahocvien', $user->manguoidung)->first();
 
             $ketquathi = ketquathithu::join('dethi', 'ketquathithu.madethi', '=', 'dethi.made')
-                ->where('mahocvien', '1681118558')
+                ->where('mahocvien', $user->manguoidung)
                 ->orderBy('ketquathithu.created_at', 'DESC')
                 ->get();
         } else if ($user->giaovien == 1) {
