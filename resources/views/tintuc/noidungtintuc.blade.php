@@ -14,6 +14,12 @@
         .subtitle {
             font-size: 8.7pt;
         }
+
+        .center-items {
+            display: flex;
+            align-items: center;
+            justify-content: right;
+        }
     </style>
 @endsection
 
@@ -23,7 +29,21 @@
 
 @section('content')
     <div class="card">
-        <h3 class="pt-8 pb-3 pl-7 pr-7 border-bottom border-1">TIN TỨC</h3>
+        <div class="border-bottom border-1 d-flex">
+            <div class="pt-8 pb-3 pl-7 pr-7 col-10">
+                <h3>TIN TỨC</h3>
+            </div>
+            <div class="col-2 center-items">
+                @if (chkPhanQuyen('tintuc', 'thaydoi'))
+                    <button type="button" class="btn btn-primary m-1">
+                        <a href="{{ '/TinTuc/' . $baiviet->slug . '/Sua' }}" style="color: white">Sửa</a>
+                    </button>
+                    <button type="button" class="btn btn-danger m-1" data-target="#xacnhan" data-toggle="modal">
+                        Xoá
+                    </button>
+                @endif
+            </div>
+        </div>
         <div class="pt-7 pb-7 pl-15 pr-15">
             <div class="pb-2 border-bottom border-2">
                 <h2 class="text-uppercase">{{ $baiviet->tieude }}</h2>
@@ -48,10 +68,25 @@
                     </a>
                 </div>
                 <div>
-                    <a href="{{ url('/TinTuc/' . $bai->slug) }}" style="font-size: 11pt">{{$bai->tieude}}</a>
-                    <i style="font-size: 9.5pt">{{Carbon\Carbon::createFromTimeString($bai->created_at)->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i:s')}}</i>
+                    <a href="{{ url('/TinTuc/' . $bai->slug) }}" style="font-size: 11pt">{{ $bai->tieude }}</a>
+                    <i
+                        style="font-size: 9.5pt">{{ Carbon\Carbon::createFromTimeString($bai->created_at)->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i:s') }}</i>
                 </div>
             </div>
         @endforeach
+    </div>
+    <div id="xacnhan" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+        <div class="modal-dialog modal-sm align-middle">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h4 id="modal-header-primary-label" class="modal-title">Xác nhận xoá bài viết!</h4>
+                    <div class="pt-3">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="button" class="btn btn-danger"><a href="{{ '/TinTuc/' . $baiviet->slug . '/Xoa' }}"
+                                style="color: white">Đồng ý</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
