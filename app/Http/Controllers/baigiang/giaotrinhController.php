@@ -36,6 +36,7 @@ class giaotrinhController extends Controller
 
         return view('baigiang.giaotrinh.index')
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('pageTitle','Giáo trình');
     }
 
@@ -82,6 +83,7 @@ class giaotrinhController extends Controller
         $inputs['url']='/GiaoTrinh/chitiet';
         return view('baigiang.giaotrinh.chitiet')
                 ->with('m_baihoc',$m_baihoc)
+                ->with('baocao',getdulieubaocao())
                 ->with('a_baihoc',$a_baihoc)
                 ->with('a_giaotrinh',$a_giaotrinh)
                 ->with('inputs',$inputs)
@@ -177,6 +179,7 @@ class giaotrinhController extends Controller
         $model=baihoc::where('magiaotrinh',1681271756)->get();
 
         return view('baigiang.giaotrinh.60baieps.index')
+        ->with('baocao',getdulieubaocao())
                 ->with('model',$model)
                 ->with('pageTitle','60 bài eps-topik');
 
@@ -209,6 +212,7 @@ class giaotrinhController extends Controller
         $m_baitap=baitap::where('mabaihoc',$inputs['mabaihoc'])->get();
         return view('baigiang.giaotrinh.60baieps.chitiet')
                     ->with('m_baihocchinh',$m_baihocchinh)
+                    ->with('baocao',getdulieubaocao())
                     ->with('m_tuvung',$m_tuvung)
                     ->with('a_cumtuvung',$a_cumtuvung)
                     ->with('m_tracnghiem',$m_tracnghiem)

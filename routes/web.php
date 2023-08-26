@@ -24,4 +24,4 @@ include('baigiang.php');
 include('dethi.php');
 include('danhmuc.php');
 include('export.php');
-include('tintuc.php');
+include('baocao_thongke.php');

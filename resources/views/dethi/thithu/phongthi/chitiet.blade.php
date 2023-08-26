@@ -46,6 +46,7 @@
                                 <th>STT</th>
                                 <th>Mã lớp</th>
                                 <th>Tên lớp</th>
+                                <th>Đề thi</th>
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -57,15 +58,17 @@
                                     <td name="maphongthi" style="width: 2%">{{ $dt->malop }}</td>
                                     <td name='tenphongthi' class="text-left" style="width: 10%">
                                         {{ $tenlop[$dt->malop] ? $tenlop[$dt->malop] . '-' . $khoa[$dt->malop] : '' }}</td>
+                                        <td name="maphongthi" style="width: 2%">{{ $a_dethi[$dt->made] }}</td>
                                     <td name='trangthai' style="width: 2%">
                                         {{ isset($dt->trangthai) ? $a_trangthai[$dt->trangthai] : '' }}</td>
+                                       
                                     <td class="text-center" style="width:8%">
 
-                                        {{-- <button title="Sửa thông tin"
-                                            onclick="edit(this,'{{ $dt->maphongthi }}','{{ $dt->trangthai }}')"
+                                        <button title="Đổi đề thi"
+                                            onclick="edit(this,'{{ $dt->maphongthi }}','{{ $dt->made }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
-                                        </button> --}}
+                                        </button>
                                         <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{ '/PhongThi/XoaLop/' . $dt->malop . '?maphongthi=' . $dt->maphongthi }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
@@ -169,13 +172,13 @@
             <div class="modal-dialog modal-xs">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin phòng thi
+                        <h4 id="modal-header-primary-label" class="modal-title">Đổi đề thi
                         </h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <div class="col-md-12 mt-2">
+                            {{-- <div class="col-md-12 mt-2">
                             <label class="control-label">Lớp học<span class="require">*</span></label>
                             <select name="malop[]" class="form-control select2basic" multiple style="width:100%">
                                 @foreach ($lophoc as $lh)
@@ -183,10 +186,10 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="col-md-12 mt-2">
                             <label class="control-label">Đề thi<span class="require">*</span></label>
-                            <select name="made" class="form-control select2basic" style="width:100%">
+                            <select name="made" class="form-control select2basic" id="made_edit" style="width:100%">
                                 @foreach ($m_dethi as $dt)
                                     <option value="{{ $dt->made }}">{{ $dt->tende }}</option>
                                 @endforeach
@@ -245,13 +248,14 @@
 
 
 
-        function edit(e, id, trangthai) {
+        function edit(e, id, made) {
             var url = '/PhongThi/update/' + id;
             var tr = $(e).closest('tr');
-
-            $('#tenphongthi').val($(tr).find('td[name=tenphongthi]').text());
-            $('#trangthai option[value=' + trangthai + ' ]').attr('selected', false);
-            $('#trangthai option[value=' + trangthai + ' ]').attr('selected', 'selected');
+// console.log(made);
+            // $('#tenphongthi').val($(tr).find('td[name=tenphongthi]').text());
+            // $('#trangthai option[value=' + trangthai + ' ]').attr('selected', false);
+            // $('#made_edit option[value=' + made + ' ]').attr('selected', 'selected');
+            $('#made_edit').val(made).change();
             $('#frm_edit').attr('action', url);
 
         }

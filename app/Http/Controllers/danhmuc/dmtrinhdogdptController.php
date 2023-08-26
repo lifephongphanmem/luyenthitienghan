@@ -26,6 +26,7 @@ class dmtrinhdogdptController extends Controller
         $model = trinhdogdpt::all()->sortBy('stt');	
 		$count = Count($model);		
 		return view('danhmuc.trinhdogdpt.index',compact('model','count'))
+        ->with('baocao',getdulieubaocao())
         ->with('pageTitle','Danh mục trình độ DGPT');
 	}
     public function store_update(Request $request)

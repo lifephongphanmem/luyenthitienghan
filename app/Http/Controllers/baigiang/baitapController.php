@@ -8,6 +8,7 @@ use App\Models\baigiang\baitap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Imports\ColectionImport;
+use App\Models\danhmuc\loaicauhoi;
 use Maatwebsite\Excel\Facades\Excel;
 
 class baitapController extends Controller
@@ -24,16 +25,24 @@ class baitapController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!chkPhanQuyen('baitap', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'baitap');
         }
-        $model = baitap::all();
+        $inputs=$request->all();
         $m_baihoc = baihoc::all();
+        $inputs['mabaihoc']=$inputs['mabaihoc']??$m_baihoc->first()->mabaihoc;
+        $model=baitap::join('baihoc','baihoc.mabaihoc','baitap.mabaihoc')
+                        ->select('baitap.*')
+                        ->where('baihoc.mabaihoc',$inputs['mabaihoc'])
+                        ->get();
+                        $inputs['url']='/BaiTap/ThongTin';
         return view('baigiang.baitap.index')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('m_baihoc', $m_baihoc)
+            ->with('inputs',$inputs)
             ->with('pageTitle', 'Bài tập');
     }
 
@@ -106,7 +115,8 @@ class baitapController extends Controller
         $dataObj = new ColectionImport();
         $theArray = Excel::toArray($dataObj, $inputs['file']);
         $arr = $theArray[0];
-        $arr_col = array('tenbaihoc','cauhoi','anh','audio','A','B','C','D','dapan');
+        // $arr_col = array('tenbaihoc','cauhoi','noidung','hoithoai1','hoithoai2','hoithoai3','hoithoai4','anh','audio','A','B','C','D','dapan');
+        $arr_col = array('tenbaihoc', 'cauhoi', 'noidung','hoithoai1','hoithoai2','hoithoai3','hoithoai4','anh','audio','A','B','C','D','dapan','dangcauhoi','loaidapan1','phanloai','dangcaudochieu','loaidapan','dangcau');
         $nfield = sizeof($arr_col);
         // dd($arr);
         for ($i = 1; $i < count($arr); $i++) {
@@ -117,6 +127,7 @@ class baitapController extends Controller
                 $data[$arr_col[$j]] = $arr[$i][$j];
             }
             $baihoc = baihoc::where('mabaihoc', $inputs['tenbaihoc'])->first();
+            // dd($data);
             if (!isset($baihoc)) {
                 $inputs['mabaihoc'] = getdate()[0];
                 $databaihoc = [

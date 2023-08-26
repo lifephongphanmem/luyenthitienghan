@@ -15,6 +15,9 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+            $('#a_baihoc').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?mabaihoc=' + $('#a_baihoc').val();
+            });
         });
     </script>
 @stop
@@ -40,6 +43,19 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Bài học</label>
+
+                            <select name="mabaihoc" id="a_baihoc" class="form-control select2basic">
+                                @foreach ($m_baihoc as $key => $ct)
+                                    <option value="{{ $ct->mabaihoc }}"
+                                        {{ $ct->mabaihoc == $inputs['mabaihoc'] ? 'selected' : '' }}>{{ $ct->tenbaihoc }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr class="text-center">
@@ -57,10 +73,10 @@
                             @foreach ($model as $key => $tv)
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
-                                    <td style="width: 2%">{{ $tv->mabaihoc }}</td>
-                                    <td name='tengiaotrinh' class="text-left" style="width: 5%">{{ $tv->cumtuvung }}</td>
-                                    <td name='soluongbai' style="width: 8%">{{ $tv->tutienghan }}</td>
-                                    <td name='ghichu' style="width: 10%">{{ $tv->tiengviet }}</td>
+                                    <td name='mabaihoc' style="width: 2%">{{ $tv->mabaihoc }}</td>
+                                    <td name='cumtu' class="text-left" style="width: 5%">{{ $tv->cumtuvung }}</td>
+                                    <td name='tutienghan' style="width: 8%">{{ $tv->tutienghan }}</td>
+                                    <td name='tiengviet' style="width: 10%">{{ $tv->tiengviet }}</td>
                                     {{-- <td name='tengiaotrinh' class="text-left" style="width: 20%">{{ $tv->audio }}</td> --}}
                                     <td class="text-center" style="width:8%">
                                         <button title="Sửa thông tin"
@@ -129,10 +145,10 @@
                                 <label class="control-label">Hình ảnh<span class="require">*</span></label>
                                 <input type="file" name="hinhanh" class="form-control">
                             </div> --}}
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <label class="control-label">Audio</label>
                                 <input type="file" name="audio" class="form-control">
-                            </div>
+                            </div> --}}
                             <div class="col-md-12">
                                 <label class="control-label">Tiếng Hàn</label>
                                 <input type="text" name="tutienghan" class="form-control">
@@ -157,7 +173,7 @@
         </form>
     </div>
 
-        <!--Thêm mới -->
+        <!--Thêm mới excel -->
         <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
             <form action="{{ '/TuVung/import' }}" method="POST" id="frm_tuvung_import" enctype="multipart/form-data">
                 @csrf
@@ -203,6 +219,76 @@
                 </div>
             </form>
         </div>
+            <!--Cập nhật -->
+    <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+        <form action="" method="POST" id="frm_edit" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin từ vựng
+                        </h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-md-10">
+                                <label class="control-label">Tên bài học<span class="require">*</span></label>
+                                <select name="tenbaihoc" id="tenbaihoc_update" class="form-control">
+                                    @foreach ($m_baihoc as $key=>$ct )
+                                        <option value="{{$ct->mabaihoc}}">{{$ct->tenbaihoc}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-1" style="padding-left: 0px;">
+                                <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                                <button type="button" class="btn btn-default" data-target="#modal-tenbaihoc" data-toggle="modal">
+                                    <i class="fa fa-plus"></i></button>
+                            </div>
+                            <div class="col-md-10">
+                                <label class="control-label">Cụm từ<span class="require">*</span></label>
+                                <select name="cumtuvung" id="cumtu_update" class="form-control">
+                                    @foreach ($a_cumtuvung as $key=>$ct )
+                                        <option value="{{$ct}}">{{$ct}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-1" style="padding-left: 0px;">
+                                <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                                <button type="button" class="btn btn-default" data-target="#modal-cumtu" data-toggle="modal">
+                                    <i class="fa fa-plus"></i></button>
+                            </div>
+                            {{-- <div class="col-md-12">
+                                <label class="control-label">Hình ảnh<span class="require">*</span></label>
+                                <input type="file" name="hinhanh" class="form-control">
+                            </div> --}}
+                            {{-- <div class="col-md-12">
+                                <label class="control-label">Audio</label>
+                                <input type="file" name="audio" class="form-control">
+                            </div> --}}
+                            <div class="col-md-12">
+                                <label class="control-label">Tiếng Hàn</label>
+                                <input type="text" name="tutienghan" id="tutienghan" class="form-control">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Tiếng Việt</label>
+                                <input type="text" name="tiengviet" id="tiengviet" class="form-control">
+                            </div>
+                            {{-- <div class="col-md-12">
+                                <label class="control-label">Số thứ tự<span class="require">*</span></label>
+                                <input type="text" name="stt" class="form-control">
+                            </div> --}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
     <div id="modal-tenbaihoc" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <div class="modal-dialog">
@@ -253,42 +339,8 @@
         </div>
     </div>
 
-    <!--Cập nhật -->
-    <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
-        <form action="" method="POST" id="frm_edit" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin giáo trình
-                        </h4>
-                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label class="control-label">Tên giáo trình<span class="require">*</span></label>
-                                <input type="text" name="tengiaotrinh" id="tengiaotrinh" class="form-control" required>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="control-label">Số lượng bài<span class="require">*</span></label>
-                                <input type="text" name="soluongbai" id="soluongbai" class="form-control" required>
-                            </div>
-                            <div class="col-md-12 mt-3">
-                                <label class="control-label">Ghi chú</label>
-                                <textarea name="ghichu" id="ghichu" cols="" rows="5" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
-                            ý</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+
+    <!-- delete modal -->
     <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8">
             @csrf
@@ -309,6 +361,10 @@
     </div>
     {{-- @include('includes.delete') --}}
     <script>
+        function add(){
+            $('#tenbaihoc').val('');
+            $('#cumtuvung').val('');
+        }
         function cfDel(url) {
             $('#frmDelete').attr('action', url);
         }
@@ -333,6 +389,9 @@
             var gt = $('#tenbaihoc_add').val();
             $('#tenbaihoc').append(new Option(gt, gt, true, true));
             $('#tenbaihoc').val(gt).trigger('change');
+
+            $('#tenbaihoc_update').append(new Option(gt, gt, true, true));
+            $('#tenbaihoc_update').val(gt).trigger('change');
         }
 
         function add_cumtu(){
@@ -340,15 +399,20 @@
             var gt = $('#cumtu_add').val();
             $('#cumtuvung').append(new Option(gt, gt, true, true));
             $('#cumtuvung').val(gt).trigger('change');
+            $('#cumtu_update').append(new Option(gt, gt, true, true));
+            $('#cumtu_update').val(gt).trigger('change');
         }
         function edit(e, id) {
-            var url='/GiaoTrinh/update/'+id;
+            var url='/TuVung/update/'+id;
             var tr = $(e).closest('tr');
+            // $('cumtu_update').removeAttr('selected');
+            cumtu = $(tr).find('td[name=cumtu]').text();
+            tenbaihoc = $(tr).find('td[name=mabaihoc]').text();
+            $('#tutienghan').val($(tr).find('td[name=tutienghan]').text());
+            $('#tiengviet').val($(tr).find('td[name=tiengviet]').text());
 
-            $('#tengiaotrinh').val($(tr).find('td[name=tengiaotrinh]').text());
-            $('#soluongbai').val($(tr).find('td[name=soluongbai]').text());
-            $('#ghichu').val($(tr).find('td[name=ghichu]').text());
-
+            $('#cumtu_update option[value=' + cumtu + ' ]').removeAttr('selected').attr('selected', 'selected');
+            $('#tenbaihoc_update option[value=' + tenbaihoc + ' ]').removeAttr('selected').attr('selected', 'selected');
             $('#frm_edit').attr('action', url);
           
         }

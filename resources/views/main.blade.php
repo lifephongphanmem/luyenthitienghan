@@ -102,7 +102,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <!--begin::Left-->
                             <div class="d-none d-lg-flex align-items-center mr-3">
                                 <!--begin::Logo-->
-                                <a href="index.html" class="mr-20">
+                                <a href="{{ '/TrangChu' }}" class="mr-20">
                                     <img alt="Logo" src="{{ url('assets/media/logos/ttdvvl.png') }}"
                                         class="max-h-55px" />
                                 </a>
@@ -292,6 +292,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="container">
                             <!--begin::Dashboard-->
                             @yield('content')
+                            @include('includes.modal')
                             <!--end::Dashboard-->
                         </div>
                         <!--end::Container-->

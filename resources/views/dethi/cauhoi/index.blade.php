@@ -95,7 +95,7 @@
             if (hoithoai == 0) {
                 var html = '<div class="col-md-12 mt-2" id="noidung">';
                 html += '<label class="control-label">Nội dung<span class="require">*</span></label>';
-                html += ' <input type="text" name="noidung" class="form-control">';
+                html += '<textarea name="noidung" id="noidungcau" rows="5" class="form-control"></textarea>';
                 html += '</div>'
 
 
@@ -104,12 +104,20 @@
                 html += '<div class="row mt-2">'
                 html += '<div class="col-md-6 mt-2">'
 
-                html += '<label class="control-label">Người 1<span class="require">*</span></label>';
-                html += '<input type="text" name="nguoi1" class="form-control">';
+                html += '<label class="control-label">Hội thoại 1<span class="require">*</span></label>';
+                html += '<input type="text" name="hoithoai1" class="form-control">';
                 html += '</div>';
                 html += '<div class="col-md-6 mt-2">'
-                html += '<label class="control-label">Người 2<span class="require">*</span></label>';
-                html += '<input type="text" name="nguoi2" class="form-control">';
+                html += '<label class="control-label">Hội thoại 2<span class="require">*</span></label>';
+                html += '<input type="text" name="hoithoai2" class="form-control">';
+                html += '</div>';
+                html += '<div class="col-md-6 mt-2">'
+                html += '<label class="control-label">Hội thoại 3<span class="require">*</span></label>';
+                html += '<input type="text" name="hoithoai3" class="form-control">';
+                html += '</div>';
+                html += '<div class="col-md-6 mt-2">'
+                html += '<label class="control-label">Hội thoại 4<span class="require">*</span></label>';
+                html += '<input type="text" name="hoithoai4" class="form-control">';
                 html += '</div>';
                 html += '</div>';
                 html += '</div>';
@@ -119,11 +127,15 @@
         });
         $('#madanhmuc').on('change', function() {
             window.location.href = "{{ $inputs['url'] }}" + '?madm=' + $('#madanhmuc').val() + '&dangcau=' + $(
-                '#dangcauhoi').val();
+                '#dangcauhoi').val() + '&nguoncauhoi=' + $('#nguoncauhoi_select').val();
         });
         $('#dangcauhoi').on('change', function() {
             window.location.href = "{{ $inputs['url'] }}" + '?madm=' + $('#madanhmuc').val() + '&dangcau=' + $(
-                '#dangcauhoi').val();
+                '#dangcauhoi').val() + '&nguoncauhoi=' + $('#nguoncauhoi_select').val();
+        });
+        $('#nguoncauhoi_select').on('change', function() {
+            window.location.href = "{{ $inputs['url'] }}" + '?madm=' + $('#madanhmuc').val() + '&dangcau=' + $(
+                '#dangcauhoi').val() + '&nguoncauhoi=' + $('#nguoncauhoi_select').val();
         });
     </script>
 @stop
@@ -141,7 +153,7 @@
                     <div class="card-toolbar">
                         <button onclick="add()" data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button>
-                            <button class="btn btn-xs btn-success mr-2" title="Nhận dữ liệu từ file Excel"
+                        <button class="btn btn-xs btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import"></i>Nhận Excel
                         </button>
@@ -165,6 +177,16 @@
                             <select name="dangcau" id="dangcauhoi" class="form-control select2basic">
                                 <option value="1" {{ $inputs['dangcau'] == 1 ? 'selected' : '' }}>Câu đơn</option>
                                 <option value="2" {{ $inputs['dangcau'] == 2 ? 'selected' : '' }}>Câu ghép</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Nguồn câu hỏi</label>
+                            <select name="nguoncauhoi" id="nguoncauhoi_select" class="form-control">
+                                @foreach ($nguoncauhoi as $ct)
+                                    <option value="{{ $ct->madm }}"
+                                        {{ $ct->madm == $inputs['nguoncauhoi'] ? 'selected' : '' }}>{{ $ct->tendm }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -244,50 +266,51 @@
     </div>
     <!--end::Row-->
 
-            <!--Nhận excel -->
-            <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
-                <form action="{{ '/CauHoi/import' }}" method="POST" id="frm_import" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-dialog modal-xs">
-                        <div class="modal-content">
-                            <div class="modal-header modal-header-primary">
-                                <h4 id="modal-header-primary-label" class="modal-title">Thông tin câu hỏi
-                                </h4>
-                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+    <!--Nhận excel -->
+    <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+        <form action="{{ '/CauHoi/import' }}" method="POST" id="frm_import" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin câu hỏi
+                        </h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="control-label">Nguồn câu hỏi<span class="require">*</span></label>
+                                <select name="nguoncauhoi" id="nguoncauhoi_excel" class="form-control">
+                                    @foreach ($nguoncauhoi as $ct)
+                                        <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Nguồn câu hỏi<span class="require">*</span></label>
-                                        <select name="nguoncauhoi" id="nguoncauhoi_excel" class="form-control">
-                                            @foreach ($nguoncauhoi as $ct)
-                                            <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
-                                        @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="control-label">Loại câu hỏi<span class="require">*</span></label>
-                                        <select name="loaicauhoi" id="loaicauhoi_excel" class="form-control">
-                                            @foreach ($loaicauhoi as $key=>$ct )
-                                                <option value="{{$ct->madm}}">{{$ct->tendm}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12 mt-2">
-                                        <label class="control-label">File excel<span class="require">*</span></label>
-                                        <input type="file" name="file" class="form-control">
-                                    </div>
-                                </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Loại câu hỏi<span class="require">*</span></label>
+                                <select name="loaicauhoi" id="loaicauhoi_excel" class="form-control">
+                                    @foreach ($loaicauhoi as $key => $ct)
+                                        <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                                <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickNhanexcel()">Đồng
-                                    ý</button>
+                            <div class="col-md-12 mt-2">
+                                <label class="control-label">File excel<span class="require">*</span></label>
+                                <input type="file" name="file" class="form-control">
                             </div>
                         </div>
                     </div>
-                </form>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" data-dismiss="modal" class="btn btn-primary"
+                            onclick="clickNhanexcel()">Đồng
+                            ý</button>
+                    </div>
+                </div>
             </div>
+        </form>
+    </div>
     <!--Thêm mới -->
     <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="{{ '/CauHoi/store' }}" method="POST" id="frm_cauhoi" enctype="multipart/form-data">
@@ -400,26 +423,105 @@
     <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="" method="POST" id="frm_edit" enctype="multipart/form-data">
             @csrf
-            <div class="modal-dialog modal-xs">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin đề thi
+                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin câu hỏi
                         </h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
+
                         <div class="form-group row">
-                            <div class="col-md-12">
-                                <label class="control-label">Tên đề thi<span class="require">*</span></label>
-                                <input type="text" name="tende" id="tende" class="form-control" required>
+                            <div class="col-md-6 mt-2">
+                                <label class="control-label">Nguồn câu hỏi<span class="require">*</span></label>
+                                <select name="nguoncauhoi" class="form-control" id='nguoncauhoi'>
+                                    @foreach ($nguoncauhoi as $ct)
+                                        <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <label class="control-label">Dạng câu hỏi<span class="require">*</span></label>
+                                <select name="dangcau" class="form-control" id='dangcau'>
+                                    <option value="1">Câu đơn</option>
+                                    <option value="2">Câu ghép</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <label class="control-label">Câu hội thoại/không<span class="require">*</span></label>
+                                <select name="hoithoai" class="form-control" id='hoithoai'>
+                                    <option value="0">Không hội thoại</option>
+                                    <option value="1">Câu hội thoại</option>
+                                </select>
+                            </div>
+                            <div id='cauhoithoai' style="width:100%">
+
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <label class="control-label">Câu hỏi<span class="require">*</span></label>
+                                <input type="text" name="cauhoi" class="form-control">
+                            </div>
+
+                            <div class="col-md-4 mt-2">
+                                <label class="control-label">Loại câu hỏi<span class="require">*</span></label>
+                                <select name="loaicauhoi" class="form-control" id='loaicauhoi'>
+                                    @foreach ($loaicauhoi as $ct)
+                                        <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mt-2">
+                                <label class="control-label">Ảnh</label>
+                                <input type="file" name="anh" class="form-control">
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <label class="control-label">Audio<span class="require">*</span></label>
+                                <input type="file" name="audio" class="form-control">
+                            </div>
+                            <div id='caudoc' style="width:100%">
+                                <div class="col-md-12 mt-2" id="xoadangcaunghe">
+                                    <label class="control-label">Dạng câu nghe<span class="require">*</span></label>
+                                    <select name="loaicaunghe" class="form-control" id="loaicaunghe">
+                                        @foreach ($caunghe as $ct)
+                                            <option value="{{ $ct->madmct }}"> {{ $ct->tendmct }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div id='xemtranh' style="width:100%">
+
+                            </div>
+                            <div class="col-md-6 mt-2">
+                                <label class="control-label">Loại đáp án<span class="require">*</span></label>
+                                <select name="loaidapan" class="form-control " id="loaidapan">
+                                    <option value="1">Text</option>
+                                    <option value="2">Hình ảnh</option>
+                                </select>
+                            </div>
+                            <div class=" row" id='dapan' style="width:100%">
+
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <label class="control-label">Đáp án đúng<span class="require">*</span></label>
+                                <select name="dapan" class="form-control">
+                                    <option value="A">1</option>
+                                    <option value="B">2</option>
+                                    <option value="C">3</option>
+                                    <option value="D">4</option>
+                                </select>
                             </div>
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
+                        <button type="submit" data-dismiss="modal" class="btn btn-primary"
+                            onclick="clickNhanvaTKT()">Đồng
                             ý</button>
                     </div>
+
                 </div>
             </div>
         </form>
@@ -455,9 +557,11 @@
         function clickNhanvaTKT() {
             $('#frm_cauhoi').submit();
         }
-        function clickNhanexcel(){
+
+        function clickNhanexcel() {
             $('#frm_import').submit();
         }
+
         function clickedit() {
             $('#frm_edit').submit();
         }
@@ -528,13 +632,18 @@
         }
 
         function edit(e, id) {
-            var url = '/DeThi/update/' + id;
-            var tr = $(e).closest('tr');
-
-            $('#tende').val($(tr).find('td[name=tende]').text());
-
-            $('#frm_edit').attr('action', url);
-
+            var url = '/CauHoi/edit/' + id;
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            jQuery.ajax({
+                url: "/CauHoi/edit/" + id,
+                data: {
+                    _token: CSRF_TOKEN,
+                },
+                type: "GET",
+                success: function(data) {
+                    console.log(data);
+                }
+            })
         }
 
         function loaicauhoi() {

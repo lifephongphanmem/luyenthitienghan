@@ -8,7 +8,9 @@ use App\Models\baigiang\hinhanh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Imports\ColectionImport;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
+
 
 class hinhanhController extends Controller
 {
@@ -24,16 +26,24 @@ class hinhanhController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!chkPhanQuyen('hinhanh', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'hinhanh');
         }
-        $model=hinhanh::orderBy('id','desc')->get();
+        $inputs=$request->all();
         $m_baihoc = baihoc::all();
+        $inputs['mabaihoc']=$inputs['mabaihoc']??$m_baihoc->first()->mabaihoc;
+        $model=hinhanh::join('baihoc','baihoc.mabaihoc','hinhanh.mabaihoc')
+                        ->select('hinhanh.*')
+                        ->where('baihoc.mabaihoc',$inputs['mabaihoc'])
+                        ->get();
+        $inputs['url']='/HinhAnh/ThongTin';
         return view('baigiang.hinhanh.index')
                     ->with('model',$model)
+                    ->with('baocao',getdulieubaocao())
                     ->with('m_baihoc',$m_baihoc)
+                    ->with('inputs',$inputs)
                     ->with('pageTitle','Hình ảnh bài giảng');
     }
 
@@ -89,7 +99,38 @@ class hinhanhController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (!chkPhanQuyen('hinhanh', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'hinhanh');
+        }
+
+        $inputs=$request->all();
+        $model=hinhanh::where('mahinhanh',$id)->first();
+        if(isset($inputs['hinhanh'])){
+            if(File::exists($model->hinhanh)){
+                File::Delete($model->hinhanh);
+            }
+       
+            $file = $inputs['hinhanh'];
+            $name = time() . $file->getClientOriginalName();
+            $file->move('uploads/hinhanh/audio/', $name);
+            $inputs['hinhanh'] = 'uploads/hinhanh/anh/' . $name;
+        }
+
+        if(isset($inputs['audio'])){
+            if(File::exists($model->audio)){
+                File::Delete($model->audio);
+            }
+            $file = $inputs['audio'];
+            $name = time() . $file->getClientOriginalName();
+            $file->move('uploads/hinhanh/audio/', $name);
+            $inputs['audio'] = 'uploads/hinhanh/audio/' . $name;
+        }
+
+        if(isset($model)){
+            $model->update($inputs);
+        }
+        
+        return redirect('/HinhAnh/ThongTin?mabaihoc='.$model->mabaihoc)->with('success','Cập nhật thành công');
     }
 
     /**
@@ -97,7 +138,22 @@ class hinhanhController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (!chkPhanQuyen('hinhanh', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'hinhanh');
+        }
+        $model=hinhanh::where('mahinhanh',$id)->first();
+        $mabaihoc=$model->mabaihoc;
+        if(isset($model)){
+            if(File::exists($model->hinhanh)){
+                File::Delete($model->hinhanh);
+            }
+            if(File::exists($model->audio)){
+                File::Delete($model->audio);
+            }
+            $model->delete();
+        }
+
+        return redirect('/HinhAnh/ThongTin?mabaihoc='.$mabaihoc)->with('success','Xóa thành công');
     }
     public function import(Request $request){
         if (!chkPhanQuyen('hinhanh', 'thaydoi')) {

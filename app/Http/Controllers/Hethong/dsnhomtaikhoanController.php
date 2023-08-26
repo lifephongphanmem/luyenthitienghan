@@ -35,13 +35,14 @@ class dsnhomtaikhoanController extends Controller
             return view('errors.noperm')->with('machucnang', 'nhomtaikhoan');
         }
         $inputs = $request->all();
-        $model = dsnhomtaikhoan::all();        
+        $model = dsnhomtaikhoan::orderBy('stt')->get();        
         $m_taikhoan = User::all();
         foreach ($model as $ct){
             $ct->soluong = $m_taikhoan->where('manhomchucnang', $ct->manhomchucnang)->count();
         }
         return view('Hethong.nhomchucnang.index')
             ->with('model', $model)
+            ->with('baocao',getdulieubaocao())
             ->with('inputs', $inputs)
             ->with('pageTitle', 'Quản lý nhóm tài khoản');
     }
@@ -99,6 +100,7 @@ class dsnhomtaikhoanController extends Controller
             ->with('model', $m_chucnang->where('capdo', '1')->sortby('sapxep'))
             ->with('m_chucnang', $m_chucnang)
             ->with('m_nhomtaikhoan', $m_nhomtaikhoan)
+            ->with('baocao',getdulieubaocao())
             ->with('pageTitle', 'Phân quyền nhóm tài khoản');
     }
 
@@ -167,7 +169,7 @@ class dsnhomtaikhoanController extends Controller
         $model=dsnhomtaikhoan::findOrFail($id);
         $model->delete();
 
-        return redirect('/nhomchucnang/danhsach')
+        return redirect('/nhomchucnang/ThongTin')
                 ->with('success','Xóa thành công');
     }
 
@@ -184,6 +186,7 @@ class dsnhomtaikhoanController extends Controller
             ->with('model', $model)
             ->with('m_nhom', $m_nhom)
             ->with('inputs', $inputs)
+            ->with('baocao',getdulieubaocao())
             ->with('pageTitle', 'Danh sách tài khoản trong nhóm');
     }
 

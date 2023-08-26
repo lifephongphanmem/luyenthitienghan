@@ -134,7 +134,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-horizontal">
-                        <div class="form-group row">
+                        <div class="form-group row" style="display: none">
                             <div class="col-12">
                                 <label class="control-label">Mã số</label>
                                 <input type="text" name='manhomchucnang' class="form-control">
