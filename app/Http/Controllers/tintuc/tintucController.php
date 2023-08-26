@@ -20,9 +20,9 @@ class tintucController extends Controller
             };
             return $next($request);
         })->except([
-            'index',
-            'show'
-        ]);
+                'index',
+                'show'
+            ]);
     }
 
     public function index()
@@ -32,6 +32,7 @@ class tintucController extends Controller
             ->orderBy('created_at', 'DESC')->paginate(12);
 
         return view('tintuc.index', compact('baiviet'))
+            ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Tin tức');
     }
 
@@ -42,6 +43,7 @@ class tintucController extends Controller
         }
 
         return view('tintuc.taobai')
+            ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Tạo bài viết');
     }
 
@@ -86,6 +88,7 @@ class tintucController extends Controller
             ->orderBy('created_at', 'DESC')->take(6)->get();
 
         return view('tintuc.noidungtintuc', compact('baiviet', 'cacbaivietganday'))
+            ->with('baocao', getdulieubaocao())
             ->with('pageTitle', $baiviet->tieude);
     }
 
@@ -98,6 +101,7 @@ class tintucController extends Controller
         $baiviet = tintuc::where('slug', '=', $slug)->first();
 
         return view('tintuc.suabaiviet', compact('baiviet'))
+            ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Sửa bài viết');
     }
 
