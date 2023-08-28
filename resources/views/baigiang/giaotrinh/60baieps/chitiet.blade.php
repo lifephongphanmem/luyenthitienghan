@@ -153,7 +153,7 @@
                         </div> --}}
                         @if (file_exists($model->link1))
                             <div class="box_dark">
-                                <video controls width="100%" poster="{{url('/images/logolife.png')}}">
+                                <video controls width="100%" poster="{{url($model->link3)}}">
                                     <source src="{{ url($model->link1) }}">
                                 </video>
                                 {{-- <p class="mt-5 mb-5 text-center">Link local</p> --}}
