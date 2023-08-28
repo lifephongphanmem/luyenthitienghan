@@ -32,6 +32,10 @@ class User extends Authenticatable
         'mataikhoan'
     ];
 
+    public function tintuc() {
+        return $this->hasMany('App\Models\tintuc\tintuc');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
