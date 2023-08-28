@@ -332,6 +332,32 @@
         @endif
     </li>
     @endif
+
+    <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
+        <a href="javascript:;" class="menu-link menu-toggle">
+            <span class="menu-text">TIN TỨC&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+            <ul class="menu-subnav">
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/TinTuc/TrangChu'}}" class="menu-link"><i class="icon-sm la la-angle-double-right"></i>&nbsp;
+                        <span class="menu-text">TIN TỨC</span>
+                        {{-- <span class="menu-desc"></span> --}}
+                    </a>
+                </li>
+                @if (chkPhanQuyen('tintuc', 'phanquyen'))
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/TinTuc/TaoBai'}}" class="menu-link"><i class="icon-sm la la-angle-double-right"></i>&nbsp;
+                        <span class="menu-text">TẠO BÀI</span>
+                        {{-- <span class="menu-desc"></span> --}}
+                    </a>
+                </li>
+                @endif
+            </ul>
+        </div>
+    </li>
+    
     @if (chkPhanQuyen('hethong', 'phanquyen'))
         <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
             <a href="javascript:;" class="menu-link menu-toggle">
