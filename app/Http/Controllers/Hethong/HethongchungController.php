@@ -9,6 +9,7 @@ use App\Models\quanly\giaovien;
 use App\Models\quanly\hocvien;
 use App\Models\thithu\phongthi;
 use App\Models\User;
+use App\Models\tintuc\tintuc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -17,9 +18,13 @@ class HethongchungController extends Controller
 {
 	public function index()
 	{
+		$cacbaivietganday = tintuc::select('id', 'tieude', 'slug', 'phude', 'created_at')
+			->orderBy('created_at', 'DESC')->take(4)->get();
+
 		return view('trangchu')
-		->with('baocao',getdulieubaocao())
-			->with('pageTitle', 'Trang chủ');
+			->with('baocao', getdulieubaocao())
+			->with('pageTitle', 'Trang chủ')
+			->with('cacbaivietganday', $cacbaivietganday);
 	}
 
 	public function login()
