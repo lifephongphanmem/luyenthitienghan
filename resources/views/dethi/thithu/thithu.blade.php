@@ -71,7 +71,7 @@
                         <div>
                             {{-- <marquee width="100%" bgcolor="pink" onmouseover="this.stop();"
                                 onmouseout="this.start();">Để được đăng ký sử dụng phần mềm có nội dung đề sưu tầm thi
-                                thật vui lòng liên hệ số ĐT: 024 6287 6287.</marquee> --}}
+                                thật vui lòng liên hệ số ĐT: .</marquee> --}}
                         </div>
                         <div class="list-tracnghiem diemthi-tracnghiem" style="background-color: white;display:none;">
                         </div>

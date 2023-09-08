@@ -36,6 +36,8 @@
                             data-target="#modal-chondethi" data-toggle="modal">
                             <i class="fa fa-plus"></i> Chọn đề thi
                         </button> --}}
+                        <a onclick="history.back()" class="btn btn-primary"><i
+                            class="fa fa-reply"></i>&nbsp;Quay lại</a>
                     </div>
                 </div>
 

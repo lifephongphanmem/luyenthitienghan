@@ -166,7 +166,7 @@ class giaotrinhController extends Controller
         if(isset($baihoc)){
             $baihoc->update(['magiaotrinh'=>'']);
         }
-
+        $giaotrinh->update(['soluongbai'=>$giaotrinh->soluongbai -1]);
         return redirect('/GiaoTrinh/chitiet?magiaotrinh='.$giaotrinh->magiaotrinh)
                 ->with('success','Xóa thành công');
     }
