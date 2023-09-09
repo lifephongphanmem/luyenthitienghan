@@ -73,7 +73,7 @@
                                     <td name='khoahoc' class="text-left" style="width: 10%">{{ $lh->khoahoc }}</td>
                                     <td name='soluonghocvien' style="width: 10%">{{ $lh->soluonghocvien }}</td>
                                     <td name='giaovienchunhiem' class="text-left" style="width: 30%">
-                                        {{ isset($lh->giaovienchunhiem)?$a_giaovien[$lh->giaovienchunhiem]:'' }}</td>
+                                        {{ isset($a_giaovien[$lh->giaovienchunhiem])?$a_giaovien[$lh->giaovienchunhiem]:'' }}</td>
                                     <td class="text-center">
                                         <a href="{{'/LopHoc/chitiet?lophoc='.$lh->malop}}" title="Chi tiết"
                                        class="btn btn-sm btn-clean btn-icon">
