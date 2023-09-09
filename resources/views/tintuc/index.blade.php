@@ -8,11 +8,11 @@
 @endsection
 
 @section('custom-script')
-    <script>
+    {{-- <script>
         var str = '{{ json_encode($baiviet) }}';
         str = str.replace(/&quot;/ig, '"');
         console.log(JSON.parse(str))
-    </script>
+    </script> --}}
 @endsection
 
 @section('content')
