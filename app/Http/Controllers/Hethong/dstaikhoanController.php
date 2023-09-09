@@ -28,12 +28,20 @@ class dstaikhoanController extends Controller
             return $next($request);
         });
     }
-    public function ThongTin()
+    public function ThongTin(Request $request)
     {
         if (!chkPhanQuyen('taikhoan', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
-        $model = User::where('sadmin','0')->get();
+        $inputs=$request->all();
+        
+        $model = User::where('sadmin','0')
+                    ->where(function($q) use ($inputs){
+                        if(isset($inputs['nhomcn'])){
+                            $q->where('manhomchucnang',$inputs['nhomcn']);
+                        }
+                    })
+                    ->get();
         $a_phanloai=['giaovien'=>1,'hocvien'=>2,'hethong'=>3];
         foreach($model as $ct){
             foreach($a_phanloai as $k=>$val){
@@ -42,12 +50,15 @@ class dstaikhoanController extends Controller
                 }
             }
         }
+        $inputs['nhomcn']=isset($inputs['nhomcn'])?$inputs['nhomcn']:'';
+        $inputs['url']='/TaiKhoan/ThongTin';
         // dd($model);
         $a_nhomtk = array_column(dsnhomtaikhoan::all()->toArray(), 'tennhomchucnang', 'manhomchucnang');
         return view('Hethong.taikhoan.index')
             ->with('model', $model)
             ->with('baocao',getdulieubaocao())
             ->with('a_nhomtk', $a_nhomtk)
+            ->with('inputs',$inputs)
             ->with('pageTitle','Quản lý tài khoản');
     }
 
@@ -137,11 +148,25 @@ class dstaikhoanController extends Controller
                 $inputs['giaovien'] = 1;
                 $inputs['hocvien'] = 0;
                 $inputs['hethong'] = 0;
+                $data=[
+                    'tengiaovien'=>$inputs['tentaikhoan'],
+                    'cccd'=>$inputs['cccd'],
+                    'email'=>$inputs['email']
+                ];
+                $gv=giaovien::where('cccd',$model->cccd)->first();
+                $gv->update($data);
                 break;
             case '2':
                 $inputs['hocvien'] = 1;
                 $inputs['giaovien'] = 0;
                 $inputs['hethong'] = 0;
+                $data=[
+                    'tenhocvien'=>$inputs['tentaikhoan'],
+                    'cccd'=>$inputs['cccd'],
+                    'email'=>$inputs['email']
+                ];
+                $hv=hocvien::where('cccd',$model->cccd)->first();
+                $hv->update($data);
                 break;
             default:
                 $inputs['hehthong'] = 1;

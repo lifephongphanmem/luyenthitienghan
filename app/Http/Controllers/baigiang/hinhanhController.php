@@ -31,6 +31,7 @@ class hinhanhController extends Controller
         if (!chkPhanQuyen('hinhanh', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'hinhanh');
         }
+        dd(session('admin'));
         $inputs=$request->all();
         $m_baihoc = baihoc::all();
         $inputs['mabaihoc']=$inputs['mabaihoc']??$m_baihoc->first()->mabaihoc;

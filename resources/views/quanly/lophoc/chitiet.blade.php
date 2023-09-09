@@ -43,6 +43,8 @@
                         <button  class="btn btn-xs btn-success mr-2" onclick="kq_thithu()" data-target="#thithu" data-toggle="modal">
                             <i class="flaticon-list"></i> Kết quả thi
                         </button>
+                        <a onclick="history.back()" class="btn btn-primary"><i
+                            class="fa fa-reply"></i>&nbsp;Quay lại</a>
                     </div>
                 </div>
 

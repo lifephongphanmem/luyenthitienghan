@@ -153,7 +153,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickNhanvaTKT()">Đồng
+                        <button type="submit" class="btn btn-primary">Đồng
                             ý</button>
                     </div>
                 </div>

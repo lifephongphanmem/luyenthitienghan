@@ -79,7 +79,7 @@
                             @foreach ($m_cauhoi as $key => $ch)
                                 <tr class="text-center">
                                     <td>{{ ++$key }}</td>
-                                    <td name='loaicauhoi' class="text-left" >{{ $ch->loaicauhoi }}</td>
+                                    <td name='loaicauhoi' class="text-left" >{{ isset($ch->loaicauhoi)?$a_loaicauhoi[$ch->loaicauhoi]:'' }}</td>
                                     <td name='loaicauhoi' class="text-left" >{{ $ch->cauhoi }}</td>
                                     <td name='noidung' class="text-left" >{{ $ch->noidung }}</td>
                                     <td >

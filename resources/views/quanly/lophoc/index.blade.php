@@ -73,7 +73,7 @@
                                     <td name='khoahoc' class="text-left" style="width: 10%">{{ $lh->khoahoc }}</td>
                                     <td name='soluonghocvien' style="width: 10%">{{ $lh->soluonghocvien }}</td>
                                     <td name='giaovienchunhiem' class="text-left" style="width: 30%">
-                                        {{ $lh->giaovienchunhiem }}</td>
+                                        {{ isset($lh->giaovienchunhiem)?$a_giaovien[$lh->giaovienchunhiem]:'' }}</td>
                                     <td class="text-center">
                                         <a href="{{'/LopHoc/chitiet?lophoc='.$lh->malop}}" title="Chi tiết"
                                        class="btn btn-sm btn-clean btn-icon">
@@ -138,7 +138,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickNhanvaTKT()">Đồng
+                        <button type="submit"  class="btn btn-primary" >Đồng
                             ý</button>
                     </div>
                 </div>
