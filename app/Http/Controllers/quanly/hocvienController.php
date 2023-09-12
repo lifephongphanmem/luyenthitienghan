@@ -29,8 +29,15 @@ class hocvienController extends Controller
         if (!chkPhanQuyen('hocvien', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'hocvien');
         }
-        $model=hocvien::all();
 
+        if(in_array(session('admin')->sadmin,['SSA','admin'])){
+            $model=hocvien::all();
+        }else if(session('admin')->giaovien ==1){
+            $model=hocvien::join('lophoc','lophoc.malop','hocvien.malop')
+                            ->select('hocvien.*')
+                            ->where('lophoc.giaovienchunhiem',session('admin')->manguoidung)
+                            ->get();
+        }
         return view('quanly.hocvien.index')
                     ->with('model',$model)
                     ->with('baocao',getdulieubaocao())

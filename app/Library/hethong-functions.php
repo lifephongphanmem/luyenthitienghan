@@ -64,9 +64,8 @@ function taodeluyenthi()
     $macaudoc_khac = [];
     $macaunghekhac = [];
     $caudoc_tutao = $caudoc->where('nguoncauhoi', 1684121372);
-
     $caudoc_bode = $caudoc->where('nguoncauhoi', 1684121327);
-    if (count($caudoc_tutao) > 0) {
+    if (count($caudoc_tutao) > 2) {
         //Lấy 2 câu tự tạo
         $cauthi_tutao = $caudoc_tutao->random(2);
         // dd($cauthi_tutao);
@@ -181,7 +180,7 @@ function taodethi()
     $caudoc_tutao = $caudoc->where('nguoncauhoi', 1684121372);
 
     $caudoc_bode = $caudoc->where('nguoncauhoi', 1684121327);
-    if (count($caudoc_tutao) > 0) {
+    if (count($caudoc_tutao) > 2) {
         //Lấy 2 câu tự tạo
         $cauthi_tutao = $caudoc_tutao->random(2);
         // dd($cauthi_tutao);

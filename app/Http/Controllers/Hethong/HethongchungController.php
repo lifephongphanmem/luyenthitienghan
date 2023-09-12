@@ -93,11 +93,15 @@ class HethongchungController extends Controller
 				$hocvien = hocvien::where('cccd', $user->cccd)->first();
 				$user->manguoidung = $hocvien->mahocvien;
 				$user->malop = $hocvien->malop;
+				$user->vitri= 'Học viên';
+				$user->sdt=$hocvien->sdt;
 
 			}
 			if ($user->giaovien == 1) {
 				$giaovien = giaovien::where('cccd', $user->cccd)->first();
 				$user->manguoidung = $giaovien->magiaovien;
+				$user->vitri= 'Giáo viên';
+				$user->sdt=$giaovien->sdt;
 
 			}
 			$user->phanquyen = json_decode($user->phanquyen, true);

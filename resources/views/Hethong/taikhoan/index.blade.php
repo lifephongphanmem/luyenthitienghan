@@ -15,7 +15,11 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+            $('#nhomcn').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?nhomcn=' +$('#nhomcn').val();
+            });
         });
+
     </script>
 @stop
 @section('content')
@@ -30,7 +34,7 @@
                         <h3 class="card-label text-uppercase">Danh sách tài khoản</h3>
                     </div>
                     <div class="card-toolbar">
-                        <button onclick="add()" data-target="#themmoi" data-toggle="modal" class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button>
+                        <button  data-target="#themmoi" data-toggle="modal" class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button>
                         {{-- <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import"></i>
@@ -39,6 +43,18 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Nhóm tài khoản</label>
+
+                            <select name="manhomchucnang" id="nhomcn"  class="form-control select2basic">
+                                <option value="">Tất cả</option>
+                                @foreach ($a_nhomtk as $k=>$ct )
+                                    <option value="{{$k}}" {{$k == $inputs['nhomcn']?'selected':''}}>{{$ct}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr class="text-center">
@@ -68,7 +84,7 @@
                                         </td>
                                     @endif
                                     <td class="text-center">
-                                        <button title="Sửa thông tin" onclick="edit(this,'{{$tk->id}}','{{$tk->trangthai}}','{{$tk->phanloai}}','{{$tk->manhomchucnang}}')" data-target="#edit" data-toggle="modal"
+                                        <button title="Sửa thông tin" onclick="edit(this,'{{$tk->id}}','{{$tk->trangthai}}','{{$tk->phanloai}}','{{$tk->manhomchucnang}}','{{$tk->email}}')" data-target="#edit" data-toggle="modal"
                                             class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
@@ -115,32 +131,26 @@
                 <div class="modal-body">
 
                     <div class="form-group row">
-                        {{-- <div class="col-md-12"> --}}
+
                             <div class="col-md-4">
                                 <label class="control-label">Tên truy cập<span class="require">*</span></label>
-                                {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                                 <input type="text" name="tentaikhoan" class="form-control" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="control-label">CCCD/CMND<span class="require">*</span></label>
-                                {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                                 <input type="text" name="cccd" class="form-control" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="control-label">Email</label>
-                                {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
-                                <input type="text" name="email" class="form-control">
+                                <input type="text" name="email" class="form-control" >
                             </div>
-                        {{-- </div> --}}
 
                         <div class="col-md-6 mt-1">
                             <label class="control-label">Mật khẩu<span class="require">*</span></label>
-                            {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                             <input type="password" name="password" value="123456abc" class="form-control">
                         </div>
                         <div class="col-md-6 mt-1">
                             <label class="control-label">Trạng thái</label>
-                            {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                             <select name="trangthai" class="form-control select2basic"  style="width:100%">
 
                                 <option value="1">Kích hoạt</option>
@@ -151,7 +161,6 @@
                         </div>
                         <div class="col-md-6 mt-1">
                             <label class="control-label">Phân loại<span class="require">*</span></label>
-                            {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                             <select name="phanloai" class="form-control select2basic"  style="width:100%">
 
                                 <option value="1">Giáo viên</option>
@@ -162,7 +171,6 @@
                         </div>
                         <div class="col-md-6 mt-1">
                             <label class="control-label">Tên nhóm chức năng<span class="require">*</span></label>
-                            {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                             <select name="manhomchucnang" class="form-control select2basic"style="width:100%">
                                 <option value="">-- Chọn nhóm chức năng --</option>
                                 @foreach ($a_nhomtk as $k=>$ct )
@@ -174,12 +182,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickNhanvaTKT()">Đồng
+                    <button type="submit" class="btn btn-primary">Đồng
                         ý</button>
                 </div>
             </div>
         </div>
-        {{-- {!! Form::close() !!} --}}
     </form>
     </div>
 
@@ -212,7 +219,7 @@
                                     <div class="col-md-4">
                                         <label class="control-label">Email</label>
                                         {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
-                                        <input type="text" name="email" class="form-control">
+                                        <input type="text" name="email" id='email' class="form-control">
                                     </div>
                                 {{-- </div> --}}
         
@@ -344,11 +351,12 @@
         $('#frm_nhomchucnang').find("[name='phanloaitk']").val(phanloaitk);
     }
 
-        function edit(e,id,trangthai,phanloai,nhomchucnang){
+        function edit(e,id,trangthai,phanloai,nhomchucnang,email){
             var url='/TaiKhoan/update/'+id;
             var tr = $(e).closest('tr');
             $('#tentaikhoan').val($(tr).find('td[name=tentaikhoan]').text());
             $('#cccd').val($(tr).find('td[name=cccd]').text());
+            $('#email').val(email)
             $('#phanloai option[value=' + phanloai + ' ]').attr('selected', 'selected');
             $('#trangthai option[value=' + trangthai + ' ]').attr('selected', 'selected');
             $('#nhomchucnang option[value=' + nhomchucnang + ' ]').attr('selected', 'selected');

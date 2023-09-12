@@ -4,6 +4,7 @@ namespace App\Http\Controllers\dethi;
 
 use App\Http\Controllers\Controller;
 use App\Models\danhmuc\chitietloaicauhoict;
+use App\Models\danhmuc\loaicauhoi;
 use App\Models\danhmuc\loaicauhoict;
 use App\Models\dethi\cauhoi;
 use App\Models\dethi\cauhoi_dethi;
@@ -161,7 +162,8 @@ class dethiController extends Controller
         $a_dethi=array_column(dethi::all()->toarray(),'tende','made');
 
         $a_cauhoi=array_column($m_cauhoi->toarray(),'macauhoi');
-        $m_cauhoi_khac=cauhoi::wherenotin('macauhoi',$a_cauhoi)->where('nguoncauhoi',1684121372)->get();               
+        $m_cauhoi_khac=cauhoi::wherenotin('macauhoi',$a_cauhoi)->where('nguoncauhoi',1684121372)->get();
+        $a_loaicauhoi=array_column(loaicauhoi::all()->toarray(),'tendm','madm');           
         if(isset($inputs['made'])){
             $inputs['url']='/DeThi/ChiTiet/'.$inputs['made'];
         }else{
@@ -175,6 +177,8 @@ class dethiController extends Controller
                     ->with('a_cauhoi',$a_cauhoi)
                     ->with('m_cauhoi_khac',$m_cauhoi_khac)
                     ->with('inputs',$inputs)
+                    ->with('a_loaicauhoi',$a_loaicauhoi)
+                    ->with('baocao',getdulieubaocao())
                     ->with('pageTitle','Chi tiết đề thi');
     }
 

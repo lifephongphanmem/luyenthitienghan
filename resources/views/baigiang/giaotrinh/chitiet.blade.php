@@ -40,6 +40,8 @@
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import"></i>
                         </button> --}}
+                        <a href="{{'/GiaoTrinh/ThongTin'}}" class="btn btn-primary"><i
+                            class="fa fa-reply"></i>&nbsp;Quay lại</a>
                     </div>
                 </div>
 

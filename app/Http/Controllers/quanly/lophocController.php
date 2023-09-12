@@ -32,13 +32,27 @@ class lophocController extends Controller
             return view('errors.noperm')->with('machucnang', 'lophoc');
         }
         $inputs=$request->all();
-        $khoahoc=lophoc::select('khoahoc')->orderBy('id','desc')->first();
+        if(in_array(session('admin')->sadmin,['SSA','admin'])){
+            $khoahoc=lophoc::select('khoahoc')->orderBy('id','desc')->first();
+                   
         $inputs['khoahoc'] = $inputs['khoahoc'] ?? (isset($khoahoc) ? $khoahoc->khoahoc : '');
         $model=lophoc::where(function($q) use($inputs){
             if(isset($inputs['khoahoc'])){
                 $q->where('khoahoc',$inputs['khoahoc']);
             }
         })->get();
+        }else if(session('admin')->giaovien ==1){
+            $khoahoc=lophoc::select('khoahoc')->where('giaovienchunhiem',session('admin')->manguoidung)->orderBy('id','desc')->first();
+            $inputs['khoahoc'] = $inputs['khoahoc'] ?? (isset($khoahoc) ? $khoahoc->khoahoc : '');
+            $model=lophoc::where(function($q) use($inputs){
+                if(isset($inputs['khoahoc'])){
+                    $q->where('khoahoc',$inputs['khoahoc']);
+                }
+            })
+            ->where('giaovienchunhiem',session('admin')->manguoidung)
+            ->get();
+        }
+
         $a_giaovien=array_column(giaovien::where('trangthai','!=',3)->get()->toarray(),'tengiaovien','magiaovien');
         $a_khoahoc=array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(),'khoahoc','khoahoc');
 
