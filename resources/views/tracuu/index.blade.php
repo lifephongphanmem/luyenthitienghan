@@ -155,7 +155,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ '/TraCuu/KetQua' }}" target="_blank" method="POST" onsubmit="return(validate());">
+            <form action="{{ '/TraCuu/KetQua' }}" target="_blank" rel="noopener noreferrer" method="POST" onsubmit="return(validate());">
                 @csrf
                 <div class="d-flex">
                     <div class="col-6">
