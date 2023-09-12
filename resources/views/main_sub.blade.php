@@ -357,9 +357,9 @@
                 </li>
                 @if (chkPhanQuyen('tintuc', 'phanquyen'))
                     <li class="menu-item" aria-haspopup="true">
-                        <a href="{{ '/TinTuc/TaoBai' }}" class="menu-link"><i
+                        <a href="{{ '/TinTuc/QuanLy' }}" class="menu-link"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
-                            <span class="menu-text">TẠO BÀI</span>
+                            <span class="menu-text">QUẢN LÝ TIN TỨC</span>
                             {{-- <span class="menu-desc"></span> --}}
                         </a>
                     </li>
