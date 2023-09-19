@@ -80,7 +80,7 @@
                                         </button> --}}
 
                                         <button title="Xóa thông tin" type="button"
-                                            onclick="cfDel('{{ '/GiaoTrinh/XoaBaiHoc/' . $bh->id }}')"
+                                            onclick="cfDel('{{ '/GiaoTrinh/XoaBaiHoc/' . $bh->mabaihoc }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-trash-alt text-danger icon-2x"></i></button>
@@ -155,6 +155,7 @@
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xoá?</h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        <input type="hidden" name='magiaotrinh' id='magiaotrinh_del'>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
@@ -168,6 +169,7 @@
     {{-- @include('includes.delete') --}}
     <script>
         function cfDel(url) {
+            $('#magiaotrinh_del').val($('#giaotrinh').val())
             $('#frmDelete').attr('action', url);
         }
 

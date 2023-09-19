@@ -95,7 +95,7 @@ class tuvungController extends Controller
         // }
 
         tuvung::create($inputs);
-
+        loghethong(getIP(),session('admin'),'them','tuvung');
         return redirect('/TuVung/ThongTin')
                 ->with('success','Thêm thành công');
     }
@@ -140,6 +140,7 @@ class tuvungController extends Controller
 
         if(isset($model)){
             $model->update($inputs);
+            loghethong(getIP(),session('admin'),'capnhat','tuvung');
         }
 
         return redirect('/TuVung/ThongTin')->with('success','Cập nhật thành công');
@@ -187,7 +188,7 @@ class tuvungController extends Controller
             unset($data['tenbaihoc']);
             tuvung::create($data);
         }
-
+        loghethong(getIP(),session('admin'),'excel','tuvung');
         return redirect('/TuVung/ThongTin')
                     ->with('success','Thêm thành công');
     }

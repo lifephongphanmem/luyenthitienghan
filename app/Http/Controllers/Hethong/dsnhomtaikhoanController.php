@@ -63,9 +63,11 @@ class dsnhomtaikhoanController extends Controller
         if ($model == null) {
             $inputs['manhomchucnang'] = getdate()[0];
             dsnhomtaikhoan::create($inputs);
+            loghethong(getIP(),session('admin'),'them','nhomtaikhoan');
         } else {
 
             $model->update($inputs);
+            loghethong(getIP(),session('admin'),'capnhat','nhomtaikhoan');
         }
 
         return redirect('/nhomchucnang/ThongTin')
@@ -120,7 +122,8 @@ class dsnhomtaikhoanController extends Controller
         $m_chucnang = Chucnang::where('trangthai', '1')->get();
         $ketqua = new Collection();
         if (isset($inputs['nhomchucnang'])) {
-            $this->getChucNang($m_chucnang, $inputs['machucnang'], $ketqua);
+            // $this->getChucNang($m_chucnang, $inputs['machucnang'], $ketqua);
+            $ketqua=$m_chucnang->where('machucnang_goc',$inputs['machucnang']);
         }
         $ketqua->add($m_chucnang->where('maso', $inputs['machucnang'])->first());
 
@@ -140,6 +143,7 @@ class dsnhomtaikhoanController extends Controller
                 $chk->update($a_kq);
             }
         }
+        loghethong(getIP(),session('admin'),'phanquyen','nhomtaikhoan');
         return redirect('/nhomchucnang/PhanQuyen?manhomchucnang=' . $inputs['manhomchucnang'])
                         ->with('success','Thành công');
     }
@@ -168,7 +172,7 @@ class dsnhomtaikhoanController extends Controller
         }
         $model=dsnhomtaikhoan::findOrFail($id);
         $model->delete();
-
+        loghethong(getIP(),session('admin'),'xoa','nhomtaikhoan');
         return redirect('/nhomchucnang/ThongTin')
                 ->with('success','Xóa thành công');
     }
@@ -221,6 +225,7 @@ class dsnhomtaikhoanController extends Controller
         foreach (array_chunk($a_phanquyen, 200) as $data) {
             dstaikhoan_phanquyen::insert($data);
         }
+        loghethong(getIP(),session('admin'),'phanquyennhom','nhomtaikhoan');
         return redirect('/nhomchucnang/danhsach_donvi?manhomchucnang=' . $inputs['manhomchucnang']);
     }
 }

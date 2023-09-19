@@ -26,3 +26,4 @@ include('danhmuc.php');
 include('export.php');
 include('baocao_thongke.php');
 include('tintuc.php');
+include('quantrihethong.php');

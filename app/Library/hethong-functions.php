@@ -4,7 +4,10 @@ use App\Models\danhmuc\loaicauhoict;
 use App\Models\dethi\cauhoi;
 use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
+use App\Models\quantrihethong\cauhinhhethong;
+use App\Models\quantrihethong\loghethong;
 use App\Models\thithu\phongthi;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
@@ -295,4 +298,79 @@ function getdulieubaocao(){
     );
 
     return $arr;
+}
+
+function getIP(){
+    if(!empty($_SERVER['HTTP_CLIENT_IP'])){  
+        $ip_add = $_SERVER['HTTP_CLIENT_IP'];  
+    }
+    elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){  
+        $ip_add = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+    }
+    else{
+        $ip_add = $_SERVER['REMOTE_ADDR'];  
+    }
+
+    return $ip_add;
+}
+function thaotac()
+{
+    return [
+        'dangnhap'=>'Đăng nhập',
+        'them'=>'Thêm',
+        'capnhat'=>'Cập nhật',
+        'xoa'=>'Xóa',
+        'excel'=>'Nhận excel',
+        'thembaihoc'=>'Thêm bài học vào',
+        'xoabaihoc'=>'Xóa bài học khỏi',
+        'themcauhoi'=>'Thêm câu hỏi vào',
+        'phanquyen'=>'Phân quyền',
+        'phanquyennhom'=>'Phân quyền tài khoản theo',
+        'phanquyentaikhoannhom'=>'Gắn phân quyền nhóm cho'
+        
+    ];
+}
+
+function loghethong($ip,$taikhoan,$thaotac,$chucnang){
+    $m_chucnang=cauhinhhethong::where('trangthai',1)->get();
+    $a_chucnang=array_column($m_chucnang->toarray(),'thumuc','machucnang');
+    // $a_thaotac=[
+    //     'dangnhap'=>'Đăng nhập',
+    //     'them'=>'Thêm',
+    //     'capnhat'=>'Cập nhật',
+    //     'xoa'=>'Xóa',
+    //     'excel'=>'Nhận excel',
+    //     'thembaihoc'=>'Thêm bài học vào',
+    //     'xoabaihoc'=>'Xóa bài học khỏi',
+    //     'themcauhoi'=>'Thêm câu hỏi vào',
+    //     'phanquyen'=>'Phân quyền',
+    //     'phanquyennhom'=>'Phân quyền tài khoản theo',
+    //     'phanquyentaikhoannhom'=>'Gắn phân quyền nhóm cho'
+        
+    // ];
+    $data=[
+        'ip'=>$ip,
+        'taikhoantruycap'=>$taikhoan->cccd,
+        'tentaikhoan'=>$taikhoan->tentaikhoan,
+        'thaotac'=>$thaotac,
+        'chucnang'=>$chucnang,
+        'noidung'=>thaotac()[$thaotac] .' '.$a_chucnang[$chucnang],
+        'thoigian'=>Carbon::now('Asia/Ho_Chi_Minh')->toDateTimeString()
+    ];
+    if(in_array($chucnang,array_column($m_chucnang->toarray(),'machucnang'))){
+        loghethong::create($data);
+    }
+
+}
+
+function xoadulieusaoluu()
+{
+    $cauhinh=cauhinhhethong::where('trangthai',1)->get();
+    $time=Carbon::now('Asia/Ho_Chi_Minh');
+    foreach($cauhinh as $ct){
+        $start_time=$time->subDays($ct->thoigianluu)->toDateTimeString();
+        $end_time=$time->toDateTimeString();
+        loghethong::where('chucnang',$ct->machucnang)->whereNotBetween('thoigian',[$start_time,$end_time])->delete();
+    }
+
 }

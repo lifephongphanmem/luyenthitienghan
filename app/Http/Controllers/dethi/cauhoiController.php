@@ -111,7 +111,7 @@ class cauhoiController extends Controller
             }
         }
         cauhoi::create($inputs);
-
+        loghethong(getIP(),session('admin'),'them','cauhoi');
         return redirect('/CauHoi/ThongTin?madm=' . $inputs['loaicauhoi'] . '&dangcau=' . $inputs['dangcau'])
             ->with('success', 'Thêm câu hỏi thành công');
     }
@@ -395,6 +395,7 @@ class cauhoiController extends Controller
             cauhoi::create($data);
             $socauhoi++;
         }
+        loghethong(getIP(),session('admin'),'excel','cauhoi');
         return redirect('/CauHoi/ThongTin?madm='.$inputs['loaicauhoi'])
                         ->with('success','Thêm thành công '.$socauhoi.' câu hỏi');
     }
@@ -407,6 +408,7 @@ class cauhoiController extends Controller
         $model=cauhoi::where('macauhoi',$macauhoi)->first();
         if(isset($model)){
             $model->delete();
+            loghethong(getIP(),session('admin'),'xoa','cauhoi');
         }
 
         return redirect('/CauHoi/ThongTin?madm='.$model->loaicauhoi.'&dangcau='.$model->dangcau)

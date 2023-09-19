@@ -215,6 +215,9 @@
                                         <label class="control-label">CCCD/CMND<span class="require">*</span></label>
                                         {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                                         <input type="text" name="cccd" class="form-control" id='cccd' required>
+                                        @if ($errors->has('cccd'))
+                                        <span class="text-danger">{{ $errors->first('cccd') }}</span>
+                                        @endif
                                     </div>
                                     <div class="col-md-4">
                                         <label class="control-label">Email</label>
@@ -264,7 +267,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                            <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
+                            <button type="submit"  class="btn btn-primary">Đồng
                                 ý</button>
                         </div>
                     </div>
@@ -275,8 +278,10 @@
     <!--nhóm chức năng -->
     <div id="modify-nhomchucnang" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         {{-- {!! Form::open(['url' => '/TaiKhoan/NhomChucNang', 'id' => 'frm_nhomchucnang']) !!} --}}
-        <form action="{{'/TaiKhoan/NhomChucNang'}}" method="GET" id="frm_ncn">
+        <form action="{{'/TaiKhoan/NhomChucNang'}}" method="POST" id="frm_ncn">
+            @csrf
         <input type="hidden" name="tendangnhap" />
+        {{-- <input type="hidden" name="nhomchucnang" /> --}}
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
@@ -302,7 +307,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickNhanvaTKT()">Đồng
+                    <button type="submit"  class="btn btn-primary" >Đồng
                         ý</button>
                 </div>
             </div>
@@ -345,10 +350,10 @@
     function clickedit() {
         $('#frm_edit').submit();
     }
-    function setPerGroup(manhomchucnang, tendangnhap,phanloaitk) {
-        $('#frm_nhomchucnang').find("[name='manhomchucnang']").val(manhomchucnang);
-        $('#frm_nhomchucnang').find("[name='tendangnhap']").val(tendangnhap);
-        $('#frm_nhomchucnang').find("[name='phanloaitk']").val(phanloaitk);
+    function setPerGroup(manhomchucnang, tendangnhap) {
+        $('#frm_ncn').find("[name='manhomchucnang']").val(manhomchucnang);
+        $('#frm_ncn').find("[name='tendangnhap']").val(tendangnhap);
+        // $('#frm_ncn').find("[name='nhomchucnang']").val($('#nhomcn').val());
     }
 
         function edit(e,id,trangthai,phanloai,nhomchucnang,email){

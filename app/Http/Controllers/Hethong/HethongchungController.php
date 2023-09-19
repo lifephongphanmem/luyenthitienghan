@@ -112,7 +112,10 @@ class HethongchungController extends Controller
 		// dd(session('chucnang'));
 		//gán phân quyền của User
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['cccd'])->get()->keyBy('machucnang')->toArray());
-
+		loghethong(getIP(),session('admin'),'dangnhap','dangnhap');
+        if (chkPhanQuyen('saoluudulieu', 'thaydoi') && session('admin')->capdo != 'SSA') {
+            xoadulieusaoluu();
+        }
 		return redirect('/TrangChu')
 			->with('success', 'Đăng nhập thành công')
 			->with('pageTitle', 'Trang chủ');

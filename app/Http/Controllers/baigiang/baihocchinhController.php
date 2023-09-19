@@ -104,7 +104,7 @@ class baihocchinhController extends Controller
         }
 
         baihocchinh::create($inputs);
-
+        loghethong(getIP(),session('admin'),'them','baihocchinh');
         return redirect('/BaiHocChinh/ThongTin')
             ->with('success', 'Thêm mới thành công');
     }
@@ -158,7 +158,7 @@ class baihocchinhController extends Controller
 
 
         $model->update($inputs);
-
+        loghethong(getIP(),session('admin'),'capnhat','baihocchinh');
         return redirect('/BaiHocChinh/ThongTin?mabaihoc='.$model->mabaihoc)->with('success','Cập nhật thành công');
     }
 
@@ -189,6 +189,7 @@ class baihocchinhController extends Controller
                 }
             }
             $model->delete();
+            loghethong(getIP(),session('admin'),'xoa','baihocchinh');
         }
         return redirect('/BaiHocChinh/ThongTin')
             ->with('success', 'Xóa thành công');
@@ -241,6 +242,7 @@ class baihocchinhController extends Controller
             unset($data['tenbaihoc']);
             baihocchinh::create($data);
         }
+        loghethong(getIP(),session('admin'),'excel','baihocchinh');
 
        return redirect('/BaiHocChinh/ThongTin')
                 ->with('success','Thêm thành công');
