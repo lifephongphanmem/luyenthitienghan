@@ -8,11 +8,11 @@
 @endsection
 
 @section('custom-script')
-    <script>
+    {{-- <script>
         var str = '{{ json_encode($baiviet) }}';
         str = str.replace(/&quot;/ig, '"');
         console.log(JSON.parse(str))
-    </script>
+    </script> --}}
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
         @foreach ($baiviet as $bai)
             <div class="p-5 d-flex" style="width: 100%">
                 <div class="pr-7">
-                    <a href="{{ url('/TinTuc/' . $bai->slug) }}">
+                    <a href="{{ '/TinTuc/' . $bai->slug }}">
                         <img style="object-fit: cover" src="{{ url($bai->hinhanh) }}" width="220px" height="140px">
                     </a>
                 </div>
