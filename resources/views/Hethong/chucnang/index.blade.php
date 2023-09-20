@@ -284,8 +284,8 @@
 
                             <div class="row form-group">
                                 <div class="col-lg-6">
-                                    <label class="control-label">Cấp độ</label>
-                                    <select class="form-control select2me" name="capdo" id="capdo">
+                                    <label class="control-label">Cấp độ<span class="require">*</span></label>
+                                    <select class="form-control select2me" name="capdo" id="capdo" required>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>

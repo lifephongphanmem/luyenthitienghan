@@ -141,6 +141,7 @@ class dethiController extends Controller
             ];
             cauhoi_dethi::create($data);
         }
+        loghethong(getIP(),session('admin'),'them','dethi');
         return redirect('/DeThi/ThongTin')
                     ->with('success','Thêm mới thành công');
 
@@ -204,7 +205,7 @@ class dethiController extends Controller
         if(isset($model)){
             $model->update($inputs);
         }
-
+        loghethong(getIP(),session('admin'),'capnhat','dethi');
         return redirect('/DeThi/ThongTin')
                         ->with('success','Cập nhật thành công');
     }
@@ -222,6 +223,7 @@ class dethiController extends Controller
         if(isset($model)){
             $model->delete();
         }
+        loghethong(getIP(),session('admin'),'xoa','dethi');
         return redirect('/DeThi/ThongTin')
                         ->with('success','Xóa thành công');
     }
@@ -241,6 +243,7 @@ class dethiController extends Controller
             cauhoi_dethi::create($data);
         }
         $mes='Thêm thành công'.count($inputs['macauhoi']).'câu hỏi';
+        loghethong(getIP(),session('admin'),'themcauhoi','dethi');
         return redirect('/DeThi/ChiTiet/'.$inputs['made'])
                 ->with('success',$mes);
 

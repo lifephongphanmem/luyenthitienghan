@@ -113,6 +113,7 @@ class dstaikhoanController extends Controller
                 break;
         }
         User::create($inputs);
+        loghethong(getIP(),session('admin'),'them','taikhoan');
         return redirect('/TaiKhoan/ThongTin');
     }
 
@@ -128,14 +129,23 @@ class dstaikhoanController extends Controller
         //         'cccd' => 
         //         [Rule::unique('users')->ignore($id)],							
 		// 	]);
+        
         $validate=$request->validate([
             'cccd'=>'unique:users,cccd,'.$id,
             // 'email'=>'unique:users,email,'.$id
+        ],
+        [
+        'cccd.unique'=>'CCCD đã được sử dụng'
         ]);
+
+        // if($validate->fails()){
+        //     return redirect('/TaiKhoan/ThongTin')->with('error','CCCD đã được sử dụng');
+        // }
 // dd(1);
 
 		$inputs = $request->all();
-		$model = User::findOrFail($id);
+        $model = User::findOrFail($id);
+
 		// $model = User::where('username',$inputs['username'])->first();
 		if ($inputs['password'] == '') {
 			$inputs['password'] = $model->password;
@@ -148,25 +158,17 @@ class dstaikhoanController extends Controller
                 $inputs['giaovien'] = 1;
                 $inputs['hocvien'] = 0;
                 $inputs['hethong'] = 0;
-                $data=[
-                    'tengiaovien'=>$inputs['tentaikhoan'],
-                    'cccd'=>$inputs['cccd'],
-                    'email'=>$inputs['email']
-                ];
+                $inputs['tengiaovien'] = $inputs['tentaikhoan'];
                 $gv=giaovien::where('cccd',$model->cccd)->first();
-                $gv->update($data);
+                $gv->update($inputs);
                 break;
             case '2':
                 $inputs['hocvien'] = 1;
                 $inputs['giaovien'] = 0;
                 $inputs['hethong'] = 0;
-                $data=[
-                    'tenhocvien'=>$inputs['tentaikhoan'],
-                    'cccd'=>$inputs['cccd'],
-                    'email'=>$inputs['email']
-                ];
+                $inputs['tenhocvien'] = $inputs['tentaikhoan'];
                 $hv=hocvien::where('cccd',$model->cccd)->first();
-                $hv->update($data);
+                $hv->update($inputs);
                 break;
             default:
                 $inputs['hehthong'] = 1;
@@ -175,7 +177,7 @@ class dstaikhoanController extends Controller
                 break;
         }
 		$model->update($inputs);
-
+        loghethong(getIP(),session('admin'),'capnhat','taikhoan');
 			return redirect('/TaiKhoan/ThongTin');
 		
 	}
@@ -214,6 +216,7 @@ class dstaikhoanController extends Controller
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
         $inputs = $request->all();
+        // dd($inputs);
         $inputs['phanquyen'] = isset($inputs['phanquyen']) ? 1 : 0;
         $inputs['danhsach'] = isset($inputs['danhsach']) ? 1 : 0;
         $inputs['thaydoi'] = isset($inputs['thaydoi']) ? 1 : 0;
@@ -222,10 +225,12 @@ class dstaikhoanController extends Controller
         $m_chucnang = Chucnang::where('trangthai', '1')->get();
         $ketqua = new Collection();
         if (isset($inputs['nhomchucnang'])) {
-            $this->getChucNang($m_chucnang, $inputs['machucnang'], $ketqua);
+            // $this->getChucNang($m_chucnang, $inputs['machucnang'], $ketqua);
+            $ketqua=$m_chucnang->where('machucnang_goc',$inputs['machucnang']);
         }
-        $ketqua->add($m_chucnang->where('maso', $inputs['machucnang'])->first());
 
+        $ketqua->add($m_chucnang->where('maso', $inputs['machucnang'])->first());
+        // dd($ketqua);
         foreach ($ketqua as $ct) {
             $chk = dstaikhoan_phanquyen::where('machucnang', $ct->maso)->where('tendangnhap', $inputs['tendangnhap'])->first();
             $a_kq = [
@@ -242,17 +247,20 @@ class dstaikhoanController extends Controller
                 $chk->update($a_kq);
             }
         }
+        loghethong(getIP(),session('admin'),'phanquyen','taikhoan');
         return redirect('/TaiKhoan/PhanQuyen?tendangnhap=' . $inputs['tendangnhap'])
             ->with('success', 'Phân quyền thành công');
     }
 
     function getChucNang(&$dschucnang, $machucnang_goc, &$ketqua)
     {
+
         foreach ($dschucnang as $key => $val) {
             if ($val->machucnang_goc == $machucnang_goc) {
                 $ketqua->add($val);
                 $dschucnang->forget($key);
                 $this->getChucNang($dschucnang, $val->machucnang, $ketqua);
+                
             }
         }
     }
@@ -264,7 +272,7 @@ class dstaikhoanController extends Controller
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
         $inputs = $request->all();
-        $m_taikhoan = User::where('username', $inputs['tendangnhap'])->first();
+        $m_taikhoan = User::where('cccd', $inputs['tendangnhap'])->first();
         // dd($inputs);
 
         if (!isset($inputs['manhomchucnang'])) {
@@ -291,11 +299,9 @@ class dstaikhoanController extends Controller
         $m_taikhoan->save();
         //Lưu phân uyền
         dstaikhoan_phanquyen::insert($a_phanquyen);
-        if ($inputs['phanloaitk'] == 1) {
-            return redirect('/TaiKhoan/DanhSach?madv=' . $m_taikhoan->madv);
-        } else {
-            return redirect('/TaiKhoan/ThongTin?phanloaitk=' . $inputs['phanloaitk']);
-        }
+        loghethong(getIP(),session('admin'),'phanquyentaikhoannhom','taikhoan');
+            return redirect('/TaiKhoan/ThongTin?nhomcn=' . $inputs['manhomchucnang']);
+
     }
 
     public function destroy($id)
@@ -319,6 +325,7 @@ class dstaikhoanController extends Controller
             }
 
             $model->delete();
+            loghethong(getIP(),session('admin'),'xoa','taikhoan');
         }
 
         return redirect('/TaiKhoan/ThongTin')->with('message','Xóa thành công');

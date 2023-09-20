@@ -7,6 +7,7 @@ use App\Models\baigiang\baihoc;
 use App\Models\baigiang\baihocchinh;
 use App\Models\baigiang\baitap;
 use App\Models\baigiang\giaotrinh;
+use App\Models\baigiang\giaotrinh_baihoc;
 use App\Models\baigiang\hinhanh;
 use App\Models\baigiang\tracnghiem;
 use App\Models\baigiang\tuvung;
@@ -33,7 +34,10 @@ class giaotrinhController extends Controller
             return view('errors.noperm')->with('machucnang', 'giaotrinh');
         }
         $model=giaotrinh::all();
-
+        foreach($model as $ct){
+            $baihoc=giaotrinh_baihoc::where('magiaotrinh',$ct->magiaotrinh)->get();
+            $ct->soluongbai=count($baihoc);
+        }
         return view('baigiang.giaotrinh.index')
                     ->with('model',$model)
                     ->with('baocao',getdulieubaocao())
@@ -59,7 +63,7 @@ class giaotrinhController extends Controller
         $inputs=$request->all();
         $inputs['magiaotrinh']=getdate()[0];
         giaotrinh::create($inputs);
-
+        loghethong(getIP(),session('admin'),'them','giaotrinh');
         return redirect('/GiaoTrinh/ThongTin')
                 ->with('success','Thêm thành công');
     }
@@ -77,8 +81,9 @@ class giaotrinhController extends Controller
         $model=giaotrinh::where('magiaotrinh',$inputs['magiaotrinh'])->first();
 
         $a_giaotrinh=array_column(giaotrinh::all()->toarray(),'tengiaotrinh','magiaotrinh');
-        $m_baihoc=baihoc::where('magiaotrinh',$model->magiaotrinh)->get();
-        $a_baihoc=array_column(baihoc::where('magiaotrinh','!=',$inputs['magiaotrinh'])->orwherenull('magiaotrinh')->get()->toarray(),'tenbaihoc','mabaihoc');
+        $a_baihoc_giaotrinh=array_column(giaotrinh_baihoc::where('magiaotrinh',$model->magiaotrinh)->get()->toarray(),'mabaihoc');
+        $m_baihoc=baihoc::wherein('mabaihoc',$a_baihoc_giaotrinh)->get();
+        $a_baihoc=array_column(baihoc::wherenotin('mabaihoc',$a_baihoc_giaotrinh)->get()->toarray(),'tenbaihoc','mabaihoc');
         $inputs['magiaotrinh']=$inputs['magiaotrinh']??'';
         $inputs['url']='/GiaoTrinh/chitiet';
         return view('baigiang.giaotrinh.chitiet')
@@ -113,7 +118,7 @@ class giaotrinhController extends Controller
         if(isset($model)){
             $model->update($inputs);
         }
-
+        loghethong(getIP(),session('admin'),'capnhat','giaotrinh');
         return redirect('/GiaoTrinh/ThongTin')
                 ->with('success','Cập nhật thành công');
     }
@@ -130,6 +135,7 @@ class giaotrinhController extends Controller
         $model=giaotrinh::findOrFail($id);
         if(isset($model)){
             $model->delete();
+            loghethong(getIP(),session('admin'),'xoa','giaotrinh');
         }
 
         return redirect('/GiaoTrinh/ThongTin')
@@ -146,11 +152,15 @@ class giaotrinhController extends Controller
         foreach($inputs['mabaihoc'] as $ct){
             $baihoc=baihoc::where('mabaihoc',$ct)->first();
             if(isset($baihoc)){
-                $baihoc->update(['magiaotrinh'=>$inputs['magiaotrinh']]);
+                $data=[
+                    'magiaotrinh'=>$model->magiaotrinh,
+                    'mabaihoc'=>$baihoc->mabaihoc
+                ];
+                giaotrinh_baihoc::create($data);
                
             }
         }
-        $model->update(['soluongbai'=>$model->soluongbai + count($inputs['mabaihoc'])]);
+        loghethong(getIP(),session('admin'),'thembaihoc','giaotrinh');
         return redirect('/GiaoTrinh/chitiet?magiaotrinh='.$model->magiaotrinh)
                 ->with('success','Thêm thành công');
     }
@@ -160,14 +170,14 @@ class giaotrinhController extends Controller
         if (!chkPhanQuyen('giaotrinh', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'giaotrinh');
         }
-
-        $baihoc=baihoc::findOrFail($id);
-        $giaotrinh=giaotrinh::where('magiaotrinh',$baihoc->magiaotrinh)->first();
-        if(isset($baihoc)){
-            $baihoc->update(['magiaotrinh'=>'']);
+        $inputs=$request->all();
+        $model=giaotrinh_baihoc::where('magiaotrinh',$inputs['magiaotrinh'])->where('mabaihoc',$id)->first();
+        if(isset($model)){
+            $model->delete();
+            loghethong(getIP(),session('admin'),'xoabaihoc','giaotrinh');
         }
-        $giaotrinh->update(['soluongbai'=>$giaotrinh->soluongbai -1]);
-        return redirect('/GiaoTrinh/chitiet?magiaotrinh='.$giaotrinh->magiaotrinh)
+
+        return redirect('/GiaoTrinh/chitiet?magiaotrinh='.$inputs['magiaotrinh'])
                 ->with('success','Xóa thành công');
     }
 

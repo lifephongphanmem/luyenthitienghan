@@ -102,10 +102,10 @@
                                 <label class="control-label">Tên giáo trinh<span class="require">*</span></label>
                                 <input type="text" name="tengiaotrinh" class="form-control" required>
                             </div>
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <label class="control-label">Số lượng bài<span class="require">*</span></label>
                                 <input type="number" name="soluongbai" class="form-control">
-                            </div>
+                            </div> --}}
                             <div class="col-md-12 mt-3">
                                 <label class="control-label">Ghi chú</label>
                                 <textarea name="ghichu" id="" cols="" rows="5" class="form-control"></textarea>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickNhanvaTKT()">Đồng
+                        <button type="submit" class="btn btn-primary">Đồng
                             ý</button>
                     </div>
                 </div>
@@ -139,10 +139,10 @@
                                 <label class="control-label">Tên giáo trình<span class="require">*</span></label>
                                 <input type="text" name="tengiaotrinh" id="tengiaotrinh" class="form-control" required>
                             </div>
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <label class="control-label">Số lượng bài<span class="require">*</span></label>
                                 <input type="text" name="soluongbai" id="soluongbai" class="form-control" required>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12 mt-3">
                                 <label class="control-label">Ghi chú</label>
                                 <textarea name="ghichu" id="ghichu" cols="" rows="5" class="form-control"></textarea>
@@ -151,7 +151,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
+                        <button type="submit"  class="btn btn-primary" >Đồng
                             ý</button>
                     </div>
                 </div>

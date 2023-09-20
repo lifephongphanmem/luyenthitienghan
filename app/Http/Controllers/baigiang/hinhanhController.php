@@ -31,7 +31,7 @@ class hinhanhController extends Controller
         if (!chkPhanQuyen('hinhanh', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'hinhanh');
         }
-        dd(session('admin'));
+        // dd(session('admin'));
         $inputs=$request->all();
         $m_baihoc = baihoc::all();
         $inputs['mabaihoc']=$inputs['mabaihoc']??$m_baihoc->first()->mabaihoc;
@@ -89,7 +89,7 @@ class hinhanhController extends Controller
         }
 
         hinhanh::create($inputs);
-
+        loghethong(getIP(),session('admin'),'them','hinhanh');
         return redirect('/HinhAnh/ThongTin')
                 ->with('success','Thêm mới thành công');
     }
@@ -129,6 +129,7 @@ class hinhanhController extends Controller
 
         if(isset($model)){
             $model->update($inputs);
+            loghethong(getIP(),session('admin'),'capnhat','hinhanh');
         }
         
         return redirect('/HinhAnh/ThongTin?mabaihoc='.$model->mabaihoc)->with('success','Cập nhật thành công');
@@ -152,6 +153,7 @@ class hinhanhController extends Controller
                 File::Delete($model->audio);
             }
             $model->delete();
+            loghethong(getIP(),session('admin'),'xoa','hinhanh');
         }
 
         return redirect('/HinhAnh/ThongTin?mabaihoc='.$mabaihoc)->with('success','Xóa thành công');
@@ -189,7 +191,7 @@ class hinhanhController extends Controller
             unset($data['tenbaihoc']);
             hinhanh::create($data);
         }
-
+        loghethong(getIP(),session('admin'),'excel','hinhanh');
         return redirect('/HinhAnh/ThongTin')
                     ->with('success','Thêm thành công');
     }

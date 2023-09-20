@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use App\Imports\ColectionImport;
 use App\Models\danhmuc\loaicauhoi;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 
 class baitapController extends Controller
 {
@@ -87,6 +88,7 @@ class baitapController extends Controller
         }
 // dd($inputs);
         baitap::create($inputs);
+        loghethong(getIP(),session('admin'),'them','baitap');
         return redirect('/BaiTap/ThongTin')
                 ->with('success','Thêm mới thành công');
     }
@@ -105,7 +107,34 @@ class baitapController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (!chkPhanQuyen('baitap', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'baitap');
+        }
+        $model=baitap::where('mabaitap',$id)->first();
+        $mabaihoc=$model->mabaihoc;
+        if(isset($model)){
+            if(File::exists($model->anh)){
+                File::Delete($model->anh);
+            }
+            if(File::exists($model->audio)){
+                File::Delete($model->audio);
+            }
+            if(File::exists($model->A)){
+                File::Delete($model->A);
+            }
+            if(File::exists($model->B)){
+                File::Delete($model->B);
+            }
+            if(File::exists($model->C)){
+                File::Delete($model->C);
+            }
+            if(File::exists($model->D)){
+                File::Delete($model->D);
+            }
+            $model->delete();
+            loghethong(getIP(),session('admin'),'xoa','baitap');
+        }
+        return redirect('/BaiTap/ThongTin?mabaihoc='.$mabaihoc)->with('success','Xóa thành công');
     }
     public function import(Request $request){
         if (!chkPhanQuyen('baitap', 'thaydoi')) {
@@ -141,6 +170,7 @@ class baitapController extends Controller
             unset($data['tenbaihoc']);
             baitap::create($data);
         }
+        loghethong(getIP(),session('admin'),'excel','baitap');
 
         return redirect('/BaiTap/ThongTin')
                     ->with('success','Thêm thành công');

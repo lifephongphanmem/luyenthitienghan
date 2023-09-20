@@ -37,13 +37,14 @@ class ChucnangController extends Controller
 
     public function store(Request $request)
     {
-        // if (!chkPhanQuyen('chucnang', 'thaydoi')) {
-        //     return view('errors.noperm')->with('machucnang', 'chucnang');
-        // }
+        if (!chkPhanQuyen('chucnang', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'chucnang');
+        }
         $inputs=$request->all();
         $inputs['parent'] = isset($inputs['parent'])?$inputs['parent']:0;
         if($inputs['edit'] == null){
             Chucnang::create($inputs);
+            loghethong(getIP(),session('admin'),'them','chucnang');
         }else{
             $id=$inputs['edit'];
             $model=Chucnang::findOrFail($id);
@@ -62,6 +63,7 @@ class ChucnangController extends Controller
                 }
 
             $model->update($inputs);
+            loghethong(getIP(),session('admin'),'capnhat','chucnang');
         }
 
         return redirect('/Chuc_nang/ThongTin');
@@ -87,6 +89,7 @@ class ChucnangController extends Controller
             foreach ($m_model as $value){
                 $value->delete();
             }
+            loghethong(getIP(),session('admin'),'xoa','chucnang');
         }
         $model->delete();
         return redirect('/Chuc_nang/ThongTin');
