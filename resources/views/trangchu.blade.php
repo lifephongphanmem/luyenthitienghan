@@ -202,14 +202,16 @@
             -webkit-line-clamp: 2;
             line-height: 1.6rem;
         }
+
         .show-main-home.show-tintuc {
-    padding: 40px 0px;
-}
-.show-main-home {
-    width: 100%;
-    float: left;
-    padding-top: 40px;
-}
+            padding: 40px 0px;
+        }
+
+        .show-main-home {
+            width: 100%;
+            float: left;
+            padding-top: 40px;
+        }
     </style>
 @endsection
 @section('banner')
@@ -257,8 +259,7 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">
-                    <a href="mien-phi"><img
-                            src="{{ url('/images/tich-hop.png') }}"
+                    <a href="mien-phi"><img src="{{ url('/images/tich-hop.png') }}"
                             data-at2x="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/tich-hop@2x.png"></a>
                 </div>
                 <h3 class="feature-heading">
@@ -271,8 +272,7 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">
-                    <a href="dich-vu"><img
-                            src="{{ url('/images/dichvu-ondinh.png') }}"
+                    <a href="dich-vu"><img src="{{ url('/images/dichvu-ondinh.png') }}"
                             data-at2x="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/dichvu-ondinh@2x.png"></a>
                 </div>
                 <h3 class="feature-heading">
@@ -285,8 +285,7 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">
-                    <a href="chat-luong"><img
-                            src="{{ url('/images/chinhsachdaily.png') }}"
+                    <a href="chat-luong"><img src="{{ url('/images/chinhsachdaily.png') }}"
                             data-at2x="https://luyenthieps.vieclamquangbinh.gov.vn/public/frontend/images/chinhsachdaily@2x.png"></a>
                 </div>
                 <h3 class="feature-heading">
@@ -310,41 +309,17 @@
             <div class="col-xs-12 col-sm-6">
                 <h2 class="left-heading">TIN MỚI NHẤT</h2>
                 <div id="news-list">
-                    <div class="normal-news">
-                        <a style="display: -webkit-box;max-height: 3.2rem;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;white-space: normal;-webkit-line-clamp: 1;"
-                            class="news-heading"
-                            href="tin-tuc/-dam-bao-an-ninh-an-toan-va-phong-ngua-cac-hanh-tieu-cuc-trong-ky-thi-tieng-han-dot-1-nam-2023">
-                            Đảm bảo an ninh an toàn và phòng ngừa các hành tiêu cực trong kỳ thi tiếng Hàn đợt 1 năm 2023</a>
-                        <div class="post-time" style="padding: 5px 0px;">Đăng ngày: 27/04/2023 23:19:22</div>
-                        <div class="news-des">Đảm bảo an ninh an toàn và phòng ngừa các hành tiêu cực trong kỳ thi tiếng Hàn đợt
-                            1 năm 2023</div>
-                    </div>
-                    <div class="normal-news">
-                        <a style="display: -webkit-box;max-height: 3.2rem;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;white-space: normal;-webkit-line-clamp: 1;"
-                            class="news-heading"
-                            href="tin-tuc/danh-sach-ca-thi-dia-diem-thi-ky-thi-tieng-han-dot-1-nam-2023">Danh sách ca thi, địa
-                            điểm thi kỳ thi tiếng Hàn đợt 1 năm 2023</a>
-                        <div class="post-time" style="padding: 5px 0px;">Đăng ngày: 27/04/2023 23:18:45</div>
-                        <div class="news-des">Danh sách ca thi, địa điểm thi kỳ thi tiếng Hàn đợt 1 năm 2023</div>
-                    </div>
-                    <div class="normal-news">
-                        <a style="display: -webkit-box;max-height: 3.2rem;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;white-space: normal;-webkit-line-clamp: 1;"
-                            class="news-heading"
-                            href="tin-tuc/lao-dong-cbt-tap-trung-hoan-thien-cac-thu-tuc-can-thiet-truoc-khi-xuat-canh-042023">Lao
-                            động CBT tập trung hoàn thiện các thủ tục cần thiết trước khi xuất cảnh 04/2023</a>
-                        <div class="post-time" style="padding: 5px 0px;">Đăng ngày: 27/04/2023 23:18:09</div>
-                        <div class="news-des">Lao động CBT tập trung hoàn thiện các thủ tục cần thiết trước khi xuất cảnh</div>
-                    </div>
-                    <div class="normal-news">
-                        <a style="display: -webkit-box;max-height: 3.2rem;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;white-space: normal;-webkit-line-clamp: 1;"
-                            class="news-heading"
-                            href="tin-tuc/tap-trung-hoan-thien-thu-tuc-xuat-canh-va-rut-tien-ky-quy-cho-lao-dong-thuoc-doi-tuong-mau-muc-di-la">Tập
-                            trung hoàn thiện thủ tục xuất cảnh và rút tiền ký quỹ cho lao động thuộc đối tượng mẫu mực đi làm
-                            việc tại Hàn Quốc theo Chương trình EPS đợt 03/2023</a>
-                        <div class="post-time" style="padding: 5px 0px;">Đăng ngày: 27/04/2023 23:17:29</div>
-                        <div class="news-des">Tập trung hoàn thiện thủ tục xuất cảnh và rút tiền ký quỹ cho lao động thuộc đối
-                            tượng mẫu mực đi làm việc tại Hàn Quốc theo Chương trình EPS đợt 03/2023</div>
-                    </div>
+                    @foreach ($cacbaivietganday as $baiviet)
+                        <div class="normal-news">
+                            <a style="display: -webkit-box;max-height: 3.2rem;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;white-space: normal;-webkit-line-clamp: 1;"
+                                class="news-heading" href="{{ url('/TinTuc/' . $baiviet->slug) }}">
+                                {{ $baiviet->tieude }}</a>
+                            <div class="post-time" style="padding: 5px 0px;">Đăng ngày:
+                                {{ Carbon\Carbon::createFromTimeString($baiviet->created_at)->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i:s') }}
+                            </div>
+                            <div class="news-des">{{ $baiviet->phude }}</div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

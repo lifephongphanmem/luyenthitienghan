@@ -36,6 +36,22 @@ class tintucController extends Controller
             ->with('pageTitle', 'Tin tức');
     }
 
+    public function quanly()
+    {
+        if (!chkPhanQuyen('tintuc', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'tintuc');
+        }
+
+        $baiviet = tintuc::with('user:id,tentaikhoan')
+            ->select('id', 'tieude', 'phude', 'user_id', 'slug', 'created_at')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return view('tintuc.quanly', compact('baiviet'))
+            ->with('baocao', getdulieubaocao())
+            ->with('pageTitle', 'Quản lý tin tức');
+    }
+
     public function create()
     {
         if (!chkPhanQuyen('tintuc', 'thaydoi')) {
@@ -68,7 +84,7 @@ class tintucController extends Controller
             'slug' => Str::slug($request['tieude'] . '-' . Carbon::now('Asia/Ho_Chi_Minh')->format('dmy-His'))
         ]);
 
-        return redirect()->route('trangchutintuc');
+        return redirect()->route('quanlytintuc');
     }
 
     public function show($slug)
@@ -144,7 +160,7 @@ class tintucController extends Controller
             'hinhanh' => $hinhanh
         ]);
 
-        return redirect()->to('/TinTuc/' . $new_slug);
+        return redirect()->route('quanlytintuc');
     }
 
     public function destroy($slug)
@@ -155,6 +171,6 @@ class tintucController extends Controller
 
         tintuc::where('slug', '=', $slug)->delete();
 
-        return redirect()->route('trangchutintuc');
+        return redirect()->route('quanlytintuc');
     }
 }

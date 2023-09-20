@@ -254,39 +254,47 @@
             </ul>
         </div>
     </li>
-    
+
     @if (chkPhanQuyen('baocao', 'phanquyen'))
-    <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
-        <a href="javascript:;" class="menu-link menu-toggle">
-            <span class="menu-text">BÁO CÁO &nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
-            {{-- <span class="menu-desc">EPS-TOPIK</span> --}}
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text">BÁO CÁO &nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+                {{-- <span class="menu-desc">EPS-TOPIK</span> --}}
+            </a>
+            @if (chkPhanQuyen('thongke', 'phanquyen'))
+                <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                    <ul class="menu-subnav">
+                        <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                            <a href="javascript:;" class="menu-link menu-toggle"><i
+                                    class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                <span class="menu-text">THỐNG KÊ</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                                <ul class="menu-subnav">
+                                    <li class="menu-item" aria-haspopup="true">
+                                        <a data-target="#modify-modal-danhsach" data-toggle="modal"
+                                            class="menu-link"><i class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                            <span class="menu-text">DANH SÁCH HỌC VIÊN</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            @endif
+        </li>
+    @endif
 
-        </a>
-        @if (chkPhanQuyen('thongke', 'phanquyen'))
-        <div class="menu-submenu menu-submenu-classic menu-submenu-left">
-            <ul class="menu-subnav">
-                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                        <a href="javascript:;" class="menu-link menu-toggle"><i
-                                class="icon-sm la la-angle-double-right"></i>&nbsp;
-                            <span class="menu-text">THỐNG KÊ</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu menu-submenu-classic menu-submenu-right">
-                            <ul class="menu-subnav">
-                                <li class="menu-item" aria-haspopup="true">
-                                    <a  data-target="#modify-modal-danhsach" data-toggle="modal" class="menu-link"><i
-                                            class="icon-sm la la-angle-double-right"></i>&nbsp;
-                                        <span class="menu-text">DANH SÁCH HỌC VIÊN</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-            </ul>
-        </div>
-        @endif
-    </li>
+    @if (chkPhanQuyen('tracuu', 'phanquyen'))
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
+            <a href="{{ '/TraCuu' }}" class="menu-link">
+                <span class="menu-text">TRA CỨU</span>
+                {{-- <span class="menu-desc">Recent Updates &amp; Reports</span> --}}
+                <i class="menu-arrow"></i>
+            </a>
+        </li>
     @endif
 
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
@@ -297,23 +305,25 @@
         <div class="menu-submenu menu-submenu-classic menu-submenu-right">
             <ul class="menu-subnav">
                 <li class="menu-item" aria-haspopup="true">
-                    <a href="{{'/TinTuc/TrangChu'}}" class="menu-link"><i class="icon-sm la la-angle-double-right"></i>&nbsp;
+                    <a href="{{ '/TinTuc/TrangChu' }}" class="menu-link"><i
+                            class="icon-sm la la-angle-double-right"></i>&nbsp;
                         <span class="menu-text">TIN TỨC</span>
                         {{-- <span class="menu-desc"></span> --}}
                     </a>
                 </li>
                 @if (chkPhanQuyen('tintuc', 'phanquyen'))
-                <li class="menu-item" aria-haspopup="true">
-                    <a href="{{'/TinTuc/TaoBai'}}" class="menu-link"><i class="icon-sm la la-angle-double-right"></i>&nbsp;
-                        <span class="menu-text">TẠO BÀI</span>
-                        {{-- <span class="menu-desc"></span> --}}
-                    </a>
-                </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{{ '/TinTuc/QuanLy' }}" class="menu-link"><i
+                                class="icon-sm la la-angle-double-right"></i>&nbsp;
+                            <span class="menu-text">QUẢN LÝ TIN TỨC</span>
+                            {{-- <span class="menu-desc"></span> --}}
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>
     </li>
-    
+
     @if (chkPhanQuyen('hethong', 'phanquyen'))
         <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
             <a href="javascript:;" class="menu-link menu-toggle">

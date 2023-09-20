@@ -34,21 +34,25 @@
                 <h3>TIN TỨC</h3>
             </div>
             <div class="col-2 center-items">
-                @if (chkPhanQuyen('tintuc', 'thaydoi'))
+                {{-- @if (chkPhanQuyen('tintuc', 'thaydoi'))
                     <button type="button" class="btn btn-primary m-1">
                         <a href="{{ '/TinTuc/' . $baiviet->slug . '/Sua' }}" style="color: white">Sửa</a>
                     </button>
                     <button type="button" class="btn btn-danger m-1" data-target="#xacnhan" data-toggle="modal">
                         Xoá
                     </button>
-                @endif
+                @endif --}}
             </div>
         </div>
         <div class="pt-7 pb-7 pl-15 pr-15">
             <div class="pb-2 border-bottom border-2">
                 <h2 class="text-uppercase">{{ $baiviet->tieude }}</h2>
                 <div class="d-flex pb-1">
-                    <div class="col-10 nopadding subtitle">Đăng bởi: {{ $baiviet->user->tentaikhoan }}</div>
+                    <div class="col-10 nopadding subtitle">Đăng bởi: 
+                        @isset($baiviet->user->tentaikhoan)
+                            {{ $baiviet->user->tentaikhoan }}
+                        @endisset
+                    </div>
                     <div class="col-2 nopadding subtitle">Lượt xem: {{ $baiviet->luotxem }}</div>
                 </div>
                 <div class="subtitle">Ngày đăng:

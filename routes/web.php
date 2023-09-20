@@ -27,3 +27,4 @@ include('export.php');
 include('baocao_thongke.php');
 include('tintuc.php');
 include('quantrihethong.php');
+include('tracuu.php');
