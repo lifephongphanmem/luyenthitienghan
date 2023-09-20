@@ -30,8 +30,11 @@
                         <h3 class="card-label text-uppercase">Danh sách lớp thi phòng: {{ $phongthi->tenphongthi }}</h3>
                     </div>
                     <div class="card-toolbar">
+                        @if ($phongthi->trangthai == 1)
                         <button data-target="#themmoi" data-toggle="modal" class="btn btn-xs btn-success mr-2"><i
-                                class="fa fa-plus"></i> Thêm lớp</button>
+                            class="fa fa-plus"></i> Thêm lớp</button>
+                        @endif
+
                         {{-- <button class="btn btn-xs btn-success mr-2" title="Chọn đề thi"
                             data-target="#modal-chondethi" data-toggle="modal">
                             <i class="fa fa-plus"></i> Chọn đề thi

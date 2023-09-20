@@ -120,6 +120,6 @@ src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.boots
 </form>
     {{-- {!! Form::close() !!} --}}
 
-    @include('includes.delete');
+    @include('includes.delete')
 
 @stop

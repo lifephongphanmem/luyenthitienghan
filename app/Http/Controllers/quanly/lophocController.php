@@ -215,7 +215,12 @@ class lophocController extends Controller
         $a_giaovien = array_column(giaovien::where('trangthai', '!=', 3)->get()->toarray(), 'tengiaovien', 'magiaovien');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
         $a_lophoc = array_column(lophoc::select('malop', 'tenlop')->get()->toarray(), 'tenlop', 'malop');
-        $ketqua = ketquathithu::where('malop', $inputs['malop'])->where('ngaythi', $inputs['ngaythi'])->get();
+        $ketqua = ketquathithu::where('malop', $inputs['malop'])
+        ->where(function ($q) use ($inputs){
+            if(isset($inputs['ngaythi'])){
+                $q->where('ngaythi', $inputs['ngaythi']);
+            }
+        })->get();
         // dd($ketqua);
         // $thongtin_thithu=$ketqua->unique('madethi')->first();
         $thongtin_thithu = $ketqua->unique('madethi');
