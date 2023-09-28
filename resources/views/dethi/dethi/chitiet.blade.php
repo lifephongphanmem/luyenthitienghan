@@ -121,9 +121,9 @@
         });
 
         $('#locbtn').click(function() {
-            console.log(nguoncauhoiopt);
-            console.log(loaicauhoiopt);
-            console.log(loaicauhoictopt);
+            // console.log(nguoncauhoiopt);
+            // console.log(loaicauhoiopt);
+            // console.log(loaicauhoictopt);
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 url: '{{ '/DeThi/ChiTiet/' . $model->made . '/DanhSachCauHoi' }}',
@@ -136,7 +136,7 @@
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     datathemmoi(data);
                 },
                 error: function(message) {
@@ -355,8 +355,12 @@
                                 </select>
                             </div>
                             <div class="col-4 no-padding text-center align-self-center">
-                                <button type="button" class="btn btn-outline-success" id="locbtn">Lọc</button>
+                                
                             </div>
+                        </div>
+
+                        <div class="text-center pb-2">
+                            <button type="button" class="btn btn-outline-success" id="locbtn">Lọc</button>
                         </div>
 
                         <input type="hidden" name='made' id='them_made' value="{{ $inputs['made'] }}">
