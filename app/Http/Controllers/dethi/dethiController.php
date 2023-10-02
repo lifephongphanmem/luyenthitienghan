@@ -166,9 +166,9 @@ class dethiController extends Controller
         $m_cauhoi_khac=cauhoi::wherenotin('macauhoi',$a_cauhoi)->where('nguoncauhoi',1684121372)->get();
         $a_loaicauhoi=array_column(loaicauhoi::all()->toarray(),'tendm','madm');           
         if(isset($inputs['made'])){
-            $inputs['url']='/DeThi/ChiTiet/'.$inputs['made'];
+            $inputs['url']='/DeThi/ChiTiet/';
         }else{
-            $inputs['url']='/DeThi/ChiTiet/'.$id;
+            $inputs['url']='/DeThi/ChiTiet/';
         }
         $inputs['made']=$inputs['made']??$id;
         return view('dethi.dethi.chitiet')

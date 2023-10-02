@@ -64,6 +64,7 @@ Route::prefix('HinhAnh')->group(function(){
 //Bài tập
 Route::prefix('BaiTap')->group(function(){
     Route::get('/ThongTin',[baitapController::class,'index']);
+    Route::get('/CapNhat/{mabaitap}',[baitapController::class,'edit']);
     Route::post('/store',[baitapController::class,'store']);
     Route::post('/update/{mabaitap}',[baitapController::class,'update']);
     Route::post('/delete/{mabiatap}',[baitapController::class,'destroy']);

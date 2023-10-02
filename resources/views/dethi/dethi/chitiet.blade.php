@@ -17,7 +17,8 @@
             TableManaged3.init();
             TableManaged1.init();
             $('#made').change(function() {
-                window.location.href = "{{ $inputs['url'] }}" + '?made='+$('#made').val();
+                // window.location.href = "{{ $inputs['url'] }}" + '?made='+$('#made').val();
+                window.location.href = "{{ $inputs['url'] }}" +$('#made').val();
             });
         });
     </script>

@@ -364,13 +364,20 @@ function loghethong($ip,$taikhoan,$thaotac,$chucnang){
 }
 
 function xoadulieusaoluu()
-{
+{//Xét thời gian đăng nhập hiện tại và thời gian đăng nhập gần nhất -> so sánh với thời gian cài đặt xóa
     $cauhinh=cauhinhhethong::where('trangthai',1)->get();
-    $time=Carbon::now('Asia/Ho_Chi_Minh');
+
     foreach($cauhinh as $ct){
-        $start_time=$time->subDays($ct->thoigianluu)->toDateTimeString();
-        $end_time=$time->toDateTimeString();
-        loghethong::where('chucnang',$ct->machucnang)->whereNotBetween('thoigian',[$start_time,$end_time])->delete();
+        // $time=Carbon::now('Asia/Ho_Chi_Minh');
+        $start_time=Carbon::now('Asia/Ho_Chi_Minh')->subDays($ct->thoigianluu)->toDateTimeString();
+        $end_time=Carbon::now('Asia/Ho_Chi_Minh')->toDateTimeString();
+        $model=loghethong::where('chucnang',$ct->machucnang)->orderBy('thoigian','desc')->first();
+        $thoigiangannhat=isset($model)?$model->thoigian:0;
+        $chenhlechthoigian=Carbon::now('Asia/Ho_Chi_Minh')->diffInDays($thoigiangannhat);
+        if($chenhlechthoigian < $ct->thoigianluu){
+            loghethong::where('chucnang',$ct->machucnang)->whereNotBetween('thoigian',[$start_time,$end_time])->delete();
+        }
+       
     }
 
 }

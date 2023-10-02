@@ -22,7 +22,9 @@ Route::prefix('DeThi')->group(function(){
 //Câu hỏi
 Route::prefix('CauHoi')->group(function(){
     Route::get('/ThongTin',[cauhoiController::class,'index']);
+    Route::get('/ThemCauHoi',[cauhoiController::class,'create']);
     Route::post('/store',[cauhoiController::class,'store']);
+    Route::get('/CapNhat/{macauhoi}',[cauhoiController::class,'edit']);
     Route::post('/update/{macauhoi}',[cauhoiController::class,'update']);
     Route::post('/delete/{macauhoi}',[cauhoiController::class,'destroy']);
     Route::post('/LoaiCauHoi',[cauhoiController::class,'loaicauhoi']);
