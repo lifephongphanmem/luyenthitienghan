@@ -96,7 +96,7 @@ class tuvungController extends Controller
 
         tuvung::create($inputs);
         loghethong(getIP(),session('admin'),'them','tuvung');
-        return redirect('/TuVung/ThongTin')
+        return redirect('/TuVung/ThongTin?mabaihoc=' . $inputs['mabaihoc'])
                 ->with('success','Thêm thành công');
     }
 
@@ -143,7 +143,7 @@ class tuvungController extends Controller
             loghethong(getIP(),session('admin'),'capnhat','tuvung');
         }
 
-        return redirect('/TuVung/ThongTin')->with('success','Cập nhật thành công');
+        return redirect('/TuVung/ThongTin?mabaihoc=' . $inputs['mabaihoc'])->with('success','Cập nhật thành công');
         
     }
 
@@ -152,8 +152,15 @@ class tuvungController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $model = tuvung::where('id', $id)->first();
+        $mabaihoc = $model->mabaihoc;
+        if (isset($model)) {
+            $model->delete();
+            loghethong(getIP(), session('admin'), 'xoa', 'tuvung');
+        }
+        return redirect('/TuVung/ThongTin?mabaihoc=' . $mabaihoc)->with('success', 'Xóa thành công');
     }
+
     public function import(Request $request){
         if (!chkPhanQuyen('tuvung', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'tuvung');

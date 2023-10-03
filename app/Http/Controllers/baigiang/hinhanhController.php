@@ -113,7 +113,7 @@ class hinhanhController extends Controller
        
             $file = $inputs['hinhanh'];
             $name = time() . $file->getClientOriginalName();
-            $file->move('uploads/hinhanh/audio/', $name);
+            $file->move('uploads/hinhanh/anh/', $name);
             $inputs['hinhanh'] = 'uploads/hinhanh/anh/' . $name;
         }
 

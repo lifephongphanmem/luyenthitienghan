@@ -16,7 +16,9 @@ Route::prefix('DeThi')->group(function(){
     Route::post('/update/{made}',[dethiController::class,'update']);
     Route::post('/delete/{made}',[dethiController::class,'destroy']);
     Route::get('/ChiTiet/{made}',[dethiController::class,'show']);
+    Route::post('/ChiTiet/{made}/DanhSachCauHoi',[dethiController::class, 'danhsachcauhoi']);
     Route::post('/ThemCauHoi',[dethiController::class,'themcauhoi']);
+    Route::post('/ChiTiet/{made}/XoaCauHoi/{macauhoi}',[dethiController::class, 'xoacauhoi']);
 });
 
 //Câu hỏi

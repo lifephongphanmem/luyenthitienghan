@@ -32,6 +32,7 @@ class tracnghiemController extends Controller
         return view('baigiang.tracnghiem.index')
                     ->with('model',$model)
                     ->with('m_baihoc',$m_baihoc)
+                    ->with('baocao',getdulieubaocao())
                     ->with('pageTitle','Quản lý câu trắc nghiệm');
     }
 
@@ -69,6 +70,7 @@ class tracnghiemController extends Controller
         tracnghiem::create($inputs);
 
         return redirect('/TracNghiem/ThongTin')
+        ->with('baocao',getdulieubaocao())
                 ->with('success','Thêm mới thành công');
     }
 
@@ -104,6 +106,7 @@ class tracnghiemController extends Controller
         }
 
         return redirect('/TracNghiem/ThongTin')
+        ->with('baocao',getdulieubaocao())
                     ->with('success','Cập nhật thành công');
     }
 
@@ -121,6 +124,7 @@ class tracnghiemController extends Controller
         }
 
         return redirect('/TracNghiem/ThongTin')
+        ->with('baocao',getdulieubaocao())
                     ->with('success','Xóa thành công');
     }
 }
