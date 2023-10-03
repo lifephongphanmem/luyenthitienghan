@@ -11,7 +11,7 @@
         src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') }}"></script>
 
     <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
-    <script src="{{url('js/custome-form.js')}}"></script>
+    <script src="{{ url('js/custome-form.js') }}"></script>
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
@@ -60,24 +60,23 @@
                                     <td style="width: 2%">{{ ++$key }}</td>
                                     <td class="text-left" style="width: 15%">{{ $hv->tenhocvien }}</td>
                                     <td style="width: 8%">{{ $hv->cccd }}</td>
-                                    <td style="width: 6%">{{ $hv->gioitinh == 0?'Nữ':'Nam' }}</td>
+                                    <td style="width: 6%">{{ $hv->gioitinh == 0 ? 'Nữ' : 'Nam' }}</td>
                                     <td style="width: 7%">{{ getDayVn($hv->ngaysinh) }}</td>
                                     <td class="text-left" style="width: 8%">
                                         {{ $hv->sdt }}</td>
-                                        <td style="width:20%">{{$hv->diachi}}</td>
-                                        {{-- <td name='trangthai' style="width:10%" class="{{$a_texttrangthai[$gv->trangthai]}}">{{$a_trangthai[$gv->trangthai]}}</td> --}}
+                                    <td style="width:20%">{{ $hv->diachi }}</td>
+                                    {{-- <td name='trangthai' style="width:10%" class="{{$a_texttrangthai[$gv->trangthai]}}">{{$a_trangthai[$gv->trangthai]}}</td> --}}
                                     <td class="text-center" style="width:8%">
-                                        <button title="Sửa thông tin"
-                                            onclick="edit(this,'{{ $hv->id }}')"
+                                        <button title="Sửa thông tin" onclick="edit(this,'{{ $hv->id }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
-                                        <button title="Kết quả thi thử"
-                                        onclick="edit(this,'{{ $hv->id }}')"
-                                        data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
-                                        <i class="icon-xl fas fa-atlas text-success "></i>
-                                    </button>
-
+                                        <a href="{{ '/HocVien/ThongTin/ChiTiet/' . $hv->mahocvien }}" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <button title="Chi tiết" class="btn btn-sm btn-clean btn-icon">
+                                                <i class="icon-xl fas fa-atlas text-success "></i>
+                                            </button>
+                                        </a>
                                         <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{ '/HocVien/delete/' . $hv->id }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
@@ -156,7 +155,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" class="btn btn-primary" >Đồng
+                        <button type="submit" class="btn btn-primary">Đồng
                             ý</button>
                     </div>
                 </div>
@@ -270,7 +269,7 @@
 
 
         function edit(e, id) {
-            
+
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 url: '/HocVien/CapNhat/' + id,
@@ -295,14 +294,14 @@
                     $('#gioitinh option[value=' + data.gioitinh + ' ]').attr('selected',
                         'selected');
 
-                        var url = '/HocVien/update/' + id;
+                    var url = '/HocVien/update/' + id;
                     $('#frm_edit').attr('action', url);
                 },
                 error: function(message) {
                     toastr.error(message, 'Lỗi!');
                 }
             });
-          
+
         }
     </script>
 

@@ -32,6 +32,7 @@ Route::prefix('GiaoVien')->group(function(){
 //Học viên
 Route::prefix('HocVien')->group(function(){
     Route::get('/ThongTin',[hocvienController::class,'index']);
+    Route::get('/ThongTin/ChiTiet/{mahocvien}', [hocvienController::class, 'show']);
     Route::post('/store',[hocvienController::class,'store']);
     Route::get('/CapNhat/{id}',[hocvienController::class,'edit']);
     Route::post('/update/{id}',[hocvienController::class,'update']);
