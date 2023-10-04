@@ -151,8 +151,10 @@
                         <h3 class="card-label text-uppercase">Danh sách câu hỏi</h3>
                     </div>
                     <div class="card-toolbar">
-                        <button onclick="add()" data-target="#themmoi" data-toggle="modal"
-                            class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button>
+                        {{-- <button onclick="add()" data-target="#themmoi" data-toggle="modal"
+                            class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button> --}}
+                            <a href="{{'/CauHoi/ThemCauHoi'}}"
+                            class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</a>
                         <button class="btn btn-xs btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import"></i>Nhận Excel
@@ -242,14 +244,17 @@
                                                 <i class="fa fa-plus text-success "></i>
                                             </button>
                                         @endif
-                                        <button title="Sửa thông tin" onclick="edit(this,'{{ $ch->macauhoi }}')"
+                                        {{-- <button title="Sửa thông tin" onclick="edit(this,'{{ $ch->macauhoi }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
-                                        </button>
+                                        </button> --}}
+                                        <a href="{{'/CauHoi/CapNhat/'.$ch->macauhoi}}" title="Sửa thông tin"  class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la flaticon-edit-1 text-primary "></i>
+                                        </a>
 
 
                                         <button title="Xóa thông tin" type="button"
-                                            onclick="cfDel('{{ '/CauHoi/delete/' . $ch->macauhoi }}')"
+                                            onclick="cfDel('{{ '/CauHoi/delete/' . $ch->macauhoi }}',{{$ch->dangcau}})"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-trash-alt text-danger icon-2x"></i></button>
@@ -430,89 +435,8 @@
                         </h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id='capnhat'>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 mt-2">
-                                <label class="control-label">Nguồn câu hỏi<span class="require">*</span></label>
-                                <select name="nguoncauhoi" class="form-control" id='nguoncauhoi'>
-                                    @foreach ($nguoncauhoi as $ct)
-                                        <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <label class="control-label">Dạng câu hỏi<span class="require">*</span></label>
-                                <select name="dangcau" class="form-control" id='dangcau'>
-                                    <option value="1">Câu đơn</option>
-                                    <option value="2">Câu ghép</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <label class="control-label">Câu hội thoại/không<span class="require">*</span></label>
-                                <select name="hoithoai" class="form-control" id='hoithoai'>
-                                    <option value="0">Không hội thoại</option>
-                                    <option value="1">Câu hội thoại</option>
-                                </select>
-                            </div>
-                            <div id='cauhoithoai' style="width:100%">
-
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <label class="control-label">Câu hỏi<span class="require">*</span></label>
-                                <input type="text" name="cauhoi" class="form-control">
-                            </div>
-
-                            <div class="col-md-4 mt-2">
-                                <label class="control-label">Loại câu hỏi<span class="require">*</span></label>
-                                <select name="loaicauhoi" class="form-control" id='loaicauhoi'>
-                                    @foreach ($loaicauhoi as $ct)
-                                        <option value="{{ $ct->madm }}">{{ $ct->tendm }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-md-4 mt-2">
-                                <label class="control-label">Ảnh</label>
-                                <input type="file" name="anh" class="form-control">
-                            </div>
-                            <div class="col-md-4 mt-2">
-                                <label class="control-label">Audio<span class="require">*</span></label>
-                                <input type="file" name="audio" class="form-control">
-                            </div>
-                            <div id='caudoc' style="width:100%">
-                                <div class="col-md-12 mt-2" id="xoadangcaunghe">
-                                    <label class="control-label">Dạng câu nghe<span class="require">*</span></label>
-                                    <select name="loaicaunghe" class="form-control" id="loaicaunghe">
-                                        @foreach ($caunghe as $ct)
-                                            <option value="{{ $ct->madmct }}"> {{ $ct->tendmct }} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div id='xemtranh' style="width:100%">
-
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <label class="control-label">Loại đáp án<span class="require">*</span></label>
-                                <select name="loaidapan" class="form-control " id="loaidapan">
-                                    <option value="1">Text</option>
-                                    <option value="2">Hình ảnh</option>
-                                </select>
-                            </div>
-                            <div class=" row" id='dapan' style="width:100%">
-
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <label class="control-label">Đáp án đúng<span class="require">*</span></label>
-                                <select name="dapan" class="form-control">
-                                    <option value="A">1</option>
-                                    <option value="B">2</option>
-                                    <option value="C">3</option>
-                                    <option value="D">4</option>
-                                </select>
-                            </div>
-                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -535,6 +459,12 @@
                         <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xoá?</h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
+                    <div id="dangcau">
+                        <div class="modal-body">
+                            <h3 class="text-warning">Nếu xóa câu hỏi sẽ xóa các câu hỏi liên quan và câu hỏi có trong đề thi thử. Bạn có chắc chắn muốn xóa ?</h3>
+
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
                         <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng
@@ -546,7 +476,12 @@
     </div>
     {{-- @include('includes.delete') --}}
     <script>
-        function cfDel(url) {
+        function cfDel(url,dangcau) {
+            var html='';
+            html='<div class="modal-body" >';
+
+
+                html='</div>';
             $('#frmDelete').attr('action', url);
         }
 
@@ -642,6 +577,7 @@
                 type: "GET",
                 success: function(data) {
                     console.log(data);
+                    $('#capnhat').append(data)
                 }
             })
         }
