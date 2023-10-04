@@ -25,9 +25,9 @@
             $('#made').change(function() {
 
                 // window.location.href = "{{ $inputs['url'] }}" + '?made='+$('#made').val();
-                // window.location.href = "{{ $inputs['url'] }}" +$('#made').val();
+                window.location.href = "{{ $inputs['url'] }}" +$('#made').val();
 
-                window.location.href = "{{ $inputs['url'] }}" + '?made=' + $('#made').val();
+                // window.location.href = "{{ $inputs['url'] }}" + '?made=' + $('#made').val();
 
             });
         });
@@ -312,7 +312,7 @@
     <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="{{ '/DeThi/ThemCauHoi' }}" method="POST" id="frm_them" enctype="multipart/form-data">
             @csrf
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">Danh sách câu hỏi

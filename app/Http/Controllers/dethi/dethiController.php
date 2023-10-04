@@ -180,9 +180,9 @@ class dethiController extends Controller
         ->where('dangcaudochieu', '1683687307')->get();
         $a_loaicauhoi = array_column(loaicauhoi::all()->toarray(), 'tendm', 'madm');
         if (isset($inputs['made'])) {
-            $inputs['url'] = '/DeThi/ChiTiet/' . $inputs['made'];
+            $inputs['url'] = '/DeThi/ChiTiet/';
         } else {
-            $inputs['url'] = '/DeThi/ChiTiet/' . $id;
+            $inputs['url'] = '/DeThi/ChiTiet/';
         }
         $inputs['made'] = $inputs['made'] ?? $id;
         $nguoncauhoi = dmnguoncauhoi::all()->sortBy('tendm');
