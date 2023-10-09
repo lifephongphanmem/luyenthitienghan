@@ -46,6 +46,15 @@
                         <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                             <ul class="menu-subnav">
                                 <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ '/BaiHoc/ThongTin' }}" class="menu-link"><i
+                                            class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                        {{-- <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i> --}}
+                                        <span class="menu-text">QUẢN LÝ BÀI HỌC</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item" aria-haspopup="true">
                                     <a href="{{ '/BaiHocChinh/ThongTin' }}" class="menu-link"><i
                                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                                         {{-- <i class="menu-bullet menu-bullet-dot">

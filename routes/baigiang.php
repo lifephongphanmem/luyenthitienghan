@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\baigiang\baihocchinhController;
+use App\Http\Controllers\baigiang\baihocController;
 use App\Http\Controllers\baigiang\baitapController;
 use App\Http\Controllers\baigiang\giaotrinhController;
 use App\Http\Controllers\baigiang\hinhanhController;
@@ -8,6 +9,13 @@ use App\Http\Controllers\baigiang\tracnghiemController;
 use App\Http\Controllers\baigiang\tuvungController;
 use Illuminate\Support\Facades\Route;
 
+Route::prefix('BaiHoc')->group(function() {
+    Route::get('/ThongTin', [baihocController::class, 'index']);
+    Route::post('/store', [baihocController::class, 'store']);
+    Route::post('/uploadvideo/{id}', [baihocController::class, 'upload']);
+    Route::post('/update/{id}', [baihocController::class, 'update']);
+    Route::post('/delete/{id}', [baihocController::class, 'destroy']);
+});
 
 //giáo trình
 Route::prefix('GiaoTrinh')->group(function(){
