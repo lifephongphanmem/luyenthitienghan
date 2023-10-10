@@ -149,20 +149,28 @@ class giaotrinhController extends Controller
         }
         $inputs=$request->all();
         $model=giaotrinh::where('magiaotrinh',$inputs['magiaotrinh'])->first();
-        foreach($inputs['mabaihoc'] as $ct){
-            $baihoc=baihoc::where('mabaihoc',$ct)->first();
-            if(isset($baihoc)){
-                $data=[
-                    'magiaotrinh'=>$model->magiaotrinh,
-                    'mabaihoc'=>$baihoc->mabaihoc
-                ];
-                giaotrinh_baihoc::create($data);
-               
+        if(isset($inputs['mabaihoc'])){
+            $sobai=0;
+            foreach($inputs['mabaihoc'] as $ct){
+                $baihoc=baihoc::where('mabaihoc',$ct)->first();
+                if(isset($baihoc)){
+                    $data=[
+                        'magiaotrinh'=>$model->magiaotrinh,
+                        'mabaihoc'=>$baihoc->mabaihoc
+                    ];
+                    giaotrinh_baihoc::create($data);
+                   $sobai++;
+                }
             }
+            loghethong(getIP(),session('admin'),'thembaihoc','giaotrinh');
+            return redirect('/GiaoTrinh/chitiet?magiaotrinh='.$model->magiaotrinh)
+            ->with('success','Thêm thành công');
+        }else{
+            return redirect('/GiaoTrinh/chitiet?magiaotrinh='.$model->magiaotrinh)
+            ->with('error','Chưa chọn bài học nào');
         }
-        loghethong(getIP(),session('admin'),'thembaihoc','giaotrinh');
-        return redirect('/GiaoTrinh/chitiet?magiaotrinh='.$model->magiaotrinh)
-                ->with('success','Thêm thành công');
+
+
     }
 
     public function xoabaihoc(Request $request,$id)

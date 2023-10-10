@@ -205,6 +205,7 @@
             </ul>
         </div>
     </li>
+    @if (chkPhanQuyen('quanlyhoso', 'phanquyen'))
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text">HỒ SƠ&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
@@ -254,6 +255,7 @@
             </ul>
         </div>
     </li>
+    @endif
 
     @if (chkPhanQuyen('baocao', 'phanquyen'))
         <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">

@@ -272,27 +272,27 @@ class baitapController extends Controller
         $html .= '<div id="cauhoithoai_edit" style="width:100%">';
         if ($model->hoithoai1 == null) {
             $html .= '<div class="col-md-12 mt-2" id="noidung_edit">';
-            $html .= '<label class="control-label">Nội dung<span class="require">*</span></label>';
-            $html .= '<textarea name="noidung" id="noidungcau" rows="5" class="form-control"></textarea>';
+            $html .= '<label class="control-label">Nội dung</label>';
+            $html .= '<textarea name="noidung" id="noidungcau" rows="5" class="form-control">'.$model->noidung.'</textarea>';
             $html .= '</div>';
         } else {
             $html .= '<div id="noidung_edit">';
             $html .= '<div class="row mt-2">';
             $html .= '<div class="col-md-6 mt-2">';
 
-            $html .= '<label class="control-label">Hội thoại 1<span class="require">*</span></label>';
+            $html .= '<label class="control-label">Hội thoại 1</label>';
             $html .= '<input type="text" name="hoithoai1" class="form-control">';
             $html .= '</div>';
             $html .= '<div class="col-md-6 mt-2">';
-            $html .= '<label class="control-label">Hội thoại 2<span class="require">*</span></label>';
+            $html .= '<label class="control-label">Hội thoại 2</label>';
             $html .= '<input type="text" name="hoithoai2" class="form-control">';
             $html .= '</div>';
             $html .= '<div class="col-md-6 mt-2">';
-            $html .= '<label class="control-label">Hội thoại 3<span class="require">*</span></label>';
+            $html .= '<label class="control-label">Hội thoại 3</label>';
             $html .= '<input type="text" name="hoithoai3" class="form-control">';
             $html .= '</div>';
             $html .= '<div class="col-md-6 mt-2">';
-            $html .= '<label class="control-label">Hội thoại 4<span class="require">*</span></label>';
+            $html .= '<label class="control-label">Hội thoại 4</label>';
             $html .= '<input type="text" name="hoithoai4" class="form-control">';
             $html .= '</div>';
             $html .= '</div>';
@@ -315,7 +315,7 @@ class baitapController extends Controller
         $html .= '</div>';
 
         $html .= '<div class="col-md-4 mt-2">';
-        $html .= '<label class="control-label">Loại đáp án<span class="require">*</span></label>';
+        $html .= '<label class="control-label">Loại đáp án</label>';
         $html .= '<select name="loaidapan" class="form-control " id="loaidapan_edit">';
         $html .= '<option value="1" ' . ($model->loaidapan == 1 ? "selected" : "") . '>Text</option>';
         $html .= '<option value="2" ' . ($model->loaidapan == 2 ? "selected" : "") . '>Hình ảnh</option>';
@@ -324,43 +324,43 @@ class baitapController extends Controller
         $html .= '<div class=" row ml-1" id="dapan_edit" style="width:100%">';
         if ($model->loaidapan == 1) {
             $html .= '<div class="col-xl-3 mt-2" id="A">';
-            $html .= '<label class="control-label">Đáp án 1<span class="require">*</span></label>';
+            $html .= '<label class="control-label">Đáp án 1</label>';
             $html .= '<input type="text" name="A" value="' . $model->A . '" class="form-control">';
             $html .= '</div>';
             $html .= '<div class="col-xl-3 mt-2" id="B">';
-            $html .= '<label class="control-label">Đáp án 2<span class="require">*</span></label>';
+            $html .= '<label class="control-label">Đáp án 2</label>';
             $html .= '<input type="text" name="B" value="' . $model->B . '" class="form-control">';
             $html .= '</div>';
             $html .= '<div class="col-xl-3 mt-2" id="C">';
-            $html .= '<label class="control-label ">Đáp án 3<span class="require">*</span></label>';
+            $html .= '<label class="control-label ">Đáp án 3</label>';
             $html .= '<input type="text" name="C" value="' . $model->C . '" class="form-control">';
             $html .= '</div>';
             $html .= '<div class="col-xl-3 mt-2" id="D">';
-            $html .= '<label class="control-label ">Đáp án 4<span class="require">*</span></label>';
+            $html .= '<label class="control-label ">Đáp án 4</label>';
             $html .= '<input type="text" name="D" value="' . $model->D . '" class="form-control">';
             $html .= '</div>';
         } else {
 
             $html .= '<div class="col-xl-3 mt-2" id="A">';
-            $html .= '<label class="control-label ">Đáp án 1<span class="require">*</span></label>';
+            $html .= '<label class="control-label ">Đáp án 1</label>';
             $html .= '<input type="file" name="A" class="form-control" accept=".jpg,.png">';
             $html .= '</div>';
             $html .= '<div class="col-xl-3 mt-2" id="B">';
-            $html .= '<label class="control-label ">Đáp án 2<span class="require">*</span></label>';
+            $html .= '<label class="control-label ">Đáp án 2</label>';
             $html .= '<input type="file" name="B" class="form-control" accept=".jpg,.png">';
             $html .= '</div>';
             $html .= '<div class="col-xl-3 mt-2" id="C">';
-            $html .= '<label class="control-label ">Đáp án 3<span class="require">*</span></label>';
+            $html .= '<label class="control-label ">Đáp án 3</label>';
             $html .= '<input type="file" name="C" class="form-control" accept=".jpg,.png">';
             $html .= '</div>';
             $html .= '<div class="col-xl-3 mt-2" id="D">';
-            $html .= '<label class="control-label ">Đáp án 4<span class="require">*</span></label>';
+            $html .= '<label class="control-label ">Đáp án 4</label>';
             $html .= '<input type="file" name="D" class="form-control" accept=".jpg,.png">';
             $html .= '</div>';
         }
         $html .= '</div>';
         $html .= '<div class="col-md-12 mt-2">';
-        $html .= '<label class="control-label">Đáp án đúng<span class="require">*</span></label>';
+        $html .= '<label class="control-label">Đáp án đúng</label>';
         $html .= '<select name="dapan" class="form-control">';
         $html .= '<option value="A" ' . ($model->dapan == "A" ? "selected" : "") . '>1</option>';
         $html .= '<option value="B" ' . ($model->dapan == "B" ? "selected" : "") . '>2</option>';
