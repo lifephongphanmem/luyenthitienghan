@@ -122,7 +122,7 @@ class tracuuController extends Controller
                 $ketqua = array_merge($giaovien->toArray(), $hocvien->toArray());
             }
 
-            return view('tracuu.ketqua', compact('ketqua'))
+            return view('tracuu.inketqua', compact('ketqua'))
                 ->with('baocao', getdulieubaocao())
                 ->with('pageTitle', 'Kết quả tra cứu');
         }

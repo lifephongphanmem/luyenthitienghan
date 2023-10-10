@@ -66,6 +66,46 @@ class lophocController extends Controller
             ->with('pageTitle', 'Quản lý lớp học');
     }
 
+    public function indanhsach(Request $request)
+    {
+        if (!chkPhanQuyen('lophoc', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'lophoc');
+        }
+
+        $inputs = $request->all();
+
+        if (in_array(session('admin')->sadmin, ['SSA', 'admin'])) {
+            $khoahoc = lophoc::select('khoahoc')->orderBy('id', 'desc')->first();
+
+            $inputs['khoahoc'] = $inputs['khoahoc'] ?? (isset($khoahoc) ? $khoahoc->khoahoc : '');
+            $model = lophoc::where(function ($q) use ($inputs) {
+                if (isset($inputs['khoahoc'])) {
+                    $q->where('khoahoc', $inputs['khoahoc']);
+                }
+            })->get();
+        } else if (session('admin')->giaovien == 1) {
+            $khoahoc = lophoc::select('khoahoc')->where('giaovienchunhiem', session('admin')->manguoidung)->orderBy('id', 'desc')->first();
+            $inputs['khoahoc'] = $inputs['khoahoc'] ?? (isset($khoahoc) ? $khoahoc->khoahoc : '');
+            $model = lophoc::where(function ($q) use ($inputs) {
+                if (isset($inputs['khoahoc'])) {
+                    $q->where('khoahoc', $inputs['khoahoc']);
+                }
+            })
+                ->where('giaovienchunhiem', session('admin')->manguoidung)
+                ->get();
+        }
+
+        $danhsachkhoahoc = $model->unique('khoahoc');
+
+        $a_giaovien = array_column(giaovien::where('trangthai', '!=', 3)->get()->toarray(), 'tengiaovien', 'magiaovien');
+
+        return view('quanly.lophoc.indanhsach')
+            ->with('model', $model)
+            ->with('a_giaovien', $a_giaovien)
+            ->with('khoahoc', $danhsachkhoahoc)
+            ->with('pageTitle', 'Danh sách lớp học');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -216,11 +256,11 @@ class lophocController extends Controller
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
         $a_lophoc = array_column(lophoc::select('malop', 'tenlop')->get()->toarray(), 'tenlop', 'malop');
         $ketqua = ketquathithu::where('malop', $inputs['malop'])
-        ->where(function ($q) use ($inputs){
-            if(isset($inputs['ngaythi'])){
-                $q->where('ngaythi', $inputs['ngaythi']);
-            }
-        })->get();
+            ->where(function ($q) use ($inputs) {
+                if (isset($inputs['ngaythi'])) {
+                    $q->where('ngaythi', $inputs['ngaythi']);
+                }
+            })->get();
         // dd($ketqua);
         // $thongtin_thithu=$ketqua->unique('madethi')->first();
         $thongtin_thithu = $ketqua->unique('madethi');

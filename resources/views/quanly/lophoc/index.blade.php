@@ -15,7 +15,7 @@
         jQuery(document).ready(function() {
             TableManaged3.init();
             $('#a_khoahoc').change(function() {
-                window.location.href = "{{ $inputs['url'] }}" + '?khoahoc=' +$('#a_khoahoc').val();
+                window.location.href = "{{ $inputs['url'] }}" + '?khoahoc=' + $('#a_khoahoc').val();
             });
         });
     </script>
@@ -38,6 +38,9 @@
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import"></i>
                         </button> --}}
+                        <button class="btn btn-xs btn-success mr-2" data-target="#tuychonin" data-toggle="modal">
+                            <i class="flaticon-list"></i> In danh sách
+                        </button>
                     </div>
                 </div>
 
@@ -46,10 +49,11 @@
                         <div class="col-md-4">
                             <label style="font-weight: bold">Khóa học</label>
 
-                            <select name="khoahoc" id="a_khoahoc"  class="form-control select2basic">
+                            <select name="khoahoc" id="a_khoahoc" class="form-control select2basic">
                                 <option value="">Tất cả</option>
-                                @foreach ($a_khoahoc as $key=>$ct )
-                                    <option value="{{$key}}" {{$key == $inputs['khoahoc']?'selected':''}}>{{$ct}}</option>
+                                @foreach ($a_khoahoc as $key => $ct)
+                                    <option value="{{ $key }}" {{ $key == $inputs['khoahoc'] ? 'selected' : '' }}>
+                                        {{ $ct }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -73,12 +77,13 @@
                                     <td name='khoahoc' class="text-left" style="width: 10%">{{ $lh->khoahoc }}</td>
                                     <td name='soluonghocvien' style="width: 10%">{{ $lh->soluonghocvien }}</td>
                                     <td name='giaovienchunhiem' class="text-left" style="width: 30%">
-                                        {{ isset($a_giaovien[$lh->giaovienchunhiem])?$a_giaovien[$lh->giaovienchunhiem]:'' }}</td>
+                                        {{ isset($a_giaovien[$lh->giaovienchunhiem]) ? $a_giaovien[$lh->giaovienchunhiem] : '' }}
+                                    </td>
                                     <td class="text-center">
-                                        <a href="{{'/LopHoc/chitiet?lophoc='.$lh->malop}}" title="Chi tiết"
-                                       class="btn btn-sm btn-clean btn-icon">
-                                        <i class="icon-lg la la-th-list text-primary "></i>
-                                    </a>
+                                        <a href="{{ '/LopHoc/chitiet?lophoc=' . $lh->malop }}" title="Chi tiết"
+                                            class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la la-th-list text-primary "></i>
+                                        </a>
                                         <button title="Sửa thông tin"
                                             onclick="edit(this,'{{ $lh->id }}','{{ $lh->tenlop }}','{{ $lh->khoahoc }}','{{ $lh->giaovienchunhiem }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
@@ -138,7 +143,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit"  class="btn btn-primary" >Đồng
+                        <button type="submit" class="btn btn-primary">Đồng
                             ý</button>
                     </div>
                 </div>
@@ -151,17 +156,17 @@
     <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="" method="POST" id="frm_edit" enctype="multipart/form-data">
             @csrf
-        <div class="modal-dialog modal-xs">
-            <div class="modal-content">
-                <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Thông tin lớp học
-                    </h4>
-                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-    
-                </div>
-                <div class="modal-body">
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin lớp học
+                        </h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
 
-                    <div class="form-group row">
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group row">
                             <div class="col-md-12">
                                 <label class="control-label">Tên lớp học<span class="require">*</span></label>
                                 <input type="text" name="tenlop" id="tenlop" class="form-control" required>
@@ -170,25 +175,26 @@
                                 <label class="control-label">Khóa học</label>
                                 <input type="text" name="khoahoc" id="khoahoc" class="form-control" required>
                             </div>
-                        <div class="col-md-12 mt-1">
-                            <label class="control-label">Giáo viên chủ nhiệm</label>
-                            <select name="giaovienchunhiem" id="giaovienchunhiem" class="form-control "style="width:100%">
-                                <option value="">-- Chọn giáo viên --</option>
-                                @foreach ($a_giaovien as $k=>$ct )
-                                    <option value="{{$k}}">{{$ct}}</option>
-                                @endforeach
-                            </select>
+                            <div class="col-md-12 mt-1">
+                                <label class="control-label">Giáo viên chủ nhiệm</label>
+                                <select name="giaovienchunhiem" id="giaovienchunhiem"
+                                    class="form-control "style="width:100%">
+                                    <option value="">-- Chọn giáo viên --</option>
+                                    @foreach ($a_giaovien as $k => $ct)
+                                        <option value="{{ $k }}">{{ $ct }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
-                        ý</button>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
+                            ý</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
     </div>
     <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8">
@@ -202,6 +208,40 @@
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
                         <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="tuychonin" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+        <form action="{{ '/LopHoc/ThongTin/InDanhSach' }}" method="POST" id="frm_print" enctype="multipart/form-data"
+            target="_blank" rel="noopener noreferrer">
+            @csrf
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Tuỳ chọn in danh sách
+                        </h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="control-label">Khóa học</label>
+                                <select name="khoahoc" id="" class="form-control select2basic" style="width:100%">
+                                    <option value="">Tất cả</option>
+                                    @foreach ($baocao['khoahoc'] as $ct)
+                                        <option value="{{ $ct->khoahoc }}">{{ $ct->khoahoc }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickprint()">Đồng
                             ý</button>
                     </div>
                 </div>
@@ -226,13 +266,16 @@
             $('#frm_edit').submit();
         }
 
+        function clickprint() {
+            $('#frm_print').submit();
+        }
 
         function edit(e, id, tenlop, khoahoc, giaovienchunhiem) {
             var url = '/LopHoc/update/' + id;
             var tr = $(e).closest('tr');
             $('#tenlop').val($(tr).find('td[name=tenlop]').text());
             $('#khoahoc').val($(tr).find('td[name=khoahoc]').text());
-            if(giaovienchunhiem != ''){
+            if (giaovienchunhiem != '') {
                 $('#giaovienchunhiem option[value=' + giaovienchunhiem + ' ]').attr('selected', 'selected');
             }
 
