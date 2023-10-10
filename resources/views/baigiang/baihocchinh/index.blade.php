@@ -206,6 +206,9 @@
                                 <input type="file" name="file" class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-12 mt-2">
+                            <a href="{{url('/mauexcel/baihocchinh.xlsx')}}" style="text-decoration: underline" class="float-right">Tải file mẫu excel</a>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>

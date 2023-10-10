@@ -414,6 +414,9 @@
                                 <input type="file" name="file" class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-12 mt-2">
+                            <a href="{{url('/mauexcel/baitap.xlsx')}}" style="text-decoration: underline" class="float-right">Tải file mẫu excel</a>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
@@ -569,7 +572,7 @@
                         if (hoithoai == 0) {
                             var html = '<div class="col-md-12 mt-2" id="noidung_edit">';
                             html +=
-                                '<label class="control-label">Nội dung<span class="require">*</span></label>';
+                                '<label class="control-label">Nội dung</label>';
                             html +=
                                 '<textarea name="noidung" id="noidungcau" rows="5" class="form-control"></textarea>';
                             html += '</div>'
@@ -591,12 +594,12 @@
                             html += '</div>';
                             html += '<div class="col-md-6 mt-2">'
                             html +=
-                                '<label class="control-label">Hội thoại 3<span class="require">*</span></label>';
+                                '<label class="control-label">Hội thoại 3</label>';
                             html += '<input type="text" name="hoithoai3" class="form-control">';
                             html += '</div>';
                             html += '<div class="col-md-6 mt-2">'
                             html +=
-                                '<label class="control-label">Hội thoại 4<span class="require">*</span></label>';
+                                '<label class="control-label">Hội thoại 4</label>';
                             html += '<input type="text" name="hoithoai4" class="form-control">';
                             html += '</div>';
                             html += '</div>';

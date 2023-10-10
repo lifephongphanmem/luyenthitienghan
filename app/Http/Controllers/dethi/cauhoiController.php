@@ -171,74 +171,74 @@ class cauhoiController extends Controller
             if ($inputs['loaidapan'] == 1) {
                 $html = '<div class="col-xl-3" id="A">';
                 $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control">';
+                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="B">';
                 $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control">';
+                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="C">';
                 $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control">';
+                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="D">';
                 $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control">';
+                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
             } else {
 
                 $html = '<div class="col-xl-3" id="A">';
                 $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" accept=".jpg,.png">';
+                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="B">';
                 $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" accept=".jpg,.png">';
+                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="C">';
                 $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" accept=".jpg,.png">';
+                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="D">';
                 $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" accept=".jpg,.png">';
+                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
             }
         } else {
             if ($inputs['loaidapan'] == 1) {
                 $html = '<div class="col-xl-3" id="A2">';
                 $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control">';
+                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="B2">';
                 $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control">';
+                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="C2">';
                 $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control">';
+                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="D2">';
                 $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control">';
+                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
             } else {
 
                 $html = '<div class="col-xl-3" id="A2">';
                 $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" accept=".jpg,.png">';
+                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="B2">';
                 $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" accept=".jpg,.png">';
+                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="C2">';
                 $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" accept=".jpg,.png">';
+                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="D2">';
                 $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" accept=".jpg,.png">';
+                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
                 $html .= '</div>';
             }
         }
