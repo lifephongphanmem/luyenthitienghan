@@ -305,6 +305,13 @@
                                 <input type="file" name="file" class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-12 mt-2">
+                            <a href="{{url('/mauexcel/960caudoc.xlsx')}}" style="text-decoration: underline" class="float-right">Tải file mẫu excel câu đọc</a>
+                        </div>
+                        <br>
+                        <div class="col-md-12 mt-2">
+                            <a href="{{url('/mauexcel/960caunghe.xlsx')}}" style="text-decoration: underline" class="float-right">Tải file mẫu excel câu nghe</a>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>

@@ -71,7 +71,7 @@
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
-                                        <a href="{{ '/HocVien/ThongTin/ChiTiet/' . $hv->mahocvien }}" target="_blank"
+                                        <a href="{{ '/HocVien/ThongTin/ChiTiet/' . $hv->mahocvien }}"
                                             rel="noopener noreferrer">
                                             <button title="Chi tiết" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-xl fas fa-atlas text-success "></i>
