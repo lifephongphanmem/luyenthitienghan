@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 //Lớp học
 Route::prefix('LopHoc')->group(function(){
     Route::get('/ThongTin',[lophocController::class,'index']);
+    Route::post('/ThongTin/InDanhSach',[lophocController::class,'indanhsach']);
     Route::post('/store',[lophocController::class,'store']);
     Route::post('/update/{id}',[lophocController::class,'update']);
     Route::post('/delete/{id}',[lophocController::class,'destroy']);
