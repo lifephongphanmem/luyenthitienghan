@@ -186,6 +186,8 @@ return [
          * Package Service Providers...
          */
 
+        Pion\Laravel\ChunkUpload\Providers\ChunkUploadServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
