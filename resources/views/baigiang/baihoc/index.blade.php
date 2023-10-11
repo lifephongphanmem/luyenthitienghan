@@ -45,13 +45,13 @@
 
     <script>
         $('#edit').on('hidden.bs.modal', function() {
-            /* $('#video-link').removeAttr('value');
-            $('#videoPreview').removeAttr('src');
-            $('#browseFile').html('Chọn Tệp');
-            $('#videoPreview').hide(); */
             if (changed) {
                 location.reload();
             }
+            $('#video-link').removeAttr('value');
+            $('#videoPreview').removeAttr('src');
+            $('#browseFile').html('Chọn Tệp');
+            $('#videoPreview').hide();
         });
     </script>
 @stop
@@ -315,6 +315,7 @@
 
             resumable.on('fileError', function(file, response) { // trigger when there is any error
                 alert('Tệp tải lên KHÔNG thành công. Lỗi không xác định');
+                console.log(response);
                 $('#submit-edit').removeAttr('disabled');
                 $('#cancel-edit').removeAttr('disabled', '');
                 $('#edit').removeAttr('data-bs-backdrop');
