@@ -291,7 +291,7 @@ function taodethi()
     return $macauhoidethi;
 }
 function getdulieubaocao(){
-    $khoahoc=lophoc::select('khoahoc')->get();
+    $khoahoc=lophoc::select('khoahoc')->get()->unique('khoahoc');
 
     $arr=array(
         'khoahoc'=>$khoahoc        
