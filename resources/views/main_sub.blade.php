@@ -1,7 +1,8 @@
 <ul class="menu-nav">
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="{{ '/TrangChu' }}" class="menu-link">
-           <span class="menu-text" style="text-transform: uppercase"> <i class="text-dark-50 fas fa-home" style="font-size: 1.35rem"></i>&nbsp;trang chủ</span>          
+            <span class="menu-text" style="text-transform: uppercase"> <i class="text-dark-50 fas fa-home"
+                    style="font-size: 1.35rem"></i>&nbsp;trang chủ</span>
             {{-- <span class="menu-desc">Recent Updates &amp; Reports</span> --}}
             <i class="menu-arrow"></i>
         </a>
@@ -215,15 +216,15 @@
         </div>
     </li>
     @if (chkPhanQuyen('quanlyhoso', 'phanquyen'))
-    <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
-        <a href="javascript:;" class="menu-link menu-toggle">
-            <span class="menu-text">HỒ SƠ&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
-            {{-- <span class="menu-desc">Giáo viên & Học viên</span> --}}
-            <i class="menu-arrow"></i>
-        </a>
-        <div class="menu-submenu menu-submenu-classic menu-submenu-left">
-            <ul class="menu-subnav">
-                {{-- @if (chkPhanQuyen('thongtin', 'phanquyen'))
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text">HỒ SƠ&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+                {{-- <span class="menu-desc">Giáo viên & Học viên</span> --}}
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    {{-- @if (chkPhanQuyen('thongtin', 'phanquyen'))
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                         <a href="{{ '/QuanLyThongTin' }}" class="menu-link"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
@@ -231,38 +232,38 @@
                         </a>
                     </li>
                 @endif --}}
-                @if (chkPhanQuyen('giaovien', 'phanquyen'))
-                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                        <a href="{{ '/GiaoVien/ThongTin' }}" class="menu-link"><i
-                                class="icon-sm la la-angle-double-right"></i>&nbsp;
-                            <span class="menu-text">QUẢN LÝ GIÁO VIÊN</span>
-                            {{-- <i class="menu-arrow"></i> --}}
-                        </a>
-                    </li>
-                @endif
-                @if (chkPhanQuyen('hocvien', 'phanquyen'))
-                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                        <a href="{{ '/HocVien/ThongTin' }}" class="menu-link"><i
-                                class="icon-sm la la-angle-double-right"></i>&nbsp;
-                            <span class="menu-text">QUẢN LÝ HỌC VIÊN</span>
-                            {{-- <i class="menu-arrow"></i> --}}
-                        </a>
-                    </li>
-                @endif
+                    @if (chkPhanQuyen('giaovien', 'phanquyen'))
+                        <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                            <a href="{{ '/GiaoVien/ThongTin' }}" class="menu-link"><i
+                                    class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                <span class="menu-text">QUẢN LÝ GIÁO VIÊN</span>
+                                {{-- <i class="menu-arrow"></i> --}}
+                            </a>
+                        </li>
+                    @endif
+                    @if (chkPhanQuyen('hocvien', 'phanquyen'))
+                        <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                            <a href="{{ '/HocVien/ThongTin' }}" class="menu-link"><i
+                                    class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                <span class="menu-text">QUẢN LÝ HỌC VIÊN</span>
+                                {{-- <i class="menu-arrow"></i> --}}
+                            </a>
+                        </li>
+                    @endif
 
-                @if (chkPhanQuyen('lophoc', 'phanquyen'))
-                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                        <a href="{{ '/LopHoc/ThongTin' }}" class="menu-link"><i
-                                class="icon-sm la la-angle-double-right"></i>&nbsp;
-                            <span class="menu-text">QUẢN LÝ LỚP HỌC</span>
-                            {{-- <i class="menu-arrow"></i> --}}
-                        </a>
-                    </li>
-                @endif
+                    @if (chkPhanQuyen('lophoc', 'phanquyen'))
+                        <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                            <a href="{{ '/LopHoc/ThongTin' }}" class="menu-link"><i
+                                    class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                <span class="menu-text">QUẢN LÝ LỚP HỌC</span>
+                                {{-- <i class="menu-arrow"></i> --}}
+                            </a>
+                        </li>
+                    @endif
 
-            </ul>
-        </div>
-    </li>
+                </ul>
+            </div>
+        </li>
     @endif
 
     @if (chkPhanQuyen('baocao', 'phanquyen'))
@@ -525,16 +526,16 @@
         </li>
     @endif
     @if (Session::has('admin'))
-    @if (session('admin')->sadmin == 'SSA')
-    <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
-        <a href="{{ '/van_phong/danh_sach' }}" class="menu-link">
-           <span class="menu-text" style="text-transform: uppercase"></i>&nbsp;văn phòng hỗ trợ</span>          
-            {{-- <span class="menu-desc">Recent Updates &amp; Reports</span> --}}
-            <i class="menu-arrow"></i>
-        </a>
+        @if (session('admin')->sadmin == 'SSA')
+            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
+                <a href="{{ '/van_phong/danh_sach' }}" class="menu-link">
+                    <span class="menu-text" style="text-transform: uppercase"></i>&nbsp;vp hỗ trợ</span>
+                    {{-- <span class="menu-desc">Recent Updates &amp; Reports</span> --}}
+                    <i class="menu-arrow"></i>
+                </a>
 
-    </li>  
-    @endif
+            </li>
+        @endif
     @endif
 
 </ul>
