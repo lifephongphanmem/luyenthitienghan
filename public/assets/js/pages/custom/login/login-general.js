@@ -104,50 +104,50 @@ var KTLogin = function() {
 			form,
 			{
 				fields: {
-					fullname: {
-						validators: {
-							notEmpty: {
-								message: 'Username is required'
-							}
-						}
-					},
-					email: {
-                        validators: {
-							notEmpty: {
-								message: 'Email address is required'
-							},
-                            emailAddress: {
-								message: 'The value is not a valid email address'
-							}
-						}
-					},
+					// fullname: {
+					// 	validators: {
+					// 		notEmpty: {
+					// 			message: 'Username is required'
+					// 		}
+					// 	}
+					// },
+					// email: {
+                    //     validators: {
+					// 		notEmpty: {
+					// 			message: 'Email address is required'
+					// 		},
+                    //         emailAddress: {
+					// 			message: 'The value is not a valid email address'
+					// 		}
+					// 	}
+					// },
                     password: {
                         validators: {
                             notEmpty: {
-                                message: 'The password is required'
+                                message: 'Không để trống mật khẩu'
                             }
                         }
                     },
-                    cpassword: {
+                    password_confirmation: {
                         validators: {
                             notEmpty: {
-                                message: 'The password confirmation is required'
+                                message: 'Không để trống'
                             },
                             identical: {
                                 compare: function() {
                                     return form.querySelector('[name="password"]').value;
                                 },
-                                message: 'The password and its confirm are not the same'
+                                message: 'Chưa trùng mật khẩu'
                             }
                         }
                     },
-                    agree: {
-                        validators: {
-                            notEmpty: {
-                                message: 'You must accept the terms and conditions'
-                            }
-                        }
-                    },
+                    // agree: {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'You must accept the terms and conditions'
+                    //         }
+                    //     }
+                    // },
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),

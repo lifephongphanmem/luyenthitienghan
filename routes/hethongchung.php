@@ -39,6 +39,12 @@ Route::prefix('TaiKhoan')->group(function () {
     Route::post('/NhomChucNang',[dstaikhoanController::class,'NhomChucNang']);
     // Route::get('/DoiMatKhau',[dstaikhoanController::class,'DoiMatKhau']);
     // Route::post('/DoiMatKhau',[dstaikhoanController::class,'capnhatdoimatkhau']);
+
+    Route::get('/QuanLyTaiKhoan',[dstaikhoanController::class,'quanlytaikhoan']);
+    Route::get('/LuuThongTin',[dstaikhoanController::class,'luuthongtin']);
+
+    Route::post('/DoiMatKhau',[dstaikhoanController::class,'doimatkhau']);
+    Route::post('/CapNhatThongTin',[dstaikhoanController::class,'capnhatthongtincanhan']);
 });
 
 //Nhóm chức năng

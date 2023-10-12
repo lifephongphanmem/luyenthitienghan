@@ -95,6 +95,9 @@ class HethongchungController extends Controller
 				$user->malop = $hocvien->malop;
 				$user->vitri= 'Học viên';
 				$user->sdt=$hocvien->sdt;
+				$user->gioitinh=$hocvien->gioitinh;
+				$user->ngaysinh=$hocvien->ngaysinh;
+				$user->diachi=$hocvien->diachi;
 
 			}
 			if ($user->giaovien == 1) {
@@ -102,6 +105,9 @@ class HethongchungController extends Controller
 				$user->manguoidung = $giaovien->magiaovien;
 				$user->vitri= 'Giáo viên';
 				$user->sdt=$giaovien->sdt;
+				$user->gioitinh=$giaovien->gioitinh;
+				$user->ngaysinh=$giaovien->ngaysinh;
+				$user->diachi=$giaovien->diachi;
 
 			}
 			$user->phanquyen = json_decode($user->phanquyen, true);
