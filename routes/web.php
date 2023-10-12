@@ -28,3 +28,4 @@ include('baocao_thongke.php');
 include('tintuc.php');
 include('quantrihethong.php');
 include('tracuu.php');
+include('vanphonghotro.php');

@@ -152,7 +152,7 @@ class cauhoiController extends Controller
                     }
                 }
             }
-            // cauhoi::create($item);
+            cauhoi::create($item);
             if ($item['dangcau'] == 1) {
                 break;
             }

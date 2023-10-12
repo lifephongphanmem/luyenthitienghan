@@ -186,7 +186,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <div class="dropdown">
                                 <!--begin::Toggle-->
                                 <div class="topbar-item" data-offset="10px,0px">
-                                    <a href="#"  target="_blank" title="Trợ giúp">
+                                    <a href="{{'/thongtinhotro'}}"  target="_blank" title="Trợ giúp">
                                         <div
                                             class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
 

@@ -110,6 +110,9 @@ class HethongchungController extends Controller
 				$user->diachi=$giaovien->diachi;
 
 			}
+			if($user->sadmin == 'ADMIN'){
+				$user->capdo='ADMIN';
+			}
 			$user->phanquyen = json_decode($user->phanquyen, true);
 			// dd($user);
 		} else {
