@@ -85582,7 +85582,8 @@ body {
   .header-menu .menu-nav > .menu-item > .menu-link .menu-text {
     color: #3F4254;
     font-weight: 500;
-    font-size: 1.35rem;
+    /* font-size: 1.35rem; */
+    font-size: 1.15rem;
   }
   .header-menu .menu-nav > .menu-item > .menu-link .menu-desc {
     margin-top: 0.35rem;
