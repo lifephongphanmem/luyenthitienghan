@@ -40,7 +40,7 @@ class cauhoiController extends Controller
         $inputs['dangcau'] = isset($inputs['dangcau']) ? $inputs['dangcau'] : 1;
         $inputs['nguoncauhoi'] = isset($inputs['nguoncauhoi']) ? $inputs['nguoncauhoi'] : $nguoncauhoi->first()->madm;
 
-        $model = cauhoi::where('loaicauhoi', $inputs['madm'])->where('dangcau', $inputs['dangcau'])->where('nguoncauhoi', $inputs['nguoncauhoi'])->orderBy('stt', 'asc')->get();
+        $model = cauhoi::where('loaicauhoi', $inputs['madm'])->where('dangcau', $inputs['dangcau'])->where('nguoncauhoi', $inputs['nguoncauhoi'])->orderBy('stt', 'desc')->get();
         // $a_ghep = array_column($model->toarray(), 'macaughep');
         $a_ghep = array_column($model->toarray(), 'stt');
         $luottrung = [];
