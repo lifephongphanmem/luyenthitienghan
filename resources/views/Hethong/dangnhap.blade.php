@@ -87,14 +87,14 @@ License: You must have a valid license purchased only from themeforest(the above
 								</div> --}}
 								<button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">Đăng nhập</button>
 							</form>
-							<div class="mt-10">
+							{{-- <div class="mt-10">
 								<span class="opacity-70 mr-4">Chưa có tài khoản ?</span>
 								<a href="javascript:;" id="kt_login_signup" class="text-muted text-hover-primary font-weight-bold">Đăng ký!</a>
-							</div>
+							</div> --}}
 						</div>
 						<!--end::Login Sign in form-->
 						<!--begin::Login Sign up form-->
-						<div class="login-signup">
+						{{-- <div class="login-signup">
 							<div class="mb-20">
 								<h3>Sign Up</h3>
 								<div class="text-muted font-weight-bold">Enter your details to create your account</div>
@@ -126,7 +126,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									<button id="kt_login_signup_cancel" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-2">Cancel</button>
 								</div>
 							</form>
-						</div>
+						</div> --}}
 						<!--end::Login Sign up form-->
 						<!--begin::Login forgot password form-->
 						<div class="login-forgot">

@@ -287,7 +287,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!--end::Header-->
                 @yield('banner')
                 <!--begin::Content-->
-                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div class="content d-flex flex-column flex-column-fluid quanly" id="kt_content">
                     <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
                         <!--begin::Container-->
@@ -353,21 +353,16 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="symbol-label" style="background-image:url({{'/assets/media/users/blank.png'}})"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column" style="width:100%">
                     <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{session('admin')?session('admin')->tentaikhoan:''}}</a>
                     <div class="text-muted mt-1">{{session('admin')->vitri??''}}</div>
                     <div class="navi mt-2">
-                        <a href="#" class="navi-item">
+                        <a href="{{'/TaiKhoan/QuanLyTaiKhoan'}}" class="navi-item">
                             <span class="navi-link p-0 pb-2">
                                 <span class="navi-icon mr-1">
-                                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo9\dist/../src/media/svg/icons\Communication\Call#1.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24"/>
-                                            <path d="M11.914857,14.1427403 L14.1188827,11.9387145 C14.7276032,11.329994 14.8785122,10.4000511 14.4935235,9.63007378 L14.3686433,9.38031323 C13.9836546,8.61033591 14.1345636,7.680393 14.7432841,7.07167248 L17.4760882,4.33886839 C17.6713503,4.14360624 17.9879328,4.14360624 18.183195,4.33886839 C18.2211956,4.37686904 18.2528214,4.42074752 18.2768552,4.46881498 L19.3808309,6.67676638 C20.2253855,8.3658756 19.8943345,10.4059034 18.5589765,11.7412615 L12.560151,17.740087 C11.1066115,19.1936265 8.95659008,19.7011777 7.00646221,19.0511351 L4.5919826,18.2463085 C4.33001094,18.1589846 4.18843095,17.8758246 4.27575484,17.613853 C4.30030124,17.5402138 4.34165566,17.4733009 4.39654309,17.4184135 L7.04781491,14.7671417 C7.65653544,14.1584211 8.58647835,14.0075122 9.35645567,14.3925008 L9.60621621,14.5173811 C10.3761935,14.9023698 11.3061364,14.7514608 11.914857,14.1427403 Z" fill="#000000"/>
-                                        </g>
-                                    </svg><!--end::Svg Icon--></span>
+                                    <i class="icon-md fas fa-user-cog"></i>
                                 </span>
-                                <span class="navi-text text-muted text-hover-primary">{{session('admin')?session('admin')->sdt:''}}</span>
+                                <span class="navi-text text-muted text-hover-primary">Quản lý tài khoản</span>
                             </span>
                         </a>
                         <a href="{{'/DangXuat'}}" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Đăng xuất</a>

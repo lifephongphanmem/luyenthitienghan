@@ -223,15 +223,14 @@
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-left">
             <ul class="menu-subnav">
-                @if (chkPhanQuyen('thongtin', 'phanquyen'))
+                {{-- @if (chkPhanQuyen('thongtin', 'phanquyen'))
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                         <a href="{{ '/QuanLyThongTin' }}" class="menu-link"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
                             <span class="menu-text">THÔNG TIN NGƯỜI DÙNG</span>
-                            {{-- <i class="menu-arrow"></i> --}}
                         </a>
                     </li>
-                @endif
+                @endif --}}
                 @if (chkPhanQuyen('giaovien', 'phanquyen'))
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                         <a href="{{ '/GiaoVien/ThongTin' }}" class="menu-link"><i
