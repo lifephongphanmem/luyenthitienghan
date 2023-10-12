@@ -524,4 +524,17 @@
             </div>
         </li>
     @endif
+    @if (Session::has('admin'))
+    @if (session('admin')->sadmin == 'SSA')
+    <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
+        <a href="{{ '/van_phong/danh_sach' }}" class="menu-link">
+           <span class="menu-text" style="text-transform: uppercase"></i>&nbsp;văn phòng hỗ trợ</span>          
+            {{-- <span class="menu-desc">Recent Updates &amp; Reports</span> --}}
+            <i class="menu-arrow"></i>
+        </a>
+
+    </li>  
+    @endif
+    @endif
+
 </ul>

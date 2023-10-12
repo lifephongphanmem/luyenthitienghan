@@ -338,6 +338,7 @@ class dstaikhoanController extends Controller
         // dd(session('admin'));
         // if(session('admin')->sadmin != 'SSA'){
         $model = User::where('cccd', session('admin')->cccd)->first();
+        $ketquathi=new ketquathithu();
         if (session('admin')->hocvien == 1) {
             $hocvien = hocvien::where('cccd', $model->cccd)->first();
             $model->sdt=$hocvien->sdt;
@@ -357,7 +358,7 @@ class dstaikhoanController extends Controller
             $model->ngaysinh=$giaovien->ngaysinh;
             $model->diachi=$giaovien->diachi;
             $model->hoten=$giaovien->tengiaovien;
-            $ketquathi=new ketquathithu();
+            // $ketquathi=new ketquathithu();
         }
         // }
 // dd($ketquathi);

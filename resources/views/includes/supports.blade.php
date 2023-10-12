@@ -27,7 +27,7 @@
 </div>
 
 <div class="row">
-    {{-- @foreach ($a_vp as $vp)
+    @foreach ($a_vp as $vp)
         <?php $vanphong = $model_vp->where('vanphong', $vp); ?>
         <div class="col-md-{{ $col }}">
             <!-- BEGIN PORTLET -->
@@ -68,6 +68,6 @@
             </div>
             <!-- END PORTLET -->
         </div>
-    @endforeach --}}
+    @endforeach
 
 </div>

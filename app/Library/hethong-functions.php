@@ -20,7 +20,7 @@ function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
     }
     $capdo = session('admin')->capdo;
 
-    if (in_array($capdo, ['SSA', 'ssa',])) {
+    if (in_array($capdo, ['SSA', 'ssa','ADMIN'])) {
         return true;
     }
     // dd(session('phanquyen'));
