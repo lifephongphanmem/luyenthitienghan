@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\baigiang\giaotrinh;
 use App\Models\danhmuc\loaicauhoict;
 use App\Models\dethi\cauhoi;
 use App\Models\quanly\hocvien;
@@ -292,9 +293,10 @@ function taodethi()
 }
 function getdulieubaocao(){
     $khoahoc=lophoc::select('khoahoc')->get()->unique('khoahoc');
-
+    $giaotrinh=giaotrinh::all();
     $arr=array(
-        'khoahoc'=>$khoahoc        
+        'khoahoc'=>$khoahoc  ,
+        'giaotrinh'=>$giaotrinh      
     );
 
     return $arr;

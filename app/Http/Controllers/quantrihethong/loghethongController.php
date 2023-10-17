@@ -37,6 +37,7 @@ class loghethongController extends Controller
                 $q->wheredate('thoigian',$inputs['ngay']);
             }
         })->where('taikhoantruycap','<>','SSA')
+        ->orderBy('id','desc')
         ->get();
         $inputs['thaotac']=isset($inputs['thaotac'])?$inputs['thaotac']:'';
         $inputs['ngay']=isset($inputs['ngay'])?$inputs['ngay']:'';

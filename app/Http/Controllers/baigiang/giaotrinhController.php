@@ -11,6 +11,7 @@ use App\Models\baigiang\giaotrinh_baihoc;
 use App\Models\baigiang\hinhanh;
 use App\Models\baigiang\tracnghiem;
 use App\Models\baigiang\tuvung;
+use App\Models\dethi\cauhoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -189,16 +190,22 @@ class giaotrinhController extends Controller
                 ->with('success','Xóa thành công');
     }
 
-    public function DanhSach(){
+    public function DanhSach(Request $request){
         if (!chkPhanQuyen('noidungbaihoc', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'giaotrinh');
         }
-
-        $model=baihoc::where('magiaotrinh',1681271756)->get();
-
+        $inputs=$request->all();
+        $model=giaotrinh_baihoc::where('magiaotrinh',$inputs['magiaotrinh'])->get();
+        $m_baihoc=baihoc::select('mabaihoc','tenbaihoc')->get();
+        $a_baihoc=array_column($m_baihoc->toarray(),'tenbaihoc','mabaihoc');
+        $giaotrinh=giaotrinh::select('tengiaotrinh')->where('magiaotrinh',$inputs['magiaotrinh'])->first();
+        // dd($a_baihoc);
+// dd($model);
         return view('baigiang.giaotrinh.60baieps.index')
         ->with('baocao',getdulieubaocao())
                 ->with('model',$model)
+                ->with('a_baihoc',$a_baihoc)
+                ->with('giaotrinh',$giaotrinh)
                 ->with('pageTitle','60 bài eps-topik');
 
     }
@@ -209,7 +216,7 @@ class giaotrinhController extends Controller
             return view('errors.noperm')->with('machucnang', 'giaotrinh');
         }
         $inputs=$request->all();
-
+        // dd($inputs);
         //Bài học chính
         $model=baihoc::where('mabaihoc',$inputs['mabaihoc'])->first();
         // dd($model);
