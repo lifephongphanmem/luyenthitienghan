@@ -29,7 +29,7 @@ class HethongchungController extends Controller
 
 	public function login()
 	{
-		return view('HeThong.dangnhap');
+		return view('Hethong.dangnhap');
 	}
 
 	public function DangNhap(Request $request)
