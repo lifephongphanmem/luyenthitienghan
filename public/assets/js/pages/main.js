@@ -2,10 +2,10 @@ $(function () {
     //cĂ²n páº£i tĂ­nh toĂ¡n
     var url = window.location.href;
 
-    var m = url.indexOf('?');
+    /* var m = url.indexOf('?');
     if (m > 0) {
         url = url.substring(0, m);
-    }
+    } */
     var chk = url.split('/');
 
     var index = url.indexOf('perm');
@@ -114,7 +114,7 @@ $(function () {
     if (index > 0) {
         url = url.substring(0, index - 1) + '/ThongTin';
     }
-    
+
     var index = url.indexOf('PhanQuyen');
     if (index > 0) {
         url = url.substring(0, index - 1) + '/ThongTin';
@@ -136,5 +136,10 @@ $(function () {
         if (element.is('li')) {
             element.parent().parent().parent().addClass('menu-item-open').addClass('menu-item-here');
         }
+
+        $('li.menu-item-submenu a').filter(function () {
+            return this.href == url || this.href.indexOf(url) == 0;
+            //return this.href == url;
+        }).parent().addClass('menu-item-open').addClass('menu-item-here');
     }
 });
