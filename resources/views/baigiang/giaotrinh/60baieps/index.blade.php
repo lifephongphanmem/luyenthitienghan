@@ -27,7 +27,7 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">60 bài eps-topik</h3>
+                        <h3 class="card-label text-uppercase">{{$giaotrinh->tengiaotrinh}}</h3>
                     </div>
                 </div>
 
@@ -36,7 +36,7 @@
                     <div class="form-group row">
                         @foreach ($model as $ct )
                         <div class="col-md-4 mb-5" style="font-size: 16px">
-                            <a class="ml-10" href="{{'/GiaoTrinh/60-bai-eps-topik/baihoc?mabaihoc='.$ct->mabaihoc}}">» {{$ct->tenbaihoc}}</a>
+                            <a class="ml-10" href="{{'/GiaoTrinh/60-bai-eps-topik/baihoc?mabaihoc='.$ct->mabaihoc}}">» {{isset($a_baihoc[$ct->mabaihoc])?$a_baihoc[$ct->mabaihoc]:''}}</a>
                         </div>
                         @endforeach
                     </div>

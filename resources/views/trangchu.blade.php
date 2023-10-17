@@ -249,7 +249,7 @@
                     <a href="gioi-thieu"><img src="{{ url('/images/gioithieu.png') }}"></a>
                 </div>
                 <h3 class="feature-heading">
-                    <a href="gioi-thieu">Giới thiệu</a>
+                    <a >Giới thiệu</a>
                 </h3>
                 <div class="feature-des">
                     Thông tin về Trung tâm, chất lượng và dịch vụ của chúng tôi.
@@ -258,10 +258,10 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">
-                    <a href="mien-phi"><img src="{{ url('/images/tich-hop.png') }}"></a>
+                    <a><img src="{{ url('/images/tich-hop.png') }}"></a>
                 </div>
                 <h3 class="feature-heading">
-                    <a href="mien-phi">Chi phí</a>
+                    <a>Chi phí</a>
                 </h3>
                 <div class="feature-des">
                     Là đơn vị đào tạo với chi phí hợp lý nhất hiện nay.
@@ -270,10 +270,10 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">
-                    <a href="dich-vu"><img src="{{ url('/images/dichvu-ondinh.png') }}"></a>
+                    <a><img src="{{ url('/images/dichvu-ondinh.png') }}"></a>
                 </div>
                 <h3 class="feature-heading">
-                    <a href="dich-vu">Dịch vụ ổn định</a>
+                    <a>Dịch vụ ổn định</a>
                 </h3>
                 <div class="feature-des">
                     Cam kết tỷ lệ đỗ cao sau khóa học kết thúc.
@@ -282,10 +282,10 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">
-                    <a href="chat-luong"><img src="{{ url('/images/chinhsachdaily.png') }}"></a>
+                    <a><img src="{{ url('/images/chinhsachdaily.png') }}"></a>
                 </div>
                 <h3 class="feature-heading">
-                    <a href="chat-luong">Chất lượng đảm bảo</a>
+                    <a >Chất lượng đảm bảo</a>
                 </h3>
                 <div class="feature-des">
                     Kinh nghiệm giảng dạy giúp các bạn có chất lượng tuyệt đối.
