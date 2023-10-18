@@ -131,6 +131,21 @@ $(function () {
         url = url.substring(0, index);
     }
 
+    var index = url.indexOf('/CapNhat');
+    if(index > 0){
+        url = url.substring(0, index) + '/QuanLy'
+    }
+
+    var index = url.indexOf('/TaoBai');
+    if(index > 0){
+        url = url.substring(0, index) + '/QuanLy';
+    }
+
+    var index = url.indexOf('/NoiDung');
+    if(index > 0){
+        url = url.substring(0, index) + '/TrangChu';
+    }
+
     chk = url.split('/');
     //alert(url);
     if (chk.length > 3 && chk[3] != '') {
@@ -149,5 +164,7 @@ $(function () {
                 //return this.href == url;
             }).parent().addClass('menu-item-open').addClass('menu-item-here');
         }
+
+        console.log(url)
     }
 });

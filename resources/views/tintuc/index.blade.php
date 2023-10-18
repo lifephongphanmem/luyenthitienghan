@@ -21,12 +21,12 @@
         @foreach ($baiviet as $bai)
             <div class="p-5 d-flex" style="width: 100%">
                 <div class="pr-7">
-                    <a href="{{ '/TinTuc/' . $bai->slug }}">
+                    <a href="{{ '/TinTuc/NoiDung/' . $bai->slug }}">
                         <img style="object-fit: cover" src="{{ url($bai->hinhanh) }}" width="220px" height="140px">
                     </a>
                 </div>
                 <div>
-                    <div class="lead text-dark"><a href="{{ url('/TinTuc/' . $bai->slug) }}">{{ $bai->tieude }}</a></div>
+                    <div class="lead text-dark"><a href="{{ url('/TinTuc/NoiDung/' . $bai->slug) }}">{{ $bai->tieude }}</a></div>
                     <div class="text-muted pt-1" style="font-size: 9pt">Đăng ngày:
                         {{ Carbon\Carbon::createFromTimeString($bai->created_at)->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i:s') }}
                     </div>
