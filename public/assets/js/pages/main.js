@@ -133,13 +133,15 @@ $(function () {
             //return this.href == url;
         }).parent().addClass('menu-item-active').parent().parent().parent().addClass('menu-item-open').addClass('menu-item-here');
 
-        if (element.is('li')) {
+        /* if (element.is('li')) {
             element.parent().parent().parent().addClass('menu-item-open').addClass('menu-item-here');
-        }
+        } */
 
-        $('li.menu-item-submenu a').filter(function () {
-            return this.href == url || this.href.indexOf(url) == 0;
-            //return this.href == url;
-        }).parent().addClass('menu-item-open').addClass('menu-item-here');
+        if (element.html() == undefined) {
+            $('li.menu-item-submenu a').filter(function () {
+                return this.href == url || this.href.indexOf(url) == 0;
+                //return this.href == url;
+            }).parent().addClass('menu-item-open').addClass('menu-item-here');
+        }
     }
 });
