@@ -125,6 +125,12 @@ $(function () {
         url = url.substring(0, index - 1) + '/ThongTin';
     }
     //
+
+    var index = url.indexOf('?mabaihoc=')
+    if(index > 0) {
+        url = url.substring(0, index);
+    }
+
     chk = url.split('/');
     //alert(url);
     if (chk.length > 3 && chk[3] != '') {
@@ -133,9 +139,9 @@ $(function () {
             //return this.href == url;
         }).parent().addClass('menu-item-active').parent().parent().parent().addClass('menu-item-open').addClass('menu-item-here');
 
-        /* if (element.is('li')) {
+        if (element.is('li')) {
             element.parent().parent().parent().addClass('menu-item-open').addClass('menu-item-here');
-        } */
+        }
 
         if (element.html() == undefined) {
             $('li.menu-item-submenu a').filter(function () {
