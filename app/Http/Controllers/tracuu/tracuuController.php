@@ -54,10 +54,6 @@ class tracuuController extends Controller
                 })->get();
 
             $ketqua = $giaovien;
-
-            return view('tracuu.ketqua', compact('ketqua'))
-                ->with('baocao', getdulieubaocao())
-                ->with('pageTitle', 'Kết quả tra cứu');
         } else if ($request['phanloai'] == 'hocvien') {
             $hocvien = hocvien::leftjoin('lophoc', 'hocvien.malop', '=', 'lophoc.malop')
                 ->leftJoin('ketquathithu', 'hocvien.mahocvien', '=', 'ketquathithu.mahocvien')
@@ -82,10 +78,6 @@ class tracuuController extends Controller
                 })->get();
 
             $ketqua = $hocvien;
-
-            return view('tracuu.ketqua', compact('ketqua'))
-                ->with('baocao', getdulieubaocao())
-                ->with('pageTitle', 'Kết quả tra cứu');
         } else if ($request['phanloai'] == 'tatca') {
             $giaovien = giaovien::leftjoin('lophoc', 'giaovien.magiaovien', '=', 'lophoc.giaovienchunhiem')
                 ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop')
@@ -121,10 +113,10 @@ class tracuuController extends Controller
             } else {
                 $ketqua = array_merge($giaovien->toArray(), $hocvien->toArray());
             }
-
-            return view('tracuu.inketqua', compact('ketqua'))
-                ->with('baocao', getdulieubaocao())
-                ->with('pageTitle', 'Kết quả tra cứu');
         }
+
+        return view('tracuu.inketqua', compact('ketqua'))
+            ->with('baocao', getdulieubaocao())
+            ->with('pageTitle', 'Kết quả tra cứu');
     }
 }
