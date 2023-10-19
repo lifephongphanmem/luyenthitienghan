@@ -621,7 +621,7 @@ pre code {
 }
 @media (min-width: 1200px) {
   .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 1140px;
+    max-width: 1180px;
   }
 }
 @media (min-width: 1400px) {
@@ -6954,7 +6954,7 @@ a.close.disabled {
 }
 @media (min-width: 1200px) {
   .modal-xl {
-    max-width: 1140px;
+    max-width: 1180px;
   }
 }
 .tooltip {
@@ -84190,7 +84190,7 @@ body {
 }
 @media (min-width: 1200px) {
   .header-menu .menu-nav > .menu-item .menu-submenu.menu-submenu-fixed-xl {
-    width: 1140px;
+    width: 1180px;
   }
 }
 @media (min-width: 1400px) {

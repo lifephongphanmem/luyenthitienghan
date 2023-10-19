@@ -76,13 +76,13 @@
                                         {{ Carbon\Carbon::createFromTimeString($bai->created_at)->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i:s') }}
                                     </td>
                                     <td style="width: 7%">
-                                        <a href="{{ '/TinTuc/' . $bai->slug }}" target="_blank" rel="noopener noreferrer">
+                                        <a href="{{ '/TinTuc/NoiDung/' . $bai->slug }}" target="_blank" rel="noopener noreferrer">
                                             <button title="Xem bài viết" type="button"
                                                 class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-lg la flaticon-interface-11 text-primary "></i>
                                             </button>
                                         </a>
-                                        <a href="{{ '/TinTuc/' . $bai->slug . '/Sua' }}">
+                                        <a href="{{ '/TinTuc/CapNhat/' . $bai->slug }}">
                                             <button title="Sửa bài viết" type="button"
                                                 class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-lg la flaticon-edit-1 text-primary "></i>
@@ -90,7 +90,7 @@
                                         </a>
                                         <button title="Xóa bài viết" type="button" class="btn btn-sm btn-clean btn-icon"
                                             data-target="#xacnhan" data-toggle="modal"
-                                            onclick="deleteTintuc('{{ '/TinTuc/' . $bai->slug . '/Xoa' }}')">
+                                            onclick="deleteTintuc('{{ '/TinTuc/Xoa/' . $bai->slug }}')">
                                             <i class="icon-lg la fa-trash-alt text-danger icon-2x"></i>
                                         </button>
                                     </td>

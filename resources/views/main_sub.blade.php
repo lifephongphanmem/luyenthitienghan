@@ -1,7 +1,7 @@
 <ul class="menu-nav">
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="{{ '/TrangChu' }}" class="menu-link">
-            <span class="menu-text" style="text-transform: uppercase"> <i class="text-dark-50 fas fa-home"
+            <span class="menu-text text-center" style="text-transform: uppercase"><i class="text-dark-50 fas fa-home"
                     style="font-size: 1.35rem"></i>&nbsp;trang chủ</span>
             <i class="menu-arrow"></i>
         </a>
@@ -9,10 +9,9 @@
     </li>
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
-            <span class="menu-text">GIÁO TRÌNH &nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+            <span class="menu-text text-center">GIÁO TRÌNH&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
             {{-- <span class="menu-desc">EPS-TOPIK</span> --}}
 
-        </a>
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-left">
             <ul class="menu-subnav">
@@ -106,7 +105,7 @@
     </li>
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
-            <span class="menu-text">THI THỬ&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+            <span class="menu-text text-center">THI THỬ&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
             <i class="menu-arrow"></i>
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-right">
@@ -156,7 +155,7 @@
     @if (chkPhanQuyen('quanlyhoso', 'phanquyen'))
         <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
             <a href="javascript:;" class="menu-link menu-toggle">
-                <span class="menu-text">HỒ SƠ&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+                <span class="menu-text text-center">HỒ SƠ&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu menu-submenu-classic menu-submenu-left">
@@ -195,7 +194,7 @@
     @if (chkPhanQuyen('baocao', 'phanquyen'))
         <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
             <a href="javascript:;" class="menu-link menu-toggle">
-                <span class="menu-text">BÁO CÁO &nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+                <span class="menu-text text-center">BÁO CÁO&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
             </a>
             @if (chkPhanQuyen('thongke', 'phanquyen'))
                 <div class="menu-submenu menu-submenu-classic menu-submenu-left">
@@ -226,7 +225,7 @@
     @if (chkPhanQuyen('tracuu', 'phanquyen'))
         <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
             <a href="{{ '/TraCuu' }}" class="menu-link">
-                <span class="menu-text">TRA CỨU</span>
+                <span class="menu-text text-center">TRA CỨU</span>
                 <i class="menu-arrow"></i>
             </a>
         </li>
@@ -234,7 +233,7 @@
 
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
-            <span class="menu-text">TIN TỨC&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+            <span class="menu-text text-center">TIN TỨC&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
             <i class="menu-arrow"></i>
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-right">
@@ -260,7 +259,7 @@
     @if (chkPhanQuyen('hethong', 'phanquyen'))
         <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
             <a href="javascript:;" class="menu-link menu-toggle">
-                <span class="menu-text">HỆ THỐNG&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
+                <span class="menu-text text-center">HỆ THỐNG&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu menu-submenu-classic menu-submenu-left">
@@ -400,7 +399,7 @@
         @if (session('admin')->sadmin == 'SSA')
             <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
                 <a href="{{ '/van_phong/danh_sach' }}" class="menu-link">
-                    <span class="menu-text" style="text-transform: uppercase"></i>&nbsp;vp hỗ trợ</span>
+                    <span class="menu-text text-center" style="text-transform: uppercase"></i>&nbsp;vp hỗ trợ</span>
                     <i class="menu-arrow"></i>
                 </a>
 

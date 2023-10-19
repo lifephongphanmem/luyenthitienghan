@@ -5,6 +5,7 @@ namespace App\Http\Controllers\tracuu;
 use App\Http\Controllers\Controller;
 use App\Models\quanly\giaovien;
 use App\Models\quanly\hocvien;
+use App\Models\quanly\lophoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -34,8 +35,11 @@ class tracuuController extends Controller
             $loaitaikhoan = 'hethong';
         }
 
+        $a_lophoc = array_column(lophoc::select('malop', 'tenlop')->get()->toarray(), 'tenlop', 'malop');
+
         return view('tracuu.index', compact('loaitaikhoan'))
             ->with('baocao', getdulieubaocao())
+            ->with('a_lophoc', $a_lophoc)
             ->with('pageTitle', 'Thông tin tra cứu');
     }
 
@@ -47,24 +51,20 @@ class tracuuController extends Controller
 
         if ($request['phanloai'] == 'giaovien') {
             $giaovien = giaovien::leftjoin('lophoc', 'giaovien.magiaovien', '=', 'lophoc.giaovienchunhiem')
-                ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop')
+                ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop', 'lophoc.malop')
                 ->where('giaovien.tengiaovien', 'LIKE', '%' . $request['hoten'] . '%')
                 ->when($request['lophoc'] != '', function ($query) use ($request) {
-                    return $query->where('lophoc.tenlop', 'LIKE', '%' . $request['lophoc'] . '%');
+                    return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
                 })->get();
 
             $ketqua = $giaovien;
-
-            return view('tracuu.ketqua', compact('ketqua'))
-                ->with('baocao', getdulieubaocao())
-                ->with('pageTitle', 'Kết quả tra cứu');
         } else if ($request['phanloai'] == 'hocvien') {
             $hocvien = hocvien::leftjoin('lophoc', 'hocvien.malop', '=', 'lophoc.malop')
                 ->leftJoin('ketquathithu', 'hocvien.mahocvien', '=', 'ketquathithu.mahocvien')
-                ->select('hocvien.tenhocvien', 'hocvien.gioitinh', 'hocvien.ngaysinh', 'hocvien.sdt', 'hocvien.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi')
+                ->select('hocvien.tenhocvien', 'hocvien.gioitinh', 'hocvien.ngaysinh', 'hocvien.sdt', 'hocvien.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi', 'lophoc.malop')
                 ->where('hocvien.tenhocvien', 'LIKE', '%' . $request['hoten'] . '%')
                 ->when($request['lophoc'] != '', function ($query) use ($request) {
-                    return $query->where('lophoc.tenlop', 'LIKE', '%' . $request['lophoc'] . '%');
+                    return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
                 })
                 ->when($request['ngaythi'] != '', function ($query) use ($request) {
                     return $query->where('ketquathithu.ngaythi', '=', $request['ngaythi']);
@@ -82,24 +82,20 @@ class tracuuController extends Controller
                 })->get();
 
             $ketqua = $hocvien;
-
-            return view('tracuu.ketqua', compact('ketqua'))
-                ->with('baocao', getdulieubaocao())
-                ->with('pageTitle', 'Kết quả tra cứu');
         } else if ($request['phanloai'] == 'tatca') {
             $giaovien = giaovien::leftjoin('lophoc', 'giaovien.magiaovien', '=', 'lophoc.giaovienchunhiem')
-                ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop')
+                ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop', 'lophoc.malop')
                 ->where('giaovien.tengiaovien', 'LIKE', '%' . $request['hoten'] . '%')
                 ->when($request['lophoc'] != '', function ($query) use ($request) {
-                    return $query->where('lophoc.tenlop', 'LIKE', '%' . $request['lophoc'] . '%');
+                    return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
                 })->get();
 
             $hocvien = hocvien::leftjoin('lophoc', 'hocvien.malop', '=', 'lophoc.malop')
                 ->leftJoin('ketquathithu', 'hocvien.mahocvien', '=', 'ketquathithu.mahocvien')
-                ->select('hocvien.tenhocvien', 'hocvien.gioitinh', 'hocvien.ngaysinh', 'hocvien.sdt', 'hocvien.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi')
+                ->select('hocvien.tenhocvien', 'hocvien.gioitinh', 'hocvien.ngaysinh', 'hocvien.sdt', 'hocvien.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi', 'lophoc.malop')
                 ->where('hocvien.tenhocvien', 'LIKE', '%' . $request['hoten'] . '%')
                 ->when($request['lophoc'] != '', function ($query) use ($request) {
-                    return $query->where('lophoc.tenlop', 'LIKE', '%' . $request['lophoc'] . '%');
+                    return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
                 })
                 ->when($request['ngaythi'] != '', function ($query) use ($request) {
                     return $query->where('ketquathithu.ngaythi', '=', $request['ngaythi']);
@@ -121,10 +117,10 @@ class tracuuController extends Controller
             } else {
                 $ketqua = array_merge($giaovien->toArray(), $hocvien->toArray());
             }
-
-            return view('tracuu.inketqua', compact('ketqua'))
-                ->with('baocao', getdulieubaocao())
-                ->with('pageTitle', 'Kết quả tra cứu');
         }
+
+        return view('tracuu.inketqua', compact('ketqua'))
+            ->with('baocao', getdulieubaocao())
+            ->with('pageTitle', 'Kết quả tra cứu');
     }
 }
