@@ -137,7 +137,7 @@
         }
 
         function validate() {
-            
+
 
             return true;
         }
@@ -205,7 +205,12 @@
                 <div class="d-flex pt-3">
                     <div class="col-6">
                         <label class="control-label">Lớp:</label>
-                        <input class="form-control" type="text" id="lophoc" name="lophoc" style="width: 70%">
+                        <select name="lophoc" id="lophoc" class="form-control select2basic">
+                            <option value="">Tất cả</option>
+                            @foreach ($a_lophoc as $key => $ct)
+                                <option value="{{ $key }}">{{ $ct }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="text-center pt-5"><button type="submit" class="btn btn-primary">Tra cứu</button></div>

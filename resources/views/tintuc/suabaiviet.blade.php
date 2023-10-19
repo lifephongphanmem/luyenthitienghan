@@ -102,7 +102,7 @@
         <div style="text-transform: uppercase;">
             <h1>Sửa bài viết</h1>
         </div>
-        <form action="{{ '/TinTuc/' . $baiviet->slug . '/CapNhat' }}" method="POST" onsubmit="return(validate());"
+        <form action="{{ '/TinTuc/ThayDoi/' . $baiviet->slug }}" method="POST" onsubmit="return(validate());"
             name="thongtin" enctype="multipart/form-data">
             @csrf
             <div>
