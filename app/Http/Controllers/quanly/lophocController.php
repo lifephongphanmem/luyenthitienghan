@@ -32,7 +32,7 @@ class lophocController extends Controller
             return view('errors.noperm')->with('machucnang', 'lophoc');
         }
         $inputs = $request->all();
-        if (in_array(session('admin')->sadmin, ['SSA', 'admin'])) {
+        if (in_array(session('admin')->sadmin, ['SSA', 'ADMIN'])) {
             $khoahoc = lophoc::select('khoahoc')->orderBy('id', 'desc')->first();
 
             $inputs['khoahoc'] = $inputs['khoahoc'] ?? (isset($khoahoc) ? $khoahoc->khoahoc : '');
