@@ -32,12 +32,10 @@
                         <h3 class="card-label text-uppercase">Danh sách lớp học</h3>
                     </div>
                     <div class="card-toolbar">
+                        @if (chkPhanQuyen('lophoc', 'thaydoi'))
                         <button onclick="add()" data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button>
-                        {{-- <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
-                            data-target="#modal-nhanexcel" data-toggle="modal">
-                            <i class="fas fa-file-import"></i>
-                        </button> --}}
+                        @endif
                         <button class="btn btn-xs btn-success mr-2" data-target="#tuychonin" data-toggle="modal">
                             <i class="flaticon-list"></i> In danh sách
                         </button>
@@ -84,6 +82,7 @@
                                             class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la la-th-list text-primary "></i>
                                         </a>
+                                        @if (chkPhanQuyen('lophoc', 'thaydoi'))
                                         <button title="Sửa thông tin"
                                             onclick="edit(this,'{{ $lh->id }}','{{ $lh->tenlop }}','{{ $lh->khoahoc }}','{{ $lh->giaovienchunhiem }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
@@ -95,6 +94,7 @@
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-trash-alt text-danger icon-2x"></i></button>
+                                            @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -52,6 +52,9 @@
                                 @foreach ($a_nhomtk as $k=>$ct )
                                     <option value="{{$k}}" {{$k == $inputs['nhomcn']?'selected':''}}>{{$ct}}</option>
                                 @endforeach
+                                @if (session('admin')->sadmin == 'SSA')
+                                    <option value="4" {{4 == $inputs['nhomcn']?'selected':''}}>Khác</option>
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -59,8 +62,8 @@
                         <thead>
                             <tr class="text-center">
                                 <th>STT</th>
-                                <th>Tên tài khoản</th>
                                 <th>Tài khoản truy cập</th>
+                                <th>Tên tài khoản</th>
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -69,7 +72,7 @@
                             @foreach ($model as $key => $tk)
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
-                                    <td name='cccd' class="text-left" style="width: 10%">{{ $tk->cccd }}</td>
+                                    <td name='cccd' class="text-left" style="width: 15%">{{ $tk->cccd }}</td>
                                     <td name='tentaikhoan' class="text-left" style="width: 50%">{{ $tk->tentaikhoan }}</td>
                                     @if ($tk->trangthai == 1)
                                         <td class="text-center">

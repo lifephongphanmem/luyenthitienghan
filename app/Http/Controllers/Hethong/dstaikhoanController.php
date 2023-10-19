@@ -36,13 +36,29 @@ class dstaikhoanController extends Controller
         }
         $inputs = $request->all();
 
-        $model = User::where('sadmin', '0')
+        if(session('admin')->sadmin == 'SSA'){
+            $model = User::where('sadmin','<>', 'SSA')
+            ->where(function ($q) use ($inputs) {
+                if (isset($inputs['nhomcn'])) {
+                    if($inputs['nhomcn'] == 4){
+                        $q->where('manhomchucnang',0);
+                    }else{
+                        $q->where('manhomchucnang', $inputs['nhomcn']);
+                    }
+                    
+                }
+            })
+            ->get();
+        }else{
+            $model = User::where('sadmin', '0')
             ->where(function ($q) use ($inputs) {
                 if (isset($inputs['nhomcn'])) {
                     $q->where('manhomchucnang', $inputs['nhomcn']);
                 }
             })
             ->get();
+        }
+
         $a_phanloai = ['giaovien' => 1, 'hocvien' => 2, 'hethong' => 3];
         foreach ($model as $ct) {
             foreach ($a_phanloai as $k => $val) {
@@ -189,7 +205,6 @@ class dstaikhoanController extends Controller
         if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
-
         $inputs = $request->all();
         $m_taikhoan = User::where('cccd', $inputs['tendangnhap'])->first();
         $m_phanquyen = dstaikhoan_phanquyen::where('tendangnhap', $inputs['tendangnhap'])->get();

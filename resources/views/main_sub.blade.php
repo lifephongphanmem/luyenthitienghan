@@ -264,6 +264,7 @@
             </a>
             <div class="menu-submenu menu-submenu-classic menu-submenu-left">
                 <ul class="menu-subnav">
+                    @if (chkPhanQuyen('danhmuc', 'phanquyen'))
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                         <a href="javascript:;" class="menu-link menu-toggle"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
@@ -337,6 +338,8 @@
                             </ul>
                         </div>
                     </li>
+                    @endif
+
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                         <a href="javascript:;" class="menu-link menu-toggle"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
@@ -345,28 +348,34 @@
                         </a>
                         <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                             <ul class="menu-subnav">
-
+                                @if (chkPhanQuyen('taikhoan', 'phanquyen'))
                                 <li class="menu-item" aria-haspopup="true">
                                     <a href="{{ '/TaiKhoan/ThongTin' }}" class="menu-link"><i
                                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                                         <span class="menu-text">Tài khoản</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (chkPhanQuyen('chucnang', 'phanquyen'))
                                 <li class="menu-item" aria-haspopup="true">
                                     <a href="{{ '/Chuc_nang/ThongTin' }}" class="menu-link"><i
                                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                                         <span class="menu-text">Chức năng</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (chkPhanQuyen('nhomtaikhoan', 'phanquyen'))
                                 <li class="menu-item" aria-haspopup="true">
                                     <a href="{{ '/nhomchucnang/ThongTin' }}" class="menu-link"><i
                                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                                         <span class="menu-text">Nhóm tài khoản</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </div>
                     </li>
+                    @if (chkPhanQuyen('quantrihethong', 'phanquyen'))
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                         <a href="javascript:;" class="menu-link menu-toggle"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
@@ -375,22 +384,26 @@
                         </a>
                         <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                             <ul class="menu-subnav">
-
+                                @if (chkPhanQuyen('loghethong', 'phanquyen'))
                                 <li class="menu-item" aria-haspopup="true">
                                     <a href="{{ '/LogHeThong/ThongTin' }}" class="menu-link"><i
                                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                                         <span class="menu-text text-uppercase">Nhật ký sử dụng</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (chkPhanQuyen('cauhinhhethong', 'phanquyen'))
                                 <li class="menu-item" aria-haspopup="true">
                                     <a href="{{ '/CauHinhHeThong/ThongTin' }}" class="menu-link"><i
                                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                                         <span class="menu-text text-uppercase">Cấu hình hệ thống</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </div>
                     </li>
+                    @endif
                 </ul>
             </div>
         </li>
