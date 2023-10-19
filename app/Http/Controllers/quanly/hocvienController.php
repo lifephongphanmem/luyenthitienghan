@@ -31,7 +31,7 @@ class hocvienController extends Controller
             return view('errors.noperm')->with('machucnang', 'hocvien');
         }
 
-        if (in_array(session('admin')->sadmin, ['SSA', 'admin'])) {
+        if (in_array(session('admin')->sadmin, ['SSA', 'ADMIN'])) {
             $model = hocvien::all();
         } else if (session('admin')->giaovien == 1) {
             $model = hocvien::join('lophoc', 'lophoc.malop', 'hocvien.malop')
