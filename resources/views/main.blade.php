@@ -357,6 +357,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{session('admin')?session('admin')->tentaikhoan:''}}</a>
                     <div class="text-muted mt-1">{{session('admin')->vitri??''}}</div>
                     <div class="navi mt-2">
+                        @if (chkPhanQuyen('quanlytaikhoan', 'phanquyen'))
                         <a href="{{'/TaiKhoan/QuanLyTaiKhoan'}}" class="navi-item">
                             <span class="navi-link p-0 pb-2">
                                 <span class="navi-icon mr-1">
@@ -365,6 +366,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <span class="navi-text text-muted text-hover-primary">Quản lý tài khoản</span>
                             </span>
                         </a>
+                        @endif
                         <a href="{{'/DangXuat'}}" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Đăng xuất</a>
                     </div>
                 </div>
@@ -377,7 +379,7 @@ License: You must have a valid license purchased only from themeforest(the above
     </div>
     <!-- end::User Panel-->
     <!--begin::Quick Panel-->
-    <div id="kt_quick_panel" class="offcanvas offcanvas-right pt-5 pb-10">
+    {{-- <div id="kt_quick_panel" class="offcanvas offcanvas-right pt-5 pb-10">
         <!--begin::Header-->
         <div class="offcanvas-header offcanvas-header-navs d-flex align-items-center justify-content-between mb-5">
             <ul class="nav nav-bold nav-tabs nav-tabs-line nav-tabs-line-3x nav-tabs-primary flex-grow-1 px-10"
@@ -400,7 +402,7 @@ License: You must have a valid license purchased only from themeforest(the above
             </div>
         </div>
         <!--end::Header-->
-    </div>
+    </div> --}}
     <!--end::Quick Panel-->
 
     <!--begin::Scrolltop-->

@@ -38,7 +38,9 @@
                 </div>
             </div>
             <div class="card-footer text-center">
+                @if (chkPhanQuyen('quanlytaikhoan', 'thaydoi'))
                 <button id="cpass_submit"  class="btn btn-success mr-2" disabled>Cập nhật</button>
+                @endif
             </div>
         </form>
         <!--end::Form-->

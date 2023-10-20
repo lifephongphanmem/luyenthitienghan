@@ -116,6 +116,7 @@ class HethongchungController extends Controller
 			$user->phanquyen = json_decode($user->phanquyen, true);
 			// dd($user);
 		} else {
+			
 			$user->capdo = "SSA";
 		}
 

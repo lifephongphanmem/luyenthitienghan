@@ -47,7 +47,7 @@ License: You must have a valid license purchased only from themeforest(the above
 						<!--begin::Login Header-->
 						<div class="d-flex flex-center mb-15">
 							<a href="#">
-								<img src="{{ url('assets/media/logos/logolife.png') }}" class="max-h-150px" alt="" />
+								<img src="{{ url('assets/media/logos/ttdvvl.png') }}" class="max-h-150px" alt="" />
 							</a>
 						</div>
 						<!--end::Login Header-->

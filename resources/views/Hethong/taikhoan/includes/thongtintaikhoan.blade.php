@@ -83,7 +83,9 @@
 
         </div>
         <div class="card-footer text-center">
+            @if (chkPhanQuyen('quanlytaikhoan', 'thaydoi'))
             <button type="submit"  class="btn btn-success mr-2">Cập nhật</button>
+            @endif
         </div>
     </form>
     <!--end::Form-->
