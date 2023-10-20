@@ -34,10 +34,11 @@ class baocaoController extends Controller
                 if (isset($inputs['khoahoc'])) {
                     $q->where('khoahoc', $inputs['khoahoc']);
                 }
-                if (isset($inputs['ketqua'])) {
-                    $q->where('diemthi', '>=', $inputs['ketqua']);
-                }
+                // if (isset($inputs['ketqua'])) {
+                //     $q->where('diemthi', '>=', $inputs['ketqua']);
+                // }
             })
+            ->whereBetween('diemthi',[$inputs['ketquatu'],$inputs['ketquaden']])
             ->orderBy('diemthi', 'desc')
             ->get();
             $mahocvien=array_column($model->unique('mahocvien')->toarray(),'mahocvien');
