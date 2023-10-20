@@ -308,7 +308,7 @@
                     @foreach ($cacbaivietganday as $baiviet)
                         <div class="normal-news">
                             <a style="display: -webkit-box;max-height: 3.2rem;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;white-space: normal;-webkit-line-clamp: 1;"
-                                class="news-heading" href="{{ url('/TinTuc/' . $baiviet->slug) }}">
+                                class="news-heading" href="{{ url('/TinTuc/NoiDung/' . $baiviet->slug) }}">
                                 {{ $baiviet->tieude }}</a>
                             <div class="post-time" style="padding: 5px 0px;">Đăng ngày:
                                 {{ Carbon\Carbon::createFromTimeString($baiviet->created_at)->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i:s') }}

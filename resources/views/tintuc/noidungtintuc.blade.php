@@ -67,12 +67,12 @@
         @foreach ($cacbaivietganday as $bai)
             <div class="pt-3 pb-3 pl-15 pr-15 d-flex">
                 <div class="pr-5">
-                    <a href="{{ url('/TinTuc/' . $bai->slug) }}">
+                    <a href="{{ url('/TinTuc/NoiDung/' . $bai->slug) }}">
                         <img style="object-fit: cover;" src="{{ url($bai->hinhanh) }}" width="45px" height="45px">
                     </a>
                 </div>
                 <div>
-                    <a href="{{ url('/TinTuc/' . $bai->slug) }}" style="font-size: 11pt">{{ $bai->tieude }}</a>
+                    <a href="{{ url('/TinTuc/NoiDung/' . $bai->slug) }}" style="font-size: 11pt">{{ $bai->tieude }}</a>
                     <i
                         style="font-size: 9.5pt">{{ Carbon\Carbon::createFromTimeString($bai->created_at)->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i:s') }}</i>
                 </div>
