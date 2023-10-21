@@ -31,6 +31,7 @@ class giaotrinhController extends Controller
      */
     public function index()
     {
+
         if (!chkPhanQuyen('giaotrinh', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'giaotrinh');
         }

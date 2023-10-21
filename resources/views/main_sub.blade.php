@@ -15,6 +15,57 @@
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-left">
             <ul class="menu-subnav">
+                @if (chkPhanQuyen('baihoc', 'phanquyen'))
+                <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                    <a href="javascript:;" class="menu-link menu-toggle"><i
+                            class="icon-sm la la-angle-double-right"></i>&nbsp;
+                        <span class="menu-text">QUẢN LÝ BÀI HỌC</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ '/BaiHoc/ThongTin' }}" class="menu-link"><i
+                                        class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                    <span class="menu-text">QUẢN LÝ BÀI HỌC</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ '/BaiHocChinh/ThongTin' }}" class="menu-link"><i
+                                        class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                    <span class="menu-text">BÀI HỌC CHÍNH</span>
+                                </a>
+                            </li>
+                            {{-- <li class="menu-item" aria-haspopup="true">
+                        <a href="{{'/TracNghiem/ThongTin'}}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">TRẮC NGHIỆM</span>
+                        </a>
+                    </li> --}}
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ '/TuVung/ThongTin' }}" class="menu-link"><i
+                                        class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                    <span class="menu-text">TỪ VỰNG</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ '/HinhAnh/ThongTin' }}" class="menu-link"><i
+                                        class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                    <span class="menu-text">HÌNH ẢNH</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ '/BaiTap/ThongTin' }}" class="menu-link"><i
+                                        class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                    <span class="menu-text">BÀI TẬP</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
                 @if (chkPhanQuyen('giaotrinhchitiet', 'phanquyen'))
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                         <a href="{{ '/GiaoTrinh/ThongTin' }}" class="menu-link "><i
@@ -23,57 +74,7 @@
                         </a>
                     </li>
                 @endif
-                @if (chkPhanQuyen('baihoc', 'phanquyen'))
-                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                        <a href="javascript:;" class="menu-link menu-toggle"><i
-                                class="icon-sm la la-angle-double-right"></i>&nbsp;
-                            <span class="menu-text">QUẢN LÝ BÀI HỌC</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu menu-submenu-classic menu-submenu-right">
-                            <ul class="menu-subnav">
-                                <li class="menu-item" aria-haspopup="true">
-                                    <a href="{{ '/BaiHoc/ThongTin' }}" class="menu-link"><i
-                                            class="icon-sm la la-angle-double-right"></i>&nbsp;
-                                        <span class="menu-text">QUẢN LÝ BÀI HỌC</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item" aria-haspopup="true">
-                                    <a href="{{ '/BaiHocChinh/ThongTin' }}" class="menu-link"><i
-                                            class="icon-sm la la-angle-double-right"></i>&nbsp;
-                                        <span class="menu-text">BÀI HỌC CHÍNH</span>
-                                    </a>
-                                </li>
-                                {{-- <li class="menu-item" aria-haspopup="true">
-                            <a href="{{'/TracNghiem/ThongTin'}}" class="menu-link">
-                                <i class="menu-bullet menu-bullet-dot">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">TRẮC NGHIỆM</span>
-                            </a>
-                        </li> --}}
-                                <li class="menu-item" aria-haspopup="true">
-                                    <a href="{{ '/TuVung/ThongTin' }}" class="menu-link"><i
-                                            class="icon-sm la la-angle-double-right"></i>&nbsp;
-                                        <span class="menu-text">TỪ VỰNG</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item" aria-haspopup="true">
-                                    <a href="{{ '/HinhAnh/ThongTin' }}" class="menu-link"><i
-                                            class="icon-sm la la-angle-double-right"></i>&nbsp;
-                                        <span class="menu-text">HÌNH ẢNH</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item" aria-haspopup="true">
-                                    <a href="{{ '/BaiTap/ThongTin' }}" class="menu-link"><i
-                                            class="icon-sm la la-angle-double-right"></i>&nbsp;
-                                        <span class="menu-text">BÀI TẬP</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                @endif
+
                 @foreach ($baocao['giaotrinh'] as $ct)
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="{{ '/GiaoTrinh/60-bai-eps-topik?magiaotrinh='.$ct->magiaotrinh }}" class="menu-link "><i

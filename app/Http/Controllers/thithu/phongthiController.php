@@ -4,6 +4,7 @@ namespace App\Http\Controllers\thithu;
 
 use App\Http\Controllers\Controller;
 use App\Models\dethi\dethi;
+use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
 use App\Models\thithu\phongthi;
 use App\Models\thithu\phongthi_lop;
@@ -67,7 +68,7 @@ class phongthiController extends Controller
         
         $phongthi = phongthi::where('maphongthi', $id)->first();
         $model = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')
-            ->select('phongthi.*', 'phongthi_lop.malop')
+            ->select('phongthi_lop.*')
             ->where('phongthi.maphongthi', $id)->get();
         $malop = array_column($model->toarray(), 'malop');
         $lophoc = lophoc::where('trangthai', 1)->wherenotin('malop', $malop)->get();
@@ -102,10 +103,12 @@ class phongthiController extends Controller
             return view('errors.noperm')->with('machucnang', 'phongthi');
         }
         $inputs = $request->all();
+        // dd($inputs);
         $model = phongthi::where('maphongthi', $id)->first();
-        // dd($model);
-        if (isset($model)) {
-            $model->update(['made'=>$inputs['made']]);
+        $phongthi_lop=phongthi_lop::where('maphongthi',$id)->where('malop',$inputs['malop'])->first();
+
+        if (isset($phongthi_lop)) {
+            $phongthi_lop->update(['made'=>$inputs['made']]);
         };
         return redirect('/PhongThi/ChiTiet/'.$model->maphongthi)
             ->with('success', 'Cập nhật thành công');
@@ -130,27 +133,34 @@ class phongthiController extends Controller
     public function themlop(Request $request)
     {
         $inputs = $request->all();
+        $inputs['made']=$inputs['made']??'';
+
         if (isset($inputs['malop'])) {
             foreach ($inputs['malop'] as $ct) {
                 $data = [
                     'maphongthi' => $inputs['maphongthi'],
-                    'malop' => $ct
+                    'malop' => $ct,
+                    'made'=>$inputs['made']
                 ];
                 phongthi_lop::create($data);
+                //khi thêm lớp set tranthaithi thử của học viên lên 1 để học viên có thể vào thi
+                hocvien::where('malop',$ct)->update(['trangthaithithu'=>1]);
             }
         }
-        $phongthi=phongthi::where('maphongthi',$inputs['maphongthi'])->first();
-        if(isset($inputs['made'])){      
-            $phongthi->update(['made'=>$inputs['made']]);
-        }
+        // $phongthi=phongthi::where('maphongthi',$inputs['maphongthi'])->first();
+        // if(isset($inputs['made'])){      
+        //     $phongthi->update(['made'=>$inputs['made']]);
+        // }
         return redirect('/PhongThi/ChiTiet/'.$inputs['maphongthi'])
-            ->with('success', 'Xóa thành công');
+            ->with('success', 'Thêm thành công');
     }
     public function xoalop(Request $request, $malop){
         $inputs=$request->all();
         $lopthi=phongthi_lop::where('malop',$malop)->first();
         if(isset($lopthi)){
             $lopthi->delete();
+            //khi xóa lớp thi chuyển trạng thái của các học viên về 0 để kết thúc thi thử
+            hocvien::where('malop',$malop)->update(['trangthaithithu'=>0]);
         }
 
         return redirect('/PhongThi/ChiTiet/'.$inputs['maphongthi'])
@@ -164,6 +174,8 @@ class phongthiController extends Controller
         if($inputs['trangthai'] == 0){
             phongthi_lop::where('maphongthi',$inputs['maphongthi'])->delete();
             $phongthi->update(['made'=>null]);
+            //chuyển tất cả các học viên có trong lớp đó về 0 để đóng thi thử
+            hocvien::where('trangthaithithu',1)->update(['trangthaithithu',0]);
         }
         $phongthi->update(['trangthai'=>$inputs['trangthai']]);
 

@@ -19,6 +19,7 @@ class ketquathithu extends Model
         'malop',
         'maphongthi',
         'ngaythi',
-        'giothi'
+        'giothi',
+        'lanthithu'
     ];
 }

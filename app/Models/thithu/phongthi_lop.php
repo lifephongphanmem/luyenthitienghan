@@ -10,6 +10,6 @@ class phongthi_lop extends Model
     use HasFactory;
     protected $table='phongthi_lop';
     protected $fillable=[
-        'maphongthi','malop'
+        'maphongthi','malop','made'
     ];
 }

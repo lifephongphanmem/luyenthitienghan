@@ -70,7 +70,7 @@ class thithuController extends Controller
         } else {
             $hocvien = hocvien::where('mahocvien', session('admin')->manguoidung)->first();
             $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')
-                ->select('phongthi.made','phongthi_lop.malop','phongthi.maphongthi')
+                ->select('phongthi_lop.made','phongthi_lop.malop','phongthi.maphongthi')
                 ->where('phongthi.trangthai', 1)
                 ->where('phongthi_lop.malop', $hocvien->malop)
                 ->first();
@@ -159,7 +159,11 @@ class thithuController extends Controller
         $data['kq_dung'] = $kq_dung;
         $data['madethi']=$inputs['madethi'];
         // $data['thoigianlambai']=$thoigianlambai;
+       
         if ($inputs['madethi'] != 1) {
+             //kiểm tra số lần thi thử trong ngày để tính toán đóng phòng thi và khóa chức năng thi thử
+             $ketqua=ketquathithu::where('mahocvien',session('admin')->manguoidung)->where('malop',$inputs['malop'])->where('maphongthi',$inputs['maphongthi'])->where('madethi',$inputs['madethi'])->where('ngaythi',$thoigianketthuc->toDateString())->max('lanthithu');
+             $lanthithu=$ketqua == ''?1:($ketqua+1);
             $luu_kq = array(
                 'maketqua' => getdate()[0],
                 'madethi' => $inputs['madethi'],
@@ -170,14 +174,15 @@ class thithuController extends Controller
                 'malop'=>$inputs['malop'],
                 'maphongthi'=>$inputs['maphongthi'],
                 'ngaythi'=>$thoigianketthuc->toDateString(),
-                'giothi'=>$thoigianketthuc->toTimeString()
+                'giothi'=>$thoigianketthuc->toTimeString(),
+                'lanthithu'=>$lanthithu
             );
 
             ketquathithu::create($luu_kq);
+            hocvien::where('mahocvien',session('admin')->manguoidung)->update(['trangthaithithu'=>0]);
+            //kiểm tra nếu học viên nộp bải hết thì xóa lớp đó khỏi phòng thi, nếu phòng thi không còn lớp nào thì đóng phòng thi.
+            chksoluonghocsinhtrongphongthi($inputs['malop'],$inputs['maphongthi'],$lanthithu,$inputs['madethi']);
         }
-
-        //kiểm tra học viên đã nộp bài chưa để đóng phòng thi và đóng chức năng thi thử của học viên
-        checkthithu($inputs['madethi']);
         return response()->json($data);
     }
 
