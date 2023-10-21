@@ -28,11 +28,11 @@
                         </div> --}}
                         <div class="col-md-6 mt-2">
                             <label class="control-label">Điểm thi từ</label>
-                            <input type="text" name="ketquatu" value="0" id="ketqua" class="form-control">
+                            <input type="text" name="ketquatu" value="0" id="ketquatu" class="form-control">
                         </div>
                         <div class="col-md-6 mt-2">
                             <label class="control-label"> Điểm thi đến</label>
-                            <input type="text" name="ketquaden" value="200" id="ketqua" class="form-control">
+                            <input type="text" name="ketquaden" value="200" id="ketquaden" class="form-control">
                         </div>
                         {{-- <div class="col-md-1 mt-2" style="padding-left: 0px;">
                             <label class="control-label">&nbsp;&nbsp;&nbsp;</label>

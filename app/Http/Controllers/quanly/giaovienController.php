@@ -75,6 +75,7 @@ class giaovienController extends Controller
             'manhomchucnang'=>1680747743
         ];
         User::create($data);
+        add_phanquyen('1680747743',$inputs['cccd']);
         }
         return redirect('/GiaoVien/ThongTin')
                 ->with('success','Thêm mới thành công');

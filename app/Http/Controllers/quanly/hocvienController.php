@@ -86,6 +86,7 @@ class hocvienController extends Controller
                 'manhomchucnang' => 1680748012
             ];
             User::create($data);
+            add_phanquyen('1680748012',$inputs['cccd']);
         }
         return redirect('/HocVien/ThongTin')
             ->with('success', 'Thêm mới thành công');

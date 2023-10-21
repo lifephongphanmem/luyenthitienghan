@@ -176,6 +176,8 @@ class thithuController extends Controller
             ketquathithu::create($luu_kq);
         }
 
+        //kiểm tra học viên đã nộp bài chưa để đóng phòng thi và đóng chức năng thi thử của học viên
+        checkthithu($inputs['madethi']);
         return response()->json($data);
     }
 

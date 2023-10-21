@@ -27,7 +27,8 @@
                 <div class="form-group row">
                     <label class="col-xl-3 col-lg-3 col-form-label text-alert">Mật khẩu mới</label>
                     <div class="col-lg-9 col-xl-6">
-                        <input type="password" name="password" id="password" class="form-control form-control-lg form-control-solid" value="" placeholder="Mật khẩu mới" />
+                        <input type="password" name="password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" class="form-control form-control-lg form-control-solid" value="" placeholder="Mật khẩu mới" />
+                        <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và chữ số</span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -39,7 +40,7 @@
             </div>
             <div class="card-footer text-center">
                 @if (chkPhanQuyen('quanlytaikhoan', 'thaydoi'))
-                <button id="cpass_submit"  class="btn btn-success mr-2" disabled>Cập nhật</button>
+                <button id="cpass_submit" type="submit"  class="btn btn-success mr-2" disabled>Cập nhật</button>
                 @endif
             </div>
         </form>
