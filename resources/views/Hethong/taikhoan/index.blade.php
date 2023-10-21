@@ -136,7 +136,7 @@
                     <div class="form-group row">
 
                             <div class="col-md-4">
-                                <label class="control-label">Tên truy cập<span class="require">*</span></label>
+                                <label class="control-label">Tên tài khoản<span class="require">*</span></label>
                                 <input type="text" name="tentaikhoan" class="form-control" required>
                             </div>
                             <div class="col-md-4">
@@ -148,11 +148,12 @@
                                 <input type="text" name="email" class="form-control" >
                             </div>
 
-                        <div class="col-md-6 mt-1">
+                        <div class="col-md-6 mt-2">
                             <label class="control-label">Mật khẩu<span class="require">*</span></label>
-                            <input type="password" name="password" value="123456abc" class="form-control">
+                            <input type="password" name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" value="123456abc" class="form-control">
+                            <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và chữ số</span>
                         </div>
-                        <div class="col-md-6 mt-1">
+                        <div class="col-md-6 mt-2">
                             <label class="control-label">Trạng thái</label>
                             <select name="trangthai" class="form-control select2basic"  style="width:100%">
 
@@ -174,7 +175,7 @@
                         </div>
                         <div class="col-md-6 mt-1">
                             <label class="control-label">Tên nhóm chức năng<span class="require">*</span></label>
-                            <select name="manhomchucnang" class="form-control select2basic"style="width:100%">
+                            <select name="manhomchucnang" class="form-control select2basic"style="width:100%" required>
                                 <option value="">-- Chọn nhóm chức năng --</option>
                                 @foreach ($a_nhomtk as $k=>$ct )
                                     <option value="{{$k}}">{{$ct}}</option>
@@ -210,14 +211,14 @@
                             <div class="form-group row">
                                 {{-- <div class="col-md-12"> --}}
                                     <div class="col-md-4">
-                                        <label class="control-label">Tên truy cập<span class="require">*</span></label>
+                                        <label class="control-label">Tên tài khoản<span class="require">*</span></label>
                                         {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                                         <input type="text" name="tentaikhoan" class="form-control" id='tentaikhoan' required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="control-label">CCCD/CMND<span class="require">*</span></label>
                                         {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
-                                        <input type="text" name="cccd" class="form-control" id='cccd' required>
+                                        <input type="text" name="cccd" class="form-control" id='cccd_update' required>
                                         @if ($errors->has('cccd'))
                                         <span class="text-danger">{{ $errors->first('cccd') }}</span>
                                         @endif
@@ -229,12 +230,13 @@
                                     </div>
                                 {{-- </div> --}}
         
-                                <div class="col-md-6 mt-1">
+                                <div class="col-md-6 mt-2">
                                     <label class="control-label">Mật khẩu<span class="require">*</span></label>
                                     {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
-                                    <input type="password" name="password" placeholder="Nếu không đổi thì không cần nhập" id='password' class="form-control">
+                                    <input type="password" name="password" placeholder="Nếu không đổi thì không cần nhập" id='password_update' class="form-control">
+                                    <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và chữ số</span>
                                 </div>
-                                <div class="col-md-6 mt-1">
+                                <div class="col-md-6 mt-2">
                                     <label class="control-label">Trạng thái</label>
                                     {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                                     <select name="trangthai" class="form-control" id='trangthai'  style="width:100%">
@@ -260,7 +262,7 @@
                                     <label class="control-label">Tên nhóm chức năng<span class="require">*</span></label>
                                     {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                                     <select name="manhomchucnang" id='nhomchucnang' class="form-control "style="width:100%">
-                                        <option value="">-- Chọn nhóm chức năng --</option>
+                                        {{-- <option value="">-- Chọn nhóm chức năng --</option> --}}
                                         @foreach ($a_nhomtk as $k=>$ct )
                                             <option value="{{$k}}">{{$ct}}</option>
                                         @endforeach
@@ -363,14 +365,24 @@
             var url='/TaiKhoan/update/'+id;
             var tr = $(e).closest('tr');
             $('#tentaikhoan').val($(tr).find('td[name=tentaikhoan]').text());
-            $('#cccd').val($(tr).find('td[name=cccd]').text());
+            $('#cccd_update').val($(tr).find('td[name=cccd]').text());
             $('#email').val(email)
             $('#phanloai option[value=' + phanloai + ' ]').attr('selected', 'selected');
             $('#trangthai option[value=' + trangthai + ' ]').attr('selected', 'selected');
             $('#nhomchucnang option[value=' + nhomchucnang + ' ]').attr('selected', 'selected');
 
             $('#frm_edit').attr('action', url);
+
         }
+
+        $('#password_update').on('change',function(){
+            // var password=
+            if($('#password_update').val() != ''){
+                $('#password_update').attr('pattern','^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+            }else{
+                $('#password_update').removeAttr('pattern');
+            }
+        });
 
     </script>
     

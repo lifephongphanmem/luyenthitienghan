@@ -3,6 +3,8 @@
 use App\Models\baigiang\giaotrinh;
 use App\Models\danhmuc\loaicauhoict;
 use App\Models\dethi\cauhoi;
+use App\Models\Hethong\dsnhomtaikhoan_phanquyen;
+use App\Models\Hethong\dstaikhoan_phanquyen;
 use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
 use App\Models\quantrihethong\cauhinhhethong;
@@ -382,4 +384,28 @@ function xoadulieusaoluu()
        
     }
 
+}
+
+//gắn phân quyền luôn khi tạo mới học viên hoặc giáo viên
+function add_phanquyen($manhomchucnang,$cccd)
+{
+    $model_phanquyen = dsnhomtaikhoan_phanquyen::where('manhomchucnang', $manhomchucnang)->get();
+    foreach ($model_phanquyen as $phanquyen) {
+        $a_phanquyen[] = [
+            'tendangnhap' =>$cccd,
+            'machucnang' => $phanquyen->machucnang,
+            'phanquyen' => $phanquyen->phanquyen,
+            'danhsach' => $phanquyen->danhsach,
+            'thaydoi' => $phanquyen->thaydoi,
+            'hoanthanh' => $phanquyen->hoanthanh,
+        ];
+    }
+    foreach (array_chunk($a_phanquyen, 200) as $data) {
+        dstaikhoan_phanquyen::insert($data);
+    }
+}
+
+//kiểm tra số lượng học viên đã nộp bài để đóng phòng học và đóng thi thử ^.^
+function checkthithu(){
+    //Lấy mảng mã học viên trong bảng kết quả thi của mã đề
 }

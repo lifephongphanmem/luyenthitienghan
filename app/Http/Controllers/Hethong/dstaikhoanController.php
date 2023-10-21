@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Facades\Validator;
 
 class dstaikhoanController extends Controller
 {
@@ -118,7 +118,7 @@ class dstaikhoanController extends Controller
             case '2':
                 $inputs['hocvien'] = 1;
                 $data = [
-                    'hocvien' => $inputs['cccd'] . '_' . getdate()[0],
+                    'mahocvien' => $inputs['cccd'] . '_' . getdate()[0],
                     'tenhocvien' => $inputs['tentaikhoan'],
                     'cccd' => $inputs['cccd'],
                     'email' => $inputs['email'],
@@ -130,6 +130,7 @@ class dstaikhoanController extends Controller
                 break;
         }
         User::create($inputs);
+        add_phanquyen($inputs['manhomchucnang'],$inputs['cccd']);
         loghethong(getIP(), session('admin'), 'them', 'taikhoan');
         return redirect('/TaiKhoan/ThongTin');
     }
@@ -140,29 +141,18 @@ class dstaikhoanController extends Controller
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
 
-        // $validate = $request->validate([
-        // 	'email' => 
-        //         [Rule::unique('users')->ignore($id)],
-        //         'cccd' => 
-        //         [Rule::unique('users')->ignore($id)],							
-        // 	]);
 
-        $validate = $request->validate(
-            [
-                'cccd' => 'unique:users,cccd,' . $id,
-                // 'email'=>'unique:users,email,'.$id
-            ],
-            [
-                'cccd.unique' => 'CCCD đã được sử dụng'
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'cccd'=>'required|unique:users,cccd,'.$id
+        ]);
 
-        // if($validate->fails()){
-        //     return redirect('/TaiKhoan/ThongTin')->with('error','CCCD đã được sử dụng');
-        // }
+        if($validator->fails()){
+            return redirect('/TaiKhoan/ThongTin')->with('error','CCCD đã được sử dụng');
+        }
         // dd(1);
 
         $inputs = $request->all();
+        // dd($inputs);
         $model = User::findOrFail($id);
 
         // $model = User::where('username',$inputs['username'])->first();
@@ -195,7 +185,16 @@ class dstaikhoanController extends Controller
                 $inputs['giaovien'] = 0;
                 break;
         }
+        
         $model->update($inputs);
+        if($inputs['cccd'] != $model->cccd){
+            dstaikhoan_phanquyen::where('tendangnhap',$model->cccd)->delete();
+            add_phanquyen($inputs['manhomchucnang'],$inputs['cccd']);
+        }
+        if($inputs['manhomchucnang'] != $model->manhomchucnang){
+            dstaikhoan_phanquyen::where('tendangnhap',$model->cccd)->delete();
+            add_phanquyen($inputs['manhomchucnang'],$inputs['cccd']);
+        }
         loghethong(getIP(), session('admin'), 'capnhat', 'taikhoan');
         return redirect('/TaiKhoan/ThongTin');
     }
@@ -338,6 +337,9 @@ class dstaikhoanController extends Controller
                     $giaovien->delete();
                 }
             }
+
+            //xóa ở bảng phân quyền
+            $phanquyen=dstaikhoan_phanquyen::where('tendangnhap',$model->cccd)->delete();
 
             $model->delete();
             loghethong(getIP(), session('admin'), 'xoa', 'taikhoan');
