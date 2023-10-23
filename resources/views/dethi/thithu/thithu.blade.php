@@ -121,7 +121,7 @@
                                                         </table>
                                                         @endif
                                                         @if (isset($ct->anh))
-                                                            <img src="{{ url($ct->anh) }}">
+                                                            <img src="{{ url($ct->anh) }}" class="imgquestion">
                                                         @endif
                                                     </div>
                                                 </div>
@@ -133,8 +133,7 @@
                                                             @if ($ct->loaidapan == 1)
                                                             {{ $ct->A }}
                                                         @else
-                                                            <img src="{{ url($ct->A) }}" width="120"
-                                                                height="120">
+                                                            <img src="{{ url($ct->A) }}" class="imganswer">
                                                         @endif
                                                     </div>
                                                     </div>
@@ -145,8 +144,7 @@
                                                             @if ($ct->loaidapan == 1)
                                                             {{ $ct->B }}
                                                         @else
-                                                            <img src="{{ url($ct->B) }}" width="120"
-                                                                height="120">
+                                                            <img src="{{ url($ct->B) }}" class="imganswer">
                                                         @endif
                                                     </div>
                                                     </div>
@@ -157,8 +155,7 @@
                                                             @if ($ct->loaidapan == 1)
                                                             {{ $ct->C }}
                                                         @else
-                                                            <img src="{{ url($ct->C) }}" width="120"
-                                                                height="120">
+                                                            <img src="{{ url($ct->C) }}" class="imganswer">
                                                         @endif
                                                     </div>
                                                     </div>
@@ -169,8 +166,7 @@
                                                             @if ($ct->loaidapan == 1)
                                                             {{ $ct->D }}
                                                         @else
-                                                            <img src="{{ url($ct->D) }}" width="120"
-                                                                height="120">
+                                                            <img src="{{ url($ct->D) }}" class="imganswer">
                                                         @endif
                                                     </div>
                                                     </div>
@@ -184,7 +180,7 @@
                                                         src="{{ url($ct->audio) }}"></audio><strong>{{ $ct->cauhoi }}</strong>
                                                     <p style="display: block;"></p>
                                                     @if (isset($ct->anh))
-                                                        <img src="{{ $ct->anh }}">
+                                                        <img src="{{ $ct->anh }}" class="imgquestion">
                                                     @endif
                                                 </div>
                                                 <div class="quiz-list">
