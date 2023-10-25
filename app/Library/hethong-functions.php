@@ -75,6 +75,15 @@ function taodeluyenthi()
     $caudoc = $m_cauhoi->where('loaicauhoi', 1683685323);
     $loaicaudoc = loaicauhoict::where('madm', 1683685323)->get();
     $loaicaunghe = loaicauhoict::where('madm', 1683685241)->where('madmct', '!=', 1684898896)->get();
+    if(loaicauhoict::where('madm', 1683685241)->sum('soluongcau') != 20){
+        return redirect('/')
+        ->with('error', 'Lỗi! Liên hệ với giáo viên để được trợ giúp');
+    };
+    if($loaicaudoc->sum('soluongcau') != 20)
+    {
+        return redirect('/')
+        ->with('error', 'Lỗi! Liên hệ với giáo viên để được trợ giúp');
+    }
     // dd($loaicaunghe);
     // $macaudoc=[];
     $macaudoc_khac = [];
@@ -184,11 +193,21 @@ function taodeluyenthi()
 }
 function taodethi()
 {
+    // dd(1);
     $m_cauhoi = cauhoi::all();
     $m_caunghe = $m_cauhoi->where('loaicauhoi', 1683685241);
     $caudoc = $m_cauhoi->where('loaicauhoi', 1683685323);
     $loaicaudoc = loaicauhoict::where('madm', 1683685323)->get();
     $loaicaunghe = loaicauhoict::where('madm', 1683685241)->where('madmct', '!=', 1684898896)->get();
+    if(loaicauhoict::where('madm', 1683685241)->sum('soluongcau') != 20){
+        return redirect('/DeThi/ThongTin')
+        ->with('error', 'Số lượng câu nghe ở danh mục chưa chính xác');
+    };
+    if($loaicaudoc->sum('soluongcau') != 20)
+    {
+        return redirect('/DeThi/ThongTin')
+        ->with('error', 'Số lượng câu đọc ở danh mục chưa chính xác');
+    }
     // dd($loaicaunghe);
     // $macaudoc=[];
     $macaudoc_khac = [];

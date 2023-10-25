@@ -143,7 +143,7 @@ class phongthiController extends Controller
                     'made'=>$inputs['made']
                 ];
                 phongthi_lop::create($data);
-                //khi thêm lớp set tranthaithi thử của học viên lên 1 để học viên có thể vào thi
+                //khi thêm lớp set trangthaithi thử của học viên lên 1 để học viên có thể vào thi
                 hocvien::where('malop',$ct)->update(['trangthaithithu'=>1]);
             }
         }

@@ -27,7 +27,6 @@ class tintucController extends Controller
 
     public function index()
     {
-        dd(chkThiThu(session('admin')->manguoidung));
         $baiviet = tintuc::where('active', '=', 1)
             ->select('id', 'hinhanh', 'tieude', 'phude', 'created_at', 'slug')
             ->orderBy('created_at', 'DESC')->paginate(12);

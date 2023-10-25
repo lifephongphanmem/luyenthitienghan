@@ -134,15 +134,18 @@ class dethiController extends Controller
             return redirect('/DeThi/ThongTin')
                 ->with('error', 'Đề thi đã tồn tại');
         }
-        // dd($inputs);
-        dethi::create($inputs);
+        // dd(taodethi());
+
         foreach (taodethi() as $ct) {
+            // dd($ct);
             $data = [
                 'made' => $inputs['made'],
                 'macauhoi' => $ct
             ];
+            // dd($data);
             cauhoi_dethi::create($data);
         }
+        dethi::create($inputs);
         loghethong(getIP(), session('admin'), 'them', 'dethi');
         return redirect('/DeThi/ThongTin')
             ->with('success', 'Thêm mới thành công');
@@ -241,6 +244,7 @@ class dethiController extends Controller
 
         $model = dethi::where('made', $id)->first();
         if (isset($model)) {
+            cauhoi_dethi::where('made',$model->made)->delete();
             $model->delete();
         }
         loghethong(getIP(), session('admin'), 'xoa', 'dethi');

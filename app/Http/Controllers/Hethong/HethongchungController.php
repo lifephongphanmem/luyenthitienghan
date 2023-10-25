@@ -108,6 +108,7 @@ class HethongchungController extends Controller
 				$user->gioitinh=$giaovien->gioitinh;
 				$user->ngaysinh=$giaovien->ngaysinh;
 				$user->diachi=$giaovien->diachi;
+				$user->hdsd='';
 
 			}
 			if($user->sadmin == 'ADMIN'){
