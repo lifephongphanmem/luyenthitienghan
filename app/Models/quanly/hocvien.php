@@ -9,5 +9,7 @@ class hocvien extends Model
 {
     use HasFactory;
     protected $table='hocvien';
-    protected $fillable=['mahocvien','malop','tenhocvien','cccd','sdt','email','ngaysinh','gioitinh','diachi','trangthai','ghichu','diachi'];
+    protected $fillable=['mahocvien','malop','tenhocvien','cccd','sdt','email','ngaysinh','gioitinh','diachi','trangthai','ghichu','diachi',
+    'trangthaithithu'//0:chưa thi,1:đang thi
+];
 }

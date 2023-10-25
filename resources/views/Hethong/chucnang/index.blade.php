@@ -277,7 +277,7 @@
 
                                 <div class="col-lg-8">
                                     <label class="control-label">Tên chức năng<span class="require">*</span></label>
-                                    <input class="form-control" required="required" name="tencn" type="text"
+                                    <input class="form-control" required="required"  name="tencn" type="text"
                                         id="tencn">
                                 </div>
                             </div>

@@ -29,7 +29,7 @@ class baocaoController extends Controller
 
         $model = hocvien::join('ketquathithu', 'ketquathithu.mahocvien', 'hocvien.mahocvien')
             ->join('lophoc', 'lophoc.malop', 'hocvien.malop')
-            ->select('hocvien.*', 'lophoc.khoahoc', 'ketquathithu.madethi', 'ketquathithu.diemthi')
+            ->select('hocvien.*', 'lophoc.khoahoc','lophoc.malop','lophoc.tenlop', 'ketquathithu.madethi', 'ketquathithu.diemthi')
             ->where(function ($q) use ($inputs) {
                 if (isset($inputs['khoahoc'])) {
                     $q->where('khoahoc', $inputs['khoahoc']);
@@ -54,9 +54,11 @@ class baocaoController extends Controller
             }
             // dd($hocvien);
         $khoahoc = $model->unique('khoahoc');
+        $lophoc=$model->unique('malop');
         return view('baocao.danhsachhocvien')
             ->with('model', $hocvien)
             ->with('khoahoc', $khoahoc)
+            ->with('lophoc', $lophoc)
             ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Thống kê danh sách học viên');
     }

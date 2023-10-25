@@ -32,35 +32,43 @@
         <tbody>
             @foreach ($khoahoc as $k => $ct)
                 <tr style="font-weight:bold">
-                    <td>{{ convert2Roman(++$k) }}</td>
-                    <td colspan="6">Khóa: {{ $ct->khoahoc }}</td>
+                    <td>{{ strtoupper(toAlpha(++$k)) }}</td>
+                    <td colspan="7">Khóa: {{ $ct->khoahoc }}</td>
                 </tr>
-                <?php $m_hocvien = $model->where('khoahoc', $ct->khoahoc); ?>
-                @foreach ($m_hocvien as $key => $made)
-                    @foreach ($m_hocvien as $k=>$item)
-                        <tr>
-                            <td style="text-align: center ; vertical-align: middle">{{ ++$k }}</td>
-                            <td style="vertical-align: middle">{{ $item->tenhocvien }}</td>
+                <?php $m_hocvien_khoahoc = $model->where('khoahoc', $ct->khoahoc); ?>
+                @foreach ($lophoc as $key=>$val )
+                    <?php $m_hocvien=$m_hocvien_khoahoc->where('malop',$val->malop);
+                    $stt=0;
+                    ?>
+                    <tr style="font-weight:bold; font-style:italic">
+                        <td>{{ convert2Roman(++$key) }}</td>
+                        <td colspan="7">Lớp: {{ $val->tenlop }}</td>
+                    </tr>
+                    
+                    @foreach ($m_hocvien as $item)   
+                    <tr>
+                        <td style="text-align: center ; vertical-align: middle">{{ ++$stt }}</td>
+                        <td style="vertical-align: middle">{{ $item->tenhocvien }}</td>
 
-                            @if ($item->gioitinh == 1)
-                                <td style="text-align: center ; vertical-align: middle">{{ getDayVn($item->ngaysinh) }}</td>
-                            @else
-                                <td></td>
-                            @endif
-                            @if ($item->gioitinh == 0)
-                                <td style="text-align: center ; vertical-align: middle">{{ $item->ngaysinh }}</td>
-                            @else
-                                <td></td>
-                            @endif
+                        @if ($item->gioitinh == 1)
+                            <td style="text-align: center ; vertical-align: middle">{{ getDayVn($item->ngaysinh) }}</td>
+                        @else
+                            <td></td>
+                        @endif
+                        @if ($item->gioitinh == 0)
+                            <td style="text-align: center ; vertical-align: middle">{{  getDayVn($item->ngaysinh) }}</td>
+                        @else
+                            <td></td>
+                        @endif
 
-                            <td style="text-align: center ; vertical-align: middle">{{ $item->cccd }}</td>
-                            <td style="text-align: center ; vertical-align: middle">{{ $item->sdt }}</td>
-                            <td style="vertical-align: middle">{{ $item->diachi }}</td>
-                            <td style="text-align: center ; vertical-align: middle">{{ $item->diemthi }}</td>
+                        <td style="text-align: center ; vertical-align: middle">{{ $item->cccd }}</td>
+                        <td style="text-align: center ; vertical-align: middle">{{ $item->sdt }}</td>
+                        <td style="vertical-align: middle">{{ $item->diachi }}</td>
+                        <td style="text-align: center ; vertical-align: middle">{{ $item->diemthi }}</td>
 
 
-                        </tr>
-                    @endforeach
+                    </tr>
+                @endforeach
                 @endforeach
             @endforeach
 

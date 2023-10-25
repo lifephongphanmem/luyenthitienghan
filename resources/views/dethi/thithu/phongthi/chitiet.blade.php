@@ -52,7 +52,7 @@
                                 <th>Mã lớp</th>
                                 <th>Tên lớp</th>
                                 <th>Đề thi</th>
-                                <th>Trạng thái</th>
+                                {{-- <th>Trạng thái</th> --}}
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -64,13 +64,13 @@
                                     <td name='tenphongthi' class="text-left" style="width: 10%">
                                         {{ $tenlop[$dt->malop] ? $tenlop[$dt->malop] . '-' . $khoa[$dt->malop] : '' }}</td>
                                         <td name="maphongthi" style="width: 2%">{{ $a_dethi[$dt->made] }}</td>
-                                    <td name='trangthai' style="width: 2%">
-                                        {{ isset($dt->trangthai) ? $a_trangthai[$dt->trangthai] : '' }}</td>
+                                    {{-- <td name='trangthai' style="width: 2%">
+                                        {{ isset($dt->trangthai) ? $a_trangthai[$dt->trangthai] : '' }}</td> --}}
                                        
                                     <td class="text-center" style="width:8%">
 
                                         <button title="Đổi đề thi"
-                                            onclick="edit(this,'{{ $dt->maphongthi }}','{{ $dt->made }}')"
+                                            onclick="edit(this,'{{ $dt->maphongthi }}','{{ $dt->made }}','{{ $dt->malop }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
@@ -194,12 +194,13 @@
                         </div> --}}
                         <div class="col-md-12 mt-2">
                             <label class="control-label">Đề thi<span class="require">*</span></label>
-                            <select name="made" class="form-control select2basic" id="made_edit" style="width:100%">
+                            <select name="made" class="form-control select2basic " id="made_edit" style="width:100%">
                                 @foreach ($m_dethi as $dt)
                                     <option value="{{ $dt->made }}">{{ $dt->tende }}</option>
                                 @endforeach
                             </select>
                         </div>
+                        <input type="hidden" name="malop" id="malop_doidethi">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -253,13 +254,14 @@
 
 
 
-        function edit(e, id, made) {
+        function edit(e, id, made,malop) {
             var url = '/PhongThi/update/' + id;
             var tr = $(e).closest('tr');
 // console.log(made);
             // $('#tenphongthi').val($(tr).find('td[name=tenphongthi]').text());
             // $('#trangthai option[value=' + trangthai + ' ]').attr('selected', false);
             // $('#made_edit option[value=' + made + ' ]').attr('selected', 'selected');
+            $('#malop_doidethi').val(malop);
             $('#made_edit').val(made).change();
             $('#frm_edit').attr('action', url);
 

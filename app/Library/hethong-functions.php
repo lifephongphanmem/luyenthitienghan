@@ -5,11 +5,13 @@ use App\Models\danhmuc\loaicauhoict;
 use App\Models\dethi\cauhoi;
 use App\Models\Hethong\dsnhomtaikhoan_phanquyen;
 use App\Models\Hethong\dstaikhoan_phanquyen;
+use App\Models\ketqua\ketquathithu;
 use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
 use App\Models\quantrihethong\cauhinhhethong;
 use App\Models\quantrihethong\loghethong;
 use App\Models\thithu\phongthi;
+use App\Models\thithu\phongthi_lop;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
@@ -46,12 +48,20 @@ function chkThiThu($mahocvien)
     $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')->select('phongthi_lop.malop')->where('phongthi.trangthai', 1)->get();
     $a_malop = array_column($phongthi->toarray(), 'malop');
     $hocvien = hocvien::where('mahocvien', $mahocvien)->first();
+        // dd($hocvien);
+    //Kiểm tra xem học viên đã nộp bài chưa.Nếu nộp bài rồi thì khóa chức năng thi thử
 
+    // dd($ketqua);
     if (isset($hocvien)) {
-        if (in_array($hocvien->malop, $a_malop)) {
-            return true;
-        } else {
+        // if (in_array($hocvien->malop, $a_malop)) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+        if($hocvien->trangthaithithu == 0){
             return false;
+        }else{
+            return true;
         }
     } else {
         return false;
@@ -65,6 +75,15 @@ function taodeluyenthi()
     $caudoc = $m_cauhoi->where('loaicauhoi', 1683685323);
     $loaicaudoc = loaicauhoict::where('madm', 1683685323)->get();
     $loaicaunghe = loaicauhoict::where('madm', 1683685241)->where('madmct', '!=', 1684898896)->get();
+    if(loaicauhoict::where('madm', 1683685241)->sum('soluongcau') != 20){
+        return redirect('/')
+        ->with('error', 'Lỗi! Liên hệ với giáo viên để được trợ giúp');
+    };
+    if($loaicaudoc->sum('soluongcau') != 20)
+    {
+        return redirect('/')
+        ->with('error', 'Lỗi! Liên hệ với giáo viên để được trợ giúp');
+    }
     // dd($loaicaunghe);
     // $macaudoc=[];
     $macaudoc_khac = [];
@@ -174,11 +193,21 @@ function taodeluyenthi()
 }
 function taodethi()
 {
+    // dd(1);
     $m_cauhoi = cauhoi::all();
     $m_caunghe = $m_cauhoi->where('loaicauhoi', 1683685241);
     $caudoc = $m_cauhoi->where('loaicauhoi', 1683685323);
     $loaicaudoc = loaicauhoict::where('madm', 1683685323)->get();
     $loaicaunghe = loaicauhoict::where('madm', 1683685241)->where('madmct', '!=', 1684898896)->get();
+    if(loaicauhoict::where('madm', 1683685241)->sum('soluongcau') != 20){
+        return redirect('/DeThi/ThongTin')
+        ->with('error', 'Số lượng câu nghe ở danh mục chưa chính xác');
+    };
+    if($loaicaudoc->sum('soluongcau') != 20)
+    {
+        return redirect('/DeThi/ThongTin')
+        ->with('error', 'Số lượng câu đọc ở danh mục chưa chính xác');
+    }
     // dd($loaicaunghe);
     // $macaudoc=[];
     $macaudoc_khac = [];
@@ -406,6 +435,16 @@ function add_phanquyen($manhomchucnang,$cccd)
 }
 
 //kiểm tra số lượng học viên đã nộp bài để đóng phòng học và đóng thi thử ^.^
-function checkthithu(){
-    //Lấy mảng mã học viên trong bảng kết quả thi của mã đề
+function chksoluonghocsinhtrongphongthi($malop,$maphongthi,$lanthithu,$madethi){
+    $ketqua=ketquathithu::where('maphongthi',$maphongthi)->where('malop',$malop)->where('madethi',$madethi)->where('lanthithu',$lanthithu)->get();
+    $lop=hocvien::where('malop',$malop)->get();
+    if(count($ketqua) == count($lop)){
+        //Tiến hành xóa lớp khỏi phòng thi.
+        phongthi_lop::where('malop',$malop)->delete();
+        //sau xóa xong lớp kiểm tra lại phòng thi còn lớp nào nữa không -> nếu không có thì đóng phòng thi.
+        $count=phongthi_lop::where('malop',$malop)->get()->count();
+        if($count == 0){
+            phongthi::where('maphongthi',$maphongthi)->update(['trangthai'=>0]);
+        }
+    }
 }
