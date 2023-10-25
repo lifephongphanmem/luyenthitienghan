@@ -121,58 +121,58 @@
                                                         </table>
                                                         @endif
                                                         @if (isset($ct->anh))
-                                                            <img src="{{ url($ct->anh) }}">
+                                                            <img src="{{ url($ct->anh) }}" class="imgquestion">
                                                         @endif
                                                     </div>
                                                 </div>
                                                 <div class="quiz-list" style="margin-left: 10%;">
-                                                    <div class="qselect cot2" id="{{$ct->macauhoi}}_A" data-id="{{$ct->cau}}"
-                                                        data-traloi="{{$ct->macauhoi}}:A">
-                                                        <div class="mark">1</div>
-                                                        <div class="qsign"> 
-                                                            @if ($ct->loaidapan == 1)
-                                                            {{ $ct->A }}
-                                                        @else
-                                                            <img src="{{ url($ct->A) }}" width="120"
-                                                                height="120">
-                                                        @endif
+                                                    <div class="d-flex">
+                                                        <div class="qselect cot2" id="{{$ct->macauhoi}}_A" data-id="{{$ct->cau}}"
+                                                            data-traloi="{{$ct->macauhoi}}:A">
+                                                            <div class="mark">1</div>
+                                                            <div class="qsign"> 
+                                                                @if ($ct->loaidapan == 1)
+                                                                {{ $ct->A }}
+                                                            @else
+                                                                <img src="{{ url($ct->A) }}" class="imganswer">
+                                                            @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="qselect cot2" id="{{$ct->macauhoi}}_B" data-id="{{$ct->cau}}"
+                                                            data-traloi="{{$ct->macauhoi}}:B">
+                                                            <div class="mark">2</div>
+                                                            <div class="qsign">  
+                                                                @if ($ct->loaidapan == 1)
+                                                                {{ $ct->B }}
+                                                            @else
+                                                                <img src="{{ url($ct->B) }}" class="imganswer">
+                                                            @endif
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    </div>
-                                                    <div class="qselect cot2" id="{{$ct->macauhoi}}_B" data-id="{{$ct->cau}}"
-                                                        data-traloi="{{$ct->macauhoi}}:B">
-                                                        <div class="mark">2</div>
-                                                        <div class="qsign">  
-                                                            @if ($ct->loaidapan == 1)
-                                                            {{ $ct->B }}
-                                                        @else
-                                                            <img src="{{ url($ct->B) }}" width="120"
-                                                                height="120">
-                                                        @endif
-                                                    </div>
-                                                    </div>
-                                                    <div class="qselect cot2" id="{{$ct->macauhoi}}_C" data-id="{{$ct->cau}}"
-                                                        data-traloi="{{$ct->macauhoi}}:C">
-                                                        <div class="mark">3</div>
-                                                        <div class="qsign">  
-                                                            @if ($ct->loaidapan == 1)
-                                                            {{ $ct->C }}
-                                                        @else
-                                                            <img src="{{ url($ct->C) }}" width="120"
-                                                                height="120">
-                                                        @endif
-                                                    </div>
-                                                    </div>
-                                                    <div class="qselect cot2" id="{{$ct->macauhoi}}_D" data-id="{{$ct->cau}}"
-                                                        data-traloi="{{$ct->macauhoi}}:D">
-                                                        <div class="mark">4</div>
-                                                        <div class="qsign"> 
-                                                            @if ($ct->loaidapan == 1)
-                                                            {{ $ct->D }}
-                                                        @else
-                                                            <img src="{{ url($ct->D) }}" width="120"
-                                                                height="120">
-                                                        @endif
-                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="qselect cot2" id="{{$ct->macauhoi}}_C" data-id="{{$ct->cau}}"
+                                                            data-traloi="{{$ct->macauhoi}}:C">
+                                                            <div class="mark">3</div>
+                                                            <div class="qsign">  
+                                                                @if ($ct->loaidapan == 1)
+                                                                {{ $ct->C }}
+                                                            @else
+                                                                <img src="{{ url($ct->C) }}" class="imganswer">
+                                                            @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="qselect cot2" id="{{$ct->macauhoi}}_D" data-id="{{$ct->cau}}"
+                                                            data-traloi="{{$ct->macauhoi}}:D">
+                                                            <div class="mark">4</div>
+                                                            <div class="qsign"> 
+                                                                @if ($ct->loaidapan == 1)
+                                                                {{ $ct->D }}
+                                                            @else
+                                                                <img src="{{ url($ct->D) }}" class="imganswer">
+                                                            @endif
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,7 +184,7 @@
                                                         src="{{ url($ct->audio) }}"></audio><strong>{{ $ct->cauhoi }}</strong>
                                                     <p style="display: block;"></p>
                                                     @if (isset($ct->anh))
-                                                        <img src="{{ $ct->anh }}">
+                                                        <img src="{{ $ct->anh }}" class="imgquestion">
                                                     @endif
                                                 </div>
                                                 <div class="quiz-list">

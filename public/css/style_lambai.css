@@ -418,8 +418,10 @@ a {
     color: #fff
 }
 
-@media only screen and (min-width: 992px) #main-menu {
-    height:auto
+@media only screen and (min-width: 992px) {
+    #main-menu {
+        height:auto
+    }
 }
 
 #main-menu {
@@ -1557,7 +1559,6 @@ img {
 .blog-lienhe .submit-contact {
     color: #f39220
 }
-}
 
 .animate-box {
     padding: 3px
@@ -1799,7 +1800,6 @@ a>img.fh5co-align-center {
     border-radius: 3px;
     margin-bottom: 10px;
     box-shadow: 0 2px 8px rgb(0 24 171 / 43%)
-}
 }
 
 .entry-tracnghiem-test .qselect {
@@ -6428,4 +6428,59 @@ a {
 
 .pixel-slide .page-next {
     right: 30px
+}
+
+@media screen and (max-width: 1365px) {
+    .imgquestion {
+        max-height: 200px !important; 
+    }
+
+    .imganswer {
+        max-width: 300px !important; 
+        max-height: 120px !important;
+    }
+}
+
+@media screen and (max-width: 1599px) and (min-width: 1366px) {
+    .imgquestion {
+        max-height: 250px !important; 
+    }
+
+    .imganswer {
+        max-width: 350px !important; 
+        max-height: 150px !important; 
+    }
+}
+
+@media screen and (max-width: 1919px) and (min-width: 1600px) {
+    .imgquestion {
+        max-height: 300px !important;
+    }
+
+    .imganswer {
+        max-width: 350px !important;
+        max-height: 170px !important;
+    }
+}
+
+@media screen and (max-width: 2559px) and (min-width: 1920px) {
+    .imgquestion {
+        max-height: 400px !important;
+    }
+
+    .imganswer {
+        max-width: 350px !important;
+        max-height: 200px !important;
+    }
+}
+
+@media screen and (min-width: 2560px) {
+    .imgquestion {
+        max-height: 500px !important;
+    }
+
+    .imganswer {
+        max-width: 400px !important;
+        max-height: 200px !important;
+    }
 }
