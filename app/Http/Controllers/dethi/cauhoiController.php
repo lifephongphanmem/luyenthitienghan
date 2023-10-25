@@ -35,7 +35,7 @@ class cauhoiController extends Controller
         $inputs = $request->all();
         $nguoncauhoi = dmnguoncauhoi::all();
         $loaicauhoi = loaicauhoi::all();
-        $madm = loaicauhoi::select('madm')->first()->madm;
+        $madm = loaicauhoi::select('madm')->orderBy('id','desc')->first()->madm;
         $inputs['madm'] = isset($inputs['madm']) ? $inputs['madm'] : $madm;
         $inputs['dangcau'] = isset($inputs['dangcau']) ? $inputs['dangcau'] : 1;
         $inputs['nguoncauhoi'] = isset($inputs['nguoncauhoi']) ? $inputs['nguoncauhoi'] : $nguoncauhoi->first()->madm;
