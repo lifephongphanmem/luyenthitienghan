@@ -15,6 +15,10 @@ class vanphonghotroController extends Controller
             if (!Session::has('admin')) {
                 return redirect('/');
             };
+            if (!chksession()) {
+                return redirect('/DangNhap');
+            };
+            chkaction();
             return $next($request);
         });
     }

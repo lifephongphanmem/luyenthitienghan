@@ -20,6 +20,10 @@ class lophocController extends Controller
             if (!Session::has('admin')) {
                 return redirect('/DangNhap');
             };
+            if (!chksession()) {
+                return redirect('/DangNhap');
+            };
+            chkaction();
             return $next($request);
         });
     }
@@ -53,6 +57,14 @@ class lophocController extends Controller
                 ->get();
         }
 
+        // foreach($model as $ct){
+        //     if($ct->giaotrinhhoc != null){
+        //         $ct->giaotrinh=explode(';',$ct->giaotrinhhoc);
+        //     }else{
+        //         $ct->giaotrinh='';
+        //     }
+        // }
+        // dd($model);
         $a_giaovien = array_column(giaovien::where('trangthai', '!=', 3)->get()->toarray(), 'tengiaovien', 'magiaovien');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
 
@@ -296,4 +308,5 @@ class lophocController extends Controller
             ->with('ketqua', $ketqua)
             ->with('pageTitle', 'Kết quả thi thử');
     }
+
 }

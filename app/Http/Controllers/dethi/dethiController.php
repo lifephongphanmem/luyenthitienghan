@@ -21,6 +21,10 @@ class dethiController extends Controller
             if (!Session::has('admin')) {
                 return redirect('/DangNhap');
             };
+            if (!chksession()) {
+                return redirect('/DangNhap');
+            };
+            chkaction();
             return $next($request);
         });
     }

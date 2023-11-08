@@ -545,7 +545,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--begin::Page Scripts(used by this page)-->
     <script src="{{ url('assets/js/pages/widgets.js') }}"></script>
     <script src="{{ url('assets/js/pages/main.js') }}"></script>
-    <script src="{{ url('assets/js/pages/select2.js') }}"></script>
+    {{-- <script src="{{ url('assets/js/pages/select2.js') }}"></script> --}}
 
     @yield('custom-script')
     <!--end::Page Scripts-->
