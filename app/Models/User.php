@@ -29,7 +29,10 @@ class User extends Authenticatable
         'giaovien',
         'hethong',
         'chucnangkhac',
-        'mataikhoan'
+        'mataikhoan',
+        'islogin',
+        'isluyenthi',
+        'isaction'
     ];
 
     public function tintuc() {

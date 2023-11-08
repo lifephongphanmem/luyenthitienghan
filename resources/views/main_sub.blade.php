@@ -74,7 +74,7 @@
                         </a>
                     </li>
                 @endif
-
+                @if (chkPhanQuyen('60baieps', 'phanquyen'))
                 @foreach ($baocao['giaotrinh'] as $ct)
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="{{ '/GiaoTrinh/60-bai-eps-topik?magiaotrinh='.$ct->magiaotrinh }}" class="menu-link "><i
@@ -83,24 +83,29 @@
                     </a>
                 </li>
                 @endforeach
+                @endif
                 {{-- <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="{{ '/GiaoTrinh/60-bai-eps-topik?magiaotrinh=1681271756' }}" class="menu-link "><i
                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                         <span class="menu-text">60 BÀI EPS-TOPIK</span>
                     </a>
                 </li> --}}
+                @if (chkPhanQuyen('960caudoc', 'phanquyen'))
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="{{ '/960CauDocHieu' }}" class="menu-link "><i
                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                         <span class="menu-text">960 CÂU ĐỌC HIỂU</span>
                     </a>
                 </li>
+                @endif
+                @if (chkPhanQuyen('960caunghe', 'phanquyen'))
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="{{ '/960CauNgheHieu' }}" class="menu-link "><i
                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                         <span class="menu-text">960 CÂU NGHE HIỂU</span>
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
     </li>
@@ -136,12 +141,14 @@
                         </a>
                     </li>
                 @endif
+                @if (chkPhanQuyen('luyenthi', 'phanquyen'))
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{ '/LuyenThi_EPS' }}" class="menu-link"><i
                             class="icon-sm la la-angle-double-right"></i>&nbsp;
                         <span class="menu-text">LUYỆN THI EPS</span>
                     </a>
                 </li>
+                @endif
                 @if (session('admin') ? chkThiThu(session('admin')->manguoidung) : '')
                     <li class="menu-item" aria-haspopup="true">
                         <a href="{{ '/ThiThu/EPS-TOPIK' }}" class="menu-link"><i
@@ -397,7 +404,15 @@
                                 <li class="menu-item" aria-haspopup="true">
                                     <a href="{{ '/CauHinhHeThong/ThongTin' }}" class="menu-link"><i
                                             class="icon-sm la la-angle-double-right"></i>&nbsp;
-                                        <span class="menu-text text-uppercase">Cấu hình hệ thống</span>
+                                        <span class="menu-text text-uppercase">thư mục lưu nhật ký</span>
+                                    </a>
+                                </li>
+                                @endif
+                                @if (chkPhanQuyen('generalconfig', 'phanquyen'))
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ '/generalconfig/ThongTin' }}" class="menu-link"><i
+                                            class="icon-sm la la-angle-double-right"></i>&nbsp;
+                                        <span class="menu-text text-uppercase">thiết lập hệ thống</span>
                                     </a>
                                 </li>
                                 @endif

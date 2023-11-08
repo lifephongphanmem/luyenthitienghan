@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\quanly\giaovien;
 use App\Models\User;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+
 
 class giaovienController extends Controller
 {
@@ -17,6 +19,10 @@ class giaovienController extends Controller
             if (!Session::has('admin')) {
                 return redirect('/DangNhap');
             };
+            if (!chksession()) {
+                return redirect('/DangNhap');
+            };
+            chkaction();
             return $next($request);
         });
     }

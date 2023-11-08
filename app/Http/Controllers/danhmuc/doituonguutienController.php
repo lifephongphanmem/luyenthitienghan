@@ -15,6 +15,10 @@ public function __construct()
             if (!Session::has('admin')) {
                 return redirect('/DangNhap');
             };
+            if (!chksession()) {
+                return redirect('/DangNhap');
+            };
+            chkaction();
             return $next($request);
         });
     }

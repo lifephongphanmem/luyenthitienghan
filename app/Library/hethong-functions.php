@@ -12,6 +12,7 @@ use App\Models\quantrihethong\cauhinhhethong;
 use App\Models\quantrihethong\loghethong;
 use App\Models\thithu\phongthi;
 use App\Models\thithu\phongthi_lop;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
@@ -448,3 +449,26 @@ function chksoluonghocsinhtrongphongthi($malop,$maphongthi,$lanthithu,$madethi){
         }
     }
 }
+
+function chkaction()
+{
+    $time=Carbon::now('Asia/Ho_Chi_Minh')->toDateTimeString();
+    User::findOrFail(session('admin')->id)->update(['isaction'=>$time]);
+}
+
+function chksession()
+{
+    if (!Session::has('admin')) {
+        return false;
+    };
+    $session_in_db=User::findOrFail(session('admin')->id)->islogin;
+    $session_id=session()->getId();
+
+    if($session_id == $session_in_db){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+

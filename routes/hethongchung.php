@@ -3,6 +3,7 @@
 use App\Http\Controllers\Hethong\ChucnangController;
 use App\Http\Controllers\Hethong\dsnhomtaikhoanController;
 use App\Http\Controllers\Hethong\dstaikhoanController;
+use App\Http\Controllers\Hethong\generalConfigController;
 use App\Http\Controllers\Hethong\HethongchungController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,15 @@ Route::prefix('TaiKhoan')->group(function () {
 
     Route::post('/DoiMatKhau',[dstaikhoanController::class,'doimatkhau']);
     Route::post('/CapNhatThongTin',[dstaikhoanController::class,'capnhatthongtincanhan']);
+
+    //Phân quyền chức năng luyện thi riêng
+    Route::post('/phanquyenluyenthi',[dstaikhoanController::class,'phanquyenluyenthi']);
+    Route::post('/phanquyenkhoahoc',[dstaikhoanController::class,'phanquyenkhoahoc']);
+    // Route::post('/phanquyenbaigiang',[dstaikhoanController::class,'phanquyenbaigiang']);
+    // Route::post('/phanquyen960cau',[dstaikhoanController::class,'phanquyen960cau']);
+
+    //Khóa nhiều tài khoản (chủ yếu khóa tài khoản học viên theo lớp)
+    Route::post('/khoataikhoan',[dstaikhoanController::class,'khoataikhoan']);
 });
 
 //Nhóm chức năng
@@ -58,4 +68,10 @@ Route::prefix('nhomchucnang')->group(function(){
 
     Route::get('/danhsach_donvi',[dsnhomtaikhoanController::class,'DanhSachDonVi']);
     Route::post('/ThietLapLai', [dsnhomtaikhoanController::class, 'ThietLapLai']);
+});
+
+//thiết lập hệ thống
+Route::prefix('generalconfig')->group(function(){
+    Route::get('/ThongTin',[generalConfigController::class,'index']);
+    Route::post('/update',[generalConfigController::class,'update']);
 });

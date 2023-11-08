@@ -10,6 +10,7 @@ use App\Models\Hethong\dstaikhoan_phanquyen;
 use App\Models\ketqua\ketquathithu;
 use App\Models\quanly\giaovien;
 use App\Models\quanly\hocvien;
+use App\Models\quanly\lophoc;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,6 +27,10 @@ class dstaikhoanController extends Controller
             if (!Session::has('admin')) {
                 return redirect('/DangNhap');
             };
+            if (!chksession()) {
+                return redirect('/DangNhap');
+            };
+            chkaction();
             return $next($request);
         });
     }
@@ -66,7 +71,9 @@ class dstaikhoanController extends Controller
                     $ct->phanloai = $val;
                 }
             }
+
         }
+        
         $inputs['nhomcn'] = isset($inputs['nhomcn']) ? $inputs['nhomcn'] : '';
         $inputs['url'] = '/TaiKhoan/ThongTin';
         // dd($model);
@@ -378,7 +385,7 @@ class dstaikhoanController extends Controller
             // $ketquathi=new ketquathithu();
         }
         // }
-// dd($ketquathi);
+
         return view('Hethong.taikhoan.quanlytaikhoan')
             ->with('model', $model)
             ->with('ketquathi', $ketquathi)
@@ -448,5 +455,92 @@ class dstaikhoanController extends Controller
 
         return redirect('/TaiKhoan/QuanLyTaiKhoan')
                     ->with('success','Cập nhật thành công');
+    }
+    public function phanquyenluyenthi(Request $request)
+    {
+        $inputs=$request->all();
+        $m_hocvien=hocvien::select('cccd')->where('malop',$inputs['malop'])->get();
+        $a_hocvien=array_column($m_hocvien->toarray(),'cccd');
+        if(count($a_hocvien)>0){
+            // dstaikhoan_phanquyen::wherein('tendangnhap',$a_hocvien)->where('machucnang','luyenthi')->update(['phanquyen'=>$phanquyen]);
+            foreach($a_hocvien as $val){
+                $model=dstaikhoan_phanquyen::where('tendangnhap',$val)->where('machucnang','luyenthi')->first();
+                if(isset($model)){
+                    $model->update(['phanquyen'=>$inputs['trangthai']]);
+                }else{
+                    $data=[
+                        'machucnang' => 'luyenthi',
+                        'tendangnhap' => $val,
+                        'phanquyen' => $inputs['trangthai'],
+                        'danhsach' => 0,
+                        'thaydoi' => 0,
+                        'hoanthanh' => 0,
+                    ];
+                    dstaikhoan_phanquyen::create($data);
+                }
+            }
+        }
+        $lophoc=lophoc::where('malop',$inputs['malop'])->update(['phanquyenluyenthi'=>$inputs['trangthai']]);
+
+        return redirect('/LopHoc/ThongTin')
+                        ->with('success','Thay đổi thành công');
+    }
+
+    public function phanquyenkhoahoc(Request $request)
+    {
+        $inputs=$request->all();
+        $inputs['trangthai']=$inputs['kh_khoahoc'];
+        $inputs['giaotrinh']=array();
+        isset($inputs['60baieps'])?array_push($inputs['giaotrinh'], $inputs['60baieps']):'';
+        isset($inputs['960caudoc'])?array_push($inputs['giaotrinh'], $inputs['960caudoc']):'';
+        isset($inputs['960caunghe'])?array_push($inputs['giaotrinh'], $inputs['960caunghe']):'';
+        // $inputs['giaotrinh']=[$inputs['60baieps'],$inputs['960caudoc'],$inputs['960caunghe']];
+        // dd($inputs);
+        $khoahoc=implode(';',$inputs['giaotrinh']);
+        $m_hocvien=hocvien::select('cccd')->where('malop',$inputs['malop'])->get();
+        $a_hocvien=array_column($m_hocvien->toarray(),'cccd');
+        if(count($a_hocvien)>0){
+            foreach ($inputs['giaotrinh'] as $ct){
+                foreach($a_hocvien as $val){
+                    $model=dstaikhoan_phanquyen::where('tendangnhap',$val)->where('machucnang',$ct)->first();
+                    if(isset($model)){
+                        $model->update(['phanquyen'=>$inputs['trangthai']]);
+                    }else{
+                        $data=[
+                            'machucnang' => $ct,
+                            'tendangnhap' => $val,
+                            'phanquyen' => $inputs['trangthai'],
+                            'danhsach' => 0,
+                            'thaydoi' => 0,
+                            'hoanthanh' => 0,
+                        ];
+                        dstaikhoan_phanquyen::create($data);
+                    }
+                }
+               
+            }
+            
+        }
+        $thongtin=[
+            'giaotrinhhoc'=>$khoahoc,
+            'phanquyengiaotrinhhoc'=>$inputs['trangthai']
+        ];
+        lophoc::where('malop',$inputs['malop'])->update($thongtin);
+
+        return redirect('/LopHoc/ThongTin')
+                        ->with('success','Thay đổi thành công');
+    }
+
+    public function khoataikhoan(Request $request)
+    {
+        $inputs=$request->all();
+        $m_hocvien=hocvien::select('cccd')->where('malop',$inputs['malop'])->get();
+        $a_hocvien=array_column($m_hocvien->toarray(),'cccd');
+        if(count($a_hocvien)>0){
+           User::wherein('cccd',$a_hocvien)->update(['trangthai'=>$inputs['trangthai']]);
+        }
+        lophoc::where('malop',$inputs['malop'])->update(['khoataikhoan'=>$inputs['trangthai']]);
+        return redirect('/LopHoc/ThongTin')
+        ->with('success','Thay đổi thành công');
     }
 }
