@@ -179,7 +179,7 @@ class phongthiController extends Controller
             phongthi_lop::where('maphongthi',$inputs['maphongthi'])->delete();
             $phongthi->update(['made'=>null]);
             //chuyển tất cả các học viên có trong lớp đó về 0 để đóng thi thử
-            hocvien::where('trangthaithithu',1)->update(['trangthaithithu',0]);
+            hocvien::where('trangthaithithu',1)->update(['trangthaithithu'=>0]);
         }
         $phongthi->update(['trangthai'=>$inputs['trangthai']]);
 
