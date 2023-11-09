@@ -122,7 +122,7 @@ class HethongchungController extends Controller
 			
 			$user->capdo = "SSA";
 		}
-		if($this->chklogin($user->isaction)){
+		if($this->chklogin($user->isaction,$user->id)){
 			//1. Không cho đăng nhập, đẩy ra thông báo
 			//2. Cho đăng nhập thì lập tức tài khoản đang onl logout luôn
 			$dxtaikhoan=generalCOnfig::first()->dxtaikhoan;
@@ -143,7 +143,8 @@ class HethongchungController extends Controller
 		//đẩy session id vào user để check đăng nhập giới hạn 1 tài khoản
 		$data_update=[
 			'isaction'=>$time,
-			'islogin'=>session()->getId()
+			'islogin'=>session()->getId(),
+			'islogout'=>1
 		];
 		$userupdate = User::where('cccd', session('admin')->cccd)->first();
 
@@ -169,17 +170,21 @@ class HethongchungController extends Controller
 	public function logout()
 	{
 		if (Session::has('admin')) {
+			User::findOrFail(session('admin')->id)->update(['islogout'=> 0]);
 			Session::flush();
 			return redirect('/');
 		} else {
 			return redirect('');
 		}
 	}
-	public function chklogin($thoigian){
+	public function chklogin($thoigian, $id){
 		if (!Session::has('admin')) {
 			return false;
 		};
-		// $user=User::findOrFail($id);
+		$user=User::findOrFail($id);
+		if($user->islogout == 0){
+			return false;
+		}
 		// $thoigianthaotac=$user->isaction();
 		$chenhlechthoigian=Carbon::now('Asia/Ho_Chi_Minh')->diffInMinutes($thoigian);
 		$time_session=Config::get('session.lifetime');

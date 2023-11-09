@@ -100,7 +100,23 @@
                                             data-target="#chuyenlop" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-xl la la-exchange-alt text-success"></i>
                                         </button>
-
+                                        <div class="btn-group dropup">
+                                            <button type="button" class="btn btn-sm dropdown-toggle"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="icon-lg fas fa-users-cog text-primary"></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" style="cursor: default"
+                                                    onclick="phanquyenluyenthi('{{ $hv->cccd }}','{{ $hv->phanquyenluyenthi }}')"
+                                                    data-target="#luyenthi" data-toggle="modal">Luyện thi</a>
+                                                <a class="dropdown-item" style="cursor: default"
+                                                    onclick="phanquyenkhoahoc('{{ $hv->cccd }}','{{ $hv->giaotrinhhoc }}','{{ $hv->phanquyengiaotrinhhoc }}')"
+                                                    data-target="#phanquyenkhoahoc" data-toggle="modal">Giáo trình
+                                                    học</a>
+                                                <a class="dropdown-item" style="cursor: default"
+                                                    onclick="khoataikhoan('{{ $hv->cccd }}','{{ $hv->khoataikhoan }}')"
+                                                    data-target="#khoataikhoan" data-toggle="modal">Khóa tài khoản</a>
+                                            </div>
+                                        </div>
                                         {{-- <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{ '/LopHoc/delete/' . $lh->id }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
@@ -178,6 +194,7 @@
                 </div>
             </form>
         </div>
+
         <div id="thithu" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
             <form action="{{'/Export/KetQuaThi'}}" method="POST" id="frm_kq_thithu" enctype="multipart/form-data" target="_blank">
                 @csrf
@@ -271,8 +288,149 @@
             </div>
         </form>
     </div>
-    {{-- @include('includes.delete') --}}
+    <!--Khóa luyện thi -->
+    <div id="luyenthi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmLuyenthi" method="POST" action="{{ '/TaiKhoan/phanquyenluyenthi' }}" accept-charset="UTF-8">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Đồng ý?</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12 mt-1">
+                            <label class="control-label">Trạng thái luyện thi</label>
+                            <select name="trangthai" id='phanquyenluyenthi' class="form-control select2basic"
+                                style="width:100%">
+                                <option value="0">Khóa</option>
+                                <option value="1">Kích hoạt</option>
+                            </select>
+                        </div>
+                        {{-- <input type="hidden" name='malop' id='malop_luyenthi'> --}}
+                        <input type="hidden" name='mahocvien' id='mahocvien_luyenthi'>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                        <button type="submit" class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--Khóa tài khoản -->
+    <div id="khoataikhoan" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmkhoatk" method="POST" action="{{ '/TaiKhoan/khoataikhoan' }}" accept-charset="UTF-8">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Đồng ý?</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12 mt-1">
+                            <label class="control-label">Trạng thái tài khoản</label>
+                            <select name="trangthai" id='khoataikhoan' class="form-control"style="width:100%">
+                                <option value="1">Kích hoạt</option>
+                                <option value="2">Khóa tài khoản</option>
+                            </select>
+                        </div>
+                        {{-- <input type="hidden" name='malop' id='malop_khoatk'> --}}
+                        <input type="hidden" name='mahocvien' id='mahocvien_khoatk'>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                        <button type="submit" class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--Phân quyền giáo trình học -->
+    <div id="phanquyenkhoahoc" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmphanquyenkhoahoc" method="POST" action="{{ '/TaiKhoan/phanquyenkhoahoc' }}"
+            accept-charset="UTF-8">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Phân quyền giáo trình học</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Giáo trình học</label>
+                            <div class="col-9 col-form-label">
+                                <div class="checkbox-inline">
+                                    <label class="checkbox checkbox-primary">
+                                    <input type="checkbox" name="60baieps" value="60baieps" id='60baieps' />
+                                    <span></span>60 bài eps</label>
+                                    <label class="checkbox checkbox-primary">
+                                    <input type="checkbox" name="960caudoc" value="960caudoc" id="960caudoc" />
+                                    <span></span>960 câu đọc</label>
+                                    <label class="checkbox checkbox-primary">
+                                        <input type="checkbox" name="960caunghe" value="960caunghe" id="960caunghe" />
+                                        <span></span>960 câu hiểu</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Trạng thái</label>
+                            <div class="col-9 col-form-label">
+                                <div class="radio-inline">
+                                    <label class="radio radio-primary">
+                                    <input type="radio" name="kh_khoahoc" value="1" id="kh_khoahoc" />
+                                    <span></span>Kích hoạt</label>
+                                    <label class="radio radio-primary">
+                                    <input type="radio" name="kh_khoahoc" value="0" id="khoa_khoahoc" />
+                                    <span></span>Khóa</label>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <input type="hidden" name='malop' id='malop_khoahoc'> --}}
+                        <input type="hidden" name='mahocvien' id='mahocvien_khoahoc'>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                        <button type="submit" class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <script>
+          function phanquyenluyenthi(mahocvien, phanquyenluyenthi) {
+            $('#mahocvien_luyenthi').val(mahocvien);
+            $('#phanquyenluyenthi option[value=' + phanquyenluyenthi + ' ]').attr('selected', 'selected');
+        }
+
+        function phanquyenkhoahoc(malop, giaotrinh,phanquyen) {
+            $('#mahocvien_khoahoc').val(malop);
+           
+            if (giaotrinh != null) {
+                var arr_giaotrinh = giaotrinh.split(';')
+                arr_giaotrinh.forEach(element => {
+                    $('#'+element).prop('checked',true);
+                });
+                
+
+            }
+            if(phanquyen == 1){
+                $('#kh_khoahoc').prop('checked',true);
+            }else{
+                $('#khoa_khoahoc').prop('checked',true);
+            }
+        }
+
+        function khoataikhoan(malop, khoataikhoan) {
+            $('#mahocvien_khoatk').val(malop);
+            $('#khoataikhoan option[value=' + khoataikhoan + ' ]').attr('selected', 'selected');
+        }
+
         function cfDel(url) {
             $('#frmDelete').attr('action', url);
         }
