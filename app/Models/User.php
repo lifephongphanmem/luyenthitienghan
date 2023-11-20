@@ -32,7 +32,8 @@ class User extends Authenticatable
         'mataikhoan',
         'islogin',
         'isluyenthi',
-        'isaction'
+        'isaction',
+        'islogout'//0:logout; 1:unlogout
     ];
 
     public function tintuc() {

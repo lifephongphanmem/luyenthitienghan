@@ -4,10 +4,12 @@ namespace App\Http\Controllers\quanly;
 
 use App\Http\Controllers\Controller;
 use App\Models\dethi\dethi;
+use App\Models\Hethong\dstaikhoan_phanquyen;
 use App\Models\ketqua\ketquathithu;
 use App\Models\quanly\giaovien;
 use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -161,6 +163,37 @@ class lophocController extends Controller
             ->where('hocvien.malop', $inputs['lophoc'])
             ->where('khoahoc', $inputs['khoahoc'])
             ->get();
+            foreach($hocvien as $ct){
+                $phanquyen=dstaikhoan_phanquyen::where('tendangnhap',$ct->cccd)->wherein('machucnang',['luyenthi','60baieps','960caudoc','960caunghe'])->get();
+                $a_phanquyen=array_column($phanquyen->toarray(),'phanquyen','machucnang');
+                $a_macngiaotrinh=array_column($phanquyen->toarray(),'machucnang','machucnang');
+                if(isset($a_phanquyen['luyenthi'])){
+                    $ct->phanquyenluyenthi=$a_phanquyen['luyenthi'];
+                    unset($a_phanquyen['luyenthi']);
+                    unset($a_macngiaotrinh['luyenthi']);
+                }else{
+                    $ct->phanquyenluyenthi=0;
+                }
+                if(count($a_phanquyen)> 0){
+                    $giaotrinh=implode(';',$a_macngiaotrinh);
+                    $ct->giaotrinhhoc=$giaotrinh;
+                    foreach($a_phanquyen as $val){
+                        $ct->phanquyengiaotrinhhoc=$val;
+                        break;
+                    }
+                }else{
+                    $ct->giaotrinhhoc='60baieps;960caudoc;960caunghe';
+                    $ct->phanquyengiaotrinhhoc=0;
+                }
+
+                $khoataikhoan=User::where('cccd',$ct->cccd)->first();
+                if(isset($khoataikhoan)){
+                    $ct->khoataikhoan=$khoataikhoan->trangthai;
+                }else{
+                    $ct->khoataikhoan=2;
+                }
+
+            }
         // $giaovien=giaovien::where('trangthai','!=',3)->get();
         $a_giaovien = array_column(giaovien::where('trangthai', '!=', 3)->get()->toarray(), 'tengiaovien', 'magiaovien');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
