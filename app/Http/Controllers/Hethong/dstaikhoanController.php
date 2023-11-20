@@ -159,7 +159,6 @@ class dstaikhoanController extends Controller
         $inputs = $request->all();
         // dd($inputs);
         $model = User::findOrFail($id);
-
         // $model = User::where('username',$inputs['username'])->first();
         if ($inputs['password'] == '') {
             $inputs['password'] = $model->password;
@@ -191,15 +190,24 @@ class dstaikhoanController extends Controller
                 break;
         }
 
+        if($model->sadmin != 'ADMIN'){
+            if ($inputs['cccd'] != $model->cccd) {
+                dstaikhoan_phanquyen::where('tendangnhap', $model->cccd)->delete();
+                add_phanquyen($inputs['manhomchucnang'], $inputs['cccd']);
+            }
+            if ($inputs['manhomchucnang'] != $model->manhomchucnang) {
+                dstaikhoan_phanquyen::where('tendangnhap', $model->cccd)->delete();
+                add_phanquyen($inputs['manhomchucnang'], $inputs['cccd']);
+            }
+        }else{
+            if($inputs['cccd'] != $model->cccd){
+                dstaikhoan_phanquyen::where('tendangnhap',$model->cccd)->update(['tendangnhap'=>$inputs['cccd']]);
+            }
+           
+        }
+
         $model->update($inputs);
-        if ($inputs['cccd'] != $model->cccd) {
-            dstaikhoan_phanquyen::where('tendangnhap', $model->cccd)->delete();
-            add_phanquyen($inputs['manhomchucnang'], $inputs['cccd']);
-        }
-        if ($inputs['manhomchucnang'] != $model->manhomchucnang) {
-            dstaikhoan_phanquyen::where('tendangnhap', $model->cccd)->delete();
-            add_phanquyen($inputs['manhomchucnang'], $inputs['cccd']);
-        }
+
         loghethong(getIP(), session('admin'), 'capnhat', 'taikhoan');
         return redirect('/TaiKhoan/ThongTin');
     }
