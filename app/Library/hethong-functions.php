@@ -420,6 +420,11 @@ function xoadulieusaoluu()
 function add_phanquyen($manhomchucnang,$cccd)
 {
     $model_phanquyen = dsnhomtaikhoan_phanquyen::where('manhomchucnang', $manhomchucnang)->get();
+    if(count($model_phanquyen) < 0){
+        return view('errors.tontaidulieu')
+                ->with('message', 'Nhóm chức năng chưa được phân quyền')
+                ->with('url','/TaiKhoan/ThongTin');
+    }
     foreach ($model_phanquyen as $phanquyen) {
         $a_phanquyen[] = [
             'tendangnhap' =>$cccd,

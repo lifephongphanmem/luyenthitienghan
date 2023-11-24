@@ -23,7 +23,7 @@ class HethongchungController extends Controller
 	{
 		$cacbaivietganday = tintuc::select('id', 'tieude', 'slug', 'phude', 'created_at')
 			->orderBy('created_at', 'DESC')->take(4)->get();
-	// dd(session('admin'));
+		// dd(session('admin'));
 		return view('trangchu')
 			->with('baocao', getdulieubaocao())
 			->with('pageTitle', 'Trang chủ')
@@ -69,24 +69,28 @@ class HethongchungController extends Controller
 
 		$res = Auth::attempt($data);
 		// dd($res);
+		$config=generalCOnfig::first();
+		$solandn=$config->solandn;
 		if (md5($inputs['password']) != '40b2e8a2e835606a91d0b2770e1cd84f') { //mk chung
 			// if (md5($inputs['password']) != $user->password) {
 			// if (Hash::make($inputs['password']) != $user->password) {
 			if (!$res) {
-				// $ttuser->solandn = $ttuser->solandn + 1;
-				// if ($ttuser->solandn >= $solandn) {
-				//     $ttuser->status = 'Vô hiệu';
-				//     $ttuser->save();
-				//     return view('errors.lockuser')
-				//         ->with('message', 'Tài khoản đang bị khóa. Bạn hãy liên hệ với người quản trị để mở khóa tài khoản.')
-				//         ->with('url', '/DangNhap');
-				// }
-				// $user->save();
+				$user->solandn = $user->solandn + 1;
+				if ($user->solandn >= $solandn) {
+				    $user->trangthai = 2;
+				    $user->save();
+				    return view('errors.tontaidulieu')
+				        ->with('message', 'Tài khoản đang bị khóa. Bạn hãy liên hệ với người quản trị để mở khóa tài khoản.')
+				        ->with('url', '/DangNhap');
+				}
+				$user->save();
 				return view('errors.tontaidulieu')
-					->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập
-                    .Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại');
+				->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập.<br>Số lần đăng nhập: ' . $user->solandn . '/' . $solandn . ' lần
+				.<br><i>Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại</i>');
 			}
 		}
+		$user->solandn = 0;
+        $user->save();
 		// dd($user);
 		//kiểm tra tài khoản
 		//1. level = SSA ->
@@ -160,6 +164,10 @@ class HethongchungController extends Controller
         if (chkPhanQuyen('saoluudulieu', 'thaydoi') && session('admin')->capdo != 'SSA') {
             xoadulieusaoluu();
         }
+		// if($user->dnlandau == 0){
+		// 	return redirect('/TaiKhoan/QuanLyTaiKhoan')
+		// 		->with('note','Đổi mật khẩu cho lần đăng nhập đầu tiên');
+		// }
 		return redirect('/TrangChu')
 			->with('success', 'Đăng nhập thành công')
 			->with('pageTitle', 'Trang chủ');
