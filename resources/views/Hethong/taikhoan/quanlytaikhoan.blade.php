@@ -307,6 +307,9 @@
         <!--end::Entry-->
     </div>
     <!--end::Content-->
+
+    <!--Modal thông báo -->
+
     <script>
         function chooseprofile(key) {
             switch (key) {

@@ -150,7 +150,7 @@
 
                         <div class="col-md-6 mt-2">
                             <label class="control-label">Mật khẩu<span class="require">*</span></label>
-                            <input type="password" name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" value="123456abc" class="form-control">
+                            <input type="password" name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" value="123456abc" class="form-control" required>
                             <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và chữ số</span>
                         </div>
                         <div class="col-md-6 mt-2">
@@ -233,7 +233,7 @@
                                 <div class="col-md-6 mt-2">
                                     <label class="control-label">Mật khẩu<span class="require">*</span></label>
                                     {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
-                                    <input type="password" name="password" placeholder="Nếu không đổi thì không cần nhập" id='password_update' class="form-control">
+                                    <input type="password" name="password" placeholder="Nếu không đổi thì không cần nhập" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" class="form-control">
                                     <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và chữ số</span>
                                 </div>
                                 <div class="col-md-6 mt-2">
@@ -379,6 +379,7 @@
             // var password=
             if($('#password_update').val() != ''){
                 $('#password_update').attr('pattern','^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+                                                    
             }else{
                 $('#password_update').removeAttr('pattern');
             }
