@@ -48,7 +48,7 @@
                     @foreach ($m_hocvien as $item)   
                     <tr>
                         <td style="text-align: center ; vertical-align: middle">{{ ++$stt }}</td>
-                        <td style="vertical-align: middle">{{ $item->tenhocvien }}</td>
+                        <td style="vertical-align: middle">{{ $item->tentaikhoan }}</td>
 
                         @if ($item->gioitinh == 1)
                             <td style="text-align: center ; vertical-align: middle">{{ getDayVn($item->ngaysinh) }}</td>
@@ -62,7 +62,7 @@
                         @endif
 
                         <td style="text-align: center ; vertical-align: middle">{{ $item->cccd }}</td>
-                        <td style="text-align: center ; vertical-align: middle">{{ $item->sdt }}</td>
+                        <td style="text-align: center ; vertical-align: middle">{{ $item->sodienthoai }}</td>
                         <td style="vertical-align: middle">{{ $item->diachi }}</td>
                         <td style="text-align: center ; vertical-align: middle">{{ $item->diemthi }}</td>
 

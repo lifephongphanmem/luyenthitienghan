@@ -42,6 +42,8 @@ License: You must have a valid license purchased only from themeforest(the above
 				<!--begin::Content-->
                 <h1>Lỗi!</h1>
                 <h2>{{isset($message) ? $message : 'Dữ liệu đã tồn tại' }}</h2>
+                <h2>{{isset($message1) ? $message1 : '' }}</h2>
+                <h2>{{isset($message2) ? $message2 : '' }}</h2>
                 <h3> <p><a href='{{isset($furl) ? url($furl) : url('/') }}'>Bấm vào đây</a> để quay lại.</p></h3>
 				<!--end::Content-->
 			</div>

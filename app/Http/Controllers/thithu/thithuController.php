@@ -9,6 +9,7 @@ use App\Models\ketqua\ketquathithu;
 use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
 use App\Models\thithu\phongthi;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -33,7 +34,8 @@ class thithuController extends Controller
     {
         $m_phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')->select('phongthi_lop.malop')->where('phongthi.trangthai', 1)->get();
         $a_malop = array_column($m_phongthi->toarray(), 'malop');
-        $hocvien = hocvien::where('mahocvien', session('admin')->manguoidung)->first();
+        // $hocvien = hocvien::where('mahocvien', session('admin')->manguoidung)->first();
+        $hocvien = User::where('mataikhoan', session('admin')->mataikhoan)->first();
         if (isset($hocvien)) {
             if (in_array($hocvien->malop, $a_malop)) {
                 $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')->select('phongthi.*')->where('phongthi_lop.malop', $hocvien->malop)->first();
@@ -72,7 +74,8 @@ class thithuController extends Controller
             $maphongthi=1;
             $title='Luyện thi EPS-TOPIK';
         } else {
-            $hocvien = hocvien::where('mahocvien', session('admin')->manguoidung)->first();
+            // $hocvien = hocvien::where('mahocvien', session('admin')->manguoidung)->first();
+            $hocvien = User::where('mataikhoan', session('admin')->mataikhoan)->first();
             $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')
                 ->select('phongthi_lop.made','phongthi_lop.malop','phongthi.maphongthi')
                 ->where('phongthi.trangthai', 1)
@@ -166,12 +169,12 @@ class thithuController extends Controller
        
         if ($inputs['madethi'] != 1) {
              //kiểm tra số lần thi thử trong ngày để tính toán đóng phòng thi và khóa chức năng thi thử
-             $ketqua=ketquathithu::where('mahocvien',session('admin')->manguoidung)->where('malop',$inputs['malop'])->where('maphongthi',$inputs['maphongthi'])->where('madethi',$inputs['madethi'])->where('ngaythi',$thoigianketthuc->toDateString())->max('lanthithu');
+             $ketqua=ketquathithu::where('mahocvien',session('admin')->mataikhoan)->where('malop',$inputs['malop'])->where('maphongthi',$inputs['maphongthi'])->where('madethi',$inputs['madethi'])->where('ngaythi',$thoigianketthuc->toDateString())->max('lanthithu');
              $lanthithu=$ketqua == ''?1:($ketqua+1);
             $luu_kq = array(
                 'maketqua' => getdate()[0],
                 'madethi' => $inputs['madethi'],
-                'mahocvien' => session('admin')->manguoidung,
+                'mahocvien' => session('admin')->mataikhoan,
                 'diemthi' => $diemthi,
                 'dapanchon' => json_encode($bailam),
                 'thoigianlambai' => $thoigianlambai,
@@ -183,7 +186,8 @@ class thithuController extends Controller
             );
 
             ketquathithu::create($luu_kq);
-            hocvien::where('mahocvien',session('admin')->manguoidung)->update(['trangthaithithu'=>0]);
+            // hocvien::where('mahocvien',session('admin')->manguoidung)->update(['trangthaithithu'=>0]);
+            User::where('mataikhoan',session('admin')->mataikhoan)->update(['trangthaithithu'=>0]);
             //kiểm tra nếu học viên nộp bải hết thì xóa lớp đó khỏi phòng thi, nếu phòng thi không còn lớp nào thì đóng phòng thi.
             chksoluonghocsinhtrongphongthi($inputs['malop'],$inputs['maphongthi'],$lanthithu,$inputs['madethi']);
         }

@@ -26,21 +26,21 @@
             @foreach ($ketqua as $key => $kq)
                 <tr class="text-center">
                     <td style="width: 5%">{{ ++$key }}</td>
-                    <td style="width: 20%">
-                        @if (isset($kq['tengiaovien']))
-                            {{ $kq['tengiaovien'] }}
-                        @elseif (isset($kq['tenhocvien']))
-                            {{ $kq['tenhocvien'] }}
+                    <td style="width: 20%" class="text-left">
+                        @if (isset($kq['tentaikhoan']))
+                            {{ $kq['tentaikhoan'] }}
+                        @elseif (isset($kq['tentaikhoan']))
+                            {{ $kq['tentaikhoan'] }}
                         @endif
                     </td>
                     <td style="width: 10%">
-                        @if (isset($kq['tenhocvien']))
+                        @if (isset($kq['tentaikhoan']))
                             Học viên
-                        @elseif (isset($kq['tengiaovien']))
+                        @elseif (isset($kq['tentaikhoan']))
                             Giáo viên
                         @endif
                     </td>
-                    <td style="width: 10%">{{ $kq['sdt'] }}</td>
+                    <td style="width: 10%">{{ $kq['sodienthoai'] }}</td>
                     <td style="width: 10%">{{ $kq['cccd'] }}</td>
                     <td style="width: 5%">
                         @if ($kq['gioitinh'] == 1)

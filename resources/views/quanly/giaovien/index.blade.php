@@ -59,13 +59,13 @@
                             @foreach ($model as $key => $gv)
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
-                                    <td class="text-left" style="width: 20%">{{ $gv->tengiaovien }}</td>
+                                    <td class="text-left" style="width: 20%">{{ $gv->tentaikhoan }}</td>
                                     <td style="width: 8%">{{ $gv->cccd }}</td>
                                     <td style="width: 6%">{{ $gv->gioitinh == 0?'Nữ':'Nam' }}</td>
                                     <td style="width: 7%">{{ getDayVn($gv->ngaysinh) }}</td>
                                     <td style="width: 10%">{{ $gv->email }}</td>
                                     <td class="text-left" style="width: 8%">
-                                        {{ $gv->sdt }}</td>
+                                        {{ $gv->sodienthoai }}</td>
                                         <td style="width:20%">{{$gv->diachi}}</td>
                                         {{-- <td name='trangthai' style="width:10%" class="{{$a_texttrangthai[$gv->trangthai]}}">{{$a_trangthai[$gv->trangthai]}}</td> --}}
                                     <td class="text-center" style="width:8%">
@@ -279,10 +279,10 @@
                 dataType: 'JSON',
                 success: function(data) {
                     console.log(data);
-                    $('#tengiaovien').val(data.tengiaovien);
+                    $('#tengiaovien').val(data.tentaikhoan);
                     $('#email').val(data.email);
                     $('#cccd').val(data.cccd);
-                    $('#sdt').val(data.sdt);
+                    $('#sdt').val(data.sodienthoai);
                     $('#diachi').val(data.diachi);
                     $('#ngaysinh').val(data.ngaysinh);
                     $('#ghichu').text(data.ghichu);

@@ -35,11 +35,12 @@ class hocvienController extends Controller
             return view('errors.noperm')->with('machucnang', 'hocvien');
         }
 
-        if (in_array(session('admin')->sadmin, ['SSA', 'ADMIN'])) {
-            $model = hocvien::all();
+        if (in_array(session('admin')->sadmin, ['SSA', 'ADMIN']) || session('admin')->hethong == 1) {
+            // $model = hocvien::all();
+            $model = User::where('hocvien',1)->get();
         } else if (session('admin')->giaovien == 1) {
-            $model = hocvien::join('lophoc', 'lophoc.malop', 'hocvien.malop')
-                ->select('hocvien.*')
+            $model = User::join('lophoc', 'lophoc.malop', 'users.malop')
+                ->select('users.*')
                 ->where('lophoc.giaovienchunhiem', session('admin')->manguoidung)
                 ->get();
         }
@@ -80,16 +81,22 @@ class hocvienController extends Controller
         $taikhoan = User::where('cccd', $inputs['cccd'])->first();
         //Tạo tài khoản
         if (!isset($taikhoan)) {
-            $data = [
-                'tentaikhoan' => $inputs['tenhocvien'],
-                'cccd' => $inputs['cccd'],
-                'password' => Hash::make('123456abc'),
-                'hocvien' => 1,
-                'sdt' => $inputs['sdt'],
-                'mataikhoan' => date('YmdHis'),
-                'manhomchucnang' => 1680748012
-            ];
-            User::create($data);
+            // $data = [
+            //     'tentaikhoan' => $inputs['tenhocvien'],
+            //     'cccd' => $inputs['cccd'],
+            //     'password' => Hash::make('123456abc'),
+            //     'hocvien' => 1,
+            //     'sodienthoai' => $inputs['sdt'],
+            //     'mataikhoan' => date('YmdHis'),
+            //     'manhomchucnang' => 1680748012
+            // ];
+            $inputs['tentaikhoan']=$inputs['tenhocvien'];
+            $inputs['password']=Hash::make('123456abc');
+            $inputs['hocvien']=1;
+            $inputs['mataikhoan']=$inputs['mahocvien'];
+            $inputs['sodienthoai']=$inputs['sdt'];
+            $inputs['manhomchucnang']=1680747743;
+            User::create($inputs);
             add_phanquyen('1680748012',$inputs['cccd']);
         }
         return redirect('/HocVien/ThongTin')
@@ -102,7 +109,8 @@ class hocvienController extends Controller
      */
     public function show(string $mahocvien)
     {
-        $hocvien = hocvien::where('mahocvien', $mahocvien)->first();
+        // $hocvien = hocvien::where('mahocvien', $mahocvien)->first();
+        $hocvien = User::where('mataikhoan', $mahocvien)->first();
 
         $ketquathi = ketquathithu::join('dethi', 'ketquathithu.madethi', '=', 'dethi.made')
             ->where('mahocvien', $mahocvien)
@@ -123,7 +131,7 @@ class hocvienController extends Controller
             return view('errors.noperm')->with('machucnang', 'hocvien');
         }
 
-        $model = hocvien::findOrFail($id);
+        $model = User::findOrFail($id);
         return response()->json($model);
     }
 
@@ -137,8 +145,18 @@ class hocvienController extends Controller
         }
 
         $inputs = $request->all();
-        $model = hocvien::findOrFail($id);
+        $model = User::findOrFail($id);
         if (isset($model)) {
+            if($model->cccd != $inputs['cccd']){
+                $model->update(['cccd'=>$inputs['cccd']]);
+                // add_phanquyen('1680748012',$inputs['cccd']);
+            }
+            $user=hocvien::where('cccd',$model->cccd)->first();
+            if(isset($user)){
+                $user->update($inputs);
+            }
+            $inputs['tentaikhoan']=$inputs['tenhocvien'];
+            $inputs['sodienthoai']=$inputs['sdt'];
             $model->update($inputs);
         }
 
@@ -154,10 +172,12 @@ class hocvienController extends Controller
         if (!chkPhanQuyen('hocvien', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'hocvien');
         }
-        $model = hocvien::findOrFail($id);
+        // $model = hocvien::findOrFail($id);
+        $model = User::findOrFail($id);
         if (isset($model)) {
-            $taikhoan = User::where('cccd', $model->cccd)->delete();
-            $lophoc = lophoc::where('malop', $model->malop)->delete();
+            // $taikhoan = User::where('cccd', $model->cccd)->delete();
+            // $lophoc = lophoc::where('malop', $model->malop)->delete();
+            hocvien::where('cccd',$model->cccd)->delete();
             $model->delete();
 
         }

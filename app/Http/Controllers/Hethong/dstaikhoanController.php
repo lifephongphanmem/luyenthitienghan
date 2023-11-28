@@ -113,7 +113,7 @@ class dstaikhoanController extends Controller
             case '1':
                 $inputs['giaovien'] = 1;
                 $data = [
-                    'magiaovien' => $inputs['cccd'] . '_' . getdate()[0],
+                    'magiaovien' => $inputs['mataikhoan'],
                     'tengiaovien' => $inputs['tentaikhoan'],
                     'cccd' => $inputs['cccd'],
                     'email' => $inputs['email'],
@@ -123,7 +123,7 @@ class dstaikhoanController extends Controller
             case '2':
                 $inputs['hocvien'] = 1;
                 $data = [
-                    'mahocvien' => $inputs['cccd'] . '_' . getdate()[0],
+                    'mahocvien' => $inputs['mataikhoan'],
                     'tenhocvien' => $inputs['tentaikhoan'],
                     'cccd' => $inputs['cccd'],
                     'email' => $inputs['email'],
@@ -146,12 +146,12 @@ class dstaikhoanController extends Controller
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
 
-
         $validator = Validator::make($request->all(), [
             'cccd' => 'required|unique:users,cccd,' . $id
         ]);
 
         if ($validator->fails()) {
+            
             return redirect('/TaiKhoan/ThongTin')->with('error', 'CCCD đã được sử dụng');
         }
         // dd(1);
@@ -184,7 +184,7 @@ class dstaikhoanController extends Controller
                 $hv->update($inputs);
                 break;
             default:
-                $inputs['hehthong'] = 1;
+                $inputs['hethong'] = 1;
                 $inputs['hocvien'] = 0;
                 $inputs['giaovien'] = 0;
                 break;
@@ -203,6 +203,7 @@ class dstaikhoanController extends Controller
             if($inputs['cccd'] != $model->cccd){
                 dstaikhoan_phanquyen::where('tendangnhap',$model->cccd)->update(['tendangnhap'=>$inputs['cccd']]);
             }
+            $inputs['manhomchucnang']=0;
            
         }
 
@@ -370,26 +371,26 @@ class dstaikhoanController extends Controller
         $model = User::where('cccd', session('admin')->cccd)->first();
         $ketquathi = new ketquathithu();
         if (session('admin')->hocvien == 1) {
-            $hocvien = hocvien::where('cccd', $model->cccd)->first();
-            $model->sdt = $hocvien->sdt;
-            $model->gioitinh = $hocvien->gioitinh;
-            $model->ngaysinh = $hocvien->ngaysinh;
-            $model->diachi = $hocvien->diachi;
-            $model->hoten = $hocvien->tenhocvien;
+            // $hocvien = hocvien::where('cccd', $model->cccd)->first();
+            // $model->sdt = $hocvien->sdt;
+            // $model->gioitinh = $hocvien->gioitinh;
+            // $model->ngaysinh = $hocvien->ngaysinh;
+            // $model->diachi = $hocvien->diachi;
+            // $model->hoten = $model->tentaikhoan;
             $ketquathi = ketquathithu::join('dethi', 'ketquathithu.madethi', '=', 'dethi.made')
-                ->where('mahocvien', $hocvien->mahocvien)
+                ->where('mahocvien', $model->mataikhoan)
                 ->orderBy('ketquathithu.created_at', 'DESC')
                 ->get();
         }
-        if (session('admin')->giaovien == 1) {
-            $giaovien = giaovien::where('cccd', $model->cccd)->first();
-            $model->sdt = $giaovien->sdt;
-            $model->gioitinh = $giaovien->gioitinh;
-            $model->ngaysinh = $giaovien->ngaysinh;
-            $model->diachi = $giaovien->diachi;
-            $model->hoten = $giaovien->tengiaovien;
-            // $ketquathi=new ketquathithu();
-        }
+        // if (session('admin')->giaovien == 1) {
+        //     $giaovien = giaovien::where('cccd', $model->cccd)->first();
+        //     // $model->sdt = $giaovien->sdt;
+        //     // $model->gioitinh = $giaovien->gioitinh;
+        //     // $model->ngaysinh = $giaovien->ngaysinh;
+        //     // $model->diachi = $giaovien->diachi;
+        //     // $model->hoten = $giaovien->tengiaovien;
+        //     // $ketquathi=new ketquathithu();
+        // }
         // }
 
         return view('Hethong.taikhoan.quanlytaikhoan')
@@ -401,7 +402,8 @@ class dstaikhoanController extends Controller
 
     public function doimatkhau(Request $request)
     {
-        if (!chkPhanQuyen('quanlytaikhoan', 'thaydoi')) {
+
+        if (!chkPhanQuyen('doimatkhau', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'quanlytaikhoan');
         }
         $inputs = $request->all();
@@ -412,10 +414,16 @@ class dstaikhoanController extends Controller
                 ->with('furl', '/TaiKhoan/QuanLyTaiKhoan');
         }
 
+        if($inputs['password'] == '123456abc'){
+            return view('errors.tontaidulieu')
+            ->with('message', 'Mật khẩu mới phải khác mật khẩu mặc định được cấp')
+            ->with('furl', '/TaiKhoan/QuanLyTaiKhoan');
+        }
+
         $model = User::where('cccd', session('admin')->cccd)->first();
         $inputs['password'] = Hash::make($inputs['password']);
         if (isset($model)) {
-            $model->update(['password' => $inputs['password']]);
+            $model->update(['password' => $inputs['password'],'dnlandau'=>1]);
             if (Session::has('admin')) {
                 Session::flush();
             }
@@ -429,7 +437,7 @@ class dstaikhoanController extends Controller
 
     public function capnhatthongtincanhan(Request $request)
     {
-        if (!chkPhanQuyen('quanlytaikhoan', 'thaydoi')) {
+        if (!chkPhanQuyen('thongtincanhan', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'quanlytaikhoan');
         }
 
@@ -452,12 +460,14 @@ class dstaikhoanController extends Controller
             }
         }
 
-        $data = [
-            'tentaikhoan' => $inputs['hoten'],
-            'email' => $inputs['email'],
-            'sodienthoai' => $inputs['sdt']
-        ];
-        $user->update($data);
+        // $data = [
+        //     'tentaikhoan' => $inputs['hoten'],
+        //     'email' => $inputs['email'],
+        //     'sodienthoai' => $inputs['sdt']
+        // ];
+        $inputs['tentaikhoan']=$inputs['hoten'];
+        $inputs['sodienthoai']=$inputs['sdt'];
+        $user->update($inputs);
 
         return redirect('/TaiKhoan/QuanLyTaiKhoan')
             ->with('success', 'Cập nhật thành công');
@@ -466,11 +476,11 @@ class dstaikhoanController extends Controller
     {
         $inputs = $request->all();
         if (isset($inputs['mahocvien'])) {
-            $m_hocvien = hocvien::select('cccd', 'malop')->where('cccd', $inputs['mahocvien'])->get();
+            $m_hocvien = User::select('cccd', 'malop')->where('hocvien',1)->where('cccd', $inputs['mahocvien'])->get();
             $malop = $m_hocvien->first()->malop;
             $url = '/LopHoc/chitiet?lophoc=' . $malop;
         } else {
-            $m_hocvien = hocvien::select('cccd')->where('malop', $inputs['malop'])->get();
+            $m_hocvien = User::select('cccd')->where('hocvien',1)->where('malop', $inputs['malop'])->get();
             $url = '/LopHoc/ThongTin';
         }
 
@@ -515,11 +525,11 @@ class dstaikhoanController extends Controller
         $khoahoc = implode(';', $inputs['giaotrinh']);
         // $m_hocvien=hocvien::select('cccd')->where('malop',$inputs['malop'])->get();
         if (isset($inputs['mahocvien'])) {
-            $m_hocvien = hocvien::select('cccd', 'malop')->where('cccd', $inputs['mahocvien'])->get();
+            $m_hocvien = User::select('cccd', 'malop')->where('hocvien',1)->where('cccd', $inputs['mahocvien'])->get();
             $malop = $m_hocvien->first()->malop;
             $url = '/LopHoc/chitiet?lophoc=' . $malop;
         } else {
-            $m_hocvien = hocvien::select('cccd')->where('malop', $inputs['malop'])->get();
+            $m_hocvien = User::select('cccd')->where('hocvien',1)->where('malop', $inputs['malop'])->get();
             $url = '/LopHoc/ThongTin';
         }
         $a_hocvien = array_column($m_hocvien->toarray(), 'cccd');
@@ -559,11 +569,11 @@ class dstaikhoanController extends Controller
     {
         $inputs = $request->all();
         if (isset($inputs['mahocvien'])) {
-            $m_hocvien = hocvien::select('cccd', 'malop')->where('cccd', $inputs['mahocvien'])->get();
+            $m_hocvien = User::select('cccd', 'malop')->where('hocvien',1)->where('cccd', $inputs['mahocvien'])->get();
             $malop = $m_hocvien->first()->malop;
             $url = '/LopHoc/chitiet?lophoc=' . $malop;
         } else {
-            $m_hocvien = hocvien::select('cccd')->where('malop', $inputs['malop'])->get();
+            $m_hocvien = User::select('cccd')->where('hocvien',1)->where('malop', $inputs['malop'])->get();
             $url = '/LopHoc/ThongTin';
         }
         $a_hocvien = array_column($m_hocvien->toarray(), 'cccd');

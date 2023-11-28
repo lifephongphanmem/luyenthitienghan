@@ -58,12 +58,12 @@
                             @foreach ($model as $key => $hv)
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
-                                    <td class="text-left" style="width: 15%">{{ $hv->tenhocvien }}</td>
+                                    <td class="text-left" style="width: 15%">{{ $hv->tentaikhoan }}</td>
                                     <td style="width: 8%">{{ $hv->cccd }}</td>
                                     <td style="width: 6%">{{ $hv->gioitinh == 0 ? 'Nữ' : 'Nam' }}</td>
                                     <td style="width: 7%">{{ getDayVn($hv->ngaysinh) }}</td>
                                     <td class="text-left" style="width: 8%">
-                                        {{ $hv->sdt }}</td>
+                                        {{ $hv->sodienthoai }}</td>
                                     <td style="width:20%">{{ $hv->diachi }}</td>
                                     {{-- <td name='trangthai' style="width:10%" class="{{$a_texttrangthai[$gv->trangthai]}}">{{$a_trangthai[$gv->trangthai]}}</td> --}}
                                     <td class="text-center" style="width:8%">
@@ -71,7 +71,7 @@
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
-                                        <a href="{{ '/HocVien/ThongTin/ChiTiet/' . $hv->mahocvien }}"
+                                        <a href="{{ '/HocVien/ThongTin/ChiTiet/' . $hv->mataikhoan }}"
                                             rel="noopener noreferrer">
                                             <button title="Chi tiết" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-xl fas fa-atlas text-success "></i>
@@ -281,10 +281,10 @@
                 dataType: 'JSON',
                 success: function(data) {
                     console.log(data);
-                    $('#tenhocvien').val(data.tenhocvien);
+                    $('#tenhocvien').val(data.tentaikhoan);
                     $('#email').val(data.email);
                     $('#cccd').val(data.cccd);
-                    $('#sdt').val(data.sdt);
+                    $('#sdt').val(data.sodienthoai);
                     $('#diachi').val(data.diachi);
                     $('#ngaysinh').val(data.ngaysinh);
                     $('#ghichu').text(data.ghichu);

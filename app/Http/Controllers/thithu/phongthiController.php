@@ -8,6 +8,7 @@ use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
 use App\Models\thithu\phongthi;
 use App\Models\thithu\phongthi_lop;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -148,7 +149,7 @@ class phongthiController extends Controller
                 ];
                 phongthi_lop::create($data);
                 //khi thêm lớp set trangthaithi thử của học viên lên 1 để học viên có thể vào thi
-                hocvien::where('malop',$ct)->update(['trangthaithithu'=>1]);
+                User::where('malop',$ct)->update(['trangthaithithu'=>1]);
             }
         }
         // $phongthi=phongthi::where('maphongthi',$inputs['maphongthi'])->first();
@@ -164,7 +165,7 @@ class phongthiController extends Controller
         if(isset($lopthi)){
             $lopthi->delete();
             //khi xóa lớp thi chuyển trạng thái của các học viên về 0 để kết thúc thi thử
-            hocvien::where('malop',$malop)->update(['trangthaithithu'=>0]);
+            User::where('malop',$malop)->update(['trangthaithithu'=>0]);
         }
 
         return redirect('/PhongThi/ChiTiet/'.$inputs['maphongthi'])
@@ -176,10 +177,11 @@ class phongthiController extends Controller
         $phongthi=phongthi::where('maphongthi',$inputs['maphongthi'])->first();
         $inputs['trangthai'] == 1?$inputs['trangthai']=0:$inputs['trangthai']=1;
         if($inputs['trangthai'] == 0){
+            $malop=array_column(phongthi_lop::where('maphongthi',$inputs['maphongthi'])->get()->toarray(),'malop');
             phongthi_lop::where('maphongthi',$inputs['maphongthi'])->delete();
             $phongthi->update(['made'=>null]);
             //chuyển tất cả các học viên có trong lớp đó về 0 để đóng thi thử
-            hocvien::where('trangthaithithu',1)->update(['trangthaithithu'=>0]);
+            User::wherein('malop',$malop)->where('trangthaithithu',1)->update(['trangthaithithu'=>0]);
         }
         $phongthi->update(['trangthai'=>$inputs['trangthai']]);
 

@@ -85,8 +85,11 @@ class HethongchungController extends Controller
 				}
 				$user->save();
 				return view('errors.tontaidulieu')
-				->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập.<br>Số lần đăng nhập: ' . $user->solandn . '/' . $solandn . ' lần
-				.<br><i>Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại</i>');
+				->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập.')
+				->with('message1', 'Số lần đăng nhập: ' . $user->solandn . '/' . $solandn . ' lần')
+				->with('message2', 'Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại');
+				// ->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập.<br> Số lần đăng nhập: ' . $user->solandn . '/' . $solandn . ' lần
+				// .<br><i>Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại</i>');
 			}
 		}
 		$user->solandn = 0;
@@ -100,20 +103,20 @@ class HethongchungController extends Controller
 				$user->manguoidung = $hocvien->mahocvien;
 				$user->malop = $hocvien->malop;
 				$user->vitri= 'Học viên';
-				$user->sdt=$hocvien->sdt;
-				$user->gioitinh=$hocvien->gioitinh;
-				$user->ngaysinh=$hocvien->ngaysinh;
-				$user->diachi=$hocvien->diachi;
+				// $user->sdt=$hocvien->sdt;
+				// $user->gioitinh=$hocvien->gioitinh;
+				// $user->ngaysinh=$hocvien->ngaysinh;
+				// $user->diachi=$hocvien->diachi;
 
 			}
 			if ($user->giaovien == 1) {
 				$giaovien = giaovien::where('cccd', $user->cccd)->first();
 				$user->manguoidung = $giaovien->magiaovien;
 				$user->vitri= 'Giáo viên';
-				$user->sdt=$giaovien->sdt;
-				$user->gioitinh=$giaovien->gioitinh;
-				$user->ngaysinh=$giaovien->ngaysinh;
-				$user->diachi=$giaovien->diachi;
+				// $user->sdt=$giaovien->sdt;
+				// $user->gioitinh=$giaovien->gioitinh;
+				// $user->ngaysinh=$giaovien->ngaysinh;
+				// $user->diachi=$giaovien->diachi;
 				$user->hdsd='';
 
 			}
@@ -123,8 +126,46 @@ class HethongchungController extends Controller
 			$user->phanquyen = json_decode($user->phanquyen, true);
 			// dd($user);
 		} else {
-			
 			$user->capdo = "SSA";
+			//Đầy dữ liệu của bảng học viên và giáo viên vào bảng users
+			$giaovien=giaovien::all();
+			foreach($giaovien as $ct){
+				$data=[
+					'tentaikhoan'=>$ct->tengiaovien,
+					'sodienthoai'=>$ct->sdt,
+					'gioitinh'=>$ct->gioitinh,
+					'diachi'=>$ct->diachi,
+					// 'mataikhoan'=>$ct->magiaovien,
+					'ngaysinh'=>$ct->ngaysinh
+				];
+				$taikhoangv=User::where('cccd',$ct->cccd)->first();
+				if(isset($taikhoangv)){
+					if($taikhoangv->mataikhoan == null){
+						$data['mataikhoan']=$ct->magiaovien;
+					}
+					$taikhoangv->update($data);
+				}
+			}
+
+			$hocvien=hocvien::all();
+			foreach($hocvien as $val){
+				$data=[
+					'tentaikhoan'=>$val->tenhocvien,
+					'sodienthoai'=>$val->sdt,
+					'gioitinh'=>$val->gioitinh,
+					'diachi'=>$val->diachi,
+					// 'mataikhoan'=>$val->mahocvien,
+					'ngaysinh'=>$val->ngaysinh,
+					'malop'=>$val->malop
+				];
+				$taikhoanhv=User::where('cccd',$val->cccd)->first();
+				if(isset($taikhoanhv)){
+					if($taikhoanhv->mataikhoan == null){
+						$data['mataikhoan']=$val->mahocvien;
+					}
+					$taikhoanhv->update($data);
+				}
+			}
 		}
 		if($this->chklogin($user->isaction,$user->id)){
 			//1. Không cho đăng nhập, đẩy ra thông báo
@@ -164,10 +205,10 @@ class HethongchungController extends Controller
         if (chkPhanQuyen('saoluudulieu', 'thaydoi') && session('admin')->capdo != 'SSA') {
             xoadulieusaoluu();
         }
-		// if($user->dnlandau == 0){
-		// 	return redirect('/TaiKhoan/QuanLyTaiKhoan')
-		// 		->with('note','Đổi mật khẩu cho lần đăng nhập đầu tiên');
-		// }
+		if($user->dnlandau == 0){
+			return redirect('/TaiKhoan/QuanLyTaiKhoan')
+				->with('note','Đổi mật khẩu cho lần đăng nhập đầu tiên');
+		}
 		return redirect('/TrangChu')
 			->with('success', 'Đăng nhập thành công')
 			->with('pageTitle', 'Trang chủ');
