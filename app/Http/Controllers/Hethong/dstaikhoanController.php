@@ -77,7 +77,7 @@ class dstaikhoanController extends Controller
         // dd($model);
         $a_nhomtk = array_column(dsnhomtaikhoan::all()->toArray(), 'tennhomchucnang', 'manhomchucnang');
         return view('Hethong.taikhoan.index')
-            ->with('model', $model)
+            ->with('model', $model->sortbyDesc('id'))
             ->with('baocao', getdulieubaocao())
             ->with('a_nhomtk', $a_nhomtk)
             ->with('inputs', $inputs)

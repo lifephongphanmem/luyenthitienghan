@@ -48,14 +48,15 @@ class lophocController extends Controller
                 }
             })->get();
         } else if (session('admin')->giaovien == 1) {
-            $khoahoc = lophoc::select('khoahoc')->where('giaovienchunhiem', session('admin')->manguoidung)->orderBy('id', 'desc')->first();
+            $khoahoc = lophoc::select('khoahoc')->where('giaovienchunhiem', session('admin')->mataikhoan)->orderBy('id', 'desc')->first();
             $inputs['khoahoc'] = $inputs['khoahoc'] ?? (isset($khoahoc) ? $khoahoc->khoahoc : '');
+            // dd($inputs['khoahoc']);
             $model = lophoc::where(function ($q) use ($inputs) {
                 if (isset($inputs['khoahoc'])) {
                     $q->where('khoahoc', $inputs['khoahoc']);
                 }
             })
-                ->where('giaovienchunhiem', session('admin')->manguoidung)
+                ->where('giaovienchunhiem', session('admin')->mataikhoan)
                 ->get();
         }
 

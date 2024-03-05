@@ -41,7 +41,7 @@ class hocvienController extends Controller
         } else if (session('admin')->giaovien == 1) {
             $model = User::join('lophoc', 'lophoc.malop', 'users.malop')
                 ->select('users.*')
-                ->where('lophoc.giaovienchunhiem', session('admin')->manguoidung)
+                ->where('lophoc.giaovienchunhiem', session('admin')->mataikhoan)
                 ->get();
         }
         return view('quanly.hocvien.index')

@@ -216,7 +216,7 @@
 @endsection
 @section('banner')
     <div id="header-banner" class="div-group-content">
-        <div class="collapse" style="float: right; height: auto; width: 100%; display: block;margin-top: 10px;">
+        <div class="collapse" style="float: right; height: auto; width: 100%; display: block">
             <div id="owl-baner" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
                 <div class="owl-wrapper-outer">
                     <div class="owl-wrapper" style="width: 100%; left: 0px; display: block;">

@@ -58,13 +58,13 @@
                             @foreach ($model as $key => $hv)
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
-                                    <td class="text-left" style="width: 15%">{{ $hv->tentaikhoan }}</td>
-                                    <td style="width: 8%">{{ $hv->cccd }}</td>
+                                    <td class="text-left" style="width: 12%">{{ $hv->tentaikhoan }}</td>
+                                    <td style="width: 6%">{{ $hv->cccd }}</td>
                                     <td style="width: 6%">{{ $hv->gioitinh == 0 ? 'Nữ' : 'Nam' }}</td>
                                     <td style="width: 7%">{{ getDayVn($hv->ngaysinh) }}</td>
                                     <td class="text-left" style="width: 8%">
                                         {{ $hv->sodienthoai }}</td>
-                                    <td style="width:20%">{{ $hv->diachi }}</td>
+                                    <td style="width:15%">{{ $hv->diachi }}</td>
                                     {{-- <td name='trangthai' style="width:10%" class="{{$a_texttrangthai[$gv->trangthai]}}">{{$a_trangthai[$gv->trangthai]}}</td> --}}
                                     <td class="text-center" style="width:8%">
                                         <button title="Sửa thông tin" onclick="edit(this,'{{ $hv->id }}')"
