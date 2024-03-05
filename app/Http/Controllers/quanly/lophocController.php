@@ -55,8 +55,11 @@ class lophocController extends Controller
                 if (isset($inputs['khoahoc'])) {
                     $q->where('khoahoc', $inputs['khoahoc']);
                 }
+                if(!chkPhanQuyen('taikhoan', 'thaydoi')){
+                    $q->where('giaovienchunhiem', session('admin')->mataikhoan);
+                }
             })
-                ->where('giaovienchunhiem', session('admin')->mataikhoan)
+                // ->where('giaovienchunhiem', session('admin')->mataikhoan)
                 ->get();
         }
 
