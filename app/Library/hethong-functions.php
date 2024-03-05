@@ -20,9 +20,19 @@ use Illuminate\Support\Facades\Session;
 function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
 {
     //return true;
+    //Kiểm tra tài khoản đã đổi tài khoản sau lần đăng nhập đầu tiên chưa
+
     //Kiểm tra giao diện (danhmucchucnang)
     if (!chkGiaoDien($machucnang)) {
         return false;
+    }
+    if(session('admin')->dnlandau == 0){
+        if(in_array($machucnang,['quanlytaikhoan','doimatkhau'])){
+            return true;
+        }else{
+            return false;
+        }
+        
     }
     $capdo = session('admin')->capdo;
 
@@ -48,7 +58,8 @@ function chkThiThu($mahocvien)
     // };
     $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')->select('phongthi_lop.malop')->where('phongthi.trangthai', 1)->get();
     $a_malop = array_column($phongthi->toarray(), 'malop');
-    $hocvien = hocvien::where('mahocvien', $mahocvien)->first();
+    // $hocvien = hocvien::where('mahocvien', $mahocvien)->first();
+    $hocvien = User::where('mataikhoan', $mahocvien)->first();
         // dd($hocvien);
     //Kiểm tra xem học viên đã nộp bài chưa.Nếu nộp bài rồi thì khóa chức năng thi thử
 
@@ -443,7 +454,8 @@ function add_phanquyen($manhomchucnang,$cccd)
 //kiểm tra số lượng học viên đã nộp bài để đóng phòng học và đóng thi thử ^.^
 function chksoluonghocsinhtrongphongthi($malop,$maphongthi,$lanthithu,$madethi){
     $ketqua=ketquathithu::where('maphongthi',$maphongthi)->where('malop',$malop)->where('madethi',$madethi)->where('lanthithu',$lanthithu)->get();
-    $lop=hocvien::where('malop',$malop)->get();
+    // $lop=hocvien::where('malop',$malop)->get();
+    $lop=User::where('malop',$malop)->get();
     if(count($ketqua) == count($lop)){
         //Tiến hành xóa lớp khỏi phòng thi.
         phongthi_lop::where('malop',$malop)->delete();

@@ -50,6 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Layout Themes-->
     @yield('custom-style')
     <link rel="shortcut icon" href="{{ url('assets/media/logos/ttdvvl.png') }}" />
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->

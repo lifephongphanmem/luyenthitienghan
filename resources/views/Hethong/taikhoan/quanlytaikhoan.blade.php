@@ -187,6 +187,7 @@
                                
                                 <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                                     @if (!in_array(session('admin')->capdo,['SSA','ADMIN']))
+                                    @if (chkPhanQuyen('thongtincanhan', 'thaydoi'))
                                     <div class="navi-item mb-2">
                                         <a onclick="chooseprofile(1)" class="navi-link py-4 active" id="a_thongtincanhan">
                                             <span class="navi-icon mr-2">
@@ -213,8 +214,9 @@
                                         </a>
                                     </div>
                                     @endif
+                                    @endif
                                     <div class="navi-item mb-2">
-                                        <a onclick="chooseprofile(2)" class="navi-link py-4 {{(in_array(session('admin')->capdo,['SSA','ADMIN']))?'active':''}}"   id="a_doimatkhau">
+                                        <a onclick="chooseprofile(2)" class="navi-link py-4 {{(in_array(session('admin')->capdo,['SSA','ADMIN'])) || session('admin')->dnlandau == 0?'active':''}}"   id="a_doimatkhau">
                                             <span class="navi-icon mr-2">
                                                 <span class="svg-icon">
                                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg-->
@@ -245,6 +247,7 @@
                                         </a>
                                     </div>
                                     @if (session('admin')->hocvien == 1)
+                                    @if (chkPhanQuyen('ketquathithu', 'thaydoi'))
                                         <div class="navi-item mb-2">
                                             <a onclick="chooseprofile(3)" class="navi-link py-4" id="a_ketquathithu">
                                                 <span class="navi-icon mr-2">
@@ -274,6 +277,7 @@
                                             </a>
                                         </div>
                                     @endif
+                                    @endif
                                 </div>
                                 <!--end::Nav-->
                             </div>
@@ -284,17 +288,21 @@
                     <!--end::Aside-->
                     <!--begin::Content-->
                     @if (!in_array(session('admin')->capdo,['SSA','ADMIN']))
+                    @if (chkPhanQuyen('thongtincanhan', 'thaydoi'))
                     <div class="flex-row-fluid ml-lg-8" id="thongtincanhan">
                         @include('Hethong.taikhoan.includes.thongtintaikhoan')
                     </div>
                     @endif
-                    <div class="flex-row-fluid ml-lg-8 {{(!in_array(session('admin')->capdo,['SSA','ADMIN']))?'hide':''}}" id="doimatkhau">
+                    @endif
+                    <div class="flex-row-fluid ml-lg-8 {{(!in_array(session('admin')->capdo,['SSA','ADMIN']) && session('admin')->dnlandau == 1)?'hide':''}}" id="doimatkhau">
                         @include('Hethong.taikhoan.includes.doimatkhau')
                     </div>
                     @if (session('admin')->hocvien == 1)
+                    @if (chkPhanQuyen('ketquathithu', 'thaydoi'))
                         <div class="flex-row-fluid ml-lg-8 hide" id="ketquathithu">
                             @include('Hethong.taikhoan.includes.ketquathithu')
                         </div>
+                    @endif
                     @endif
 
 

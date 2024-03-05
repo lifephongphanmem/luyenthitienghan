@@ -34,7 +34,8 @@ class giaovienController extends Controller
         if (!chkPhanQuyen('giaovien', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'giaovien');
         }
-        $model=giaovien::all();
+        // $model=giaovien::all();
+        $model=User::where('giaovien',1)->get();
                 $a_trangthai=array('1'=>'Đang công tác','2'=>'Nghỉ Phép','3'=>'Đã nghỉ việc');
                 $a_texttrangthai=array('1'=>'text-success','2'=>'text-warning','3'=>'text-danger');
         return view('quanly.giaovien.index')
@@ -71,16 +72,21 @@ class giaovienController extends Controller
         giaovien::create($inputs);
         $taikhoan=User::where('cccd',$inputs['cccd'])->first();
         if(!isset($taikhoan)){
-        $data=[
-            'tentaikhoan'=>$inputs['tengiaovien'],
-            'cccd'=>$inputs['cccd'],
-            'password'=>Hash::make('123456abc'),
-            'giaovien'=>1,
-            'sdt'=>$inputs['sdt'],
-            'mataikhoan'=>date('YmdHis'),
-            'manhomchucnang'=>1680747743
-        ];
-        User::create($data);
+        // $data=[
+        //     'tentaikhoan'=>$inputs['tengiaovien'],
+        //     'cccd'=>$inputs['cccd'],
+        //     'password'=>Hash::make('123456abc'),
+        //     'giaovien'=>1,
+        //     'sdt'=>$inputs['sdt'],
+        //     'mataikhoan'=>date('YmdHis'),
+        //     'manhomchucnang'=>1680747743
+        // ];
+        $inputs['tentaikhoan']=$inputs['tengiaovien'];
+        $inputs['password']=Hash::make('123456abc');
+        $inputs['giaovien']=1;
+        $inputs['mataikhoan']=$inputs['magiaovien'];
+        $inputs['manhomchucnang']=1680747743;
+        User::create($inputs);
         add_phanquyen('1680747743',$inputs['cccd']);
         }
         return redirect('/GiaoVien/ThongTin')
@@ -103,7 +109,8 @@ class giaovienController extends Controller
         if (!chkPhanQuyen('giaovien', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'giaovien');
         }
-        $model=giaovien::findOrFail($id);
+        // $model=giaovien::findOrFail($id);
+        $model=User::findOrFail($id);
         return response()->json($model);
 
     }
@@ -117,12 +124,19 @@ class giaovienController extends Controller
             return view('errors.noperm')->with('machucnang', 'giaovien');
         }
         $inputs=$request->all();
-        $model=giaovien::findOrFail($id);
+        $model=User::findOrFail($id);
 
         if(isset($model)){
             if($model->cccd != $inputs['cccd']){
                 User::where('cccd',$model->cccd)->update(['cccd'=>$inputs['cccd']]);
+                // add_phanquyen('1680747743',$inputs['cccd']);
             }
+            $user=giaovien::where('cccd',$model->cccd)->first();
+            if(isset($user)){
+                $user->update($inputs);
+            }
+            $inputs['tentaikhoan']=$inputs['tengiaovien'];
+            $inputs['sodienthoai']=$inputs['sdt'];
             $model->update($inputs);
         }
 
@@ -138,10 +152,10 @@ class giaovienController extends Controller
         if (!chkPhanQuyen('giaovien', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'giaovien');
         }
-        $model=giaovien::findOrFail($id);
+        $model=User::findOrFail($id);
 
         if(isset($model)){
-            $user=User::where('cccd',$model->cccd)->first();
+            $user=giaovien::where('cccd',$model->cccd)->first();
             if(isset($user)){
                 $user->delete();
             }

@@ -122,7 +122,7 @@ class dsnhomtaikhoanController extends Controller
         $inputs['thaydoi'] = isset($inputs['thaydoi']) ? 1 : 0;
         $inputs['hoanthanh'] = isset($inputs['hoanthanh']) ? 1 : 0;
         $inputs['danhsach'] = ($inputs['hoanthanh'] == 1 || $inputs['thaydoi'] == 1) ? 1 : $inputs['danhsach'];
-        //dd($inputs);
+        // dd($inputs);
         $m_chucnang = Chucnang::where('trangthai', '1')->get();
         $ketqua = new Collection();
         if (isset($inputs['nhomchucnang'])) {

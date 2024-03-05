@@ -22,6 +22,7 @@ class User extends Authenticatable
         'cccd',
         'email',
         'password',
+        'sodienthoai',
         'trangthai',
         'sadmin',
         'manhomchucnang',
@@ -33,7 +34,14 @@ class User extends Authenticatable
         'islogin',
         'isluyenthi',
         'isaction',
-        'islogout'//0:logout; 1:unlogout
+        'islogout',//0:logout; 1:unlogout
+        'trangthaithithu',
+        'malop',
+        'ngaysinh',
+        'gioitinh',
+        'diachi',
+        'solandn',
+        'dnlandau'//0:true,1:false
     ];
 
     public function tintuc() {

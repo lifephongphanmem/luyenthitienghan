@@ -85583,6 +85583,7 @@ body {
     border-radius: 0;
     padding-left: 2rem;
     border-right: 2px solid #F3F6F9;
+    height: 80%;
   }
   .header-menu .menu-nav > .menu-item > .menu-link .menu-text {
     color: #3F4254;

@@ -48,14 +48,18 @@ class lophocController extends Controller
                 }
             })->get();
         } else if (session('admin')->giaovien == 1) {
-            $khoahoc = lophoc::select('khoahoc')->where('giaovienchunhiem', session('admin')->manguoidung)->orderBy('id', 'desc')->first();
+            $khoahoc = lophoc::select('khoahoc')->where('giaovienchunhiem', session('admin')->mataikhoan)->orderBy('id', 'desc')->first();
             $inputs['khoahoc'] = $inputs['khoahoc'] ?? (isset($khoahoc) ? $khoahoc->khoahoc : '');
+            // dd($inputs['khoahoc']);
             $model = lophoc::where(function ($q) use ($inputs) {
                 if (isset($inputs['khoahoc'])) {
                     $q->where('khoahoc', $inputs['khoahoc']);
                 }
+                if(!chkPhanQuyen('taikhoan', 'thaydoi')){
+                    $q->where('giaovienchunhiem', session('admin')->mataikhoan);
+                }
             })
-                ->where('giaovienchunhiem', session('admin')->manguoidung)
+                // ->where('giaovienchunhiem', session('admin')->mataikhoan)
                 ->get();
         }
 
@@ -67,7 +71,7 @@ class lophocController extends Controller
         //     }
         // }
         // dd($model);
-        $a_giaovien = array_column(giaovien::where('trangthai', '!=', 3)->get()->toarray(), 'tengiaovien', 'magiaovien');
+        $a_giaovien = array_column(User::where('giaovien',1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
 
         $inputs['url'] = '/LopHoc/ThongTin';
@@ -159,8 +163,8 @@ class lophocController extends Controller
 
         $inputs['khoahoc'] = isset($inputs['khoahoc']) ? $inputs['khoahoc'] : $model->khoahoc;
 
-        $hocvien = lophoc::join('hocvien', 'hocvien.malop', 'lophoc.malop')
-            ->where('hocvien.malop', $inputs['lophoc'])
+        $hocvien = lophoc::join('users', 'users.malop', 'lophoc.malop')
+            ->where('users.malop', $inputs['lophoc'])
             ->where('khoahoc', $inputs['khoahoc'])
             ->get();
             foreach($hocvien as $ct){
@@ -195,15 +199,15 @@ class lophocController extends Controller
 
             }
         // $giaovien=giaovien::where('trangthai','!=',3)->get();
-        $a_giaovien = array_column(giaovien::where('trangthai', '!=', 3)->get()->toarray(), 'tengiaovien', 'magiaovien');
+        $a_giaovien = array_column(User::where('giaovien',1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
         $a_lophoc = array_column(lophoc::select('malop', 'tenlop')->get()->toarray(), 'tenlop', 'malop');
 
         $inputs['url'] = '/LopHoc/chitiet';
-        $m_hocvien = hocvien::wherenull('malop')->get();
+        $m_hocvien = User::where('hocvien',1)->wherenull('malop')->get();
         $ketquathi = ketquathithu::where('malop', $inputs['lophoc'])->get();
         $ketquathi->unique('created_at');
-
+// dd($hocvien);
         return view('quanly.lophoc.chitiet')
             ->with('model', $model)
             ->with('inputs', $inputs)
@@ -270,7 +274,7 @@ class lophocController extends Controller
         $inputs = $request->all();
         $lophoc = lophoc::where('malop', $inputs['malop'])->first();
         foreach ($inputs['mahocvien'] as $ct) {
-            $hocvien = hocvien::where('mahocvien', $ct)->first();
+            $hocvien = User::where('mataikhoan', $ct)->first();
             $hocvien->update(['malop' => $inputs['malop']]);
         }
         $lophoc->update(['soluonghocvien' => $lophoc->soluonghocvien + count($inputs['mahocvien'])]);
@@ -282,7 +286,7 @@ class lophocController extends Controller
             return view('errors.noperm')->with('machucnang', 'lophoc');
         }
         $inputs = $request->all();
-        $hocvien = hocvien::findOrFail($id);
+        $hocvien = User::findOrFail($id);
         $lophoc = lophoc::where('malop', $hocvien->malop)->first();
         if (isset($hocvien)) {
             $hocvien->update(['malop' => $inputs['malop']]);
@@ -297,7 +301,7 @@ class lophocController extends Controller
     public function ketquathi(Request $request)
     {
         $inputs = $request->all();
-        $a_giaovien = array_column(giaovien::where('trangthai', '!=', 3)->get()->toarray(), 'tengiaovien', 'magiaovien');
+        $a_giaovien = array_column(User::where('giaovien',1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
         $a_lophoc = array_column(lophoc::select('malop', 'tenlop')->get()->toarray(), 'tenlop', 'malop');
         $ketqua = ketquathithu::where('malop', $inputs['malop'])
@@ -318,7 +322,7 @@ class lophocController extends Controller
         }
         $mahocvien = array_column($ketqua->toarray(), 'mahocvien');
 
-        $hocvien = hocvien::wherein('mahocvien', $mahocvien)->get();
+        $hocvien = User::where('hocvien',1)->wherein('mahocvien', $mahocvien)->get();
         foreach ($hocvien as $ct) {
             $ketqua_hv = $ketqua->where('mahocvien', $ct->mahocvien)->first();
             $ct->diemthi = $ketqua_hv->diemthi;

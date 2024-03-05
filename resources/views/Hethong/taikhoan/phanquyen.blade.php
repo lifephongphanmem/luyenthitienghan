@@ -60,7 +60,7 @@
 <div class="card card-custom wave wave-animate-slow wave-primary" style="min-height: 600px">
     <div class="card-header flex-wrap border-1 pt-6 pb-0">
         <div class="card-title">
-            <h3 class="card-label text-uppercase">Phân quyền tài khoản: {{ $m_taikhoan->username }}</h3>
+            <h3 class="card-label text-uppercase">Phân quyền tài khoản: {{ $m_taikhoan->tentaikhoan }}</h3>
         </div>
         <div class="card-toolbar">
         </div>

@@ -14,7 +14,7 @@
         </div>
         <!--end::Header-->
 
-        {{-- @if(Session::has('admin') && !in_array(session('admin')->sadmin,['SSA','ADMIN']) && session('admin')->dnlandau == 0)
+        @if(Session::has('admin') && !in_array(session('admin')->sadmin,['SSA','ADMIN']) && session('admin')->dnlandau == 0)
         <div class="alert alert-custom alert-outline-2x alert-outline-danger fade show mb-5" role="alert">
             <div class="alert-icon">
                 <i class="flaticon-warning"></i>
@@ -28,7 +28,7 @@
                 </button>
             </div>
         </div>
-        @endif --}}
+        @endif
         <!--begin::Form-->
         <form action="{{'/TaiKhoan/DoiMatKhau'}}" method="POST" class="form">
             @csrf

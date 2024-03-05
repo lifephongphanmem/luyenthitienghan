@@ -23,7 +23,7 @@
                 <div class="col-lg-9 col-xl-6">
                     {{-- <div class="spinner spinner-sm spinner-success spinner-right"> --}}
                     <input class="form-control form-control-lg form-control-solid" type="text" name="hoten"
-                        value="{{ $model->hoten }}" placeholder="Họ và tên" />
+                        value="{{ $model->tentaikhoan }}" placeholder="Họ và tên" />
                     {{-- </div> --}}
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="col-lg-9 col-xl-6">
                     <div class="input-group input-group-lg input-group-solid">
                         <input type="text" name="sdt" class="form-control form-control-lg form-control-solid"
-                            value="{{ $model->sdt }}" placeholder="Điện thoại" />
+                            value="{{ $model->sodienthoai }}" placeholder="Điện thoại" />
                     </div>
                 </div>
             </div>

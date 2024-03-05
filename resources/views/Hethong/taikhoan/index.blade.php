@@ -151,7 +151,7 @@
                         <div class="col-md-6 mt-2">
                             <label class="control-label">Mật khẩu<span class="require">*</span></label>
                             <input type="password" name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" value="123456abc" class="form-control" required>
-                            <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và chữ số</span>
+                            <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và 1 chữ số</span>
                         </div>
                         <div class="col-md-6 mt-2">
                             <label class="control-label">Trạng thái</label>
@@ -234,7 +234,7 @@
                                     <label class="control-label">Mật khẩu<span class="require">*</span></label>
                                     {{-- {!! Form::select('manhomchucnang', $a_nhomtk, null, ['class' => 'form-control select2_modal', 'required'=>'true']) !!} --}}
                                     <input type="password" name="password" placeholder="Nếu không đổi thì không cần nhập" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" class="form-control">
-                                    <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và chữ số</span>
+                                    <span class="text-muted font-weight-bold font-size-sm mt-1">Mật khẩu ít nhất 8 ký tự, ít nhất 1 chữ cái và 1 chữ số</span>
                                 </div>
                                 <div class="col-md-6 mt-2">
                                     <label class="control-label">Trạng thái</label>
@@ -369,7 +369,10 @@
             $('#email').val(email)
             $('#phanloai option[value=' + phanloai + ' ]').attr('selected', 'selected');
             $('#trangthai option[value=' + trangthai + ' ]').attr('selected', 'selected');
-            $('#nhomchucnang option[value=' + nhomchucnang + ' ]').attr('selected', 'selected');
+            if(nhomchucnang != ''){
+                $('#nhomchucnang option[value=' + nhomchucnang + ' ]').attr('selected', 'selected');
+            }
+
 
             $('#frm_edit').attr('action', url);
 

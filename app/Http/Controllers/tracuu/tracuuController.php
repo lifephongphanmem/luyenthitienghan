@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\quanly\giaovien;
 use App\Models\quanly\hocvien;
 use App\Models\quanly\lophoc;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -54,19 +55,28 @@ class tracuuController extends Controller
         }
 
         if ($request['phanloai'] == 'giaovien') {
-            $giaovien = giaovien::leftjoin('lophoc', 'giaovien.magiaovien', '=', 'lophoc.giaovienchunhiem')
-                ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop', 'lophoc.malop')
-                ->where('giaovien.tengiaovien', 'LIKE', '%' . $request['hoten'] . '%')
+            // $giaovien = giaovien::leftjoin('lophoc', 'giaovien.magiaovien', '=', 'lophoc.giaovienchunhiem')
+            //     ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop', 'lophoc.malop')
+            //     ->where('giaovien.tengiaovien', 'LIKE', '%' . $request['hoten'] . '%')
+            //     ->when($request['lophoc'] != '', function ($query) use ($request) {
+            //         return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
+            //     })->get();
+                $giaovien = User::leftjoin('lophoc', 'users.mataikhoan', '=', 'lophoc.giaovienchunhiem')
+                ->select('users.tentaikhoan', 'users.gioitinh', 'users.ngaysinh', 'users.sodienthoai', 'users.cccd', 'lophoc.tenlop', 'lophoc.malop')
+                ->where('giaovien',1)
+                ->where('users.tentaikhoan', 'LIKE', '%' . $request['hoten'] . '%')
                 ->when($request['lophoc'] != '', function ($query) use ($request) {
                     return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
                 })->get();
 
             $ketqua = $giaovien;
         } else if ($request['phanloai'] == 'hocvien') {
-            $hocvien = hocvien::leftjoin('lophoc', 'hocvien.malop', '=', 'lophoc.malop')
-                ->leftJoin('ketquathithu', 'hocvien.mahocvien', '=', 'ketquathithu.mahocvien')
-                ->select('hocvien.tenhocvien', 'hocvien.gioitinh', 'hocvien.ngaysinh', 'hocvien.sdt', 'hocvien.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi', 'lophoc.malop')
-                ->where('hocvien.tenhocvien', 'LIKE', '%' . $request['hoten'] . '%')
+            // $hocvien = hocvien::leftjoin('lophoc', 'hocvien.malop', '=', 'lophoc.malop')
+            $hocvien = User::leftjoin('lophoc', 'users.malop', '=', 'lophoc.malop')
+                ->leftJoin('ketquathithu', 'users.mataikhoan', '=', 'ketquathithu.mahocvien')
+                ->select('users.tentaikhoan', 'users.gioitinh', 'users.ngaysinh', 'users.sodienthoai', 'users.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi', 'lophoc.malop')
+                ->where('users.hocvien',1)
+                ->where('users.tentaikhoan', 'LIKE', '%' . $request['hoten'] . '%')
                 ->when($request['lophoc'] != '', function ($query) use ($request) {
                     return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
                 })
@@ -87,17 +97,27 @@ class tracuuController extends Controller
 
             $ketqua = $hocvien;
         } else if ($request['phanloai'] == 'tatca') {
-            $giaovien = giaovien::leftjoin('lophoc', 'giaovien.magiaovien', '=', 'lophoc.giaovienchunhiem')
-                ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop', 'lophoc.malop')
-                ->where('giaovien.tengiaovien', 'LIKE', '%' . $request['hoten'] . '%')
-                ->when($request['lophoc'] != '', function ($query) use ($request) {
-                    return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
-                })->get();
+            // $giaovien = giaovien::leftjoin('lophoc', 'giaovien.magiaovien', '=', 'lophoc.giaovienchunhiem')
+            //     ->select('giaovien.tengiaovien', 'giaovien.gioitinh', 'giaovien.ngaysinh', 'giaovien.sdt', 'giaovien.cccd', 'lophoc.tenlop', 'lophoc.malop')
+            //     ->where('giaovien.tengiaovien', 'LIKE', '%' . $request['hoten'] . '%')
+            //     ->when($request['lophoc'] != '', function ($query) use ($request) {
+            //         return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
+            //     })->get();
+            $giaovien = User::leftjoin('lophoc', 'users.mataikhoan', '=', 'lophoc.giaovienchunhiem')
+            ->select('users.tentaikhoan', 'users.gioitinh', 'users.ngaysinh', 'users.sodienthoai', 'users.cccd', 'lophoc.tenlop', 'lophoc.malop')
+            ->where('users.tentaikhoan', 'LIKE', '%' . $request['hoten'] . '%')
+            ->when($request['lophoc'] != '', function ($query) use ($request) {
+                return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
+            })->get();
 
-            $hocvien = hocvien::leftjoin('lophoc', 'hocvien.malop', '=', 'lophoc.malop')
-                ->leftJoin('ketquathithu', 'hocvien.mahocvien', '=', 'ketquathithu.mahocvien')
-                ->select('hocvien.tenhocvien', 'hocvien.gioitinh', 'hocvien.ngaysinh', 'hocvien.sdt', 'hocvien.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi', 'lophoc.malop')
-                ->where('hocvien.tenhocvien', 'LIKE', '%' . $request['hoten'] . '%')
+            // $hocvien = hocvien::leftjoin('lophoc', 'hocvien.malop', '=', 'lophoc.malop')
+            //     ->leftJoin('ketquathithu', 'hocvien.mahocvien', '=', 'ketquathithu.mahocvien')
+            //     ->select('hocvien.tenhocvien', 'hocvien.gioitinh', 'hocvien.ngaysinh', 'hocvien.sdt', 'hocvien.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi', 'lophoc.malop')
+            //     ->where('hocvien.tenhocvien', 'LIKE', '%' . $request['hoten'] . '%')
+                $hocvien = User::leftjoin('lophoc', 'users.malop', '=', 'lophoc.malop')
+                ->leftJoin('ketquathithu', 'users.mataikhoan', '=', 'ketquathithu.mahocvien')
+                ->select('users.tentaikhoan', 'users.gioitinh', 'users.ngaysinh', 'users.sodienthoai', 'users.cccd', 'lophoc.tenlop', 'ketquathithu.diemthi', 'ketquathithu.ngaythi', 'lophoc.malop')
+                ->where('users.tentaikhoan', 'LIKE', '%' . $request['hoten'] . '%')
                 ->when($request['lophoc'] != '', function ($query) use ($request) {
                     return $query->where('lophoc.malop', 'LIKE', '%' . $request['lophoc'] . '%');
                 })

@@ -38,7 +38,7 @@
                                 <div class="col-sm-3">Họ tên:</div>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control-plaintext" readonly
-                                        value="{{ $hocvien->tenhocvien }}">
+                                        value="{{ $hocvien->tentaikhoan }}">
                                 </div>
                             </div>
                             <div class="row align-items-center" style="padding-left: 5%">
@@ -52,7 +52,7 @@
                                 <div class="col-sm-3">Số điện thoại:</div>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control-plaintext" readonly
-                                        value="{{ $hocvien->sdt }}">
+                                        value="{{ $hocvien->sodienthoai }}">
                                 </div>
                             </div>
                             <div class="row align-items-center" style="padding-left: 5%">

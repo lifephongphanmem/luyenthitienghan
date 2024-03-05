@@ -87,12 +87,12 @@
                             @foreach ($hocvien as $key => $hv)
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
-                                    <td  class="text-left" style="width: 20%">{{ $hv->tenhocvien }}</td>
+                                    <td  class="text-left" style="width: 20%">{{ $hv->tentaikhoan }}</td>
                                     <td class="text-left" style="width: 10%">{{ $hv->cccd }}</td>
                                     <td  style="width: 10%">{{  $hv->gioitinh == 0?'Nữ':'Nam' }}</td>
                                     <td class="text-left" style="width: 8%">
                                         {{ getDayVn($hv->ngaysinh)}}</td>
-                                     <td class="text-left" style="width: 10%">{{ $hv->sdt }}</td>
+                                     <td class="text-left" style="width: 10%">{{ $hv->sodienthoai }}</td>
                                      <td class="text-left" style="width: 20%">{{ $hv->diachi }}</td>
                                     <td class="text-center">
                                         <button title="Chuyển lớp"
@@ -165,17 +165,17 @@
                                     @foreach ($m_hocvien as $key => $hv)
                                         <tr class="text-center">
                                             <td style="width: 2%">{{ ++$key }}</td>
-                                            <td class="text-left" style="width: 20%">{{ $hv->tenhocvien }}</td>
+                                            <td class="text-left" style="width: 20%">{{ $hv->tentaikhoan }}</td>
                                             <td style="width: 8%">{{ $hv->cccd }}</td>
                                             <td style="width: 6%">{{ $hv->gioitinh == 0?'Nữ':'Nam' }}</td>
                                             <td style="width: 7%">{{ getDayVn($hv->ngaysinh) }}</td>
                                             <td class="text-left" style="width: 8%">
-                                                {{ $hv->sdt }}</td>
+                                                {{ $hv->sodienthoai }}</td>
                                                 <td style="width:20%">{{$hv->diachi}}</td>
                                                 {{-- <td name='trangthai' style="width:10%" class="{{$a_texttrangthai[$gv->trangthai]}}">{{$a_trangthai[$gv->trangthai]}}</td> --}}
                                             <td class="text-center" style="width:8%">
                                                 <label class="checkbox checkbox-outline checkbox-success">
-                                                    <input type="checkbox" name="mahocvien[]" value="{{$hv->mahocvien}}">
+                                                    <input type="checkbox" name="mahocvien[]" value="{{$hv->mataikhoan}}">
                                                     <span></span>&nbsp;Chọn</label>
         
 

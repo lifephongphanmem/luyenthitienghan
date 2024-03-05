@@ -135,59 +135,6 @@
                     </div>
                 </div>
                  @endforeach
-                    {{-- <div id="question" class="question entry-tracnghiem-test cauhoi-1" data-id="2235">
-                        <div class="cauhoitracnghiem"> <b>{{ $ct['stt'] }}.</b> <audio controls="controls"
-                                src="{{ url($ct['audio']) }}" audio=""></audio>1 - {{ $ct['cauhoi1'] }} <a onclick="playAudio(this,'{{ url($ct['audio']) }}')"
-                                class="sm2_button" data-div="1" style="margin-left:10px;"> </a> </div>
-                        <div class="quiz-list">
-                            <div class="qselect cot2" data-id="{{ $ct['macauhoi1'] }}"
-                                data-traloi="{{ $ct['dapan1'] == 'A' ? 'T' : 'F' }}">
-                                <div class="mark">1</div>
-                                <div class="qsign">{{ $ct['A1'] }}</div>
-                            </div>
-                            <div class="qselect cot2" data-id="{{ $ct['macauhoi1'] }}"
-                                data-traloi="{{ $ct['dapan1'] == 'B' ? 'T' : 'F' }}">
-                                <div class="mark">2</div>
-                                <div class="qsign"> {{ $ct['B1'] }}</div>
-                            </div>
-                            <div class="qselect cot2" data-id="{{ $ct['macauhoi1'] }}"
-                                data-traloi="{{ $ct['dapan1'] == 'C' ? 'T' : 'F' }}">
-                                <div class="mark">3</div>
-                                <div class="qsign">{{ $ct['C1'] }}</div>
-                            </div>
-                            <div class="qselect cot2" data-id="{{ $ct['macauhoi1'] }}"
-                                data-traloi="{{ $ct['dapan1'] == 'D' ? 'T' : 'F' }}">
-                                <div class="mark">4</div>
-                                <div class="qsign"> {{ $ct['D1'] }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="question" class="question entry-tracnghiem-test cauhoi-2" data-id="2236">
-                        <div class="cauhoitracnghiem"> <b>{{ $ct['stt'] }}.</b> 2 - {{ $ct['cauhoi2'] }} <a onclick="playAudio(this,'')"
-                                class="sm2_button" data-div="2" style="margin-left:10px;"> </a> </div>
-                        <div class="quiz-list">
-                                <div class="qselect cot2" data-id="{{ $ct['macauhoi2'] }}"
-                                    data-traloi="{{ $ct['dapan2'] == 'A' ? 'T' : 'F' }}">
-                                    <div class="mark">1</div>
-                                    <div class="qsign">{{ $ct['A2'] }}</div>
-                                </div>
-                                <div class="qselect cot2" data-id="{{ $ct['macauhoi2'] }}"
-                                    data-traloi="{{ $ct['dapan2'] == 'B' ? 'T' : 'F' }}">
-                                    <div class="mark">2</div>
-                                    <div class="qsign"> {{ $ct['B2'] }}</div>
-                                </div>
-                                <div class="qselect cot2" data-id="{{ $ct['macauhoi2'] }}"
-                                    data-traloi="{{ $ct['dapan2'] == 'C' ? 'T' : 'F' }}">
-                                    <div class="mark">3</div>
-                                    <div class="qsign">{{ $ct['C2'] }}</div>
-                                </div>
-                                <div class="qselect cot2" data-id="{{ $ct['macauhoi2'] }}"
-                                    data-traloi="{{ $ct['dapan2'] == 'D' ? 'T' : 'F' }}">
-                                    <div class="mark">4</div>
-                                    <div class="qsign"> {{ $ct['D2'] }}</div>
-                                </div>
-                        </div>
-                    </div> --}}
                 @endif
             @endforeach
         </div>
