@@ -18,6 +18,7 @@ Route::prefix('LopHoc')->group(function(){
     Route::post('/themhocvien',[lophocController::class,'themhocvien']);
     Route::post('/chuyenlop/{id}',[lophocController::class,'chuyenlop']);
     Route::post('/KetQuaThiThu',[lophocController::class,'ketquathi']);
+    Route::post('/NhanExcel',[lophocController::class,'nhanexcel']);
 });
 
 //giáo viên

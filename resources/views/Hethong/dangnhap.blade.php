@@ -72,7 +72,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<form action="{{'/DangNhap'}}" method="POST" class="form" id="kt_login_signin_form">
                                 @csrf
 								<div class="form-group mb-5">
-									<input class="form-control h-auto form-control-solid py-4 px-8" type="text" placeholder="Căn cước công dân" name="cccd" autocomplete="off" required />
+									<input class="form-control h-auto form-control-solid py-4 px-8" type="text" placeholder="Tài khoản đăng nhập" name="sodienthoai" autocomplete="off" required />
 								</div>
 								<div class="form-group mb-5">
 									<input class="form-control h-auto form-control-solid py-4 px-8" type="password" placeholder="Mật khẩu" name="password" required />

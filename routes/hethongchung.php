@@ -55,6 +55,8 @@ Route::prefix('TaiKhoan')->group(function () {
 
     //Khóa nhiều tài khoản (chủ yếu khóa tài khoản học viên theo lớp)
     Route::post('/khoataikhoan',[dstaikhoanController::class,'khoataikhoan']);
+    Route::get('/phanloai',[dstaikhoanController::class,'getnhontaikhoan']);
+    Route::get('/ChuyenDuLieu',[dstaikhoanController::class,'chuyendulieu']);
 });
 
 //Nhóm chức năng

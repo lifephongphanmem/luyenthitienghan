@@ -5404,22 +5404,31 @@ input[type="checkbox"]+label {
 
     .box_dark.thi-tracnghiem #contentWrap {
         width: 100%;
-        float: left
+        float: left;
+        position: absolute;
     }
 
     .box_dark.thi-tracnghiem #containerWrap {
         width: 100%;
         float: left
     }
-
+    /* #contentWrap {
+        position: relative;
+    } */
     .box_dark.thi-tracnghiem .list-tracnghiem,.box_dark.thi-tracnghiem .pagination {
         height: auto;
         width: 100%;
         min-height: 10px;
         padding: 0px;
         background: #fff;
+        position: relative;
+        top: -10px;
     }
 
+    /* .pagination {
+        position: absolute;
+        top: -10px;
+    } */
     .list-tracnghiem .qselect.cot2,.list-tracnghiem .qselect.cot3,.list-tracnghiem .qselect.cot4 {
         width: 100%;
         min-height: 20px
@@ -6482,5 +6491,32 @@ a {
     .imganswer {
         max-width: 400px !important;
         max-height: 200px !important;
+    }
+}
+/* Hide the desktop version and display only the mobile version on small screens */
+/* @media only screen and (max-width: 768px) {
+    .content-pagination {
+        display: none;
+    }
+
+    .view-mobile {
+        display: block;
+    }
+} */
+
+/* For larger screens, show the default desktop version and hide mobile-specific pagination */
+/* @media only screen and (min-width: 769px) {
+    .view-mobile {
+        display: none;
+    }
+    
+    .content-pagination {
+        display: block;
+    }
+} */
+
+@media only screen and (max-width: 768px) {
+    #examNextPrevious {
+        display: none;
     }
 }

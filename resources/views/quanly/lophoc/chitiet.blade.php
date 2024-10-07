@@ -38,11 +38,19 @@
                         <h3 class="card-label text-uppercase">Danh sách học viên</h3>
                     </div>
                     <div class="card-toolbar">
-                        <button  data-target="#themmoi" data-toggle="modal"
+                        <div class="btn-toolbar justify-content-between mr-5" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group" role="group" aria-label="First group">
+                                <button type="button" data-target="#themmoi" data-toggle="modal" class="btn btn-primary  btn-icon" title="Thêm học viên"><i class="fa fa-plus"></i></button>
+                                <button type="button" data-target="#thithu" data-toggle="modal" class="btn btn-success btn-icon" title="Kết quả thi"><i class="flaticon-list"></i></button>
+                                <button type="button" data-target="#modal-nhanexcel" data-toggle="modal" class="btn btn-warning btn-icon" title="Nhận excel"><i class="fas fa-file-import"></i></button>
+                                {{-- <button type="button" class="btn btn-info btn-icon"><i class="la la-scissors"></i></button> --}}
+                            </div>
+                        </div>
+                        {{-- <button  data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i>Thêm học viên</button>
                         <button  class="btn btn-xs btn-success mr-2" onclick="kq_thithu()" data-target="#thithu" data-toggle="modal">
                             <i class="flaticon-list"></i> Kết quả thi
-                        </button>
+                        </button> --}}
                         <a onclick="history.back()" class="btn btn-primary"><i
                             class="fa fa-reply"></i>&nbsp;Quay lại</a>
                     </div>
@@ -402,6 +410,7 @@
             </div>
         </form>
     </div>
+    @include('modal.modal_excel')
     <script>
           function phanquyenluyenthi(mahocvien, phanquyenluyenthi) {
             $('#mahocvien_luyenthi').val(mahocvien);

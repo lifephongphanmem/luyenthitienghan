@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\quanly;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ColectionImport;
 use App\Models\dethi\dethi;
 use App\Models\Hethong\dstaikhoan_phanquyen;
 use App\Models\ketqua\ketquathithu;
@@ -12,7 +13,9 @@ use App\Models\quanly\lophoc;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class lophocController extends Controller
 {
@@ -55,7 +58,7 @@ class lophocController extends Controller
                 if (isset($inputs['khoahoc'])) {
                     $q->where('khoahoc', $inputs['khoahoc']);
                 }
-                if(!chkPhanQuyen('taikhoan', 'thaydoi')){
+                if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
                     $q->where('giaovienchunhiem', session('admin')->mataikhoan);
                 }
             })
@@ -71,7 +74,7 @@ class lophocController extends Controller
         //     }
         // }
         // dd($model);
-        $a_giaovien = array_column(User::where('giaovien',1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
+        $a_giaovien = array_column(User::where('giaovien', 1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
 
         $inputs['url'] = '/LopHoc/ThongTin';
@@ -164,50 +167,50 @@ class lophocController extends Controller
         $inputs['khoahoc'] = isset($inputs['khoahoc']) ? $inputs['khoahoc'] : $model->khoahoc;
 
         $hocvien = lophoc::join('users', 'users.malop', 'lophoc.malop')
+            ->join('hocvien','hocvien.sdt','users.sodienthoai')
             ->where('users.malop', $inputs['lophoc'])
             ->where('khoahoc', $inputs['khoahoc'])
             ->get();
-            foreach($hocvien as $ct){
-                $phanquyen=dstaikhoan_phanquyen::where('tendangnhap',$ct->cccd)->wherein('machucnang',['luyenthi','60baieps','960caudoc','960caunghe'])->get();
-                $a_phanquyen=array_column($phanquyen->toarray(),'phanquyen','machucnang');
-                $a_macngiaotrinh=array_column($phanquyen->toarray(),'machucnang','machucnang');
-                if(isset($a_phanquyen['luyenthi'])){
-                    $ct->phanquyenluyenthi=$a_phanquyen['luyenthi'];
-                    unset($a_phanquyen['luyenthi']);
-                    unset($a_macngiaotrinh['luyenthi']);
-                }else{
-                    $ct->phanquyenluyenthi=0;
-                }
-                if(count($a_phanquyen)> 0){
-                    $giaotrinh=implode(';',$a_macngiaotrinh);
-                    $ct->giaotrinhhoc=$giaotrinh;
-                    foreach($a_phanquyen as $val){
-                        $ct->phanquyengiaotrinhhoc=$val;
-                        break;
-                    }
-                }else{
-                    $ct->giaotrinhhoc='60baieps;960caudoc;960caunghe';
-                    $ct->phanquyengiaotrinhhoc=0;
-                }
-
-                $khoataikhoan=User::where('cccd',$ct->cccd)->first();
-                if(isset($khoataikhoan)){
-                    $ct->khoataikhoan=$khoataikhoan->trangthai;
-                }else{
-                    $ct->khoataikhoan=2;
-                }
-
+        foreach ($hocvien as $ct) {
+            $phanquyen = dstaikhoan_phanquyen::where('tendangnhap', $ct->cccd)->wherein('machucnang', ['luyenthi', '60baieps', '960caudoc', '960caunghe'])->get();
+            $a_phanquyen = array_column($phanquyen->toarray(), 'phanquyen', 'machucnang');
+            $a_macngiaotrinh = array_column($phanquyen->toarray(), 'machucnang', 'machucnang');
+            if (isset($a_phanquyen['luyenthi'])) {
+                $ct->phanquyenluyenthi = $a_phanquyen['luyenthi'];
+                unset($a_phanquyen['luyenthi']);
+                unset($a_macngiaotrinh['luyenthi']);
+            } else {
+                $ct->phanquyenluyenthi = 0;
             }
+            if (count($a_phanquyen) > 0) {
+                $giaotrinh = implode(';', $a_macngiaotrinh);
+                $ct->giaotrinhhoc = $giaotrinh;
+                foreach ($a_phanquyen as $val) {
+                    $ct->phanquyengiaotrinhhoc = $val;
+                    break;
+                }
+            } else {
+                $ct->giaotrinhhoc = '60baieps;960caudoc;960caunghe';
+                $ct->phanquyengiaotrinhhoc = 0;
+            }
+
+            $khoataikhoan = User::where('sodienthoai', $ct->sodienthoai)->first();
+            if (isset($khoataikhoan)) {
+                $ct->khoataikhoan = $khoataikhoan->trangthai;
+            } else {
+                $ct->khoataikhoan = 2;
+            }
+        }
         // $giaovien=giaovien::where('trangthai','!=',3)->get();
-        $a_giaovien = array_column(User::where('giaovien',1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
+        $a_giaovien = array_column(User::where('giaovien', 1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
         $a_lophoc = array_column(lophoc::select('malop', 'tenlop')->get()->toarray(), 'tenlop', 'malop');
 
         $inputs['url'] = '/LopHoc/chitiet';
-        $m_hocvien = User::where('hocvien',1)->wherenull('malop')->get();
+        $m_hocvien = User::where('hocvien', 1)->wherenull('malop')->get();
         $ketquathi = ketquathithu::where('malop', $inputs['lophoc'])->get();
         $ketquathi->unique('created_at');
-// dd($hocvien);
+        // dd($hocvien);
         return view('quanly.lophoc.chitiet')
             ->with('model', $model)
             ->with('inputs', $inputs)
@@ -301,7 +304,7 @@ class lophocController extends Controller
     public function ketquathi(Request $request)
     {
         $inputs = $request->all();
-        $a_giaovien = array_column(User::where('giaovien',1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
+        $a_giaovien = array_column(User::where('giaovien', 1)->where('trangthai', '!=', 3)->get()->toarray(), 'tentaikhoan', 'mataikhoan');
         $a_khoahoc = array_column(lophoc::select('khoahoc')->get()->unique('khoahoc')->toarray(), 'khoahoc', 'khoahoc');
         $a_lophoc = array_column(lophoc::select('malop', 'tenlop')->get()->toarray(), 'tenlop', 'malop');
         $ketqua = ketquathithu::where('malop', $inputs['malop'])
@@ -322,7 +325,7 @@ class lophocController extends Controller
         }
         $mahocvien = array_column($ketqua->toarray(), 'mahocvien');
 
-        $hocvien = User::where('hocvien',1)->wherein('mahocvien', $mahocvien)->get();
+        $hocvien = User::where('hocvien', 1)->wherein('mahocvien', $mahocvien)->get();
         foreach ($hocvien as $ct) {
             $ketqua_hv = $ketqua->where('mahocvien', $ct->mahocvien)->first();
             $ct->diemthi = $ketqua_hv->diemthi;
@@ -345,5 +348,73 @@ class lophocController extends Controller
             ->with('ketqua', $ketqua)
             ->with('pageTitle', 'Kết quả thi thử');
     }
+    public function nhanexcel(Request $request)
+    {
+        $inputs = $request->all();
 
+        $dataObj = new ColectionImport();
+        $theArray = Excel::toArray($dataObj, $inputs['fexcel']);
+        $data = $theArray[0];
+        $lophoc=lophoc::where('malop',$inputs['malop'])->first();
+        // if(isset($lophoc)){
+        //     $soluonghocvien=$lophoc->soluonghocvien;
+        // }else{
+        //     $soluonghocvien=0;
+        // }
+        $soluong=0;
+        $a_dshocvien = array();
+        for ($i = ($inputs['tudong'] - 1); $i <= $inputs['dendong']; $i++) {
+            $sdt = $data[$i][ColumnName()[$inputs['sdt']]];
+            if(!isset($sdt) && !isset($data[$i][ColumnName()[$inputs['tenhocvien']]])){
+                break;
+            }
+            $hocvien = hocvien::where('sdt', $sdt)->first();
+            if (isset($hocvien) || !isset($sdt)) {
+                continue;
+            }
+            if (is_int($data[$i][ColumnName()[$inputs['ngaysinh']]])) {
+                $unix_date = ($data[$i][ColumnName()[$inputs['ngaysinh']]] - 25569) * 86400;
+                $ngaysinh = date('Y-m-d', $unix_date);
+            } else {
+                $ngaysinh = '';
+            }
+
+
+            $a_dshocvien = array(
+                'mahocvien' => $sdt . '_' . getdate()[0],
+                'tenhocvien' => $data[$i][ColumnName()[$inputs['tenhocvien']]] ?? '',
+                'cccd' => $data[$i][ColumnName()[$inputs['cccd']]] ?? '',
+                'sdt' => $sdt,
+                'ngaysinh' => $ngaysinh,
+                'gioitinh' => $data[$i][ColumnName()[$inputs['gioitinh']]] ?? '',
+                'diachi' => $data[$i][ColumnName()[$inputs['diachi']]] ?? ''
+            );
+            hocvien::create($a_dshocvien);
+            //Tạo tài khoản cho học viên
+            $user = User::where('sodienthoai', $sdt)->first();
+            if (isset($user)) {
+                continue;
+            }
+            $a_taikhoan = array(
+                'mataikhoan' => $sdt . '_' . getdate()[0] . $i,
+                'tentaikhoan' => $data[$i][ColumnName()[$inputs['tenhocvien']]] ?? '',
+                'cccd' => $data[$i][ColumnName()[$inputs['cccd']]] ?? '',
+                'sodienthoai' => $sdt,
+                'cccd' => $data[$i][ColumnName()[$inputs['cccd']]] ?? '',
+                'password' => Hash::make('123456abc'),
+                'manhomchucnang' => '1680748012',
+                'hocvien' => true,
+                'malop' => $inputs['malop']
+            );
+            User::create($a_taikhoan);
+            //gắn phân quyền cho tài khoản
+            add_phanquyen('1680748012', $sdt);
+            $soluong +=1;
+        }
+        $lophoc->soluonghocvien += $soluong;
+        $lophoc->save();
+
+        return redirect('/LopHoc/chitiet?lophoc=' . $inputs['malop'])
+            ->with('success', 'Nhận excel thành công');
+    }
 }

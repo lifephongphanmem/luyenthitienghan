@@ -50,29 +50,23 @@ class thithuController extends Controller
 
     public function lambai(Request $request)
     {
-        // $model = dethi::all();
-        // $a_madethi = array_column($model->toarray(), 'made');
-        // $made = $a_madethi[array_rand($a_madethi)];
         $inputs = $request->all();
+        // dd($inputs);
         if (isset($inputs['loai'])) {
             $cauhoi = taodeluyenthi();
             // dd($cauhoi);
             $m_cauhoi = cauhoi::wherein('macauhoi', $cauhoi)->get();
-            // $hocvien = hocvien::where('mahocvien', session('admin')->mahocvien)->first();
-            // $phongthi = phongthi::join('phongthi_lop', 'phongthi_lop.maphongthi', 'phongthi.maphongthi')
-            //     ->select('phongthi.made')
-            //     ->where('phongthi.trangthai', 1)
-            //     ->where('phongthi_lop.malop', $hocvien->malop)
-            //     ->first();
-            // $made = $phongthi->made;
-            // $m_cauhoi = cauhoi::join('cauhoi_dethi', 'cauhoi_dethi.macauhoi', 'cauhoi.macauhoi')
-            //     ->where('cauhoi_dethi.made', $made)
-            //     ->orderBy('loaicauhoi', 'desc')
-            //     ->get();
             $made = 1;
             $malop=1;
             $maphongthi=1;
             $title='Luyện thi EPS-TOPIK';
+            
+            //tăng số lượt luyện thi của học viên
+            $hocvien=hocvien::where('sdt',session('admin')->sodienthoai)->first();
+            if(isset($hocvien)){
+                $hocvien->solanluyenthi += 1;
+                $hocvien->save();
+            }
         } else {
             // $hocvien = hocvien::where('mahocvien', session('admin')->manguoidung)->first();
             $hocvien = User::where('mataikhoan', session('admin')->mataikhoan)->first();

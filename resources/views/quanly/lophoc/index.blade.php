@@ -146,10 +146,22 @@
                                 <label class="control-label">Tên lớp học<span class="require">*</span></label>
                                 <input type="text" name="tenlop" class="form-control" required>
                             </div>
-                            <div class="col-md-12">
+                            {{-- <div class="form-group row"> --}}
+                            <div class="col-md-10">
                                 <label class="control-label">Khóa học</label>
-                                <input type="text" name="khoahoc" class="form-control" required>
+                                <select name="khoahoc" id="khoahoc" class="form-control">
+                                    @foreach ($a_khoahoc as $ct)
+                                        <option value="{{ $ct }}">{{ $ct }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                            <div class="col-md-1" style="padding-left: 0px;">
+                                <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
+                                <button type="button" class="btn btn-default" data-target="#modal-khoahoc"
+                                    data-toggle="modal">
+                                    <i class="fa fa-plus"></i></button>
+                            </div>
+                            {{-- </div> --}}
                             <div class="col-md-12 mt-1">
                                 <label class="control-label">Giáo viên chủ nhiệm</label>
                                 <select name="giaovienchunhiem" class="form-control select2basic"style="width:100%">
@@ -193,7 +205,11 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="control-label">Khóa học</label>
-                                <input type="text" name="khoahoc" id="khoahoc" class="form-control" required>
+                                <select name="khoahoc" id="khoahoc" class="form-control">
+                                    @foreach ($a_khoahoc as $ct)
+                                        <option value="{{ $ct }}">{{ $ct }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-12 mt-1">
                                 <label class="control-label">Giáo viên chủ nhiệm</label>
@@ -354,11 +370,11 @@
                             <div class="col-9 col-form-label">
                                 <div class="checkbox-inline">
                                     <label class="checkbox checkbox-primary">
-                                    <input type="checkbox" name="60baieps" value="60baieps" id='60baieps' />
-                                    <span></span>60 bài eps</label>
+                                        <input type="checkbox" name="60baieps" value="60baieps" id='60baieps' />
+                                        <span></span>60 bài eps</label>
                                     <label class="checkbox checkbox-primary">
-                                    <input type="checkbox" name="960caudoc" value="960caudoc" id="960caudoc" />
-                                    <span></span>960 câu đọc</label>
+                                        <input type="checkbox" name="960caudoc" value="960caudoc" id="960caudoc" />
+                                        <span></span>960 câu đọc</label>
                                     <label class="checkbox checkbox-primary">
                                         <input type="checkbox" name="960caunghe" value="960caunghe" id="960caunghe" />
                                         <span></span>960 câu hiểu</label>
@@ -370,11 +386,11 @@
                             <div class="col-9 col-form-label">
                                 <div class="radio-inline">
                                     <label class="radio radio-primary">
-                                    <input type="radio" name="kh_khoahoc" value="1" id="kh_khoahoc" />
-                                    <span></span>Kích hoạt</label>
+                                        <input type="radio" name="kh_khoahoc" value="1" id="kh_khoahoc" />
+                                        <span></span>Kích hoạt</label>
                                     <label class="radio radio-primary">
-                                    <input type="radio" name="kh_khoahoc" value="0" id="khoa_khoahoc" />
-                                    <span></span>Khóa</label>
+                                        <input type="radio" name="kh_khoahoc" value="0" id="khoa_khoahoc" />
+                                        <span></span>Khóa</label>
                                 </div>
                             </div>
                         </div>
@@ -397,27 +413,58 @@
             </div>
         </form>
     </div>
+    <!-- modal tạo khóa học -->
+    <div id="modal-khoahoc" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Thông tin khóa học</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-control-label">Khóa học<span class="require">*</span></label>
+                            <input type="text" name="khoahoc_add" id="khoahoc_add" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button class="btn btn-primary" onclick="add_khoahoc()">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
+        function add_khoahoc() {
+            $('#modal-khoahoc').modal('hide');
+            var gt = $('#khoahoc_add').val();
+            $('#khoahoc').append(new Option(gt, gt, true, true));
+            $('#khoahoc').val(gt).trigger('change');
+        }
+
         function phanquyenluyenthi(malop, phanquyenluyenthi) {
             $('#malop_luyenthi').val(malop);
             $('#phanquyenluyenthi option[value=' + phanquyenluyenthi + ' ]').attr('selected', 'selected');
         }
 
-        function phanquyenkhoahoc(malop, giaotrinh,phanquyen) {
+        function phanquyenkhoahoc(malop, giaotrinh, phanquyen) {
             $('#malop_khoahoc').val(malop);
-           
+
             if (giaotrinh != null) {
                 var arr_giaotrinh = giaotrinh.split(';')
                 arr_giaotrinh.forEach(element => {
-                    $('#'+element).prop('checked',true);
+                    $('#' + element).prop('checked', true);
                 });
-                
+
 
             }
-            if(phanquyen == 1){
-                $('#kh_khoahoc').prop('checked',true);
-            }else{
-                $('#khoa_khoahoc').prop('checked',true);
+            if (phanquyen == 1) {
+                $('#kh_khoahoc').prop('checked', true);
+            } else {
+                $('#khoa_khoahoc').prop('checked', true);
             }
         }
 
