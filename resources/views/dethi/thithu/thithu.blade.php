@@ -1,4 +1,4 @@
-<html  lang="vi">
+<html lang="vi">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -72,22 +72,25 @@
                             {{-- <marquee width="100%" bgcolor="pink" onmouseover="this.stop();"
                                 onmouseout="this.start();">Để được đăng ký sử dụng phần mềm có nội dung đề sưu tầm thi
                                 thật vui lòng liên hệ số ĐT: .</marquee> --}}
-                        </div>
-                        <div class="list-tracnghiem diemthi-tracnghiem" style="background-color: white;display:none;">
-                        </div>
-                        <div>
+                            {{-- </div> --}}
+                            <div class="list-tracnghiem diemthi-tracnghiem"
+                                style="background-color: white;display:none;">
+                            </div>
+                            {{-- <div> --}}
                             <div id="question-panel"
                                 style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"
                                 class="bailam-tracnghiem list-tracnghiem">
                                 <div class="bailam-tracnghiem-center">
-                                    <input type="hidden" name="madethi" id="madethi" value="{{$made}}">
-                                    <input type="hidden" name="timestart" id="timestart" value="{{$timestart}}">
-                                    <input type="hidden" name="malop" id="malop" value="{{$malop}}">
-                                    <input type="hidden" name="maphongthi" id="maphongthi" value="{{$maphongthi}}">
+                                    <input type="hidden" name="madethi" id="madethi" value="{{ $made }}">
+                                    <input type="hidden" name="timestart" id="timestart" value="{{ $timestart }}">
+                                    <input type="hidden" name="malop" id="malop" value="{{ $malop }}">
+                                    <input type="hidden" name="maphongthi" id="maphongthi"
+                                        value="{{ $maphongthi }}">
                                     @foreach ($m_cauhoi as $k => $ct)
                                         @if ($ct->loaicauhoi == 1683685323)
-                                            <div id="question" class="question thi-thu entry-tracnghiem cauhoi-{{$ct->cau}} @if($k == 0) active @endif"
-                                                data-id="{{$ct->cau}}" data-code="{{$ct->macauhoi}}:F">
+                                            <div id="question"
+                                                class="question thi-thu entry-tracnghiem cauhoi-{{ $ct->cau }} @if ($k == 0) active @endif"
+                                                data-id="{{ $ct->cau }}" data-code="{{ $ct->macauhoi }}:F">
                                                 <div class="cauhoitracnghiem">
                                                     <p style="font-size: 10px;">[MA-{{ $ct->macauhoi }}]</p>
                                                     <div class="noidung-cauhoi">
@@ -95,30 +98,36 @@
                                                         <strong>{{ $ct->cauhoi }}</strong>
                                                         <p style="display: block;"></p>
                                                         @if ($ct->noidung != null)
-                                                        <table border="1" style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;" height="70">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style="width: 99%; padding: 10px; text-align: center;">{{$ct->noidung}}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                            <table border="1"
+                                                                style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;"
+                                                                height="70">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td
+                                                                            style="width: 99%; padding: 10px; text-align: center;">
+                                                                            {{ $ct->noidung }}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         @endif
-                                                        @if($ct->hoithoai1 != null)
-                                                        <table border="1" style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;" height="70">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style="width: 99%; padding: 10px;">
-                                                                        <?php $a_hoithoai=['hoithoai1','hoithoai2','hoithoai3','hoithoai4'] ?>
-                                                                        @foreach ($a_hoithoai as $ng=>$ht)
-                                                                        @if($ct->$ht != null)
-                                                                            {{in_array($ng,['1','3'])?'가':'나'}} : {{$ct->$ht}}<br>
-                                                                        @endif
-                                                                        @endforeach
-                                                                        {{-- 가： 지금 김 과장님 자리에 안 계신데요. 메모를 남겨 드릴까요?<br>나： 아니요, 제가 나중에 다시 전화 _______________. --}}
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                        @if ($ct->hoithoai1 != null)
+                                                            <table border="1"
+                                                                style="height: 70px; width: 99%; margin-top: 20px; margin-left: auto; margin-right: auto;"
+                                                                height="70">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 99%; padding: 10px;">
+                                                                            <?php $a_hoithoai = ['hoithoai1', 'hoithoai2', 'hoithoai3', 'hoithoai4']; ?>
+                                                                            @foreach ($a_hoithoai as $ng => $ht)
+                                                                                @if ($ct->$ht != null)
+                                                                                    {{ in_array($ng, ['1', '3']) ? '가' : '나' }}
+                                                                                    : {{ $ct->$ht }}<br>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         @endif
                                                         @if (isset($ct->anh))
                                                             <img src="{{ url($ct->anh) }}" class="imgquestion">
@@ -127,59 +136,64 @@
                                                 </div>
                                                 <div class="quiz-list" style="margin-left: 10%;">
                                                     <div class="d-flex">
-                                                        <div class="qselect cot2" id="{{$ct->macauhoi}}_A" data-id="{{$ct->cau}}"
-                                                            data-traloi="{{$ct->macauhoi}}:A">
+                                                        <div class="qselect cot2" id="{{ $ct->macauhoi }}_A"
+                                                            data-id="{{ $ct->cau }}"
+                                                            data-traloi="{{ $ct->macauhoi }}:A">
                                                             <div class="mark">1</div>
-                                                            <div class="qsign"> 
+                                                            <div class="qsign">
                                                                 @if ($ct->loaidapan == 1)
-                                                                {{ $ct->A }}
-                                                            @else
-                                                                <img src="{{ url($ct->A) }}" class="imganswer">
-                                                            @endif
+                                                                    {{ $ct->A }}
+                                                                @else
+                                                                    <img src="{{ url($ct->A) }}" class="imganswer">
+                                                                @endif
                                                             </div>
                                                         </div>
-                                                        <div class="qselect cot2" id="{{$ct->macauhoi}}_B" data-id="{{$ct->cau}}"
-                                                            data-traloi="{{$ct->macauhoi}}:B">
+                                                        <div class="qselect cot2" id="{{ $ct->macauhoi }}_B"
+                                                            data-id="{{ $ct->cau }}"
+                                                            data-traloi="{{ $ct->macauhoi }}:B">
                                                             <div class="mark">2</div>
-                                                            <div class="qsign">  
+                                                            <div class="qsign">
                                                                 @if ($ct->loaidapan == 1)
-                                                                {{ $ct->B }}
-                                                            @else
-                                                                <img src="{{ url($ct->B) }}" class="imganswer">
-                                                            @endif
+                                                                    {{ $ct->B }}
+                                                                @else
+                                                                    <img src="{{ url($ct->B) }}" class="imganswer">
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex">
-                                                        <div class="qselect cot2" id="{{$ct->macauhoi}}_C" data-id="{{$ct->cau}}"
-                                                            data-traloi="{{$ct->macauhoi}}:C">
+                                                        <div class="qselect cot2" id="{{ $ct->macauhoi }}_C"
+                                                            data-id="{{ $ct->cau }}"
+                                                            data-traloi="{{ $ct->macauhoi }}:C">
                                                             <div class="mark">3</div>
-                                                            <div class="qsign">  
+                                                            <div class="qsign">
                                                                 @if ($ct->loaidapan == 1)
-                                                                {{ $ct->C }}
-                                                            @else
-                                                                <img src="{{ url($ct->C) }}" class="imganswer">
-                                                            @endif
+                                                                    {{ $ct->C }}
+                                                                @else
+                                                                    <img src="{{ url($ct->C) }}" class="imganswer">
+                                                                @endif
                                                             </div>
                                                         </div>
-                                                        <div class="qselect cot2" id="{{$ct->macauhoi}}_D" data-id="{{$ct->cau}}"
-                                                            data-traloi="{{$ct->macauhoi}}:D">
+                                                        <div class="qselect cot2" id="{{ $ct->macauhoi }}_D"
+                                                            data-id="{{ $ct->cau }}"
+                                                            data-traloi="{{ $ct->macauhoi }}:D">
                                                             <div class="mark">4</div>
-                                                            <div class="qsign"> 
+                                                            <div class="qsign">
                                                                 @if ($ct->loaidapan == 1)
-                                                                {{ $ct->D }}
-                                                            @else
-                                                                <img src="{{ url($ct->D) }}" class="imganswer">
-                                                            @endif
+                                                                    {{ $ct->D }}
+                                                                @else
+                                                                    <img src="{{ url($ct->D) }}" class="imganswer">
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         @else
-                                            <div id="question" class="question thi-thu entry-tracnghiem cauhoi-{{$ct->cau}}"
-                                                data-id="{{$ct->cau}}" data-code="{{$ct->macauhoi}}:F">
-                                                <div class="cauhoitracnghiem"> <b>Câu: {{$ct->cau }}.
+                                            <div id="question"
+                                                class="question thi-thu entry-tracnghiem cauhoi-{{ $ct->cau }}"
+                                                data-id="{{ $ct->cau }}" data-code="{{ $ct->macauhoi }}:F">
+                                                <div class="cauhoitracnghiem"> <b>Câu: {{ $ct->cau }}.
                                                         [MA-{{ $ct->macauhoi }}]</b> <audio controls="controls"
                                                         src="{{ url($ct->audio) }}"></audio><strong>{{ $ct->cauhoi }}</strong>
                                                     <p style="display: block;"></p>
@@ -188,8 +202,9 @@
                                                     @endif
                                                 </div>
                                                 <div class="quiz-list">
-                                                    <div class="qselect cot4" id="{{$ct->macauhoi}}_A" data-id="{{$ct->cau}}"
-                                                        data-traloi="{{$ct->macauhoi}}:A">
+                                                    <div class="qselect cot4" id="{{ $ct->macauhoi }}_A"
+                                                        data-id="{{ $ct->cau }}"
+                                                        data-traloi="{{ $ct->macauhoi }}:A">
                                                         <div class="mark">1</div>
                                                         <div class="qsign">
                                                             @if ($ct->loaidapan == 1)
@@ -200,8 +215,9 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="qselect cot4" id="{{$ct->macauhoi}}_B" data-id="{{$ct->cau}}"
-                                                        data-traloi="{{$ct->macauhoi}}:B">
+                                                    <div class="qselect cot4" id="{{ $ct->macauhoi }}_B"
+                                                        data-id="{{ $ct->cau }}"
+                                                        data-traloi="{{ $ct->macauhoi }}:B">
                                                         <div class="mark">2</div>
                                                         <div class="qsign">
                                                             @if ($ct->loaidapan == 1)
@@ -212,8 +228,9 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="qselect cot4" id="{{$ct->macauhoi}}_C" data-id="{{$ct->cau}}"
-                                                        data-traloi="{{$ct->macauhoi}}:C">
+                                                    <div class="qselect cot4" id="{{ $ct->macauhoi }}_C"
+                                                        data-id="{{ $ct->cau }}"
+                                                        data-traloi="{{ $ct->macauhoi }}:C">
                                                         <div class="mark">3</div>
                                                         <div class="qsign">
                                                             @if ($ct->loaidapan == 1)
@@ -224,8 +241,9 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="qselect cot4" id="{{$ct->macauhoi}}_D" data-id="{{$ct->cau}}"
-                                                        data-traloi="{{$ct->macauhoi}}:D">
+                                                    <div class="qselect cot4" id="{{ $ct->macauhoi }}_D"
+                                                        data-id="{{ $ct->cau }}"
+                                                        data-traloi="{{ $ct->macauhoi }}:D">
                                                         <div class="mark">4</div>
                                                         <div class="qsign">
                                                             @if ($ct->loaidapan == 1)
@@ -244,7 +262,6 @@
                             </div>
                         </div>
                         <div class="pagination">
-
                             <div class="content-pagination">
                                 <div class="button view-mobile" id="examNextPreviousMB">
                                     <a class="cautruoc"><img src="{{ url('images/btn_prev.png') }}"
@@ -533,10 +550,10 @@
                             $('.cauhoi-' + a + ' .qselect').addClass('traloisai');
                         }
                     }
-                    madethi=$('#madethi').val();
-                    malop=$('#malop').val();
-                    maphongthi=$('#maphongthi').val();
-                    timestart=$('#timestart').val()
+                    madethi = $('#madethi').val();
+                    malop = $('#malop').val();
+                    maphongthi = $('#maphongthi').val();
+                    timestart = $('#timestart').val()
                     danopbai = 1;
                     queryString = bailam_thisinh;
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -573,13 +590,13 @@
                                 for (var kq = 1; kq <= 40; kq++) {
                                     mang = kq - 1;
                                     $('.box_dark.thi-tracnghiem .ds-cauhoi .td-ch.trloi' + kq).addClass(kq_chon[mang]);
-                                    $('#'+dapan_dung[mang]).addClass('traloidung');
+                                    $('#' + dapan_dung[mang]).addClass('traloidung');
                                 }
-                                for($i=0;$i<kq_dung.length;$i++){
-                                    $('#'+kq_dung[$i]).addClass('traloidung');
+                                for ($i = 0; $i < kq_dung.length; $i++) {
+                                    $('#' + kq_dung[$i]).addClass('traloidung');
                                 }
-                                for($j=0;$j<kq_sai.length;$j++){
-                                    $('#'+kq_sai[$j]).addClass('traloisai');
+                                for ($j = 0; $j < kq_sai.length; $j++) {
+                                    $('#' + kq_sai[$j]).addClass('traloisai');
                                 }
                                 var tonglambai = 40;
                                 // var tongsai = tonglambai - kq_data[0];
@@ -596,16 +613,16 @@
                                 );
                                 var tongdiem = data['diemthi'];
                                 $('.box_dark.thi-tracnghiem .bailam-tracnghiem').hide();
-                                if(data['madethi'] == 1){
+                                if (data['madethi'] == 1) {
                                     $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').html('<div class="kq-thi">' +
-                                    tongdiem +
-                                    '</div><div class="ketquathi"><a href="/TrangChu" style="margin-right: 10px;"> Về Trang Chủ </a> <a href="/ThiThu/LamBai?loai=1"> Thi tiếp </a></div>'
-                                );
-                                }else{
+                                        tongdiem +
+                                        '</div><div class="ketquathi"><a href="/TrangChu" style="margin-right: 10px;"> Về Trang Chủ </a> <a href="/ThiThu/LamBai?loai=1"> Thi tiếp </a></div>'
+                                    );
+                                } else {
                                     $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').html('<div class="kq-thi">' +
-                                    tongdiem +
-                                    '</div><div class="ketquathi"><a href="/TrangChu" style="margin-right: 10px;"> Về Trang Chủ </a> </div>'
-                                );
+                                        tongdiem +
+                                        '</div><div class="ketquathi"><a href="/TrangChu" style="margin-right: 10px;"> Về Trang Chủ </a> </div>'
+                                    );
                                 }
 
                                 $('.box_dark.thi-tracnghiem .diemthi-tracnghiem').show();

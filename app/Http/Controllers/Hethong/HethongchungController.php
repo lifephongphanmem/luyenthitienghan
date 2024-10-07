@@ -39,9 +39,10 @@ class HethongchungController extends Controller
 	{
 		$inputs = $request->all();
 
-		$user = User::where('cccd', $inputs['cccd'])->first();
+		// $user = User::where('cccd', $inputs['cccd'])->first(); Chuyển sang dùng số điện thoại để đăng nhập
+		$user = User::where('sodienthoai', $inputs['sodienthoai'])->first();
 		$data = [
-			'cccd' => $inputs['cccd'],
+			'sodienthoai' => $inputs['sodienthoai'],
 			'password' => $inputs['password']
 		];
 
@@ -99,7 +100,7 @@ class HethongchungController extends Controller
 		//1. level = SSA ->
 		if ($user->sadmin != "SSA") {
 			if ($user->hocvien == 1) {
-				$hocvien = hocvien::where('cccd', $user->cccd)->first();
+				$hocvien = hocvien::where('sdt', $user->sodienthoai)->first();
 				$user->manguoidung = $hocvien->mahocvien;
 				$user->malop = $hocvien->malop;
 				$user->vitri= 'Học viên';
@@ -110,7 +111,7 @@ class HethongchungController extends Controller
 
 			}
 			if ($user->giaovien == 1) {
-				$giaovien = giaovien::where('cccd', $user->cccd)->first();
+				$giaovien = giaovien::where('sdt', $user->sodienthoai)->first();
 				$user->manguoidung = $giaovien->magiaovien;
 				$user->vitri= 'Giáo viên';
 				// $user->sdt=$giaovien->sdt;
@@ -191,7 +192,7 @@ class HethongchungController extends Controller
 			'islogin'=>session()->getId(),
 			'islogout'=>1
 		];
-		$userupdate = User::where('cccd', session('admin')->cccd)->first();
+		$userupdate = User::where('sodienthoai', session('admin')->sodienthoai)->first();
 
 		// dd($user);
 		$userupdate->update($data_update);
@@ -199,7 +200,7 @@ class HethongchungController extends Controller
 		Session::put('chucnang', Chucnang::all()->keyBy('maso')->toArray());
 		// dd(session('chucnang'));
 		//gán phân quyền của User
-		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['cccd'])->get()->keyBy('machucnang')->toArray());
+		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['sodienthoai'])->get()->keyBy('machucnang')->toArray());
 
 		loghethong(getIP(),session('admin'),'dangnhap','dangnhap');
         if (chkPhanQuyen('saoluudulieu', 'thaydoi') && session('admin')->capdo != 'SSA') {

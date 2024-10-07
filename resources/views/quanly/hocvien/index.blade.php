@@ -32,9 +32,9 @@
                     <div class="card-toolbar">
                         <button onclick="add()" data-target="#themmoi" data-toggle="modal"
                             class="btn btn-xs btn-success mr-2"><i class="fa fa-plus"></i> Tạo mới</button>
-                        {{-- <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
+                        {{-- <button class="btn btn-xs btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
-                            <i class="fas fa-file-import"></i>
+                            <i class="fas fa-file-import"></i>Nhận Excel
                         </button> --}}
                     </div>
                 </div>
@@ -112,16 +112,16 @@
                                 <input type="text" name="tenhocvien" class="form-control" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="control-label">Email<span class="require">*</span></label>
-                                <input type="text" name="email" class="form-control" required>
+                                <label class="control-label">Email</label>
+                                <input type="text" name="email" class="form-control">
                             </div>
                             <div class="col-md-6 mt-3">
                                 <label class="control-label">Ngày sinh <span class="require">*</span></label>
                                 <input type="date" name="ngaysinh" class="form-control" required>
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label class="control-label">CCCD/CMND <span class="require">*</span></label>
-                                <input type="text" name="cccd" class="form-control" required>
+                                <label class="control-label">CCCD/CMND</label>
+                                <input type="text" name="cccd" class="form-control">
                             </div>
                             <div class="col-md-6 mt-3">
                                 <label class="control-label">Giới tính</label>
@@ -132,8 +132,8 @@
                             </div>
 
                             <div class="col-md-6 mt-3">
-                                <label class="control-label">Số điện thoại</label>
-                                <input type="text" name="sdt" class="form-control">
+                                <label class="control-label">Số điện thoại <span class="require">*</span></label>
+                                <input type="text" name="sdt" class="form-control" required>
                             </div>
                             <div class="col-md-6 mt-3">
                                 <label class="control-label">Trạng thái</label>
@@ -181,16 +181,16 @@
                                 <input type="text" name="tenhocvien" id="tenhocvien" class="form-control" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="control-label">Email<span class="require">*</span></label>
-                                <input type="text" name="email" id="email" class="form-control" required>
+                                <label class="control-label">Email</label>
+                                <input type="text" name="email" id="email" class="form-control">
                             </div>
                             <div class="col-md-6 mt-3">
                                 <label class="control-label">Ngày sinh <span class="require">*</span></label>
                                 <input type="date" name="ngaysinh" id="ngaysinh" class="form-control" required>
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label class="control-label">CCCD/CMND <span class="require">*</span></label>
-                                <input type="text" name="cccd" id="cccd" class="form-control" readonly>
+                                <label class="control-label">CCCD/CMND </label>
+                                <input type="text" name="cccd" id="cccd" class="form-control" >
                             </div>
                             <div class="col-md-6 mt-3">
                                 <label class="control-label">Giới tính</label>
@@ -201,8 +201,8 @@
                             </div>
 
                             <div class="col-md-6 mt-3">
-                                <label class="control-label">Số điện thoại</label>
-                                <input type="text" name="sdt" id="sdt" class="form-control">
+                                <label class="control-label">Số điện thoại <span class="require">*</span></label>
+                                <input type="text" name="sdt" id="sdt" class="form-control" readonly>
                             </div>
                             <div class="col-md-6 mt-3">
                                 <label class="control-label">Trạng thái</label>

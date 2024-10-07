@@ -428,7 +428,7 @@ function xoadulieusaoluu()
 }
 
 //gắn phân quyền luôn khi tạo mới học viên hoặc giáo viên
-function add_phanquyen($manhomchucnang,$cccd)
+function add_phanquyen($manhomchucnang,$sdt)
 {
     $model_phanquyen = dsnhomtaikhoan_phanquyen::where('manhomchucnang', $manhomchucnang)->get();
     if(count($model_phanquyen) < 0){
@@ -438,7 +438,7 @@ function add_phanquyen($manhomchucnang,$cccd)
     }
     foreach ($model_phanquyen as $phanquyen) {
         $a_phanquyen[] = [
-            'tendangnhap' =>$cccd,
+            'tendangnhap' =>$sdt,
             'machucnang' => $phanquyen->machucnang,
             'phanquyen' => $phanquyen->phanquyen,
             'danhsach' => $phanquyen->danhsach,
@@ -486,6 +486,36 @@ function chksession()
     }else{
         return false;
     }
+}
+
+//index các cột trong excel
+function ColumnName()
+{
+    return [
+        'A' => 0,
+        'B' => 1,
+        'C' => 2,
+        'D' => 3,
+        'E' => 4,
+        'F' => 5,
+        'G' => 6,
+        'H' => 7,
+        'I' => 8,
+        'J' => 9,
+        'K' => 10,
+        'L' => 11,
+        'M' => 12,
+        'N' => 13,
+        'O' => 13,
+        'P' => 15,
+        'Q' => 16,
+        'R' => 17,
+        'S' => 18,
+        'T' => 19,
+        'U' => 20,
+        'V' => 21,
+        'W' => 22
+    ];
 }
 
 
