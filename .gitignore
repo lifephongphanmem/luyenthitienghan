@@ -10,3 +10,4 @@ npm-debug.log
 yarn-error.log
 /public/uploads/mp4
 /public/data
+vendor

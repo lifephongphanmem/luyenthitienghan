@@ -29,3 +29,4 @@ include('tintuc.php');
 include('quantrihethong.php');
 include('tracuu.php');
 include('vanphonghotro.php');
+include('thivong2.php');
