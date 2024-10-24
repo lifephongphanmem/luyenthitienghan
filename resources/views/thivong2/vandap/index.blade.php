@@ -59,7 +59,7 @@
                             <tr class="text-center">
                                 <th>STT</th>
                                 <th>Câu hỏi</th>
-                                <th>Tiếng Việt</th>
+                                {{-- <th>Tiếng Việt</th> --}}
                                 <th>Câu trả lời</th>
                                 <th>Audio</th>
                                 <th>Thao tác</th>
@@ -67,13 +67,16 @@
                         </thead>
                         <tbody>
                             @foreach ($model as $key => $ch)
+                            <?php $cautraloi=$m_cautraloi->where('macau',$ch->macau) ?>
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
-                                    <td name='cauhoi' class="text-left" style="width: 20%">{{ $ch->cauhoi }}</td>
-                                    <td name='cauhoi' class="text-left" style="width: 20%">{{ $ch->nghiatiengviet }}</td>
+                                    <td name='cauhoi' class="text-left" style="width: 20%">{{ $ch->noidung }}</td>
+                                    {{-- <td name='cauhoi' class="text-left" style="width: 20%">{{ $ch->nghiatiengviet }}</td> --}}
 
                                     <td name='cautraloi' style="width: 8%">
-                                        
+                                        @foreach ($cautraloi as $ct )
+                                            <p>{{$ct->stt}}. {{$ct->noidung}}</p>
+                                        @endforeach
                                     </td>
                                     <td name='audio' style="width: 10%">
                                         @if (isset($ch->audio))
@@ -88,7 +91,7 @@
                                              <i class="icon-lg la la-th-list text-primary "></i>
                                          </a> --}}
                                         <button title="Sửa thông tin"
-                                            {{-- onclick="edit(this,'{{ $gt->id }}','{{ $gt->mabaihoc }}','{{ $gt->stt }}','{{ $gt->anh }}','{{ $gt->anh2 }}','{{ $gt->audio }}')" --}}
+                                            onclick="edit(this,'{{ $ch->id }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
@@ -112,9 +115,9 @@
     <!--end::Row-->
     <!--Thêm mới -->
     <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
-        <form action="{{ '/ThiVong2/VanDap/LuuCauHoi' }}" method="POST" id="frm_baihocchinh" enctype="multipart/form-data">
+        <form action="{{ '/ThiVong2/VanDap/LuuCauHoi' }}" method="POST" id="frm_themcauhoi" enctype="multipart/form-data">
             @csrf
-            <div class="modal-dialog modal-xs">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">Thông tin câu hỏi
@@ -137,25 +140,30 @@
                                     data-toggle="modal">
                                     <i class="fa fa-plus"></i></button>
                             </div> --}}
-                            <div class="col-md-12">
-                                <label class="control-label">Câu hỏi<span class="require">*</span></label>
+                            <div class="col-md-12 mt-2 mb-2">
+                                <label class="control-label font-weight-bolder">Câu hỏi<span class="require">*</span></label>
                                 <input type="text" name="noidung" class="form-control">
                             </div>
-                            <div class="col-md-12">
-                                <label class="control-label">Nghĩa tiếng việt<span class="require">*</span></label>
+                            <div class="col-md-12 mt-2 mb-2">
+                                <label class="control-label font-weight-bolder">Nghĩa tiếng việt<span class="require">*</span></label>
                                 <input type="text" name="nghiatiengviet" class="form-control">
                             </div>
-                            <div class="col-md-12">
-                                <label class="control-label">Câu trả lời<span class="require">*</span></label>
+                            <div class="col-md-12 mt-2 mb-2" id="cautl">
+                                <label class="control-label font-weight-bolder">Câu trả lời<span class="require">*</span></label>
                                 <input type="text" name="cautraloi[]" class="form-control">
+                                
                             </div>
+
                             <div class="col-md-12">
-                                <label class="control-label">Audio</label>
+                                <button type="button" class="btn btn-xs btn-primary" title="Thêm câu trả lời" onclick="addAns()" ><i class="fa fa-plus"></i>Thêm câu trả lời</button>
+                            </div>
+                            <div class="col-md-12 mt-2 mb-2">
+                                <label class="control-label font-weight-bolder">Audio</label>
                                 <input type="file" name="audio" accept=".mp3" class="form-control">
                             </div>
-                            <div class="col-md-12">
-                                <label class="control-label">Số thứ tự<span class="require">*</span></label>
-                                <input type="text" name="stt" class="form-control">
+                            <div class="col-md-12 mt-2 mb-2">
+                                <label class="control-label font-weight-bolder">Số thứ tự<span class="require">*</span></label>
+                                <input type="text" name="stt" value="{{$stt}}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -242,93 +250,21 @@
     </div> --}}
 
     <!--Cập nhật -->
-    {{-- <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+    <div id="edit" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <form action="" method="POST" id="frm_edit" enctype="multipart/form-data">
             @csrf
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin giáo trình
+                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin câu hỏi
                         </h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label class="control-label">Tên bài học<span class="require">*</span></label>
-                                <select name="tenbaihoc" id="tenbaihoc_update" class="form-control">
-                                    @foreach ($m_baihoc as $key => $ct)
-                                        <option value="{{ $ct->mabaihoc }}">{{ $ct->tenbaihoc }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6 mt-3">
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Ảnh 1</label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <div class="image-input image-input-outline" id="kt_image_4"
-                                            style="background-image: url({{ '/assets/media/users/blank.png' }})">
-                                            <div class="image-input-wrapper" id="anh1"></div>
-                                            <label
-                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                data-action="change" data-toggle="tooltip" title=""
-                                                data-original-title="Change avatar">
-                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                <input type="file" name="anh" id="anh1_input" accept=".png, .jpg, .jpeg" />
-                                                <input type="hidden" name="profile_avatar_remove" />
-                                            </label>
-                                            <span
-                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-3">
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Ảnh 2</label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <div class="image-input image-input-outline" id="kt_image_4_2"
-                                            style="background-image: url({{ '/assets/media/users/blank.png' }})">
-                                            <div class="image-input-wrapper" id="anh2"></div>
-                                            <label
-                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                data-action="change" data-toggle="tooltip" title=""
-                                                data-original-title="Change avatar">
-                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                <input type="file" name="anh2" id="anh2_input" accept=".png, .jpg, .jpeg" />
-                                                <input type="hidden" name="profile_avatar_remove" />
-                                            </label>
-                                            <span
-                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="control-label">Audio</label>
-                                <input type="file" name="audio" id="audio" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <audio title="Nghe" controls="controls"
-                                    style="margin-top: 27px;
-                            height: calc(1.5em + 1.3rem + 2px);"
-                                    id="source">
-                                </audio>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="control-label">Trang<span class="require">*</span></label>
-                                <input type="text" name="stt" id="stt" class="form-control">
-                            </div>
+                        <div class="form-group row" id='edit_cauhoi'>
+
                         </div>
                     </div>
-                    <input type="hidden" name="remove_anh" id="remove_anh">
-                    <input type="hidden" name="remove_anh2" id="remove_anh2">
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                         <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickedit()">Đồng
@@ -337,7 +273,7 @@
                 </div>
             </div>
         </form>
-    </div> --}}
+    </div>
     {{-- <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8">
             @csrf
@@ -356,8 +292,8 @@
             </div>
         </form>
     </div> --}}
-    {{-- @include('includes.delete') --}}
-    {{-- <script>
+    @include('includes.delete')
+    <script>
         function cfDel(url) {
             $('#frmDelete').attr('action', url);
         }
@@ -367,7 +303,7 @@
         }
 
         function clickNhanvaTKT() {
-            $('#frm_baihocchinh').submit();
+            $('#frm_themcauhoi').submit();
         }
 
         function clickNhanexcel() {
@@ -377,59 +313,47 @@
         function clickedit() {
             $('#frm_edit').submit();
         }
-
-        function add() {
-            var form = $('#frm_baihocchinh');
-            form.find("[name='stt']").val('{{ $stt + 1 }}');
+        function add()
+        { 
+            $('#frm_themcauhoi').find("[name='noidung']").val('');
+            $('#frm_themcauhoi').find("[name='nghiatiengviet']").val('');
+            $('#frm_themcauhoi').find("[name='cautraloi[]']").val('');
         }
-
-        function add_tenbaihoc() {
-            $('#modal-tenbaihoc').modal('hide');
-            var gt = $('#tenbaihoc_add').val();
-            $('#tenbaihoc').append(new Option(gt, gt, true, true));
-            $('#tenbaihoc').val(gt).trigger('change');
-            $('#tenbaihoc_excel').append(new Option(gt, gt, true, true));
-            $('#tenbaihoc_excel').val(gt).trigger('change');
+        function addAns()
+        {
+            $('#cautl').append('<input type="text" name="cautraloi[]" class="form-control mt-2">');
         }
-
-        function add_tenbaihoc_excel() {
-            $('#modal-tenbaihoc').modal('hide');
-            var gt = $('#tenbaihoc_add').val();
-            $('#tenbaihoc_excel').append(new Option(gt, gt, true, true));
-            $('#tenbaihoc_excel').val(gt).trigger('change');
-        }
-
-        function edit(e, id, mabaihoc, stt, anh, anh2, audio) {
-            var url = '/BaiHocChinh/update/' + id;
-            var tr = $(e).closest('tr');
-            $('#audio').val('');
-            $('#tenbaihoc_update option[value=' + mabaihoc + ' ]').removeAttr('selected').attr('selected', 'selected');
-            $('#anh1').css('background-image', 'url("/' + anh + '")');
-            $('#anh2').css('background-image', 'url("/' + anh2 + '")');
-            $('#remove_anh').val(anh);
-            $('#remove_anh2').val(anh2);
-            $('#stt').val(stt);
-            $('#source').attr('src', '/' + audio);
-            $('#frm_edit').attr('action', url);
-
-        }
-        $('#audio').on('change', function() {
-            var fileElm = document.querySelector("#audio");
-            var audioElm = document.querySelector("#source");
-
-            // Gắn đường source cho audio element với file đầu tiên trong danh sách các file đã chọn
-            // File object thường là 1 array do input type file có thể chấp nhận thuộc tính multiple
-            // để chúng ta có thể chọn nhiều hơn một file. URL.createObjectURL sẽ giúp chúng ta tạo ra một
-            // DOMString chứa URL đại diện cho Object được đưa vào. Bạn có thể xem chi tiết tại: https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
-            audioElm.src = URL.createObjectURL(this.files[0]);
-
-            // Tiếp theo, tải file và thực hiện play file đã được chọn
-            audioElm.load();
-            // audioElm.play();
-
-
+        function edit(e,id)
+        {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var url='/ThiVong2/VanDap/CapNhat'
+        $.ajax({
+            url: '/ThiVong2/VanDap/edit',
+            type: 'GET',
+            data: {
+                _token: CSRF_TOKEN,
+                id: id,
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                console.log(data);
+                if (data.status == 'success') {
+                    $('#edit_cauhoi').replaceWith(data.message);
+                    TableManagedclass.init();
+                    // TableManaged4.init();
+                    $('#frm_edit').attr('action', url);
+                }
+            },
+            // error: function (message) {
+            //     toastr.error(message, 'Lỗi!');
+            // }
         });
+        }
+        function addAns_edit()
+        {
+            $('#cautl_edit').append('<input type="text" name="cautraloi[]" class="form-control mt-2">');
+        }
 
-    </script> --}}
+    </script>
 
 @stop

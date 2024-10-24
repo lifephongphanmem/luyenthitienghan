@@ -18,6 +18,8 @@ Route::prefix('ThiVong2')->group(function(){
     Route::prefix('VanDap')->group(function(){
         Route::get('ThongTin',[vandapController::class,'ThongTin']);
         Route::post('LuuCauHoi',[vandapController::class,'LuuCauHoi']);
-        Route::post('XoaCauHoi/{id}',[vandapController::class,'XoaCauHoi']);
+        Route::get('XoaCauHoi/{id}',[vandapController::class,'XoaCauHoi']);
+        Route::get('edit',[vandapController::class,'edit']);
+        Route::post('CapNhat',[vandapController::class,'CapNhat']);
     });
 });
