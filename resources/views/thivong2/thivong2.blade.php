@@ -40,8 +40,10 @@
         function HienCauHoi() {
             if ($('#cauhoi').hasClass('disable')) {
                 $('#cauhoi').removeClass('disable');
+                $(event.target).text('Ẩn toàn bộ câu hỏi');
             } else {
                 $('#cauhoi').addClass('disable');
+                $(event.target).text('Hiện toàn bộ câu hỏi');
             }
         }
 

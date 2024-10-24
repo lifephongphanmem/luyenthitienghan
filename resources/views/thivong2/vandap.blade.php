@@ -5,7 +5,7 @@
         <h1>Vấn đáp</h1>
     </div>
     <div class="col-lg-12 text-center mt-1 mb-1 bg-gray-800" style="border-radius:5px;" id="hienchu">
-        <img id='image'  src="{{ asset('images/icons/loading.gif') }}" alt="">
+        <img class="mt-1 mb-2" id='image'  src="{{ asset('images/icons/loading.gif') }}" alt="" style="filter: invert(1) hue-rotate(180deg) saturate(200%)">
         <h5 id="text-hiden" class="text-center align-middle bg-gray-800 fw-bold p-3 ps-3 pe-3 m-0 text-logo-y text-warning disable"
             style="border-bottom-left-radius:0;border-bottom-right-radius:0;font-size:2rem">나이가 어떻게 되세요?<br><span
                 class="text-light ps-0 pe-0 fs-5">Bạn bao nhiêu tuổi?</span><br><span

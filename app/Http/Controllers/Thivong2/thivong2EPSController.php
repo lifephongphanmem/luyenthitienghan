@@ -8,19 +8,19 @@ use Illuminate\Support\Facades\Session;
 
 class thivong2EPSController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (!Session::has('admin')) {
-                return redirect('/DangNhap');
-            };
-            if (!chksession()) {
-                return redirect('/DangNhap');
-            };
-            chkaction();
-            return $next($request);
-        });
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(function ($request, $next) {
+    //         if (!Session::has('admin')) {
+    //             return redirect('/DangNhap');
+    //         };
+    //         if (!chksession()) {
+    //             return redirect('/DangNhap');
+    //         };
+    //         chkaction();
+    //         return $next($request);
+    //     });
+    // }
     public function thivong2()
     {
         return redirect('/epstopik-test/vandap');

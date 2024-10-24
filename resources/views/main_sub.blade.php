@@ -209,7 +209,7 @@
             <ul class="menu-subnav">
                 {{-- @if (chkPhanQuyen('giaovien', 'phanquyen')) --}}
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                        <a href="{{ '/epstopik-test/cauphongvan' }}" class="menu-link"><i
+                        <a href="{{ '/ThiVong2/VanDap/ThongTin' }}" class="menu-link"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
                             <span class="menu-text">QUẢN LÝ CÂU PHỎNG VẤN</span>
                         </a>
