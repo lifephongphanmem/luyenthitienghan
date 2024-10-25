@@ -12,6 +12,7 @@ Route::prefix('epstopik-test')->group(function(){
     Route::get('vandap',[thivong2EPSController::class,'VanDap']);
     Route::get('hieulenh',[thivong2EPSController::class,'HieuLenh']);
     Route::get('gioithieubanthan',[thivong2EPSController::class,'GTBanThan']);
+    Route::get('getCauHoi',[thivong2EPSController::class,'getCauHoi']);
 });
 
 Route::prefix('ThiVong2')->group(function(){

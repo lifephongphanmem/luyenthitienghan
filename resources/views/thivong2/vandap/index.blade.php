@@ -163,7 +163,7 @@
                             </div>
                             <div class="col-md-12 mt-2 mb-2">
                                 <label class="control-label font-weight-bolder">Số thứ tự<span class="require">*</span></label>
-                                <input type="text" name="stt" value="{{$stt}}" class="form-control">
+                                <input type="text" name="stt" value="{{++$stt}}" class="form-control">
                             </div>
                         </div>
                     </div>

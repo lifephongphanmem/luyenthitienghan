@@ -14,8 +14,7 @@ class vandapController extends Controller
     {
         $model = vandap::all();
         $m_cautraloi = vandap_cautraloi::wherein('macau', array_column($model->toarray(), 'macau'))->get();
-        $stt = $model->max('stt') ?? 1;
-        // dd($m_cautraloi);
+        $stt = $model->max('stt')??1;
         return view('thivong2.vandap.index')
             ->with('model', $model)
             ->with('m_cautraloi', $m_cautraloi)
@@ -33,7 +32,7 @@ class vandapController extends Controller
             $file = $inputs['audio'];
             $name = time() . $file->getClientOriginalName();
             $file->move('data/vandap/audio/', $name);
-            $inputs['audio'] = 'data/vandap/audio/' . $name;
+            $inputs['audio'] = '/data/vandap/audio/' . $name;
         }
 
         $data_cauhoi = [
@@ -122,7 +121,7 @@ class vandapController extends Controller
                 $file = $inputs['audio'];
                 $name = time() . $file->getClientOriginalName();
                 $file->move('data/vandap/audio/', $name);
-                $inputs['audio'] = 'data/vandap/audio/' . $name;
+                $inputs['audio'] = '/data/vandap/audio/' . $name;
                 $model->audio = $inputs['audio'];
             }
             $model->save();

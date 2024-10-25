@@ -51,13 +51,13 @@
             // var buttonText = $(event.target).text('Ẩn chữ');
             // console.log(buttonText);  
             if ($('#image').hasClass('disable')) {
-                console.log(1);
+                // console.log(1);
                 $('#image').removeClass('disable');
-                $('#text-hiden').addClass('disable');
+                $('#hidden_view').addClass('disable');
                 $(event.target).text('Hiện chữ');
             } else {
-                console.log(2);
-                $('#text-hiden').removeClass('disable');
+                // console.log(2);
+                $('#hidden_view').removeClass('disable');
                 $('#image').addClass('disable');
                 $(event.target).text('Ẩn chữ');
             }

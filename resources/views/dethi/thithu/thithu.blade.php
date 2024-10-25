@@ -857,7 +857,7 @@
                 });
             </script> --}}
 
-            <span style="display:none"> Designed by LTEPS </span>
+            {{-- <span style="display:none"> Designed by LTEPS </span> --}}
         </div>
     </div>
     <!-- Google tag (gtag.js) -->
