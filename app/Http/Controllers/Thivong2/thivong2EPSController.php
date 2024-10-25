@@ -61,7 +61,7 @@ class thivong2EPSController extends Controller
         $result['message']='<h5 id="text-hidden"
         class="text-center align-middle bg-gray-800 fw-bold p-3 ps-3 pe-3 m-0 text-logo-y text-warning"
         style="border-bottom-left-radius:0;border-bottom-right-radius:0;font-size:2rem">'.$model->noidung.'?<br><span
-            class="text-light ps-0 pe-0 fs-5">Bạn bao nhiêu tuổi?</span><br>
+            class="text-light ps-0 pe-0 fs-5">'.$model->nghiatiengviet.'</span><br>
             <span
             class="btn text-light ps-0 pe-0 fs-5"><b class="text-warning">T.lời mẫu:</b>';
             foreach($m_traloi as $ct){
@@ -70,5 +70,11 @@ class thivong2EPSController extends Controller
              $result['message'].='</span>
     </h5>';
         return response()->json($result);
+    }
+
+    public function setcauhoi(Request $request)
+    {
+        $inputs=$request->all();
+        $model=vandap::all();
     }
 }

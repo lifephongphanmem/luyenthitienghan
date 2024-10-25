@@ -165,6 +165,6 @@ $(function () {
             }).parent().addClass('menu-item-open').addClass('menu-item-here');
         }
 
-        console.log(url)
+        // console.log(url)
     }
 });

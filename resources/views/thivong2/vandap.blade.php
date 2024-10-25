@@ -1,6 +1,6 @@
 @extends('thivong2.thivong2')
 @section('content_thivong2')
-    <audio src="{{ '/data/vandap/audio/17298183631.mp3' }}" id="audio"></audio>
+    <audio src="" id="audio"></audio>
     {{-- <audio title="Nghe" controls="controls" style="width:103px" autoplay>
         <source src="{{'/data/vandap/audio/17298183631.mp3'}}">
     </audio> --}}
@@ -32,7 +32,7 @@
     </div>
     <div class="d-flex">
         <buton class="btn btn-primary mr-2 mt-2" style="width:49.5%">Dừng</buton>
-        <buton class="btn btn-primary ml-2 mt-2" style="width:49.5%">Nghe lại</buton>
+        <buton class="btn btn-primary ml-2 mt-2" style="width:49.5%" onclick="NgheLai()">Nghe lại</buton>
     </div>
     <div class="col-lg-12 text-center mt-2 p-0">
         <buton class="btn btn-info" style="width:100%" onclick="HienCauHoi()">Hiện toàn bộ câu hỏi</buton>
@@ -40,11 +40,11 @@
     </div>
 
     <div class="disable" id="cauhoi">
-        <div class="p-0 m-0" style="max-height: 600px; overflow: scroll;">
-            @foreach ($model as $ct)
+        <div class="p-0 m-0" style="max-height: 600px; overflow: scroll;" id="cauhoict">
+            @foreach ($model as $key=> $ct)
                 <li class="border-bottom border-warning text-dl text-start list-unstyled" data-code="{{ $ct->macau }}"><button
                         class="text-dl btn p-0 text-start m-0"><span class="btn text-dl text-start ps-0 pe-0"><span
-                                class="text-danger" style="font-size: 1.2rem;">{{ $ct->stt }}. </span><span
+                                class="text-danger" style="font-size: 1.2rem;">{{ ++$key }}. </span><span
                                 class="fw-bold text-primary">{{ $ct->noidung }}</span><br></span></button></li>
             @endforeach
 
@@ -55,7 +55,6 @@
         const soundEffect = new Audio();
 
         function getcauhoi(macau) {
-            // var macau = '1729818363';
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 url: '/epstopik-test/getCauHoi',
@@ -66,10 +65,12 @@
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
+                    $("#audio").attr("src", data.model.audio);
                     soundEffect.src = data.model.audio;
                     soundEffect.play();
                     $('#text-hidden').replaceWith(data.message);
+
                 },
                 // error: function (message) {
                 //     toastr.error(message, 'Lỗi!');
@@ -84,6 +85,21 @@
         //Hàm tự động
         function PlayAudio()
         {
+            
+        }
+        function NgheLai()
+        {
+            var src=$("#audio").attr("src");
+            if(src != ''){
+                soundEffect.src = src;
+                soundEffect.play();
+            }
+
+        }
+        function setcauhoi(phanloai)
+        {
+            //Tự động thứ tự:1;tự động ngẫu nhiên:2; thủ công thứ tự:3; thủ công ngẫu nhiên:4
+            //trường hợp thủ công
             
         }
     </script>
