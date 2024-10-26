@@ -7,6 +7,7 @@ use App\Models\ThiVong2\vandap;
 use App\Models\ThiVong2\vandap_cautraloi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use PhpParser\Node\Expr\FuncCall;
 
 class thivong2EPSController extends Controller
 {
@@ -31,6 +32,7 @@ class thivong2EPSController extends Controller
     {
         $model=vandap::orderby('stt')->get();
         $m_traloi=vandap_cautraloi::all();
+        // dd($this->datlaicau(null));
         return  view('thivong2.vandap')
         ->with('model',$model)
         ->with('m_traloi',$m_traloi)
@@ -76,5 +78,12 @@ class thivong2EPSController extends Controller
     {
         $inputs=$request->all();
         $model=vandap::all();
+    }
+
+    public function datlaicau($macau)
+    {
+        $model=vandap::all();
+        $a_model=$model->toarray();
+        dd($a_model);
     }
 }

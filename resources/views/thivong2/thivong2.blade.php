@@ -8,6 +8,24 @@
         .disable {
             display: none;
         }
+
+        /* Lớp để hiển thị phần tử ở cuối danh sách */
+        #cauhoict .move-to-bottom {
+            display: block;
+            order: 1;
+            /* Sử dụng Flexbox hoặc Grid để điều khiển thứ tự */
+        }
+
+        /* Thiết lập flex để sắp xếp các phần tử */
+        #cauhoict {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #cauhoict li {
+            order: 0;
+            /* Đặt thứ tự mặc định của tất cả các phần tử */
+        }
     </style>
 @endsection
 
@@ -62,7 +80,6 @@
                 $(event.target).text('Ẩn chữ');
             }
         }
-
     </script>
 @endsection
 @section('content')
