@@ -26,6 +26,13 @@
             order: 0;
             /* Đặt thứ tự mặc định của tất cả các phần tử */
         }
+
+        button:disabled,
+        button[disabled] {
+            border: 1px solid #999999;
+            background-color: #cccccc;
+            color: #666666;
+        }
     </style>
 @endsection
 
@@ -55,31 +62,31 @@
             });
         });
 
-        function HienCauHoi() {
-            if ($('#cauhoi').hasClass('disable')) {
-                $('#cauhoi').removeClass('disable');
-                $(event.target).text('Ẩn toàn bộ câu hỏi');
-            } else {
-                $('#cauhoi').addClass('disable');
-                $(event.target).text('Hiện toàn bộ câu hỏi');
-            }
-        }
+        // function HienCauHoi() {
+        //     if ($('#cauhoi').hasClass('disable')) {
+        //         $('#cauhoi').removeClass('disable');
+        //         $(event.target).text('Ẩn toàn bộ câu hỏi');
+        //     } else {
+        //         $('#cauhoi').addClass('disable');
+        //         $(event.target).text('Hiện toàn bộ câu hỏi');
+        //     }
+        // }
 
-        function HienChu() {
-            // var buttonText = $(event.target).text('Ẩn chữ');
-            // console.log(buttonText);  
-            if ($('#image').hasClass('disable')) {
-                // console.log(1);
-                $('#image').removeClass('disable');
-                $('#hidden_view').addClass('disable');
-                $(event.target).text('Hiện chữ');
-            } else {
-                // console.log(2);
-                $('#hidden_view').removeClass('disable');
-                $('#image').addClass('disable');
-                $(event.target).text('Ẩn chữ');
-            }
-        }
+        // function HienChu() {
+        //     // var buttonText = $(event.target).text('Ẩn chữ');
+        //     // console.log(buttonText);  
+        //     if ($('#image').hasClass('disable')) {
+        //         // console.log(1);
+        //         $('#image').removeClass('disable');
+        //         $('#hidden_view').addClass('disable');
+        //         $(event.target).text('Hiện chữ');
+        //     } else {
+        //         // console.log(2);
+        //         $('#hidden_view').removeClass('disable');
+        //         $('#image').addClass('disable');
+        //         $(event.target).text('Ẩn chữ');
+        //     }
+        // }
     </script>
 @endsection
 @section('content')
