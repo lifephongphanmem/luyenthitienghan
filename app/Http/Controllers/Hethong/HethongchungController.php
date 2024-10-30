@@ -59,6 +59,7 @@ class HethongchungController extends Controller
 		// 	->with('furl', '/');
 		// }
 		//Tài khoản đang bị khóa
+		// dd($user);
 		if ($user->trangthai == 2) {
 			return view('errors.tontaidulieu')
 				->with('message', 'Tài khoản đang bị khóa. Bạn hãy liên hệ với người quản trị để mở tài khoản')

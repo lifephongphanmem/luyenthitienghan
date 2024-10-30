@@ -376,7 +376,7 @@ class dstaikhoanController extends Controller
         }
         // dd(session('admin'));
         // if(session('admin')->sadmin != 'SSA'){
-        $model = User::where('cccd', session('admin')->cccd)->first();
+        $model = User::where('sodienthoai', session('admin')->sodienthoai)->first();
         $ketquathi = new ketquathithu();
         if (session('admin')->hocvien == 1) {
             // $hocvien = hocvien::where('cccd', $model->cccd)->first();
@@ -410,7 +410,6 @@ class dstaikhoanController extends Controller
 
     public function doimatkhau(Request $request)
     {
-
         if (!chkPhanQuyen('doimatkhau', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'quanlytaikhoan');
         }
@@ -427,9 +426,10 @@ class dstaikhoanController extends Controller
                 ->with('message', 'Mật khẩu mới phải khác mật khẩu mặc định được cấp')
                 ->with('furl', '/TaiKhoan/QuanLyTaiKhoan');
         }
-
-        $model = User::where('cccd', session('admin')->cccd)->first();
+        // dd($inputs);
+        $model = User::where('sodienthoai', session('admin')->sodienthoai)->first();
         $inputs['password'] = Hash::make($inputs['password']);
+        // dd($inputs['password']);
         if (isset($model)) {
             $model->update(['password' => $inputs['password'], 'dnlandau' => 1]);
             if (Session::has('admin')) {
