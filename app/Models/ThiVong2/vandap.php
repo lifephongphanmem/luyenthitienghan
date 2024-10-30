@@ -14,6 +14,7 @@ class vandap extends Model
         'stt',
         'noidung',
         'nghiatiengviet',
-        'audio'
+        'audio',
+        'phanloai'
     ];
 }

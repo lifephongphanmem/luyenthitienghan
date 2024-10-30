@@ -41,19 +41,19 @@
                 </div>
 
                 <div class="card-body">
-                    {{-- <div class="form-group row">
+                    <div class="form-group row">
                         <div class="col-md-4">
-                            <label style="font-weight: bold">Bài học</label>
+                            <label style="font-weight: bold">Loại câu</label>
 
-                            <select name="mabaihoc" id="a_baihoc" class="form-control select2basic">
-                                @foreach ($m_baihoc as $key => $ct)
-                                    <option value="{{ $ct->mabaihoc }}"
-                                        {{ $ct->mabaihoc == $inputs['mabaihoc'] ? 'selected' : '' }}>{{ $ct->tenbaihoc }}
+                            <select name="phanloai" id="a_baihoc" class="form-control select2basic">
+                                @foreach ($a_phanloai as $key => $ct)
+                                    <option value="{{ $key }}"
+                                        {{ $ct == $inputs['phanloai'] ? 'selected' : '' }}>{{ $ct }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-                    </div> --}}
+                    </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr class="text-center">
@@ -126,14 +126,18 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            {{-- <div class="col-md-10">
-                                <label class="control-label">Tên bài học<span class="require">*</span></label>
-                                <select name="tenbaihoc" id="tenbaihoc" class="form-control">
-                                    @foreach ($m_baihoc as $key => $ct)
-                                        <option value="{{ $ct->mabaihoc }}">{{ $ct->tenbaihoc }}</option>
+                            <div class="col-md-6 mt-2 mb-2">
+                                <label class="control-label font-weight-bolder">Phân loại<span class="require">*</span></label>
+                                <select name="phanloai" class="form-control">
+                                    @foreach ($a_phanloai as $key => $ct)
+                                        <option value="{{ $key }}" {{ $key == $inputs['phanloai']?'selected':'' }}>{{ $ct }}</option>
                                     @endforeach
                                 </select>
-                            </div> --}}
+                            </div>
+                            <div class="col-md-6 mt-2 mb-2">
+                                <label class="control-label font-weight-bolder">Số thứ tự<span class="require">*</span></label>
+                                <input type="text" name="stt" value="{{++$stt}}" class="form-control">
+                            </div>
                             {{-- <div class="col-md-1" style="padding-left: 0px;">
                                 <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
                                 <button type="button" class="btn btn-default" data-target="#modal-tenbaihoc"
@@ -149,7 +153,7 @@
                                 <input type="text" name="nghiatiengviet" class="form-control">
                             </div>
                             <div class="col-md-12 mt-2 mb-2" id="cautl">
-                                <label class="control-label font-weight-bolder">Câu trả lời<span class="require">*</span></label>
+                                <label class="control-label font-weight-bolder">Câu trả lời</label>
                                 <input type="text" name="cautraloi[]" class="form-control">
                                 
                             </div>
@@ -161,10 +165,10 @@
                                 <label class="control-label font-weight-bolder">Audio</label>
                                 <input type="file" name="audio" accept=".mp3" class="form-control">
                             </div>
-                            <div class="col-md-12 mt-2 mb-2">
+                            {{-- <div class="col-md-12 mt-2 mb-2">
                                 <label class="control-label font-weight-bolder">Số thứ tự<span class="require">*</span></label>
                                 <input type="text" name="stt" value="{{++$stt}}" class="form-control">
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -26,15 +26,22 @@ class thivong2EPSController extends Controller
     // }
     public function thivong2()
     {
-        return redirect('/epstopik-test/vandap');
+        return redirect('/epstopik-test/phongvan?phanloai=VANDAP');
     }
-    public function VanDap()
+    public function VanDap(Request $request)
     {
-        $model=vandap::orderby('stt')->get();
+        $inputs=$request->all();
+        $model=vandap::where('phanloai',$inputs['phanloai'])->orderby('stt')->get();
         $m_traloi=vandap_cautraloi::all();
+        $a_phanloai = array(
+            'VANDAP' => 'Vấn đáp',
+            'HIEULENH' => 'Hiệu lệnh'
+        );
         // dd($this->datlaicau(null));
         return  view('thivong2.vandap')
         ->with('model',$model)
+        ->with('a_phanloai',$a_phanloai)
+        ->with('inputs',$inputs)
         ->with('m_traloi',$m_traloi)
         ->with('baocao',getdulieubaocao())
         ->with('pageTitle', 'Ôn thi vòng 2 EPS');

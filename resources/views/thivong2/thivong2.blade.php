@@ -37,31 +37,66 @@
 @endsection
 
 @section('custom-script')
+    <script src="{{ url('js/thivong2_vandap.js') }}"></script>
     <script>
+        // $(document).ready(function() {
+        //     var url_parent = '/epstopik-test'
+        //     // Lấy URL hiện tại
+        //     var currentUrl = window.location.pathname;
+        //     // var currentUrl = window.location.href;
+        //     // console.log(currentUrl);
+        //     i = currentUrl.indexOf('phongvan');
+        //     console.log(i);
+        //     // url = url_parent + '/ThongTin';
+        //     url = currentUrl.substring(0, i - 1)
+        //     console.log(currentUrl);
+        //     // Duyệt qua tất cả các phần tử <li>
+        //     $('.menu-item').each(function() {
+        //         // Lấy URL từ thẻ <a> bên trong <li>
+        //         var linkUrl = $(this).find('a').attr('href');
+        //         console.log(linkUrl);
+        //         // Nếu URL của thẻ <a> khớp với URL hiện tại
+        //         if (linkUrl === currentUrl) {
+        //             console.log(12);
+        //             // Thêm class 'active' cho <li> này
+        //             $(this).addClass('menu-item-active');
+        //             // $('.menu-item a[href="' + url + '"]').addClass('menu-item-active')
+        //             $('.menu-item a[href="' + url + '"]').parent().addClass('menu-item-active');
+        //             $('.menu-item a[href="' + url + '"]').parent().parent().parent().parent().addClass(
+        //                 'menu-item-active')
+
+        //         }
+        //     });
+        // });
         $(document).ready(function() {
-            var url_parent = '/epstopik-test'
-            // Lấy URL hiện tại
-            var currentUrl = window.location.pathname;
-            i = currentUrl.indexOf('vandap');
-            url = url_parent + '/ThongTin';
-            // Duyệt qua tất cả các phần tử <li>
-            $('.menu-item').each(function() {
-                // Lấy URL từ thẻ <a> bên trong <li>
-                var linkUrl = $(this).find('a').attr('href');
-
-                // Nếu URL của thẻ <a> khớp với URL hiện tại
-                if (linkUrl === currentUrl) {
-                    // Thêm class 'active' cho <li> này
-                    $(this).addClass('menu-item-active');
-                    // $('.menu-item a[href="' + url + '"]').addClass('menu-item-active')
-                    $('.menu-item a[href="' + url + '"]').parent().addClass('menu-item-active');
-                    $('.menu-item a[href="' + url + '"]').parent().parent().parent().parent().addClass(
-                        'menu-item-active')
-
+            const currentPath = window.location.pathname;
+            console.log('url_hientai=' + currentPath);
+            // Select all menu links
+            const menuLinks = document.querySelectorAll('.menu-item a');
+            menuLinks.forEach(link => {
+                link.parentElement.classList.remove('menu-item-active');
+                const parentItem = link.closest('.menu-item').parentElement.closest('.menu-item');
+                if (parentItem) {
+                    parentItem.classList.remove('menu-item-active');
                 }
             });
-        });
+            // console.log(menuLinks);
+            menuLinks.forEach(link => {
+                // Check if the link's href matches the current path
+                console.log('link='+link.getAttribute('href'));
+                if (link.getAttribute('href') === currentPath) {
+                    // console.log(link.getAttribute('href'));
+                    // Add the 'menu-item-active' class to the <li> parent of the matching link
+                    link.parentElement.classList.add('menu-item-active');
 
+                    // If the <li> has a parent <li>, add the class to that too
+                    const parentItem = link.closest('.menu-item').parentElement.closest('.menu-item');
+                    if (parentItem) {
+                        parentItem.classList.add('menu-item-active');
+                    }
+                }
+            })
+        });
         // function HienCauHoi() {
         //     if ($('#cauhoi').hasClass('disable')) {
         //         $('#cauhoi').removeClass('disable');
@@ -104,8 +139,8 @@
                         <div class="card card-custom gutter-b">
                             <div class="card-body">
                                 <ul class="menu-nav">
-                                    <li class="menu-item 'menu-item-active " aria-haspopup="true">
-                                        <a href="/epstopik-test/vandap" class="menu-link">
+                                    <li class="menu-item menu-item-active " aria-haspopup="true">
+                                        <a href="/epstopik-test/phongvan?phanloai=VANDAP" class="menu-link">
                                             <span class="svg-icon menu-icon">
                                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +162,7 @@
                                         </a>
                                     </li>
                                     <li class="menu-item " aria-haspopup="true">
-                                        <a href="/epstopik-test/hieulenh" class="menu-link">
+                                        <a href="/epstopik-test/phongvan?phanloai=HIEULENH" class="menu-link">
                                             <span class="svg-icon menu-icon">
                                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg"

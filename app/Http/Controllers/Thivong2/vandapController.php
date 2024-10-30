@@ -10,13 +10,21 @@ use Illuminate\Support\Facades\File;
 
 class vandapController extends Controller
 {
-    public function ThongTin()
+    public function ThongTin(Request $request)
     {
-        $model = vandap::all();
+        $inputs = $request->all();
+        $inputs['phanloai'] = $inputs['phanloai'] ?? 'VANDAP';
+        $a_phanloai = array(
+            'VANDAP' => 'Vấn đáp',
+            'HIEULENH' => 'Hiệu lệnh'
+        );
+        $model = vandap::where('phanloai', $inputs['phanloai'])->get();
         $m_cautraloi = vandap_cautraloi::wherein('macau', array_column($model->toarray(), 'macau'))->get();
-        $stt = $model->max('stt')??1;
+        $stt = $model->max('stt') ?? 1;
         return view('thivong2.vandap.index')
             ->with('model', $model)
+            ->with('inputs', $inputs)
+            ->with('a_phanloai', $a_phanloai)
             ->with('m_cautraloi', $m_cautraloi)
             ->with('stt', $stt)
             ->with('baocao', getdulieubaocao())
@@ -40,7 +48,8 @@ class vandapController extends Controller
             'macau' => $macau,
             'noidung' => $inputs['noidung'],
             'nghiatiengviet' => $inputs['nghiatiengviet'],
-            'stt' => $inputs['stt']
+            'stt' => $inputs['stt'],
+            'phanloai' => $inputs['phanloai']
         ];
         foreach ($inputs['cautraloi'] as $key => $ct) {
             $data_cautraloi = [
@@ -61,7 +70,10 @@ class vandapController extends Controller
     public function edit(Request $request)
     {
         $inputs = $request->all();
-
+        $a_phanloai = array(
+            'VANDAP' => 'Vấn đáp',
+            'HIEULENH' => 'Hiệu lệnh'
+        );
         $model = vandap::findOrFail($inputs['id']);
         $m_cautraloi = vandap_cautraloi::where('macau', $model->macau)->get();
 
@@ -72,6 +84,18 @@ class vandapController extends Controller
 
         $result['message'] = '<div class="form-group row" id="edit_cauhoi">';
         $result['message'] .= '<input type="hidden" name="macau" value="' . $model->macau . '">';
+        $result['message'] .= '<div class="col-md-6 mt-2 mb-2">';
+        $result['message'] .= '<label class="control-label font-weight-bolder">Phân loại<span class="require">*</span></label>';
+        $result['message'] .= '<select name="phanloai" class="form-control">';
+        foreach ($a_phanloai as $key => $ct) {
+            $result['message'] .= '<option value="' . $key . '"' . ($key == $model->phanloai ? "selected" : "") . '>' . $ct . '</option>';
+        }
+        $result['message'] .= '</select>';
+        $result['message'] .= '</div>';
+        $result['message'] .= '<div class="col-md-6 mt-2 mb-2">';
+        $result['message'] .= '<label class="control-label font-weight-bolder">Số thứ tự<span class="require">*</span></label>';
+        $result['message'] .= '<input type="text" name="stt" value="' . $model->stt . '" class="form-control">';
+        $result['message'] .= '</div>';
         $result['message'] .= '<div class="col-md-12 mt-2 mb-2">';
         $result['message'] .= '<label class="control-label font-weight-bolder">Câu hỏi<span class="require">*</span></label>';
         $result['message'] .= '<input type="text" name="noidung" value="' . $model->noidung . '" class="form-control">';
@@ -95,10 +119,7 @@ class vandapController extends Controller
         $result['message'] .= '<label class="control-label font-weight-bolder">Audio</label>';
         $result['message'] .= '<input type="file" name="audio" accept=".mp3" class="form-control">';
         $result['message'] .= '</div>';
-        $result['message'] .= '<div class="col-md-12 mt-2 mb-2">';
-        $result['message'] .= '<label class="control-label font-weight-bolder">Số thứ tự<span class="require">*</span></label>';
-        $result['message'] .= '<input type="text" name="stt" value="' . $model->stt . '" class="form-control">';
-        $result['message'] .= '</div>';
+
 
         $result['status'] = 'success';
 
@@ -114,6 +135,7 @@ class vandapController extends Controller
             $model->noidung = $inputs['noidung'];
             $model->nghiatiengviet = $inputs['nghiatiengviet'];
             $model->stt = $inputs['stt'];
+            $model->phanloai = $inputs['phanloai'];
             if (isset($inputs['audio'])) {
                 if (File::exists($model->audio)) {
                     File::Delete($model->audio);

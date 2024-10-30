@@ -117,7 +117,7 @@ class dstaikhoanController extends Controller
                     'magiaovien' => $inputs['mataikhoan'],
                     'tengiaovien' => $inputs['tentaikhoan'],
                     // 'cccd' => $inputs['cccd'],
-                    'sodienthoai' => $inputs['sodienthoai'],
+                    'sdt' => $inputs['sodienthoai'],
                     'email' => $inputs['email'],
                 ];
                 giaovien::create($data);
@@ -128,7 +128,7 @@ class dstaikhoanController extends Controller
                     'mahocvien' => $inputs['mataikhoan'],
                     'tenhocvien' => $inputs['tentaikhoan'],
                     // 'cccd' => $inputs['cccd'],
-                    'sodienthoai' => $inputs['sodienthoai'],
+                    'sdt' => $inputs['sodienthoai'],
                     'email' => $inputs['email'],
                 ];
                 hocvien::create($data);
@@ -137,6 +137,7 @@ class dstaikhoanController extends Controller
                 $inputs['hethong'] = 1;
                 break;
         }
+        // dd($inputs);
         User::create($inputs);
         add_phanquyen($inputs['manhomchucnang'], $inputs['sodienthoai']);
         loghethong(getIP(), session('admin'), 'them', 'taikhoan');
