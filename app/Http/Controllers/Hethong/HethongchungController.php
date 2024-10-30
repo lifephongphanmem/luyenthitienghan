@@ -101,6 +101,7 @@ class HethongchungController extends Controller
 		if ($user->sadmin != "SSA") {
 			if ($user->hocvien == 1) {
 				$hocvien = hocvien::where('sdt', $user->sodienthoai)->first();
+				// dd($hocvien);
 				$user->manguoidung = $hocvien->mahocvien;
 				$user->malop = $hocvien->malop;
 				$user->vitri= 'Học viên';
