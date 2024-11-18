@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Thivong2\congcuController;
 use App\Http\Controllers\Thivong2\thivong2EPSController;
 use App\Http\Controllers\Thivong2\vandapController;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,11 @@ Route::prefix('ThiVong2')->group(function(){
         Route::get('edit',[vandapController::class,'edit']);
         Route::post('CapNhat',[vandapController::class,'CapNhat']);
     });
+});
+Route::prefix('CongCu')->group(function(){
+    Route::get('ThongTin',[congcuController::class,'ThongTin']);
+    Route::post('LuuCongCu',[congcuController::class,'LuuCongCu']);
+    Route::get('XoaCongCu/{id}',[congcuController::class,'XoaCongCu']);
+    Route::get('edit',[congcuController::class,'edit']);
+    Route::post('CapNhat',[congcuController::class,'CapNhat']);
 });

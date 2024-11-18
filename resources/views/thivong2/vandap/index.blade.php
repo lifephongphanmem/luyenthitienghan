@@ -47,8 +47,8 @@
 
                             <select name="phanloai" id="a_baihoc" class="form-control select2basic">
                                 @foreach ($a_phanloai as $key => $ct)
-                                    <option value="{{ $key }}"
-                                        {{ $ct == $inputs['phanloai'] ? 'selected' : '' }}>{{ $ct }}
+                                    <option value="{{ $key }}" {{ $ct == $inputs['phanloai'] ? 'selected' : '' }}>
+                                        {{ $ct }}
                                     </option>
                                 @endforeach
                             </select>
@@ -67,15 +67,15 @@
                         </thead>
                         <tbody>
                             @foreach ($model as $key => $ch)
-                            <?php $cautraloi=$m_cautraloi->where('macau',$ch->macau) ?>
+                                <?php $cautraloi = $m_cautraloi->where('macau', $ch->macau); ?>
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
                                     <td name='cauhoi' class="text-left" style="width: 20%">{{ $ch->noidung }}</td>
                                     {{-- <td name='cauhoi' class="text-left" style="width: 20%">{{ $ch->nghiatiengviet }}</td> --}}
 
                                     <td name='cautraloi' style="width: 8%">
-                                        @foreach ($cautraloi as $ct )
-                                            <p>{{$ct->stt}}. {{$ct->noidung}}</p>
+                                        @foreach ($cautraloi as $ct)
+                                            <p>{{ $ct->stt }}. {{ $ct->noidung }}</p>
                                         @endforeach
                                     </td>
                                     <td name='audio' style="width: 10%">
@@ -90,8 +90,7 @@
                                             class="btn btn-sm btn-clean btn-icon">
                                              <i class="icon-lg la la-th-list text-primary "></i>
                                          </a> --}}
-                                        <button title="Sửa thông tin"
-                                            onclick="edit(this,'{{ $ch->id }}')"
+                                        <button title="Sửa thông tin" onclick="edit(this,'{{ $ch->id }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
@@ -127,16 +126,19 @@
                     <div class="modal-body">
                         <div class="form-group row">
                             <div class="col-md-6 mt-2 mb-2">
-                                <label class="control-label font-weight-bolder">Phân loại<span class="require">*</span></label>
+                                <label class="control-label font-weight-bolder">Phân loại<span
+                                        class="require">*</span></label>
                                 <select name="phanloai" class="form-control">
                                     @foreach ($a_phanloai as $key => $ct)
-                                        <option value="{{ $key }}" {{ $key == $inputs['phanloai']?'selected':'' }}>{{ $ct }}</option>
+                                        <option value="{{ $key }}"
+                                            {{ $key == $inputs['phanloai'] ? 'selected' : '' }}>{{ $ct }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6 mt-2 mb-2">
-                                <label class="control-label font-weight-bolder">Số thứ tự<span class="require">*</span></label>
-                                <input type="text" name="stt" value="{{++$stt}}" class="form-control">
+                                <label class="control-label font-weight-bolder">Số thứ tự<span
+                                        class="require">*</span></label>
+                                <input type="text" name="stt" value="{{ ++$stt }}" class="form-control">
                             </div>
                             {{-- <div class="col-md-1" style="padding-left: 0px;">
                                 <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
@@ -145,21 +147,24 @@
                                     <i class="fa fa-plus"></i></button>
                             </div> --}}
                             <div class="col-md-12 mt-2 mb-2">
-                                <label class="control-label font-weight-bolder">Câu hỏi<span class="require">*</span></label>
+                                <label class="control-label font-weight-bolder">Câu hỏi<span
+                                        class="require">*</span></label>
                                 <input type="text" name="noidung" class="form-control">
                             </div>
                             <div class="col-md-12 mt-2 mb-2">
-                                <label class="control-label font-weight-bolder">Nghĩa tiếng việt<span class="require">*</span></label>
+                                <label class="control-label font-weight-bolder">Nghĩa tiếng việt<span
+                                        class="require">*</span></label>
                                 <input type="text" name="nghiatiengviet" class="form-control">
                             </div>
                             <div class="col-md-12 mt-2 mb-2" id="cautl">
                                 <label class="control-label font-weight-bolder">Câu trả lời</label>
                                 <input type="text" name="cautraloi[]" class="form-control">
-                                
+
                             </div>
 
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-xs btn-primary" title="Thêm câu trả lời" onclick="addAns()" ><i class="fa fa-plus"></i>Thêm câu trả lời</button>
+                                <button type="button" class="btn btn-xs btn-primary" title="Thêm câu trả lời"
+                                    onclick="addAns()"><i class="fa fa-plus"></i>Thêm câu trả lời</button>
                             </div>
                             <div class="col-md-12 mt-2 mb-2">
                                 <label class="control-label font-weight-bolder">Audio</label>
@@ -317,47 +322,46 @@
         function clickedit() {
             $('#frm_edit').submit();
         }
-        function add()
-        { 
+
+        function add() {
             $('#frm_themcauhoi').find("[name='noidung']").val('');
             $('#frm_themcauhoi').find("[name='nghiatiengviet']").val('');
             $('#frm_themcauhoi').find("[name='cautraloi[]']").val('');
         }
-        function addAns()
-        {
+
+        function addAns() {
             $('#cautl').append('<input type="text" name="cautraloi[]" class="form-control mt-2">');
         }
-        function edit(e,id)
-        {
+
+        function edit(e, id) {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var url='/ThiVong2/VanDap/CapNhat'
-        $.ajax({
-            url: '/ThiVong2/VanDap/edit',
-            type: 'GET',
-            data: {
-                _token: CSRF_TOKEN,
-                id: id,
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                console.log(data);
-                if (data.status == 'success') {
-                    $('#edit_cauhoi').replaceWith(data.message);
-                    TableManagedclass.init();
-                    // TableManaged4.init();
-                    $('#frm_edit').attr('action', url);
-                }
-            },
-            // error: function (message) {
-            //     toastr.error(message, 'Lỗi!');
-            // }
-        });
-        }
-        function addAns_edit()
-        {
-            $('#cautl_edit').append('<input type="text" name="cautraloi[]" class="form-control mt-2">');
+            var url = '/ThiVong2/VanDap/CapNhat'
+            $.ajax({
+                url: '/ThiVong2/VanDap/edit',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id,
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status == 'success') {
+                        $('#edit_cauhoi').replaceWith(data.message);
+                        TableManagedclass.init();
+                        // TableManaged4.init();
+                        $('#frm_edit').attr('action', url);
+                    }
+                },
+                // error: function (message) {
+                //     toastr.error(message, 'Lỗi!');
+                // }
+            });
         }
 
+        function addAns_edit() {
+            $('#cautl_edit').append('<input type="text" name="cautraloi[]" class="form-control mt-2">');
+        }
     </script>
 
 @stop

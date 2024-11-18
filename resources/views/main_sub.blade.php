@@ -200,7 +200,7 @@
     @endif
 
     <!-- begin: Thi vòng 2 -->
-    {{-- <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
+    <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text text-center">VÒNG 2 EPS&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
             <i class="menu-arrow"></i>
@@ -211,6 +211,12 @@
                         <a href="{{ '/ThiVong2/VanDap/ThongTin' }}" class="menu-link"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
                             <span class="menu-text">QUẢN LÝ CÂU PHỎNG VẤN</span>
+                        </a>
+                    </li>
+                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                        <a href="{{ '/CongCu/ThongTin' }}" class="menu-link"><i
+                                class="icon-sm la la-angle-double-right"></i>&nbsp;
+                            <span class="menu-text">QUẢN LÝ CÔNG CỤ LAO ĐỘNG</span>
                         </a>
                     </li>
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
@@ -227,7 +233,7 @@
                     </li>
             </ul>
         </div>
-    </li> --}}
+    </li>
     <!-- end: Thi vòng 2 -->
 
     @if (chkPhanQuyen('baocao', 'phanquyen'))

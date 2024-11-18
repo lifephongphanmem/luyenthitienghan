@@ -137,8 +137,9 @@ class vandapController extends Controller
             $model->stt = $inputs['stt'];
             $model->phanloai = $inputs['phanloai'];
             if (isset($inputs['audio'])) {
-                if (File::exists($model->audio)) {
-                    File::Delete($model->audio);
+                $url=ltrim($model->audio,'/');
+                if (File::exists($url)) {
+                    File::Delete($url);
                 }
                 $file = $inputs['audio'];
                 $name = time() . $file->getClientOriginalName();
@@ -169,8 +170,9 @@ class vandapController extends Controller
         $model = vandap::findOrFail($id);
         if (isset($model)) {
             vandap_cautraloi::where('macau', $model->macau)->delete();
-            if (File::exists($model->audio)) {
-                File::Delete($model->audio);
+            $url=ltrim($model->audio,'/');
+            if (File::exists($url)) {
+                File::Delete($url);
             }
             $model->delete();
         }

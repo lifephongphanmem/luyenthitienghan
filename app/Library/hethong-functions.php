@@ -518,4 +518,25 @@ function ColumnName()
     ];
 }
 
+function getNganhXK()
+{
+    return [
+        '1'=>'Ngành SXCT',
+        '2'=>'Ngành xây dựng',
+        '3'=>'Ngành đóng tàu',
+        '4'=>'Ngành nông nghiệp',
+        '5'=>'Ngành ngư nghiệp'
+    ];
+}
+function getNganhfodder()
+{
+    return [
+        '1'=>'SXCT',
+        '2'=>'XD',
+        '3'=>'DT',
+        '4'=>'NN',
+        '5'=>'NgN'
+    ];
+}
+
 
