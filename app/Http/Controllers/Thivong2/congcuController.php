@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Thivong2;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ColectionImport;
 use App\Models\Thivong2\congcu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class congcuController extends Controller
 {
@@ -119,5 +121,40 @@ class congcuController extends Controller
         }
         return redirect('CongCu/ThongTin?phanloai='.$model->phanloai)
             ->with('success', 'Cập nhật thành công');
+    }
+    public function NhanExcel(Request $request)
+    {
+        $inputs=$request->all();
+        $dataObj = new ColectionImport();
+        $theArray = Excel::toArray($dataObj, $inputs['fexcel']);
+        $data = $theArray[0];
+
+        $phanloai=congcu::where('phanloai',$inputs['phanloai'])->get();
+            $stt=count($phanloai) > 0?$phanloai->max('stt'):'1';
+
+        $a_data=array();
+        for ($i = ($inputs['tudong']-1); $i <= $inputs['dendong']; $i++) {
+
+            if (!isset($data[$i][ColumnName()[$inputs['tiengHan']]])) {
+                continue;
+            }
+            $hinhanh=removeVietnameseTones($data[$i][ColumnName()[$inputs['tiengViet']]]).'.webp';
+            $inputs['hinhanh'] = '/data/congcu/'.getNganhfodder()[$inputs['phanloai']].'/'.$hinhanh;
+            $a_data[]=array(
+                'phanloai'=>$inputs['phanloai'],
+                'macongcu'=>getdate()[0].'_'.$i,
+                'tencongcu'=>$data[$i][ColumnName()[$inputs['tiengViet']]],
+                'tiengHan'=>$data[$i][ColumnName()[$inputs['tiengHan']]],
+                'hinhanh'=>$inputs['hinhanh'],
+                'stt'=>$stt++
+            );
+        }
+
+        foreach (array_chunk($a_data, 100) as $data) {
+            congcu::insert($data);
+        }
+
+        return redirect('/CongCu/ThongTin?phanloai='.$inputs['phanloai'])
+                        ->with('success','Nhận Excel thành công');
     }
 }

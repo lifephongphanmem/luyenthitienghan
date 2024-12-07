@@ -539,4 +539,16 @@ function getNganhfodder()
     ];
 }
 
+function congcu()
+{
+    return [
+        '1'=>'Công cụ SXCT',
+        '2'=>'Công cụ xây dựng',
+        '3'=>'Công cụ đóng tàu',
+        '4'=>'Công cụ nông nghiệp',
+        '5'=>'Công cụ ngư nghiệp'
+    ];
+}
+
+
 

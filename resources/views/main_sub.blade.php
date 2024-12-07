@@ -226,6 +226,12 @@
                         </a>
                     </li>
                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                        <a href="{{ '/TestMuMau/ThongTin' }}" class="menu-link"><i
+                                class="icon-sm la la-angle-double-right"></i>&nbsp;
+                            <span class="menu-text">QUẢN LÝ TEST MÙ MÀU</span>
+                        </a>
+                    </li>
+                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                         <a href="{{ '/epstopik-test/ThongTin' }}" class="menu-link"><i
                                 class="icon-sm la la-angle-double-right"></i>&nbsp;
                             <span class="menu-text">ÔN THI VÒNG 2 EPS</span>

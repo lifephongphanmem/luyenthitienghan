@@ -44,54 +44,37 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="form-group row">
-                        <div class="col-md-4">
-                            <label style="font-weight: bold">Phân loại</label>
-
-                            <select name="phanloai" id="a_nganh" class="form-control select2basic">
-                                @foreach (getNganhXK() as $key => $ct)
-                                    <option value="{{ $key }}"
-                                        {{ $key == $inputs['phanloai'] ? 'selected' : '' }}>{{ $ct }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr class="text-center">
                                 <th>STT</th>
                                 <th>Ảnh</th>
-                                <th>Tên công cụ</th>
-                                {{-- <th>Tiếng Việt</th> --}}
-                                <th>Tiếng Hàn</th>
+                                <th>Đáp án</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($model as $key => $cc)
+                            @foreach ($model as $key => $ct)
 
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
                                     <td name='hinhanh' style="width: 8%">
-                                        @if(isset($cc->hinhanh))
-                                        <img src="{{url($cc->hinhanh)}}" alt="Mô tả ảnh" style="width:82px"> 
+                                        @if(isset($ct->hinhanh))
+                                        <img src="{{url($ct->hinhanh)}}" alt="Mô tả ảnh" style="width:82px"> 
                                         @endif 
                                     </td>
-                                    <td name='cauhoi' class="text-left" style="width: 20%">{{ $cc->tencongcu }}</td>
-                                    {{-- <td name='cauhoi' class="text-left" style="width: 20%">{{ $ch->nghiatiengviet }}</td> --}}
+                                    <td name='cauhoi' class="text-left" style="width: 20%">{{ $ct->dapan }}</td>
 
-                                    <td name='tienghan' style="width: 8%">{{$cc->tiengHan}}</td>
 
                                     <td class="text-center" style="width:8%">
                                         <button title="Sửa thông tin"
-                                            onclick="edit(this,'{{ $cc->id }}')"
+                                            onclick="edit(this,'{{ $ct->id }}')"
                                             data-target="#edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary "></i>
                                         </button>
 
                                         <button title="Xóa thông tin" type="button"
-                                            onclick="cfDel('{{ '/CongCu/XoaCongCu/' . $cc->id }}')"
+                                            onclick="cfDel('{{ '/TestMuMau/Xoa/' . $ct->id }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-trash-alt text-danger icon-2x"></i></button>
@@ -109,45 +92,29 @@
     <!--end::Row-->
     <!--Thêm mới -->
     <div id="themmoi" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
-        <form action="{{ '/CongCu/LuuCongCu' }}" method="POST" id="frm_themcongcu" enctype="multipart/form-data">
+        <form action="{{ '/TestMuMau/Luu' }}" method="POST" id="frm_themtest" enctype="multipart/form-data">
             @csrf
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin công cụ
+                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin
                         </h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <div class="col-md-6 mt-2 mb-2">
-                                <label class="control-label font-weight-bolder">Phân loại<span class="require">*</span></label>
-                                <select name="phanloai" class="form-control">
-                                    @foreach (getNganhXK() as $key => $ct)
-                                        <option value="{{ $key }}" {{ $key == $inputs['phanloai']?'selected':'' }}>{{ $ct }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6 mt-2 mb-2">
+                            <div class="col-md-12 mt-2 mb-2">
                                 <label class="control-label font-weight-bolder">Số thứ tự<span class="require">*</span></label>
                                 <input type="number" name="stt" value="{{++$stt}}" class="form-control">
                             </div>
                             <div class="col-md-12 mt-2 mb-2">
-                                <label class="control-label font-weight-bolder">Tên công cụ<span class="require">*</span></label>
-                                <input type="text" name="tencongcu" class="form-control">
+                                <label class="control-label font-weight-bolder">Đáp án<span class="require">*</span></label>
+                                <input type="text" name="dapan" class="form-control">
                             </div>
-                            <div class="col-md-12 mt-2 mb-2">
-                                <label class="control-label font-weight-bolder">Tiếng Hàn<span class="require">*</span></label>
-                                <input type="text" name="tiengHan" class="form-control">
-                            </div>
-                            {{-- <div class="col-md-12 mt-2 mb-2">
-                                <label class="control-label font-weight-bolder">Nghĩa tiếng việt<span class="require">*</span></label>
-                                <input type="text" name="tiengViet" class="form-control">
-                            </div> --}}
 
                             <div class="col-md-12 mt-2 mb-2">
                                 <label class="control-label font-weight-bolder">Hình ảnh</label>
-                                <input type="file" name="hinhanh" accept=".jpg;.png;.webp" class="form-control">
+                                <input type="file" name="hinhanh" accept=".jpg,.png,.webp" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -169,12 +136,12 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin công cụ
+                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin
                         </h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group row" id='edit_congcu'>
+                        <div class="form-group row" id='edit_test'>
 
                         </div>
                     </div>
@@ -189,7 +156,7 @@
     </div>
         <!--Nhận excel -->
         <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
-            <form action="{{ '/CongCu/NhanExcel' }}" method="POST" id="frm_import" enctype="multipart/form-data">
+            <form action="{{ '/TestMuMau/NhanExcel' }}" method="POST" id="frm_import" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-dialog modal-xs">
                     <div class="modal-content">
@@ -199,25 +166,16 @@
                             <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label class="control-label font-weight-bolder">Phân loại<span class="require">*</span></label>
-                                    <select name="phanloai" class="form-control">
-                                        @foreach (getNganhXK() as $key => $ct)
-                                            <option value="{{ $key }}" {{ $key == $inputs['phanloai']?'selected':'' }}>{{ $ct }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label class="control-label font-weight-bolder">Tiếng Hàn</label>
-                                    <input type="text" name="tiengHan" value="A" class="form-control">
+                                    <label class="control-label font-weight-bolder">Đáp án</label>
+                                    <input type="text" name="dapan" value="A" class="form-control">
                                 </div>
         
                                 <div class="col-md-6">
-                                    <label class="control-label font-weight-bolder">Tiếng Việt</label>
-                                    <input type="text" name="tiengViet" value="B" class="form-control">
+                                    <label class="control-label font-weight-bolder">Hình ảnh</label>
+                                    <input type="text" name="hinhanh" value="B" class="form-control">
                                 </div>
                             </div>
         
@@ -240,7 +198,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 mt-2">
-                                <a href="{{url('/mauexcel/nganh.xlsx')}}" style="text-decoration: underline" class="float-right">Tải file mẫu excel</a>
+                                <a href="{{url('/mauexcel/testmumau.xlsx')}}" style="text-decoration: underline" class="float-right">Tải file mẫu excel</a>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -265,7 +223,7 @@
         }
 
         function clickNhanvaTKT() {
-            $('#frm_themcongcu').submit();
+            $('#frm_themtest').submit();
         }
 
         function clickNhanexcel() {
@@ -277,15 +235,14 @@
         }
         function add()
         { 
-            $('#frm_themcongcu').find("[name='tencongcu']").val('');
-            $('#frm_themcongcu').find("[name='tiengHan']").val('');
-            // $('#frm_themcongcu').find("[name='cautraloi[]']").val('');
+            $('#frm_themtest').find("[name='dapan']").val('');
+
         }
         function edit(e, id) {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            var url = '/CongCu/CapNhat'
+            var url = '/TestMuMau/CapNhat'
             $.ajax({
-                url: '/CongCu/edit',
+                url: '/TestMuMau/edit',
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN,
@@ -295,7 +252,7 @@
                 success: function(data) {
                     // console.log(data);
                     if (data.status == 'success') {
-                        $('#edit_congcu').replaceWith(data.message);
+                        $('#edit_test').replaceWith(data.message);
                         TableManagedclass.init();
                         // TableManaged4.init();
                         $('#frm_edit').attr('action', url);

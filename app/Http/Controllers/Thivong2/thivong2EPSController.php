@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Thivong2;
 
 use App\Http\Controllers\Controller;
+use App\Models\Thivong2\congcu;
+use App\Models\ThiVong2\testmumau;
 use App\Models\ThiVong2\vandap;
 use App\Models\ThiVong2\vandap_cautraloi;
 use Illuminate\Http\Request;
@@ -87,10 +89,84 @@ class thivong2EPSController extends Controller
         $model=vandap::all();
     }
 
-    public function datlaicau($macau)
+    public function CongCu($phanloai)
     {
-        $model=vandap::all();
-        $a_model=$model->toarray();
-        dd($a_model);
+        $model=congcu::where('phanloai',$phanloai)->orderBy('stt')->get();
+        $model_ct=$model->first();
+        return view('thivong2.congcu')
+        ->with('model',$model->slice(1))
+        ->with('model_ct',$model_ct)
+        ->with('baocao',getdulieubaocao())
+        ->with('pageTitle', 'Ôn thi vòng 2 EPS');
+
+    }
+
+    public function ChuyenHinhAnh(Request $request)
+    {
+        $inputs=$request->all();
+        $disable=$inputs['hiennghia'] == 0?'':'disable';
+        $congcu=congcu::where('phanloai',$inputs['phanloai'])->where('macongcu',$inputs['macongcu'])->first();
+        $result = array(
+            'status' => 'fail',
+            'hienhinhanh' => 'error',
+            'hiennghia' => 'error',
+            'model'=>$congcu
+        );
+
+        $result ['hienhinhanh']=    '<div class="col-lg-12 text-center mt-1 mb-1" id="hienhinhanh">';
+        $result ['hienhinhanh'] .= '<img class="mt-1 mb-2" style="border-radius:5px;" id="image_congcu" src="'.$congcu->hinhanh.'" alt="">';
+        $result ['hienhinhanh'] .='</div>';
+
+        $result ['hiennghia']=    '<div class="col-lg-12 text-center mt-1 mb-1 '.$disable.'" id="hiennghia">';
+        $result ['hiennghia'] .= '<p class="text-center" style="color: #517ca4;font-size:16px;font-weight:600">'.$congcu->tiengHan.'</p>';
+        $result ['hiennghia'] .= '<p class="text-center text-dark" style="font-size:14px;font-weight:600">'.$congcu->tencongcu.'</p>';
+        $result ['hiennghia'] .='</div>';
+
+        $result['status']='success';
+        return response()->json($result);
+    }
+
+    public function TestMuMau(Request $request)
+    {
+        $inputs=$request->all();
+        $model=testmumau::all()->shuffle();
+        $model_ct=$model->first();
+        return view('thivong2.testmumau',compact('model_ct'))
+        ->with('model',$model->slice(1))
+        ->with('baocao',getdulieubaocao())
+        ->with('pageTitle', 'Test mù màu');
+    }
+
+    public function ChuyenAnhTest(Request $request)
+    {
+        $inputs=$request->all();
+        $model=testmumau::where('matest',$inputs['matest'])->first();
+        $result = array(
+            'status' => 'fail',
+            'hienhinhanh' => 'error',
+            'model'=>$model
+        );
+        $result ['hienhinhanh']=    '<div class="col-lg-12 text-center mt-1 mb-1" id="hienhinhanh_test">';
+        $result ['hienhinhanh'] .= '<img class="mt-1 mb-2" style="border-radius:5px;" id="image_test" src="'.$model->hinhanh.'" alt="">';
+        $result ['hienhinhanh'] .='</div>';
+        $result['status']='success';
+        return response()->json($result);
+    }
+
+    public function KiemTra(Request $request)
+    {
+        $inputs=$request->all();
+        $model=testmumau::where('matest',$inputs['matest'])->first();
+        $message="fail";
+        if(!isset($model))
+        {
+            $message='Không tìm thấy hình ảnh';
+        }else{
+            if($model->dapan == $inputs['dapan']){
+                $message='correct';
+            }
+        }
+
+        return response()->json($message);
     }
 }
