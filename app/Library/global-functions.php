@@ -498,3 +498,38 @@ function chuyenkhongdau($str)
     foreach ($utf8 as $ascii => $uni) $str = preg_replace("/($uni)/i", $ascii, $str);
     return $str;
 }
+
+function removeVietnameseTones($str) {
+    if (!is_string($str)) {
+        return ''; // Kiểm tra nếu không phải là chuỗi, trả về chuỗi rỗng
+    }
+
+    // Bảng thay thế ký tự tiếng Việt
+    $vietnameseTones = [
+        'a' => ['á', 'à', 'ả', 'ã', 'ạ', 'â', 'ấ', 'ầ', 'ẩ', 'ẫ', 'ậ', 'ă', 'ắ', 'ằ', 'ẳ', 'ẵ', 'ặ'],
+        'e' => ['é', 'è', 'ẻ', 'ẽ', 'ẹ', 'ê', 'ế', 'ề', 'ể', 'ễ', 'ệ'],
+        'i' => ['í', 'ì', 'ỉ', 'ĩ', 'ị'],
+        'o' => ['ó', 'ò', 'ỏ', 'õ', 'ọ', 'ô', 'ố', 'ồ', 'ổ', 'ỗ', 'ộ', 'ơ', 'ớ', 'ờ', 'ở', 'ỡ', 'ợ'],
+        'u' => ['ú', 'ù', 'ủ', 'ũ', 'ụ', 'ư', 'ứ', 'ừ', 'ử', 'ữ', 'ự'],
+        'y' => ['ý', 'ỳ', 'ỷ', 'ỹ', 'ỵ'],
+        'd' => ['đ'],
+        'A' => ['Á', 'À', 'Ả', 'Ã', 'Ạ', 'Â', 'Ấ', 'Ầ', 'Ẩ', 'Ẫ', 'Ậ', 'Ă', 'Ắ', 'Ằ', 'Ẳ', 'Ẵ', 'Ặ'],
+        'E' => ['É', 'È', 'Ẻ', 'Ẽ', 'Ẹ', 'Ê', 'Ế', 'Ề', 'Ể', 'Ễ', 'Ệ'],
+        'I' => ['Í', 'Ì', 'Ỉ', 'Ĩ', 'Ị'],
+        'O' => ['Ó', 'Ò', 'Ỏ', 'Õ', 'Ọ', 'Ô', 'Ố', 'Ồ', 'Ổ', 'Ỗ', 'Ộ', 'Ơ', 'Ớ', 'Ờ', 'Ở', 'Ỡ', 'Ợ'],
+        'U' => ['Ú', 'Ù', 'Ủ', 'Ũ', 'Ụ', 'Ư', 'Ứ', 'Ừ', 'Ử', 'Ữ', 'Ự'],
+        'Y' => ['Ý', 'Ỳ', 'Ỷ', 'Ỹ', 'Ỵ'],
+        'D' => ['Đ']
+    ];
+
+    // Thay thế các ký tự tiếng Việt có dấu bằng ký tự không dấu
+    foreach ($vietnameseTones as $key => $chars) {
+        $str = str_replace($chars, $key, $str);
+    }
+
+    // Chuyển về chữ thường và loại bỏ khoảng trắng thừa
+    $str = strtolower($str);
+    $str = preg_replace('/\s+/', '', $str); // Loại bỏ khoảng trắng
+
+    return $str;
+}

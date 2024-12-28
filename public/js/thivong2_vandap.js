@@ -184,3 +184,13 @@ function disable_btn()
 {
     $('.stop').attr('disabled','disabled');
 }
+
+// function HienNghia() {
+//     if ($('#hiennghia').hasClass('disable')) {
+//         $('#hiennghia').removeClass('disable');
+//         $(event.target).text('Ẩn nghĩa');
+//     } else {
+//         $('#hiennghia').addClass('disable');
+//         $(event.target).text('Hiện nghĩa');
+//     }
+// }
