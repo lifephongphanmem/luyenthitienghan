@@ -18,34 +18,62 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+            var avatar1 = new KTImageInput('kt_image_1');
+            var avatar2 = new KTImageInput('kt_image_2');
+            var avatar3 = new KTImageInput('kt_image_3');
+            var avatar4 = new KTImageInput('kt_image_4');
+            var avatar4 = new KTImageInput('kt_image_5');
         });
 
         $('#loaidapan').on('change', function() {
             var loaidapan = $(this).val();
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            var edit=1;
+            var edit = 1;
             $.ajax({
                 url: '/CauHoi/LoaiDapAn',
                 type: 'POST',
                 data: {
                     _token: CSRF_TOKEN,
                     loaidapan: loaidapan,
-                    edit:edit
+                    edit: edit
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#A').remove();
                     $('#B').remove();
                     $('#C').remove();
                     $('#D').remove();
                     $('#dapan').append(data);
+                    var avatar1 = new KTImageInput('kt_image_1');
+                    var avatar2 = new KTImageInput('kt_image_2');
+                    var avatar3 = new KTImageInput('kt_image_3');
+                    var avatar4 = new KTImageInput('kt_image_4');
+                    var avatar4 = new KTImageInput('kt_image_5');
                 },
                 error: function(message) {
                     toastr.error(message, "Lỗi")
                 }
             });
         })
+        const audioInput = document.getElementById('audioInput');
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        // Thêm sự kiện onchange
+        audioInput.addEventListener('change', function(event) {
+            const file = event.target.files[0]; // Lấy file đầu tiên được chọn
+
+            if (file) {
+                // Tạo URL cho file được chọn
+                const audioURL = URL.createObjectURL(file);
+
+                // Gắn URL vào audio player
+                audioPlayer.src = audioURL;
+                audioPlayer.play(); // Tự động phát (tuỳ chọn)
+            } else {
+                console.log("Không có file nào được chọn.");
+            }
+        });
     </script>
 @stop
 @section('content')
@@ -247,25 +275,7 @@
                                         </div>
                                         <!--end::Input-->
                                         <div class="row">
-                                            <div class="col-xl-3">
-                                                <!--begin::Input-->
-                                                <div class="form-group">
-                                                    <label class="control-label">Ảnh</label>
-                                                    <input type="file" name="anh" class="form-control"
-                                                        accept=".jpg,.png">
-                                                </div>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-xl-3">
-                                                <!--begin::Input-->
-                                                <div class="form-group">
-                                                    <label class="control-label">Audio</label>
-                                                    <input type="file" name="audio" class="form-control"
-                                                        accept=".mp3,.m4a">
-                                                </div>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-xl-3">
+                                            <div class="col-xl-6">
                                                 <!--begin::Input-->
                                                 <div class="form-group">
                                                     <label class="control-label">Loại đáp án<span
@@ -281,7 +291,7 @@
                                                 </div>
                                                 <!--end::Input-->
                                             </div>
-                                            <div class="col-xl-3">
+                                            <div class="col-xl-6">
                                                 <!--begin::Input-->
                                                 <div class="form-group">
                                                     <label class="control-label">Đáp án đúng<span
@@ -300,6 +310,58 @@
                                                             {{ $model->dapan == 'D' ? 'selected' : '' }}>4
                                                         </option>
                                                     </select>
+                                                </div>
+                                                <!--end::Input-->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <!--begin::Input-->
+                                                {{-- <div class="form-group">
+                                                    <label class="control-label">Ảnh</label>
+                                                    <input type="file" name="anh" class="form-control"
+                                                        accept=".jpg,.png">
+                                                </div> --}}
+                                                <div class="form-group row" style="margin-left:32px">
+                                                    <label class="col-form-label">Ảnh&nbsp;</label>
+                                                    <div class="image-input image-input-outline" id="kt_image_5">
+                                                        <div class="image-input-wrapper"
+                                                            style="background-image:url({{ asset($model->anh) }})"></div>
+
+                                                        <label
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="change" data-toggle="tooltip" title=""
+                                                            data-original-title="Đổi ảnh">
+                                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                                            <input type="file" name="anh"
+                                                                accept=".png, .jpg, .jpeg" />
+                                                            <input type="hidden" name="profile_avatar_remove" />
+                                                        </label>
+
+                                                        <span
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="cancel" data-toggle="tooltip" title="Cancel">
+                                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!--end::Input-->
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <!--begin::Input-->
+                                                <div class="form-group">
+                                                    <label class="control-label">Audio</label>
+                                                    <input type="file" name="audio" class="form-control" id="audioInput"
+                                                        accept=".mp3,.m4a">
+                                                </div>
+                                                <!--end::Input-->
+                                            </div>
+                                            <div class="col-xl-3" style="line-height: 128px">
+                                                <!--begin::Input-->
+                                                <div class="form-group">
+                                                    <audio title="Nghe K-4" controls="controls" id="audioPlayer">
+                                                        <source src="{{asset($model->audio) }}">
+                                                    </audio>
                                                 </div>
                                                 <!--end::Input-->
                                             </div>
@@ -349,41 +411,130 @@
                                             @else
                                                 <div class="col-xl-3" id='A'>
                                                     <!--begin::Input-->
-                                                    <div class="form-group">
+                                                    {{-- <div class="form-group">
                                                         <label class="control-label">Đáp án 1<span
                                                                 class="require">*</span></label>
                                                         <input type="file" name="A" value="{{ $model->A }}"
                                                             class="form-control" accept=".jpg,.png">
+                                                    </div> --}}
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label">Đáp án
+                                                            1<span class="require">*</span></label>
+                                                        <div class="image-input image-input-outline" id="kt_image_1">
+                                                            <div class="image-input-wrapper"
+                                                                style="background-image:url({{ url($model->A) }})"></div>
+
+                                                            <label
+                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">
+                                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                <input type="file" name="A"
+                                                                    accept=".png, .jpg, .jpeg" />
+                                                                <input type="hidden" name="profile_avatar_remove" />
+                                                            </label>
+
+                                                            <span
+                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     <!--end::Input-->
                                                 </div>
                                                 <div class="col-xl-3" id='B'>
                                                     <!--begin::Input-->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Đáp án 2<span
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label">Đáp án 2<span
                                                                 class="require">*</span></label>
-                                                        <input type="file" name="B" value="{{ $model->B }}"
+                                                        {{-- <input type="file" name="B" value="{{ $model->B }}"
                                                             class="form-control" accept=".jpg,.png">
+                                                        <img src="{{ url($model->B) }}" alt="" width="50%"> --}}
+                                                        <div class="image-input image-input-outline" id="kt_image_2">
+                                                            <div class="image-input-wrapper"
+                                                                style="background-image:url({{ url($model->B) }})"></div>
+
+                                                            <label
+                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">
+                                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                <input type="file" name="B"
+                                                                    accept=".png, .jpg, .jpeg" />
+                                                                <input type="hidden" name="profile_avatar_remove" />
+                                                            </label>
+
+                                                            <span
+                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     <!--end::Input-->
                                                 </div>
                                                 <div class="col-xl-3" id='C'>
                                                     <!--begin::Input-->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Đáp án 3<span
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label">Đáp án 3<span
                                                                 class="require">*</span></label>
-                                                        <input type="file" name="C" value="{{ $model->C }}"
-                                                            class="form-control" accept=".jpg,.png">
+                                                        {{-- <input type="file" name="C" value="{{ $model->C }}"
+                                                            class="form-control" accept=".jpg,.png"> --}}
+                                                        <div class="image-input image-input-outline" id="kt_image_3">
+                                                            <div class="image-input-wrapper"
+                                                                style="background-image:url({{ url($model->C) }})"></div>
+
+                                                            <label
+                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">
+                                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                <input type="file" name="C"
+                                                                    accept=".png, .jpg, .jpeg" />
+                                                                <input type="hidden" name="profile_avatar_remove" />
+                                                            </label>
+
+                                                            <span
+                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     <!--end::Input-->
                                                 </div>
                                                 <div class="col-xl-3" id='D'>
                                                     <!--begin::Input-->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Đáp án 4<span
+                                                    <div class="form-group row">
+                                                        <label class="col-form-label">Đáp án 4<span
                                                                 class="require">*</span></label>
-                                                        <input type="file" name="D" value="{{ $model->D }}"
-                                                            class="form-control" accept=".jpg,.png">
+                                                        {{-- <input type="file" name="D" value="{{ $model->D }}"
+                                                            class="form-control" accept=".jpg,.png"> --}}
+                                                        <div class="image-input image-input-outline" id="kt_image_4">
+                                                            <div class="image-input-wrapper"
+                                                                style="background-image:url({{ url($model->D) }})"></div>
+
+                                                            <label
+                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">
+                                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                <input type="file" name="D"
+                                                                    accept=".png, .jpg, .jpeg" />
+                                                                <input type="hidden" name="profile_avatar_remove" />
+                                                            </label>
+
+                                                            <span
+                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     <!--end::Input-->
                                                 </div>
@@ -428,10 +579,6 @@
         <!--end::Example-->
     </div>
     <!--end::Row--> --}}
-
-
-
-
 
 
 

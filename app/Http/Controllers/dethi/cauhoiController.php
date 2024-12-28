@@ -39,7 +39,7 @@ class cauhoiController extends Controller
         $inputs = $request->all();
         $nguoncauhoi = dmnguoncauhoi::all();
         $loaicauhoi = loaicauhoi::all();
-        $madm = loaicauhoi::select('madm')->orderBy('id','desc')->first()->madm;
+        $madm = loaicauhoi::select('madm')->orderBy('id', 'desc')->first()->madm;
         $inputs['madm'] = isset($inputs['madm']) ? $inputs['madm'] : $madm;
         $inputs['dangcau'] = isset($inputs['dangcau']) ? $inputs['dangcau'] : 1;
         $inputs['nguoncauhoi'] = isset($inputs['nguoncauhoi']) ? $inputs['nguoncauhoi'] : $nguoncauhoi->first()->madm;
@@ -75,7 +75,7 @@ class cauhoiController extends Controller
         if (!chkPhanQuyen('quanlycauhoi', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'quanlycauhoi');
         }
-        
+
         $input = $request->all();
         $inputs = $input;
         // dd($inputs);
@@ -163,11 +163,91 @@ class cauhoiController extends Controller
         }
 
         loghethong(getIP(), session('admin'), 'them', 'cauhoi');
-        return redirect('/CauHoi/ThongTin?madm=' . $inputs['loaicauhoi'] . '&dangcau=' . $inputs['dangcau'])
+        return redirect('/CauHoi/ThongTin?madm=' . $inputs['loaicauhoi'] . '&dangcau=' . $inputs['dangcau'].'&nguoncauhoi='.$inputs['nguoncauhoi'])
             ->with('success', 'Thêm câu hỏi thành công');
     }
 
 
+    public function loaidapan_26122024(Request $request)
+    {
+        $inputs = $request->all();
+        if (!isset($inputs['caughep'])) {
+            if ($inputs['loaidapan'] == 1) {
+                $html = '<div class="col-xl-3" id="A">';
+                $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="B">';
+                $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="C">';
+                $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="D">';
+                $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+            } else {
+
+                $html = '<div class="col-xl-3" id="A">';
+                $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="B">';
+                $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="C">';
+                $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="D">';
+                $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+            }
+        } else {
+            if ($inputs['loaidapan'] == 1) {
+                $html = '<div class="col-xl-3" id="A2">';
+                $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="B2">';
+                $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="C2">';
+                $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="D2">';
+                $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+            } else {
+
+                $html = '<div class="col-xl-3" id="A2">';
+                $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="B2">';
+                $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="C2">';
+                $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+                $html .= '<div class="col-xl-3" id="D2">';
+                $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '</div>';
+            }
+        }
+        return response()->json($html);
+    }
     public function loaidapan(Request $request)
     {
         $inputs = $request->all();
@@ -175,80 +255,224 @@ class cauhoiController extends Controller
             if ($inputs['loaidapan'] == 1) {
                 $html = '<div class="col-xl-3" id="A">';
                 $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="B">';
                 $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="C">';
                 $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="D">';
                 $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
                 $html .= '</div>';
             } else {
 
                 $html = '<div class="col-xl-3" id="A">';
-                $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                // $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
+                // $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '<div class="form-group row">';
+                $html .= '<label class="col-form-label">Đáp án 1<span class="require">*</span></label>';
+                $html .= '<div class="image-input image-input-outline" id="kt_image_1">';
+                $html .= '<div class="image-input-wrapper" style="background-image:url(/images/no-image.jpg)"></div>';
+
+                $html .= '<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">';
+                $html .= '<i class="fa fa-pen icon-sm text-muted"></i>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" accept=".png, .jpg, .jpeg" />';
+                $html .= '<input type="hidden" name="profile_avatar_remove" /></label>';
+
+                $html .= '<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i></span>';
                 $html .= '</div>';
+                $html .= '</div>';
+                $html .= '</div>';
+                // $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="B">';
-                $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                // $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
+                // $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '<div class="form-group row">';
+                $html .= '<label class="col-form-label">Đáp án 2<span class="require">*</span></label>';
+                $html .= '<div class="image-input image-input-outline" id="kt_image_2">';
+                $html .= '<div class="image-input-wrapper" style="background-image:url(/images/no-image.jpg)"></div>';
+
+                $html .= '<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">';
+                $html .= '<i class="fa fa-pen icon-sm text-muted"></i>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" accept=".png, .jpg, .jpeg" />';
+                $html .= '<input type="hidden" name="profile_avatar_remove" /></label>';
+
+                $html .= '<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i></span>';
+                $html .= '</div>';
+                $html .= '</div>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="C">';
-                $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                // $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
+                // $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '<div class="form-group row">';
+                $html .= '<label class="col-form-label">Đáp án 3<span class="require">*</span></label>';
+                $html .= '<div class="image-input image-input-outline" id="kt_image_3">';
+                $html .= '<div class="image-input-wrapper" style="background-image:url(/images/no-image.jpg)"></div>';
+
+                $html .= '<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">';
+                $html .= '<i class="fa fa-pen icon-sm text-muted"></i>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" accept=".png, .jpg, .jpeg" />';
+                $html .= '<input type="hidden" name="profile_avatar_remove" /></label>';
+
+                $html .= '<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i></span>';
+                $html .= '</div>';
+                $html .= '</div>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="D">';
-                $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                // $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
+                // $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '<div class="form-group row">';
+                $html .= '<label class="col-form-label">Đáp án 4<span class="require">*</span></label>';
+                $html .= '<div class="image-input image-input-outline" id="kt_image_4">';
+                $html .= '<div class="image-input-wrapper" style="background-image:url(/images/no-image.jpg)"></div>';
+
+                $html .= '<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">';
+                $html .= '<i class="fa fa-pen icon-sm text-muted"></i>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" accept=".png, .jpg, .jpeg" />';
+                $html .= '<input type="hidden" name="profile_avatar_remove" /></label>';
+
+                $html .= '<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i></span>';
+                $html .= '</div>';
+                $html .= '</div>';
                 $html .= '</div>';
             }
         } else {
             if ($inputs['loaidapan'] == 1) {
                 $html = '<div class="col-xl-3" id="A2">';
                 $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="B2">';
                 $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="C2">';
                 $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="D2">';
                 $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
-                $html .= '<input type="text" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<input type="text" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" class="form-control" ' . (isset($inputs['edit']) ? "" : "required") . '>';
                 $html .= '</div>';
             } else {
 
                 $html = '<div class="col-xl-3" id="A2">';
-                $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                // $html .= '<label class="control-label ml-3">Đáp án 1<span class="require">*</span></label>';
+                // $html .= '<input type="file" name="'.(isset($inputs['edit'])?"A":"A[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                $html .= '<div class="form-group row">';
+                $html .= '<label class="col-form-label">Đáp án 1<span class="require">*</span></label>';
+                $html .= '<div class="image-input image-input-outline" id="kt_image_1">';
+                $html .= '<div class="image-input-wrapper" style="background-image:url(/images/no-image.jpg)"></div>';
+
+                $html .= '<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">';
+                $html .= '<i class="fa fa-pen icon-sm text-muted"></i>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "A" : "A[]") . '" accept=".png, .jpg, .jpeg" />';
+                $html .= '<input type="hidden" name="profile_avatar_remove" /></label>';
+
+                $html .= '<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i></span>';
+                $html .= '</div>';
+                $html .= '</div>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="B2">';
-                $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"B":"B[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                // $html .= '<label class="control-label ml-3">Đáp án 2<span class="require">*</span></label>';
+                // $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '<div class="form-group row">';
+                $html .= '<label class="col-form-label">Đáp án 2<span class="require">*</span></label>';
+                $html .= '<div class="image-input image-input-outline" id="kt_image_2">';
+                $html .= '<div class="image-input-wrapper" style="background-image:url(/images/no-image.jpg)"></div>';
+
+                $html .= '<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">';
+                $html .= '<i class="fa fa-pen icon-sm text-muted"></i>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "B" : "B[]") . '" accept=".png, .jpg, .jpeg" />';
+                $html .= '<input type="hidden" name="profile_avatar_remove" /></label>';
+
+                $html .= '<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i></span>';
+                $html .= '</div>';
+                $html .= '</div>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="C2">';
-                $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"C":"C[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                // $html .= '<label class="control-label ml-3">Đáp án 3<span class="require">*</span></label>';
+                // $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '<div class="form-group row">';
+                $html .= '<label class="col-form-label">Đáp án 3<span class="require">*</span></label>';
+                $html .= '<div class="image-input image-input-outline" id="kt_image_3">';
+                $html .= '<div class="image-input-wrapper" style="background-image:url(/images/no-image.jpg)"></div>';
+
+                $html .= '<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">';
+                $html .= '<i class="fa fa-pen icon-sm text-muted"></i>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "C" : "C[]") . '" accept=".png, .jpg, .jpeg" />';
+                $html .= '<input type="hidden" name="profile_avatar_remove" /></label>';
+
+                $html .= '<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i></span>';
+                $html .= '</div>';
+                $html .= '</div>';
                 $html .= '</div>';
                 $html .= '<div class="col-xl-3" id="D2">';
-                $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
-                $html .= '<input type="file" name="'.(isset($inputs['edit'])?"D":"D[]").'" class="form-control" accept=".jpg,.png" '.(isset($inputs['edit'])?"":"required").'>';
+                // $html .= '<label class="control-label ml-3">Đáp án 4<span class="require">*</span></label>';
+                // $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" class="form-control" accept=".jpg,.png" ' . (isset($inputs['edit']) ? "" : "required") . '>';
+                $html .= '<div class="form-group row">';
+                $html .= '<label class="col-form-label">Đáp án 4<span class="require">*</span></label>';
+                $html .= '<div class="image-input image-input-outline" id="kt_image_4">';
+                $html .= '<div class="image-input-wrapper" style="background-image:url(/images/no-image.jpg)"></div>';
+
+                $html .= '<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="change" data-toggle="tooltip" title=""
+                                                                data-original-title="Đổi ảnh">';
+                $html .= '<i class="fa fa-pen icon-sm text-muted"></i>';
+                $html .= '<input type="file" name="' . (isset($inputs['edit']) ? "D" : "D[]") . '" accept=".png, .jpg, .jpeg" />';
+                $html .= '<input type="hidden" name="profile_avatar_remove" /></label>';
+
+                $html .= '<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                                data-action="cancel" data-toggle="tooltip"
+                                                                title="Cancel">
+                                                                <i class="ki ki-bold-close icon-xs text-muted"></i></span>';
+                $html .= '</div>';
+                $html .= '</div>';
                 $html .= '</div>';
             }
         }
         return response()->json($html);
     }
-
     public function loaicauhoi(Request $request)
     {
         $inputs = $request->all();
@@ -546,6 +770,7 @@ class cauhoiController extends Controller
             return view('errors.noperm')->with('machucnang', 'quanlycauhoi');
         }
         $inputs = $request->all();
+        // dd($inputs);
         $model = cauhoi::where('macauhoi', $id)->first();
         if (isset($model)) {
             if (isset($inputs['anh'])) {
