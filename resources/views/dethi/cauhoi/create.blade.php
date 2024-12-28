@@ -19,12 +19,39 @@
         .hide {
             display: none;
         }
+
+        .form-group {
+            margin-left: 3px;
+        }
     </style>
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+            var avatar1 = new KTImageInput('kt_image_1');
+            var avatar2 = new KTImageInput('kt_image_2');
+            var avatar3 = new KTImageInput('kt_image_3');
+            var avatar4 = new KTImageInput('kt_image_4');
+            var avatar5 = new KTImageInput('kt_image_5');
         });
 
+        const audioInput = document.getElementById('audioInput');
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        // Thêm sự kiện onchange
+        audioInput.addEventListener('change', function(event) {
+            const file = event.target.files[0]; // Lấy file đầu tiên được chọn
+
+            if (file) {
+                // Tạo URL cho file được chọn
+                const audioURL = URL.createObjectURL(file);
+
+                // Gắn URL vào audio player
+                audioPlayer.src = audioURL;
+                audioPlayer.play(); // Tự động phát (tuỳ chọn)
+            } else {
+                console.log("Không có file nào được chọn.");
+            }
+        });
 
         function xemtranh(e) {
             var dangcaudoc = $(e).val();
@@ -54,12 +81,18 @@
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#A').remove();
                     $('#B').remove();
                     $('#C').remove();
                     $('#D').remove();
                     $('#dapan').append(data);
+
+                    var avatar1 = new KTImageInput('kt_image_1');
+                    var avatar2 = new KTImageInput('kt_image_2');
+                    var avatar3 = new KTImageInput('kt_image_3');
+                    var avatar4 = new KTImageInput('kt_image_4');
+                    var avatar5 = new KTImageInput('kt_image_5');
                 },
                 error: function(message) {
                     toastr.error(message, "Lỗi")
@@ -236,25 +269,7 @@
                                         </div>
                                         <!--end::Input-->
                                         <div class="row">
-                                            <div class="col-xl-3">
-                                                <!--begin::Input-->
-                                                <div class="form-group">
-                                                    <label class="control-label">Ảnh</label>
-                                                    <input type="file" name="anh[]" class="form-control"
-                                                        accept=".jpg,.png">
-                                                </div>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-xl-3">
-                                                <!--begin::Input-->
-                                                <div class="form-group">
-                                                    <label class="control-label">Audio</label>
-                                                    <input type="file" name="audio[]" class="form-control"
-                                                        accept=".mp3,.m4a">
-                                                </div>
-                                                <!--end::Input-->
-                                            </div>
-                                            <div class="col-xl-3">
+                                            <div class="col-xl-6">
                                                 <!--begin::Input-->
                                                 <div class="form-group">
                                                     <label class="control-label">Loại đáp án<span
@@ -266,7 +281,7 @@
                                                 </div>
                                                 <!--end::Input-->
                                             </div>
-                                            <div class="col-xl-3">
+                                            <div class="col-xl-6">
                                                 <!--begin::Input-->
                                                 <div class="form-group">
                                                     <label class="control-label">Đáp án đúng<span
@@ -277,6 +292,59 @@
                                                         <option value="C">3</option>
                                                         <option value="D">4</option>
                                                     </select>
+                                                </div>
+                                                <!--end::Input-->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <!--begin::Input-->
+                                                {{-- <div class="form-group">
+                                                    <label class="control-label">Ảnh</label>
+                                                    <input type="file" name="anh[]" class="form-control"
+                                                        accept=".jpg,.png">
+                                                </div> --}}
+                                                <div class="form-group row" style="margin-left:32px">
+                                                    <label class="col-form-label">Ảnh<span
+                                                            class="require">*</span></label>
+                                                    <div class="image-input image-input-outline" id="kt_image_5">
+                                                        <div class="image-input-wrapper"
+                                                            style="background-image:url(/images/no-image.jpg)"></div>
+
+                                                        <label
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="change" data-toggle="tooltip" title=""
+                                                            data-original-title="Đổi ảnh">
+                                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                                            <input type="file" name="anh[]"
+                                                                accept=".png, .jpg, .jpeg" />
+                                                            <input type="hidden" name="profile_avatar_remove" />
+                                                        </label>
+
+                                                        <span
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="cancel" data-toggle="tooltip" title="Cancel">
+                                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!--end::Input-->
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <!--begin::Input-->
+                                                <div class="form-group">
+                                                    <label class="control-label">Audio</label>
+                                                    <input type="file" name="audio[]" id="audioInput" class="form-control"
+                                                        accept=".mp3,.m4a">
+                                                </div>
+                                                <!--end::Input-->
+                                            </div>
+                                            <div class="col-xl-3" style="line-height: 128px">
+                                                <!--begin::Input-->
+                                                <div class="form-group">
+                                                    <audio title="Nghe K-4" controls="controls" id="audioPlayer">
+                                                        <source src="">
+                                                    </audio>
                                                 </div>
                                                 <!--end::Input-->
                                             </div>

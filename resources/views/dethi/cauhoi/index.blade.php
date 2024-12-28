@@ -196,7 +196,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th>STT</th>
-                                {{-- <th>Mã câu hỏi</th> --}}
+                                <th>Mã câu hỏi</th>
                                 {{-- <th>Loại câu hỏi</th> --}}
                                 <th width="20%">Câu hỏi</th>
                                 <th width="35%">Nội dung</th>
@@ -214,7 +214,7 @@
                             @foreach ($model as $key => $ch)
                                 <tr class="text-center">
                                     <td>{{ ++$key }}</td>
-                                    {{-- <td name="macauhoi">{{ $ch->macauhoi }}</td> --}}
+                                    <td name="macauhoi">{{ $ch->macauhoi }}</td>
                                     {{-- <td name='loaicauhoi'>{{ $ch->loaicauhoi }}</td> --}}
                                     <td name='cauhoi'>{{ $ch->cauhoi }}</td>
                                     <td name='noidung'>{{ $ch->noidung }}</td>
