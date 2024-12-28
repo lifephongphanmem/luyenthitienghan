@@ -200,6 +200,7 @@
     @endif
 
     <!-- begin: Thi vòng 2 -->
+    @if (chkPhanQuyen('thivong2', 'phanquyen'))
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text text-center">VÒNG 2 EPS&nbsp;<i class="icon-xl fas fa-caret-down"></i></span>
@@ -240,6 +241,7 @@
             </ul>
         </div>
     </li>
+    @endif
     <!-- end: Thi vòng 2 -->
 
     @if (chkPhanQuyen('baocao', 'phanquyen'))
