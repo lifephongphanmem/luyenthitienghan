@@ -115,7 +115,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <img src="{{ url('assets/media/logos/ttdvvl.png') }}"
                                             alt="Trung tâm Dịch vụ việc làm Quảng Trị">
                                         <div class="text">
-                                            <h3>SỞ NỘI VỤ QUẢNG TRỊ</h3>
+                                            <h3 class="text-left">SỞ NỘI VỤ QUẢNG TRỊ</h3>
                                             <h2>TRUNG TÂM DỊCH VỤ VIỆC LÀM QUẢNG TRỊ </h2>
                                         </div>
                                         <img src="{{ url('/images/main/anhbacgiap.png') }}">
