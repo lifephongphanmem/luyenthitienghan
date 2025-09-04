@@ -61,15 +61,15 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--begin::Header Mobile-->
     <div id="kt_header_mobile" class="header-mobile bg-primary header-mobile-fixed">
         <!--begin::Logo-->
-        <a href="{{'/'}}">
+        <a href="{{ '/' }}">
             <img alt="Logo" src="{{ url('assets/media/logos/ttdvvl.png') }}" class="max-h-30px" />
         </a>
         <!--end::Logo-->
         <div class="logo_slogan" style="padding-left:17px">
-        <div class="text">
-            <h3>SỞ LAO ĐỘNG THƯƠNG BINH VÀ XÃ HỘI TỈNH QUẢNG BÌNH</h3>
-            <h2>TRUNG TÂM DỊCH VỤ VIỆC LÀM QUẢNG BÌNH </h2>
-        </div>
+            <div class="text">
+                <h3>SỞ NỘI VỤ QUẢNG TRỊ</h3>
+                <h2>TRUNG TÂM DỊCH VỤ VIỆC LÀM QUẢNG TRỊ </h2>
+            </div>
         </div>
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
@@ -110,17 +110,17 @@ License: You must have a valid license purchased only from themeforest(the above
                         <!--begin::Container-->
                         <div class="container">
                             <div class="d-none d-lg-flex align-items-center mr-3">
-                            <div class="logo_slogan">
-                                <a href="/">
-                                    <img src="{{ url('assets/media/logos/ttdvvl.png') }}"
-                                        alt="Trung tâm Dịch vụ việc làm Quảng Bình">
-                                    <div class="text">
-                                        <h3>SỞ LAO ĐỘNG THƯƠNG BINH VÀ XÃ HỘI TỈNH QUẢNG BÌNH</h3>
-                                        <h2>TRUNG TÂM DỊCH VỤ VIỆC LÀM QUẢNG BÌNH </h2>
-                                    </div>
-                                    <img src="{{ url('/images/main/anhbacgiap.png') }}">
-                                </a>
-                            </div>
+                                <div class="logo_slogan">
+                                    <a href="/">
+                                        <img src="{{ url('assets/media/logos/ttdvvl.png') }}"
+                                            alt="Trung tâm Dịch vụ việc làm Quảng Trị">
+                                        <div class="text">
+                                            <h3>SỞ NỘI VỤ QUẢNG TRỊ</h3>
+                                            <h2>TRUNG TÂM DỊCH VỤ VIỆC LÀM QUẢNG TRỊ </h2>
+                                        </div>
+                                        <img src="{{ url('/images/main/anhbacgiap.png') }}">
+                                    </a>
+                                </div>
                             </div>
                             <div class="hotline_account d_flex d_flex_center">
                                 <div class="d-none d-lg-flex align-items-center mr-3">
@@ -132,38 +132,37 @@ License: You must have a valid license purchased only from themeforest(the above
                                     </div>
                                 </div>
                                 <div class="account topbar">
-                                        @if (Session::has('admin'))
-                                            {{-- <a class="d_flex d_flex_center" href="{{ '/DangNhap' }}">
+                                    @if (Session::has('admin'))
+                                        {{-- <a class="d_flex d_flex_center" href="{{ '/DangNhap' }}">
                                         <img src="{{ url('/images/main/us.png') }}">
                                         <p><span>{{ session('admin') ? session('admin')->tentaikhoan : '' }}</span></p>
                                     </a> --}}
-                                            <div class="topbar-item">
-                                                <div class="btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center btn-lg px-2"
-                                                    id="kt_quick_user_toggle">
-                                                    <span class="symbol symbol-20">
-                                                        <div class="symbol symbol-20 mr-3">
-                                                            <img alt="Pic"
-                                                                src="{{ url('/images/main/us.png') }}" />
-                                                        </div>
-                                                    </span>
-                                                    <div class="d-flex flex-column pr-3 text-left">
-                                                        <span
-                                                            class="text-white font-weight-bolder font-size-sm d-none d-md-inline">{{ session('admin') ? session('admin')->tentaikhoan : '' }}</span>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        @else
-                                            <a class="d_flex d_flex_center" href="{{ '/DangNhap' }}">
-                                                {{-- <img src="{{ url('/images/main/us.png') }}"> --}}
-                                                <span class="symbol symbol-35">
-                                                    <div class="symbol symbol-35 mr-3">
-                                                        <i class="icon-xl fas fa-sign-in-alt text-white"></i>
+                                        <div class="topbar-item">
+                                            <div class="btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center btn-lg px-2"
+                                                id="kt_quick_user_toggle">
+                                                <span class="symbol symbol-20">
+                                                    <div class="symbol symbol-20 mr-3">
+                                                        <img alt="Pic" src="{{ url('/images/main/us.png') }}" />
                                                     </div>
                                                 </span>
-                                                <p><span>Đăng nhập</span></p>
-                                            </a>
-                                        @endif
+                                                <div class="d-flex flex-column pr-3 text-left">
+                                                    <span
+                                                        class="text-white font-weight-bolder font-size-sm d-none d-md-inline">{{ session('admin') ? session('admin')->tentaikhoan : '' }}</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @else
+                                        <a class="d_flex d_flex_center" href="{{ '/DangNhap' }}">
+                                            {{-- <img src="{{ url('/images/main/us.png') }}"> --}}
+                                            <span class="symbol symbol-35">
+                                                <div class="symbol symbol-35 mr-3">
+                                                    <i class="icon-xl fas fa-sign-in-alt text-white"></i>
+                                                </div>
+                                            </span>
+                                            <p><span>Đăng nhập</span></p>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

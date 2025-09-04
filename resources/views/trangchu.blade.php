@@ -241,7 +241,7 @@
 @section('content')
     <div class="show-main-home show-icon-home">
         <h2 class="main-heading">
-            <span style="text-transform: uppercase;">TRUNG TÂM DỊCH VỤ VIỆC LÀM QUẢNG BÌNH - CHẤT LƯỢNG LÀ HÀNG ĐẦU</span>
+            <span style="text-transform: uppercase;">TRUNG TÂM DỊCH VỤ VIỆC LÀM QUẢNG TRỊ - CHẤT LƯỢNG LÀ HÀNG ĐẦU</span>
         </h2>
         <div id="feature-list">
             <div class="feature">
